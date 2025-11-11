@@ -32,15 +32,14 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: var(--spacing-xs);
+		gap: var(--spacing-sm);
 	}
 
 	.group-tree.nested {
-		margin-left: var(--spacing-md);
-		padding-left: var(--spacing-sm);
-		border-left: 1px dashed var(--border-light);
-		gap: var(--spacing-2xs);
+		margin-left: var(--spacing-sm);
+		padding-left: var(--spacing-md);
+		border-left: 1px solid var(--border-light);
+		gap: var(--spacing-sm);
 	}
-
 </style>
 

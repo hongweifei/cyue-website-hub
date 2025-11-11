@@ -9,7 +9,6 @@
 </script>
 
 <div class="tag-list">
-	<h3 class="tag-list-title">标签筛选</h3>
 	<div class="tags">
 		{#each tags as tag}
 			<button
@@ -30,33 +29,9 @@
 
 <style>
 	.tag-list {
-		margin-bottom: var(--spacing-xl);
-		background: var(--card-bg);
-		padding: var(--spacing-lg);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
-	}
-
-	.tag-list-title {
-		font-size: 0.875rem;
-		font-weight: 700;
-		margin: 0 0 var(--spacing-md) 0;
-		color: var(--text-secondary);
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
 		display: flex;
-		align-items: center;
+		flex-direction: column;
 		gap: var(--spacing-sm);
-	}
-
-	.tag-list-title::before {
-		content: '';
-		width: 3px;
-		height: 1rem;
-		background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
-		border-radius: var(--radius-sm);
 	}
 
 	.tags {
@@ -66,16 +41,15 @@
 	}
 
 	.tag-btn {
-		padding: var(--spacing-sm) var(--spacing-md);
-		font-size: 0.875rem;
-		border: 2px solid var(--border-color);
-		border-radius: var(--radius-md);
-		background: var(--card-bg);
+		padding: var(--spacing-xs) var(--spacing-sm);
+		font-size: 0.8125rem;
+		border: 1px solid var(--border-light);
+		border-radius: 999px;
+		background: var(--bg-primary);
 		color: var(--text-secondary);
 		cursor: pointer;
 		transition: all var(--transition-base);
 		font-weight: 500;
-		box-shadow: var(--shadow-sm);
 	}
 
 	.tag-btn:hover {
@@ -87,11 +61,10 @@
 	}
 
 	.tag-btn.active {
-		background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
+		background: var(--primary-color);
 		color: var(--text-inverse);
-		border-color: transparent;
-		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
+		border-color: var(--primary-color);
+		transform: translateY(-1px);
 	}
 
 	.tag-btn:active {
@@ -99,26 +72,20 @@
 	}
 
 	.clear-tags {
-		margin-top: var(--spacing-md);
-		padding: var(--spacing-sm) var(--spacing-md);
-		font-size: 0.875rem;
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
+		align-self: flex-start;
+		margin-top: var(--spacing-xs);
+		padding: var(--spacing-xs) var(--spacing-sm);
+		font-size: 0.8125rem;
+		background: transparent;
+		border: none;
 		color: var(--primary-color);
 		cursor: pointer;
 		transition: all var(--transition-base);
 		font-weight: 500;
-		display: inline-flex;
-		align-items: center;
-		gap: var(--spacing-xs);
 	}
 
 	.clear-tags:hover {
-		background: var(--primary-light);
-		border-color: var(--primary-color);
-		transform: translateY(-1px);
-		box-shadow: var(--shadow-sm);
+		text-decoration: underline;
 	}
 
 	.clear-tags:active {
@@ -126,33 +93,17 @@
 	}
 
 	@media (max-width: 768px) {
-		.tag-list {
-			padding: var(--spacing-md);
-			margin-bottom: var(--spacing-lg);
-		}
-
-		.tag-list-title {
-			font-size: 0.8125rem;
-			margin-bottom: var(--spacing-sm);
-		}
-
 		.tag-btn {
 			padding: var(--spacing-xs) var(--spacing-sm);
-			font-size: 0.8125rem;
+			font-size: 0.75rem;
 		}
 
 		.clear-tags {
-			width: 100%;
-			justify-content: center;
-			margin-top: var(--spacing-sm);
+			font-size: 0.75rem;
 		}
 	}
 
 	@media (max-width: 480px) {
-		.tag-list {
-			padding: var(--spacing-sm);
-		}
-
 		.tags {
 			gap: var(--spacing-xs);
 		}
