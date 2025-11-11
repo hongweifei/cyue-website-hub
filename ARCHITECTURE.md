@@ -164,15 +164,16 @@ ContentArea (结果展示)
 #### 3.1 数据加载模块 (`dataLoader.ts`)
 
 **职责**：
-- 动态加载所有导航项数据（支持单个对象和数组格式）
+- *仅在服务器端* 动态加载所有导航项数据（支持单个对象和数组格式）
 - 加载分组元数据
 - 加载 Markdown 内容
-- 提供数据缓存机制
+- 提供数据缓存机制，供 SSR/SSG 阶段复用
 
 **关键特性**：
 - 使用 Vite 的 `import.meta.glob` 实现动态导入
 - 内存缓存机制，避免重复加载
 - 支持两种数据格式：单个 JSON 对象和 JSON 数组
+- 避免在浏览器环境执行 Node.js 依赖（如 `gray-matter`），所有解析逻辑在服务器端完成
 
 **主要函数**：
 - `loadAllNavItems()` - 加载所有导航项
@@ -202,8 +203,9 @@ ContentArea (结果展示)
 **useNavigation Hook** (`hooks/useNavigation.ts`)
 - 封装导航数据管理逻辑
 - 使用 Svelte Context 实现单例模式
-- 管理搜索、筛选、分组等状态
-- 提供响应式的派生状态
+- 依赖 `+layout.server.ts` 注入的初始数据；首次调用时必须传入服务器端的导航数据
+- 管理搜索、筛选、分组等状态，并提供响应式派生状态
+- 客户端只在已有数据的基础上做过滤/派生，不再直接访问 `dataLoader`
 
 **useLayout Hook** (`hooks/useLayout.ts`)
 - 管理布局模式切换
@@ -226,7 +228,7 @@ ContentArea (结果展示)
 - `TagList.svelte` - 标签筛选列表
 - `NavGroup.svelte` - 导航分组展示
 - `NavItem.svelte` - 单个导航项
-- `FavoriteManager.svelte` - 收藏管理
+- `FavoriteManager.svelte` - 通过派生 store（`derived`）组合导航数据和收藏 ID，避免循环依赖
 - `MarkdownRenderer.svelte` - Markdown 渲染
 - `ThemeToggle.svelte` - 主题切换按钮
 
@@ -245,6 +247,20 @@ ContentArea (结果展示)
 - 支持 SSG（静态站点生成）
 - 自动预渲染所有页面
 - SEO 友好的 URL 结构
+
+#### 4.1 服务端数据加载流程
+
+- `src/routes/+layout.server.ts`
+  - 构建阶段（SSG）预加载所有分组、标签和导航项，作为 `navigation` 上下文注入客户端
+  - 客户端水合时复用该数据，不再额外请求或解析 Markdown
+- `src/routes/group/[group]/+page.server.ts`
+  - 按分组 ID 预渲染分组页面
+  - 仅在服务器端调用 `loadGroups()`
+- `src/routes/item/[id]/+page.server.ts`
+  - 加载单个导航项及其 Markdown 描述
+  - 避免浏览器执行 `gray-matter`
+
+> 说明：所有 `+page.server.ts` 都导出 `entries()`，确保在静态导出时预生成所有详情页。
 
 ### 5. 数据模型
 
