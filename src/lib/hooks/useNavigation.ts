@@ -1,4 +1,3 @@
-import { loadGroups, getAllTags, loadAllNavItems } from '../dataLoader';
 import { searchService } from '../services/searchService';
 import type { NavItem, NavGroup } from '../types';
 import { getContext, setContext } from 'svelte';
@@ -7,40 +6,49 @@ import { browser } from '$app/environment';
 
 const NAVIGATION_CONTEXT_KEY = Symbol('navigation');
 
+type NavigationInitialData = {
+	groups: NavGroup[];
+	tags: string[];
+	navItems: NavItem[];
+};
+
 /**
  * 导航数据管理 Hook
  * 封装数据加载和搜索逻辑
  * 注意：必须在 Svelte 组件中使用
  */
-export function useNavigation() {
+export function useNavigation(initialData?: NavigationInitialData) {
 	// 尝试从 context 获取，如果没有则创建新的
 	let navigationStore = getContext<ReturnType<typeof createNavigationStore>>(NAVIGATION_CONTEXT_KEY);
 	
 	if (!navigationStore) {
-		navigationStore = createNavigationStore();
+		if (!initialData) {
+			throw new Error('useNavigation must be initialized with navigation data.');
+		}
+		navigationStore = createNavigationStore(initialData);
 		setContext(NAVIGATION_CONTEXT_KEY, navigationStore);
 	}
 
 	return navigationStore;
 }
 
-function createNavigationStore() {
-	// 在 SSR 和浏览器环境中都加载数据
-	const initialGroups = loadGroups();
-	const initialTags = getAllTags();
-	
+function createNavigationStore(initialData: NavigationInitialData) {
+	const initialGroups = initialData.groups;
+	const initialTags = initialData.tags;
+	const initialItems = initialData.navItems;
+
 	const groups = writable<NavGroup[]>(initialGroups);
 	const allTags = writable<string[]>(initialTags);
+	const navItems = writable<NavItem[]>(initialItems);
 	const searchQuery = writable('');
 	const selectedTags = writable<string[]>([]);
 	
 	const filteredItems = derived(
-		[searchQuery, selectedTags],
-		([$searchQuery, $selectedTags]) => {
+		[searchQuery, selectedTags, navItems],
+		([$searchQuery, $selectedTags, $navItems]) => {
 			const hasFilters = $searchQuery.trim() !== '' || $selectedTags.length > 0;
 			if (!hasFilters) return [];
-			const allItems = loadAllNavItems();
-			return searchService.search(allItems, {
+			return searchService.search($navItems, {
 				query: $searchQuery,
 				tags: $selectedTags
 			});
@@ -82,6 +90,7 @@ function createNavigationStore() {
 	return {
 		groups,
 		allTags,
+		navItems,
 		searchQuery,
 		selectedTags,
 		filteredItems,

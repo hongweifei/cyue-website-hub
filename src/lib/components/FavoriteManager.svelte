@@ -1,15 +1,23 @@
 <script lang="ts">
 	import { favorites } from '../stores/favorites';
-	import { loadAllNavItems, searchNavItems } from '../dataLoader';
 	import type { NavItem } from '../types';
+	import { useNavigation } from '$lib/hooks/useNavigation';
 	import NavItemComponent from './NavItem.svelte';
+	import { derived } from 'svelte/store';
+
+	const navigation = useNavigation();
+
+	const favoriteItemsStore = derived([navigation.navItems, favorites], ([$navItems, $favoriteIds]) => {
+		const items = $navItems ?? [];
+		const ids = $favoriteIds ?? [];
+		return items.filter((item) => ids.includes(item.id));
+	}, [] as NavItem[]);
 
 	let favoriteItems = $state<NavItem[]>([]);
 
 	$effect(() => {
-		const unsubscribe = favorites.subscribe((favIds) => {
-			const allItems = loadAllNavItems();
-			favoriteItems = allItems.filter((item) => favIds.includes(item.id));
+		const unsubscribe = favoriteItemsStore.subscribe((value) => {
+			favoriteItems = value ?? [];
 		});
 		return unsubscribe;
 	});

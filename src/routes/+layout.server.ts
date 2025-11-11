@@ -1,8 +1,19 @@
 import type { LayoutServerLoad } from './$types';
+import { loadAllNavItems, loadGroups, getAllTags } from '$lib/dataLoader';
 
-export const load: LayoutServerLoad = async () => {
+export const prerender = true;
+
+export const load: LayoutServerLoad = () => {
+	const groups = loadGroups();
+	const tags = getAllTags();
+	const navItems = loadAllNavItems();
+
 	return {
-		// 可以在这里添加全局数据
+		navigation: {
+			groups,
+			tags,
+			navItems
+		}
 	};
 };
 

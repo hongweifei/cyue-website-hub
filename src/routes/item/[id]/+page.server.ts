@@ -1,8 +1,8 @@
+export const prerender = true;
+
 import { error } from '@sveltejs/kit';
 import { loadAllNavItems, loadMarkdownContent } from '$lib/dataLoader';
 import type { PageServerLoad } from './$types';
-
-export const prerender = true;
 
 export const load: PageServerLoad = ({ params }) => {
 	const allItems = loadAllNavItems();
@@ -12,7 +12,6 @@ export const load: PageServerLoad = ({ params }) => {
 		throw error(404, '导航项不存在');
 	}
 
-	// 加载 Markdown 内容
 	const markdownContent = loadMarkdownContent(item);
 
 	return {
@@ -21,11 +20,9 @@ export const load: PageServerLoad = ({ params }) => {
 	};
 };
 
-// 生成所有导航项的入口点
 export async function entries() {
 	const allItems = loadAllNavItems();
 	return allItems.map((item) => ({
 		id: item.id
 	}));
 }
-

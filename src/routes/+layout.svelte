@@ -7,11 +7,12 @@
 	import { page } from '$app/stores';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import '../app.css';
+	import type { LayoutData } from './$types';
 
-	let { children } = $props();
+	const { children, data } = $props<{ data: LayoutData }>();
 
 	// 在 layout 级别初始化 navigation context，确保所有页面都能访问
-	useNavigation();
+	useNavigation(data?.navigation);
 
 	function handleNavClick(event: MouseEvent, href: string) {
 		// 如果当前已经在目标页面，不需要导航
