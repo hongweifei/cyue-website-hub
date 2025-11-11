@@ -66,7 +66,7 @@
 
 	<footer class="footer">
 		<div class="container">
-			<p>&copy; 2024 鸽子导航网. 让导航更简单。</p>
+			<p>&copy; 2025 鸽子导航网. 让导航更简单。</p>
 		</div>
 	</footer>
 </div>
