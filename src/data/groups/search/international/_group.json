@@ -1,0 +1,8 @@
+{
+	"id": "search-international",
+	"name": "国际搜索",
+	"description": "海外与多语言搜索服务",
+	"parentId": "search",
+	"order": 2
+}
+

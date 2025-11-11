@@ -7,15 +7,6 @@
 		"desc_md": "baidu.md",
 		"group": "search",
 		"tags": ["搜索", "工具"]
-	},
-	{
-		"id": "google",
-		"name": "Google",
-		"url": "https://www.google.com",
-		"info": "全球最大的搜索引擎",
-		"desc_md": "google.md",
-		"group": "search",
-		"tags": ["搜索", "工具", "国际"]
 	}
 ]
 

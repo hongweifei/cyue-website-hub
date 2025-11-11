@@ -173,6 +173,7 @@ ContentArea (结果展示)
 - 使用 Vite 的 `import.meta.glob` 实现动态导入
 - 内存缓存机制，避免重复加载
 - 支持两种数据格式：单个 JSON 对象和 JSON 数组
+- 自动解析并构建分组树，支持任意层级的子分组
 - 避免在浏览器环境执行 Node.js 依赖（如 `gray-matter`），所有解析逻辑在服务器端完成
 
 **主要函数**：
@@ -181,6 +182,13 @@ ContentArea (结果展示)
 - `loadMarkdownContent()` - 加载 Markdown 内容
 - `loadGroupMetadata()` - 加载分组元数据
 - `getAllTags()` - 获取所有标签
+- `findGroupById()` - 在分组树中查找指定分组
+
+**分组解析流程概述**：
+1. 通过 `import.meta.glob` 读取所有 `_group.json`，构建 `GroupDefinition`，并记录路径片段和显式 `parentId`。
+2. 若未显式提供 `parentId`，根据目录层级自动推断父级分组，实现零配置嵌套结构。
+3. `loadGroups()` 根据导航项所属分组 ID 与 `GroupDefinition` 合并，生成包含 `children` 数组的树形结构，并按 `order` 与名称排序。
+4. Markdown 内容加载会复用分组路径信息，确保子分组 Markdown 可放在对应目录下。
 
 #### 3.2 状态管理模块 (`stores/`)
 
@@ -226,11 +234,22 @@ ContentArea (结果展示)
 **功能组件**：
 - `SearchBar.svelte` - 搜索输入框
 - `TagList.svelte` - 标签筛选列表
-- `NavGroup.svelte` - 导航分组展示
+- `NavGroup.svelte` - 顶层分组容器，协调分组与子分组展示
+- `NavGroupSection.svelte` - 单个分组段的递归渲染
+- `NavGroupChildren.svelte` - 子分组集合包装
+- `SidebarGroupTree.svelte` - 树形分组导航入口
+- `SidebarGroupTreeList.svelte` / `SidebarGroupTreeItem.svelte` - 树形分组列表与节点
 - `NavItem.svelte` - 单个导航项
 - `FavoriteManager.svelte` - 通过派生 store（`derived`）组合导航数据和收藏 ID，避免循环依赖
 - `MarkdownRenderer.svelte` - Markdown 渲染
 - `ThemeToggle.svelte` - 主题切换按钮
+
+#### 3.5 工具函数 (`utils/`)
+
+`group.ts` 提供树形分组相关的纯函数：
+- `countGroupItems()` - 统计分组及其子分组包含的网站数量
+- `flattenGroupTree()` - 将树形结构拍平成数组，便于快速检索
+- `findGroupInTree()` - 根据谓词在树中定位分组
 
 ### 4. 路由设计
 
@@ -286,6 +305,7 @@ interface GroupMetadata {
   description?: string; // 分组描述（可选）
   icon?: string;       // 分组图标（可选）
   order?: number;      // 排序顺序（可选）
+  parentId?: string | null; // 父级分组 ID（可选，默认按目录推断）
 }
 ```
 
@@ -298,6 +318,8 @@ interface NavGroup {
   icon?: string;
   order?: number;
   items: NavItem[];    // 该分组下的所有导航项
+  parentId?: string | null; // 父级分组
+  children?: NavGroup[];    // 子分组
 }
 ```
 
@@ -310,16 +332,19 @@ interface NavGroup {
 **分组结构**：
 ```
 groups/
-  └── [group-id]/
-      ├── _group.json      # 分组元数据
-      ├── [id].json        # 单个导航项（可选）
-      ├── [id].md          # Markdown 介绍（可选）
-      └── sites.json       # 批量导航项（可选，数组格式）
+  ├── search/
+  │   ├── _group.json          # 顶级分组元数据
+  │   ├── sites.json           # 同级导航项（可选）
+  │   └── international/       # 子分组目录（可继续嵌套）
+  │       ├── _group.json      # 子分组元数据，parentId 可省略
+  │       └── sites.json       # 子分组导航项
+  └── social/
+      └── ...
 ```
 
 **数据格式示例**：
 
-`_group.json`:
+`search/_group.json`:
 ```json
 {
   "id": "search",
@@ -329,18 +354,46 @@ groups/
 }
 ```
 
-`baidu.json`:
+`search/international/_group.json`:
 ```json
 {
-  "id": "baidu",
-  "name": "百度",
-  "url": "https://www.baidu.com",
-  "info": "中国最大的搜索引擎",
-  "desc_md": "baidu.md",
-  "group": "search",
-  "tags": ["搜索", "工具"]
+  "id": "search-international",
+  "name": "国际搜索",
+  "description": "海外与多语言搜索服务",
+  "parentId": "search",
+  "order": 2
 }
 ```
+
+`search/sites.json`:
+```json
+[
+  {
+    "id": "baidu",
+    "name": "百度",
+    "url": "https://www.baidu.com",
+    "info": "中国最大的搜索引擎",
+    "desc_md": "baidu.md",
+    "tags": ["搜索", "工具"]
+  }
+]
+```
+
+`search/international/sites.json`:
+```json
+[
+  {
+    "id": "google",
+    "name": "Google",
+    "url": "https://www.google.com",
+    "info": "全球最大的搜索引擎",
+    "desc_md": "google.md",
+    "tags": ["搜索", "工具", "国际"]
+  }
+]
+```
+
+> **提示**：若数据文件位于具体分组目录中，可省略 `group` 字段；系统会依据目录层级推断所属分组，仅在跨目录共用数据时需要显式指定。
 
 #### 浏览器存储
 

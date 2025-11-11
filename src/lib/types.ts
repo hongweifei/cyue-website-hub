@@ -15,6 +15,7 @@ export interface GroupMetadata {
 	description?: string;
 	icon?: string;
 	order?: number;
+	parentId?: string | null;
 }
 
 export interface NavGroup {
@@ -24,6 +25,8 @@ export interface NavGroup {
 	icon?: string;
 	order?: number;
 	items: NavItem[];
+	parentId?: string | null;
+	children?: NavGroup[];
 }
 
 export interface SearchFilters {

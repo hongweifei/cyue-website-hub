@@ -2,6 +2,8 @@
 	import type { NavGroup as NavGroupType } from '../types';
 	import SearchBar from './SearchBar.svelte';
 	import TagList from './TagList.svelte';
+	import SidebarGroupTree from './SidebarGroupTree.svelte';
+	import { countGroupItems } from '../utils/group';
 
 	interface Props {
 		groups: NavGroupType[];
@@ -24,6 +26,10 @@
 		onSearch,
 		onTagToggle
 	}: Props = $props();
+
+	const totalItems = $derived(
+		groups.reduce((sum, group) => sum + countGroupItems(group), 0)
+	);
 </script>
 
 <aside class="sidebar">
@@ -44,21 +50,13 @@
 		>
 			<span class="sidebar-group-icon all-groups-icon">📁</span>
 			<span class="sidebar-group-name">全部分组</span>
-			<span class="sidebar-group-count">{groups.reduce((sum, g) => sum + g.items.length, 0)}</span>
+			<span class="sidebar-group-count">{totalItems}</span>
 		</button>
-		{#each groups as group}
-			<button
-				class="sidebar-group-btn"
-				class:active={selectedGroupId === group.id}
-				onclick={() => onGroupSelect(group.id)}
-			>
-				{#if group.icon}
-					<img src={group.icon} alt={group.name} class="sidebar-group-icon" />
-				{/if}
-				<span class="sidebar-group-name">{group.name}</span>
-				<span class="sidebar-group-count">{group.items.length}</span>
-			</button>
-		{/each}
+		<SidebarGroupTree
+			{groups}
+			{selectedGroupId}
+			onSelect={(groupId) => onGroupSelect(groupId)}
+		/>
 	</nav>
 </aside>
 
@@ -205,39 +203,33 @@
 		}
 
 		.sidebar-nav {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+			display: flex;
+			flex-direction: column;
 			gap: var(--spacing-sm);
 		}
 
 		.sidebar-group-btn {
-			flex-direction: column;
-			text-align: center;
-			padding: var(--spacing-sm);
-			min-height: 80px;
+			flex-direction: row;
+			text-align: left;
+			padding: var(--spacing-sm) var(--spacing-md);
+			min-height: auto;
 		}
 
-		.sidebar-group-icon {
-			width: 32px;
-			height: 32px;
-		}
-
+		.sidebar-group-icon,
 		.all-groups-icon {
-			width: 32px;
-			height: 32px;
+			width: 28px;
+			height: 28px;
 		}
 
 		.sidebar-group-name {
-			font-size: 0.8125rem;
-			margin-top: var(--spacing-xs);
+			font-size: 0.875rem;
+			margin-top: 0;
 		}
 
 		.sidebar-group-count {
-			position: absolute;
-			top: var(--spacing-xs);
-			right: var(--spacing-xs);
-			font-size: 0.625rem;
-			padding: 2px 4px;
+			position: static;
+			font-size: 0.75rem;
+			padding: var(--spacing-2xs) var(--spacing-xs);
 		}
 	}
 

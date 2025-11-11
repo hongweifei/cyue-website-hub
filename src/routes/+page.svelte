@@ -9,7 +9,8 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
-	import type { NavItem as NavItemType, NavGroup as NavGroupType } from '$lib/types';
+import type { NavItem as NavItemType, NavGroup as NavGroupType } from '$lib/types';
+import { findGroupInTree } from '$lib/utils/group';
 
 	// 使用 Hooks 管理状态，减少耦合
 	const { layoutMode, toggleLayout } = useLayout();
@@ -106,10 +107,10 @@
 	}
 
 	// 获取当前显示的分组（null 表示显示全部）
-	const currentGroup = $derived.by(() => {
-		if (!selectedGroupId) return null;
-		return groups.find((g) => g.id === selectedGroupId) || null;
-	});
+const currentGroup = $derived.by(() => {
+	if (!selectedGroupId) return null;
+	return findGroupInTree(groups, (group) => group.id === selectedGroupId);
+});
 </script>
 
 <div class="home-page" class:sidebar-layout={currentLayoutMode === 'sidebar'} class:vertical-layout={currentLayoutMode === 'vertical'}>

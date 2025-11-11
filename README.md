@@ -5,6 +5,7 @@
 ## 功能特性
 
 - ✅ 按分组展示网站导航项
+- ✅ 支持子分组与树形导航结构
 - ✅ 支持按名称、标签、分组、介绍内容模糊搜索
 - ✅ 标签筛选和分组筛选
 - ✅ 用户收藏功能（localStorage）
@@ -53,6 +54,8 @@ npm run preview
 
 ## 使用说明
 
+> **说明**：在 `_group.json` 中可以通过 `parentId` 显式指定父级；若留空，系统会按照目录层级自动推断父子关系。
+
 ### 添加新分组
 
 1. 在 `src/data/groups/[分组id]/` 目录下创建分组元数据文件 `_group.json`：
@@ -68,11 +71,26 @@ npm run preview
 ```
 
 **字段说明**：
-- `id` (必需): 分组唯一标识符，与目录名一致
+- `id` (必需): 分组唯一标识符，与末级目录名一致
 - `name` (必需): 分组显示名称
 - `description` (可选): 分组描述
-- `icon` (可选): 分组图标路径，如果不提供会自动从分组内第一个网站获取
-- `order` (可选): 排序顺序，数字越小越靠前，默认为 999
+- `icon` (可选): 分组图标路径
+- `order` (可选): 同级排序权重，数字越小越靠前，默认为 999
+- `parentId` (可选): 父级分组 ID；若留空则按目录层级自动推断
+
+2. 子分组可以直接通过嵌套目录创建。例如：
+
+```
+src/data/groups/
+└── search/
+    ├── _group.json            # 顶级分组
+    ├── sites.json
+    └── international/
+        ├── _group.json        # 子分组，parentId 可省略
+        └── sites.json
+```
+
+上例中，`international/_group.json` 会自动继承 `search` 作为父级分组。如果需要跨目录引用其他父级，可在文件中设置 `parentId`。
 
 ### 添加新导航项
 
@@ -139,6 +157,8 @@ tags:
 }
 ```
 
+**提示**：如果 JSON 位于具体分组目录（含子分组）内，可以省略 `group` 字段，系统会按照目录层级自动推断所属分组。
+
 #### 方式三：批量文件（推荐用于大量网站）
 
 1. 在 `src/data/groups/[分组名]/` 目录下创建文件：
@@ -169,6 +189,8 @@ tags:
   }
 ]
 ```
+
+**提示**：批量 JSON 同样可省略 `group` 字段，系统会按文件路径推断分组；仅在需要跨目录共享数据时再显式指定。
 
 **注意**：
 - 三种方式可以混合使用
@@ -204,22 +226,31 @@ src/
 │   └── group/[group]/   # 分组页
 ├── lib/
 │   ├── components/      # 组件
-│   │   ├── NavItem.svelte
 │   │   ├── NavGroup.svelte
+│   │   ├── NavGroupSection.svelte
+│   │   ├── NavGroupChildren.svelte
+│   │   ├── SidebarGroupTree.svelte
+│   │   ├── SidebarGroupTreeList.svelte
+│   │   ├── SidebarGroupTreeItem.svelte
+│   │   ├── NavItem.svelte
 │   │   ├── SearchBar.svelte
 │   │   ├── TagList.svelte
 │   │   ├── FavoriteManager.svelte
 │   │   └── MarkdownRenderer.svelte
 │   ├── stores/          # 状态管理
 │   │   └── favorites.ts
+│   ├── utils/           # 工具函数
+│   │   └── group.ts
 │   ├── dataLoader.ts    # 数据加载
 │   └── types.ts         # 类型定义
 └── data/
     └── groups/          # 导航数据
         ├── search/
-        │   ├── baidu.json
-        │   ├── baidu.md
-        │   └── ...
+        │   ├── _group.json
+        │   ├── sites.json
+        │   └── international/
+        │       ├── _group.json
+        │       └── sites.json
         ├── social/
         └── ...
 ```

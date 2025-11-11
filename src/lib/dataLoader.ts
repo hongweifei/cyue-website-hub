@@ -39,6 +39,18 @@ const markdownModules = import.meta.glob<string>('/src/data/groups/**/*.md', {
 let cachedNavItems: NavItem[] | null = null;
 let cachedGroups: NavGroup[] | null = null;
 let cachedTags: string[] | null = null;
+let cachedGroupDefinitions: Map<string, GroupDefinition> | null = null;
+let cachedGroupSegmentMap: Map<string, string> | null = null;
+
+interface GroupDefinition extends GroupMetadata {
+	pathSegments: string[];
+	segmentKey: string;
+}
+
+type RawNavItem = Partial<NavItem> & {
+	tags?: unknown;
+	group?: string;
+};
 
 /**
  * 判断是否为数组
@@ -48,18 +60,52 @@ function isArray(value: unknown): value is unknown[] {
 }
 
 /**
- * 从Markdown文件路径提取分组和ID
+ * 从路径中提取相对于 `/src/data/groups/` 的子路径
  */
-function extractGroupAndIdFromPath(path: string): { group: string; id: string } | null {
-	// 路径格式：/src/data/groups/{group}/{id}.md
-	const match = path.match(/\/src\/data\/groups\/([^/]+)\/([^/]+)\.md$/);
-	if (match) {
-		return {
-			group: match[1],
-			id: match[2]
-		};
+function extractRelativeGroupPath(path: string): string | null {
+	const match = path.match(/\/src\/data\/groups\/(.+)$/);
+	return match ? match[1] : null;
+}
+
+/**
+ * 从数据文件路径提取分组路径片段
+ */
+function getGroupSegmentsFromPath(path: string): string[] {
+	const relative = extractRelativeGroupPath(path);
+	if (!relative) {
+		return [];
 	}
-	return null;
+	const parts = relative.split('/');
+	// 移除文件名
+	if (parts.length > 0) {
+		parts.pop();
+	}
+	return parts.filter((segment) => segment && segment !== '.');
+}
+
+/**
+ * 从Markdown文件路径提取分组路径和ID
+ */
+function extractGroupAndIdFromPath(path: string): { segments: string[]; segmentKey: string; id: string } | null {
+	const relative = extractRelativeGroupPath(path);
+	if (!relative) {
+		return null;
+	}
+
+	const parts = relative.split('/');
+	if (parts.length < 2) {
+		return null;
+	}
+
+	const fileName = parts.pop()!;
+	const id = fileName.replace(/\.md$/, '');
+	const segments = parts.filter((segment) => segment && segment !== '.');
+
+	return {
+		segments,
+		segmentKey: segments.join('/'),
+		id
+	};
 }
 
 /**
@@ -69,20 +115,22 @@ function createNavItemFromMarkdown(path: string, content: string): NavItem | nul
 	const parsed = matter(content);
 	const metadata = parsed.data;
 	const groupAndId = extractGroupAndIdFromPath(path);
-	
+
 	if (!groupAndId) {
 		return null;
 	}
 
+	const { segmentKey, id: fallbackId } = groupAndId;
+
 	// 从frontmatter获取元数据，如果没有则使用默认值
 	const item: NavItem = {
-		id: metadata.id || groupAndId.id,
-		name: metadata.name || groupAndId.id,
+		id: metadata.id || fallbackId,
+		name: metadata.name || fallbackId,
 		url: metadata.url || '',
 		icon: metadata.icon || '',
 		info: metadata.info || '',
-		desc_md: `${groupAndId.id}.md`, // 保持desc_md字段用于兼容
-		group: metadata.group || groupAndId.group,
+		desc_md: `${fallbackId}.md`, // 保持desc_md字段用于兼容
+		group: metadata.group || '', // 暂时占位，稍后统一赋值
 		tags: Array.isArray(metadata.tags) ? metadata.tags : 
 		      (typeof metadata.tags === 'string' ? metadata.tags.split(',').map(t => t.trim()) : [])
 	};
@@ -93,6 +141,74 @@ function createNavItemFromMarkdown(path: string, content: string): NavItem | nul
 	}
 
 	return item;
+}
+
+/**
+ * 构建分组定义映射
+ */
+function getGroupDefinitions(): Map<string, GroupDefinition> {
+	if (cachedGroupDefinitions) {
+		return cachedGroupDefinitions;
+	}
+
+	const definitions = new Map<string, GroupDefinition>();
+
+	for (const path in groupMetadataModules) {
+		const module = groupMetadataModules[path];
+		if (!module?.default) continue;
+
+		const metadata = module.default;
+		const pathSegments = getGroupSegmentsFromPath(path);
+		const segmentKey = pathSegments.join('/');
+
+		const definition: GroupDefinition = {
+			...metadata,
+			parentId: metadata.parentId ?? null,
+			pathSegments,
+			segmentKey
+		};
+
+		definitions.set(definition.id, definition);
+	}
+
+	// 构建路径到分组ID的映射
+	const segmentMap = new Map<string, string>();
+	definitions.forEach((definition) => {
+		if (definition.segmentKey) {
+			segmentMap.set(definition.segmentKey, definition.id);
+		}
+	});
+
+	// 根据路径推断父级分组（除非显式指定 parentId）
+	definitions.forEach((definition) => {
+		if (definition.parentId !== null && definition.parentId !== undefined) {
+			if (definition.parentId === '') {
+				definition.parentId = null;
+			}
+			return;
+		}
+
+		if (definition.pathSegments.length > 1) {
+			const parentSegments = definition.pathSegments.slice(0, -1);
+			const parentKey = parentSegments.join('/');
+			const parentId = segmentMap.get(parentKey);
+			definition.parentId = parentId ?? null;
+		} else {
+			definition.parentId = null;
+		}
+	});
+
+	cachedGroupDefinitions = definitions;
+	cachedGroupSegmentMap = segmentMap;
+	return definitions;
+}
+
+function getGroupSegmentMap(): Map<string, string> {
+	if (cachedGroupSegmentMap) {
+		return cachedGroupSegmentMap;
+	}
+	getGroupDefinitions();
+	return cachedGroupSegmentMap ?? new Map();
 }
 
 /**
@@ -115,19 +231,64 @@ export function loadAllNavItems(): NavItem[] {
 
 	const items: NavItem[] = [];
 	const itemMap = new Map<string, NavItem>(); // 用于去重，key为 group:id
+	const groupSegmentMap = getGroupSegmentMap();
+
+	const deriveGroupId = (path: string, explicitGroup?: string): string => {
+		if (explicitGroup && explicitGroup.trim()) {
+			return explicitGroup.trim();
+		}
+		const segments = getGroupSegmentsFromPath(path);
+		if (segments.length === 0) {
+			return '';
+		}
+		const segmentKey = segments.join('/');
+		const derived = groupSegmentMap.get(segmentKey);
+		if (derived) {
+			return derived;
+		}
+		return segments[segments.length - 1];
+	};
 
 	// 首先从JSON文件加载（作为后备）
 	for (const path in filteredNavItemsModules) {
 		const module = filteredNavItemsModules[path];
 		if (module?.default) {
 			const data = module.default;
-			const jsonItems: NavItem[] = isArray(data) ? (data as NavItem[]) : [data as NavItem];
-			
+			const jsonItems: RawNavItem[] = isArray(data) ? (data as RawNavItem[]) : [data as RawNavItem];
+
 			jsonItems.forEach((item) => {
-				const key = `${item.group}:${item.id}`;
+				const normalizedGroup = deriveGroupId(path, item.group);
+				if (!normalizedGroup || !item.id || !item.name || !item.url) {
+					return;
+				}
+
+				const rawTags = item.tags;
+				const normalizedTags = Array.isArray(rawTags)
+					? rawTags
+							.map((tag) => String(tag).trim())
+							.filter((tag): tag is string => tag.length > 0)
+					: typeof rawTags === 'string'
+						? (rawTags as string)
+								.split(',')
+								.map((tag: string) => tag.trim())
+								.filter((tag: string) => tag.length > 0)
+						: [];
+
+				const normalizedItem: NavItem = {
+					id: item.id,
+					name: item.name,
+					url: item.url,
+					icon: item.icon,
+					info: item.info,
+					desc_md: item.desc_md,
+					group: normalizedGroup,
+					tags: normalizedTags
+				};
+
+				const key = `${normalizedItem.group}:${normalizedItem.id}`;
 				// 如果还没有从Markdown加载过，则添加
 				if (!itemMap.has(key)) {
-					itemMap.set(key, item);
+					itemMap.set(key, normalizedItem);
 				}
 			});
 		}
@@ -140,9 +301,17 @@ export function loadAllNavItems(): NavItem[] {
 
 		const item = createNavItemFromMarkdown(path, content);
 		if (item) {
-			const key = `${item.group}:${item.id}`;
+			const normalizedGroup = deriveGroupId(path, item.group);
+			if (!normalizedGroup) {
+				continue;
+			}
+			const normalizedItem: NavItem = {
+				...item,
+				group: normalizedGroup
+			};
+			const key = `${normalizedItem.group}:${normalizedItem.id}`;
 			// Markdown优先级更高，会覆盖JSON中的同名项
-			itemMap.set(key, item);
+			itemMap.set(key, normalizedItem);
 		}
 	}
 
@@ -162,7 +331,12 @@ export function loadMarkdownContent(item: NavItem): string {
 	if (!item.desc_md) return '';
 
 	// 构建 Markdown 文件路径
-	const mdPath = `/src/data/groups/${item.group}/${item.desc_md}`;
+	const definitions = getGroupDefinitions();
+	const definition = definitions.get(item.group);
+	const groupPath = definition && definition.pathSegments.length > 0
+		? definition.pathSegments.join('/')
+		: item.group;
+	const mdPath = `/src/data/groups/${groupPath}/${item.desc_md}`;
 
 	let rawContent = '';
 
@@ -195,18 +369,18 @@ export function loadMarkdownContent(item: NavItem): string {
  * 加载分组元数据
  */
 export function loadGroupMetadata(groupId: string): GroupMetadata | null {
-	// 尝试加载分组元数据文件
-	for (const path in groupMetadataModules) {
-		const module = groupMetadataModules[path];
-		if (module?.default && module.default.id === groupId) {
-			return module.default;
-		}
-		// 也支持通过路径匹配
-		if (path.includes(`/${groupId}/_group.json`)) {
-			return module?.default || null;
-		}
+	const definitions = getGroupDefinitions();
+	const definition = definitions.get(groupId);
+	if (!definition) {
+		return {
+			id: groupId,
+			name: groupId,
+			parentId: null
+		};
 	}
-	return null;
+
+	const { pathSegments: _pathSegments, segmentKey: _segmentKey, ...metadata } = definition;
+	return metadata;
 }
 
 /**
@@ -220,43 +394,91 @@ export function loadGroups(): NavGroup[] {
 	}
 
 	const items = loadAllNavItems();
-	const groupMap = new Map<string, NavItem[]>();
+	const groupItemsMap = new Map<string, NavItem[]>();
 
-	// 按分组归类
 	items.forEach((item) => {
-		if (!groupMap.has(item.group)) {
-			groupMap.set(item.group, []);
+		if (!groupItemsMap.has(item.group)) {
+			groupItemsMap.set(item.group, []);
 		}
-		groupMap.get(item.group)!.push(item);
+		groupItemsMap.get(item.group)!.push(item);
 	});
 
-	// 转换为数组并加载元数据
-	const groups: NavGroup[] = Array.from(groupMap.entries())
-		.map(([groupId, items]) => {
-			// 加载分组元数据
-			const metadata = loadGroupMetadata(groupId);
+	const definitions = getGroupDefinitions();
+	const groupsMap = new Map<string, NavGroup>();
 
-			// 合并元数据和默认值
-			return {
-				id: groupId,
-				name: metadata?.name || groupId,
-				description: metadata?.description,
-				icon: metadata?.icon,
-				order: metadata?.order ?? DEFAULTS.GROUP_ORDER,
-				items: items.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
-			};
-		})
-		.sort((a, b) => {
-			// 先按 order 排序，再按名称排序
+	const ensureGroup = (groupId: string): NavGroup => {
+		if (groupsMap.has(groupId)) {
+			return groupsMap.get(groupId)!;
+		}
+
+		const definition = definitions.get(groupId);
+		const navGroup: NavGroup = {
+			id: groupId,
+			name: definition?.name || groupId,
+			description: definition?.description,
+			icon: definition?.icon,
+			order: definition?.order ?? DEFAULTS.GROUP_ORDER,
+			parentId: definition?.parentId ?? null,
+			items: [],
+			children: []
+		};
+
+		groupsMap.set(groupId, navGroup);
+		return navGroup;
+	};
+
+	// 先创建所有已有的分组
+	definitions.forEach((definition) => {
+		ensureGroup(definition.id);
+	});
+
+	// 再为仅在数据项中出现的分组创建默认分组
+	groupItemsMap.forEach((_, groupId) => {
+		ensureGroup(groupId);
+	});
+
+	// 赋值分组内的导航项
+	groupItemsMap.forEach((groupItems, groupId) => {
+		const group = ensureGroup(groupId);
+		group.items = groupItems
+			.slice()
+			.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+	});
+
+	// 构建层级结构
+	const rootGroups: NavGroup[] = [];
+
+	groupsMap.forEach((group) => {
+		if (group.parentId && groupsMap.has(group.parentId)) {
+			const parent = groupsMap.get(group.parentId)!;
+			if (!parent.children) {
+				parent.children = [];
+			}
+			parent.children.push(group);
+		} else {
+			rootGroups.push(group);
+		}
+	});
+
+	const sortGroupsRecursively = (groupList: NavGroup[]) => {
+		groupList.sort((a, b) => {
 			if (a.order !== b.order) {
-				return a.order - b.order;
+				return (a.order ?? DEFAULTS.GROUP_ORDER) - (b.order ?? DEFAULTS.GROUP_ORDER);
 			}
 			return a.name.localeCompare(b.name, 'zh-CN');
 		});
 
-	// 缓存结果
-	cachedGroups = groups;
-	return groups;
+		groupList.forEach((group) => {
+			if (group.children && group.children.length > 0) {
+				sortGroupsRecursively(group.children);
+			}
+		});
+	};
+
+	sortGroupsRecursively(rootGroups);
+
+	cachedGroups = rootGroups;
+	return rootGroups;
 }
 
 /**
@@ -292,5 +514,25 @@ export function searchNavItems(
 		group,
 		tags
 	});
+}
+
+/**
+ * 在分组树中查找指定分组
+ */
+export function findGroupById(groupId: string): NavGroup | null {
+	const groups = loadGroups();
+	const stack: NavGroup[] = [...groups];
+
+	while (stack.length > 0) {
+		const current = stack.pop()!;
+		if (current.id === groupId) {
+			return current;
+		}
+		if (current.children && current.children.length > 0) {
+			stack.push(...current.children);
+		}
+	}
+
+	return null;
 }
 
