@@ -1,6 +1,7 @@
 import type { NavItem, NavGroup, GroupMetadata } from './types';
 import { searchService } from './services/searchService';
 import { DEFAULTS } from './constants';
+import matter from 'gray-matter';
 
 // 动态导入所有导航项数据（排除分组元数据文件）
 // 支持单个对象或数组格式
@@ -47,10 +48,62 @@ function isArray(value: unknown): value is unknown[] {
 }
 
 /**
+ * 从Markdown文件路径提取分组和ID
+ */
+function extractGroupAndIdFromPath(path: string): { group: string; id: string } | null {
+	// 路径格式：/src/data/groups/{group}/{id}.md
+	const match = path.match(/\/src\/data\/groups\/([^/]+)\/([^/]+)\.md$/);
+	if (match) {
+		return {
+			group: match[1],
+			id: match[2]
+		};
+	}
+	return null;
+}
+
+/**
+ * 从Markdown frontmatter创建NavItem
+ */
+function createNavItemFromMarkdown(path: string, content: string): NavItem | null {
+	const parsed = matter(content);
+	const metadata = parsed.data;
+	const groupAndId = extractGroupAndIdFromPath(path);
+	
+	if (!groupAndId) {
+		return null;
+	}
+
+	// 从frontmatter获取元数据，如果没有则使用默认值
+	const item: NavItem = {
+		id: metadata.id || groupAndId.id,
+		name: metadata.name || groupAndId.id,
+		url: metadata.url || '',
+		icon: metadata.icon || '',
+		info: metadata.info || '',
+		desc_md: `${groupAndId.id}.md`, // 保持desc_md字段用于兼容
+		group: metadata.group || groupAndId.group,
+		tags: Array.isArray(metadata.tags) ? metadata.tags : 
+		      (typeof metadata.tags === 'string' ? metadata.tags.split(',').map(t => t.trim()) : [])
+	};
+
+	// 验证必需字段
+	if (!item.name || !item.url) {
+		return null;
+	}
+
+	return item;
+}
+
+/**
  * 加载所有导航项数据
- * 支持两种格式：
- * 1. 单个对象：{ id: "...", name: "...", ... }
- * 2. 数组：[{ id: "...", name: "..." }, { id: "...", name: "..." }]
+ * 支持三种格式：
+ * 1. JSON文件中的单个对象：{ id: "...", name: "...", ... }
+ * 2. JSON文件中的数组：[{ id: "...", name: "..." }, { id: "...", name: "..." }]
+ * 3. Markdown文件中的frontmatter（新功能）
+ * 
+ * 优先级：Markdown frontmatter > JSON文件
+ * 如果同一个id在Markdown和JSON中都存在，优先使用Markdown
  * 
  * 使用缓存机制提高性能
  */
@@ -61,21 +114,40 @@ export function loadAllNavItems(): NavItem[] {
 	}
 
 	const items: NavItem[] = [];
+	const itemMap = new Map<string, NavItem>(); // 用于去重，key为 group:id
 
+	// 首先从JSON文件加载（作为后备）
 	for (const path in filteredNavItemsModules) {
 		const module = filteredNavItemsModules[path];
 		if (module?.default) {
 			const data = module.default;
-
-			// 如果是数组，展开所有项
-			if (isArray(data)) {
-				items.push(...(data as NavItem[]));
-			} else {
-				// 如果是单个对象，直接添加
-				items.push(data as NavItem);
-			}
+			const jsonItems: NavItem[] = isArray(data) ? (data as NavItem[]) : [data as NavItem];
+			
+			jsonItems.forEach((item) => {
+				const key = `${item.group}:${item.id}`;
+				// 如果还没有从Markdown加载过，则添加
+				if (!itemMap.has(key)) {
+					itemMap.set(key, item);
+				}
+			});
 		}
 	}
+
+	// 然后从Markdown frontmatter加载（优先级更高）
+	for (const path in markdownModules) {
+		const content = markdownModules[path] as string;
+		if (!content) continue;
+
+		const item = createNavItemFromMarkdown(path, content);
+		if (item) {
+			const key = `${item.group}:${item.id}`;
+			// Markdown优先级更高，会覆盖JSON中的同名项
+			itemMap.set(key, item);
+		}
+	}
+
+	// 转换为数组
+	items.push(...Array.from(itemMap.values()));
 
 	// 缓存结果
 	cachedNavItems = items;
@@ -84,6 +156,7 @@ export function loadAllNavItems(): NavItem[] {
 
 /**
  * 加载指定导航项的 Markdown 内容
+ * 如果Markdown文件包含frontmatter，则只返回内容部分（排除frontmatter）
  */
 export function loadMarkdownContent(item: NavItem): string {
 	if (!item.desc_md) return '';
@@ -91,19 +164,31 @@ export function loadMarkdownContent(item: NavItem): string {
 	// 构建 Markdown 文件路径
 	const mdPath = `/src/data/groups/${item.group}/${item.desc_md}`;
 
+	let rawContent = '';
+
 	// 尝试直接匹配
 	if (markdownModules[mdPath]) {
-		return markdownModules[mdPath] as string;
-	}
-
-	// 尝试匹配完整路径
-	for (const path in markdownModules) {
-		if (path.includes(`${item.group}/${item.desc_md}`)) {
-			return markdownModules[path] as string;
+		rawContent = markdownModules[mdPath] as string;
+	} else {
+		// 尝试匹配完整路径
+		for (const path in markdownModules) {
+			if (path.includes(`${item.group}/${item.desc_md}`)) {
+				rawContent = markdownModules[path] as string;
+				break;
+			}
 		}
 	}
 
-	return '';
+	if (!rawContent) return '';
+
+	// 解析frontmatter，只返回内容部分
+	try {
+		const parsed = matter(rawContent);
+		return parsed.content.trim();
+	} catch (error) {
+		// 如果解析失败，返回原始内容（向后兼容没有frontmatter的Markdown文件）
+		return rawContent;
+	}
 }
 
 /**

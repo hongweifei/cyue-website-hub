@@ -76,9 +76,49 @@ npm run preview
 
 ### 添加新导航项
 
-支持两种方式添加导航项：
+支持三种方式添加导航项：
 
-#### 方式一：单个文件（推荐用于少量网站）
+#### 方式一：Markdown Frontmatter（推荐，最简单）
+
+直接在 Markdown 文件中编写元数据，无需单独的 JSON 文件。
+
+1. 在 `src/data/groups/[分组名]/` 目录下创建 `[id].md` 文件：
+
+```markdown
+---
+id: example
+name: 示例网站
+url: https://example.com
+icon: /assets/icons/example.ico
+info: 网站简介
+group: tools
+tags:
+  - 工具
+  - 开发
+---
+
+这里是网站的详细介绍，支持 Markdown 格式。
+
+**特色功能**：
+- 功能一
+- 功能二
+```
+
+**Frontmatter 字段说明**：
+- `id` (可选): 导航项唯一标识符，如果不提供则使用文件名（不含扩展名）
+- `name` (必需): 网站名称
+- `url` (必需): 网站链接
+- `icon` (可选): 图标路径
+- `info` (可选): 简短介绍
+- `group` (可选): 分组ID，如果不提供则从文件路径推断
+- `tags` (可选): 标签列表，可以是数组或逗号分隔的字符串
+
+**优势**：
+- 一个文件包含所有信息，无需维护 JSON 和 Markdown 两个文件
+- 元数据和内容在一起，更容易管理
+- 如果 Markdown 和 JSON 同时存在，优先使用 Markdown frontmatter
+
+#### 方式二：单个文件（传统方式）
 
 1. 在 `src/data/groups/[分组名]/` 目录下创建文件：
    - `[id].json` - 单个导航项元数据
@@ -99,7 +139,7 @@ npm run preview
 }
 ```
 
-#### 方式二：批量文件（推荐用于大量网站）
+#### 方式三：批量文件（推荐用于大量网站）
 
 1. 在 `src/data/groups/[分组名]/` 目录下创建文件：
    - `sites.json` - 包含多个导航项的数组
@@ -131,9 +171,10 @@ npm run preview
 ```
 
 **注意**：
-- 两种方式可以混合使用
-- 同一个分组下可以同时有单个文件和批量文件
+- 三种方式可以混合使用
+- 同一个分组下可以同时有 Markdown frontmatter、单个文件和批量文件
 - 系统会自动识别并加载所有格式
+- 如果同一个 ID 在 Markdown frontmatter 和 JSON 中都存在，优先使用 Markdown frontmatter
 
 3. **图标说明**：
    - 如果提供了 `icon` 字段，将使用指定的图标

@@ -1,3 +1,15 @@
+---
+id: github
+name: GitHub
+url: https://github.com
+info: 全球最大的代码托管平台
+group: tools
+tags:
+  - 开发
+  - 工具
+  - 代码
+---
+
 GitHub 是全球最大的代码托管和协作平台。
 
 **特色**：
