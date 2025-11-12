@@ -1,7 +1,11 @@
 {
-  "name": "鸽子导航网",
   "domain": "hub.cyye.net",
-  "description": "一个普通的导航平台",
+  "name": "鸽子导航网",
+  "description": "鸽子导航网 - 精选网站导航，快速找到你需要的网站",
+  "icon": "/favicon.png",
+  "image": "/favicon.png",
+  "keywords": "导航,网站导航,网址导航,导航网站,网站收藏,书签,工具",
+  "locale": "zh_CN",
   "author": "尘跃",
   "version": "0.1"
 }

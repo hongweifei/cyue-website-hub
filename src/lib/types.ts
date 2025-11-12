@@ -1,7 +1,11 @@
 export interface WebsiteConfig {
-	name: string;
 	domain?: string;
+	name: string;
 	description?: string;
+	icon?: string;
+	image?: string;
+	keywords?: string;
+	locale?: string;
 	author?: string;
 	version?: string;
 }

@@ -4,7 +4,7 @@
 	import { theme } from '$lib/stores/theme';
 	import { useNavigation } from '$lib/hooks/useNavigation';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import '../app.css';
 	import type { LayoutData } from './$types';
@@ -16,7 +16,7 @@
 
 	function handleNavClick(event: MouseEvent, href: string) {
 		// 如果当前已经在目标页面，不需要导航
-		if ($page.url.pathname === href) {
+		if (page.url.pathname === href) {
 			event.preventDefault();
 			return;
 		}
@@ -39,8 +39,35 @@
 <svelte:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="{data.site?.name} - 精选网站导航，快速找到你需要的网站" />
-	<meta name="keywords" content="导航,网站导航,网址导航,导航网站" />
+
+	<!-- Standard SEO Meta Tags -->
+	<meta name="title" content="{data.site?.name}" />
+	<meta name="description" content="{data.site?.description}" />
+	<meta name="keywords" content="{data.site?.keywords}" />
+	<meta name="author" content="{data.site?.author}" />
+	<meta name="robots" content="index, follow" />
+	<meta name="theme-color" content="#6366f1" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{page.url.href}" />
+	<meta property="og:title" content="{data.site?.name}" />
+	<meta property="og:description" content="{data.site?.description}" />
+	<meta property="og:image" content="{page.url.host}{data.site?.image}" />
+	<meta property="og:site_name" content="{data.site?.name}" />
+	<meta property="og:locale" content="zh_CN" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="{data.site?.name}" />
+	<meta name="twitter:description" content="{data.site?.description}" />
+	<meta name="twitter:image" content="{page.url.host}{data.site?.image}" />
+	<meta name="twitter:site" content="@{page.url.hostname}" />
+
+	<!-- Additional SEO tags -->
+	<link rel="canonical" href="{page.url.hostname}" />
+	<link rel="alternate" type="application/rss+xml" title="{data.site?.name} RSS Feed" href="{page.url.host}/rss.xml" />
+
 	<title>{data.site?.name}</title>
 </svelte:head>
 
