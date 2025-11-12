@@ -40,7 +40,7 @@ export function getFaviconUrl(url: string): string {
 	const urlInfo = extractUrlInfo(url);
 	if (!urlInfo) return '';
 
-	// 优先尝试网站根目录的 favicon.ico（最常见的位置）
+	// 优先尝试网站根目录的 favicon.ico（最常见位置）
 	// 大多数网站都会在根目录放置 favicon.ico
 	return `${urlInfo.baseUrl}/favicon.ico`;
 }
@@ -66,13 +66,22 @@ export function getFaviconUrlFallback(url: string): string {
 export function getFaviconCandidates(url: string, customIcon?: string): string[] {
 	const candidates: string[] = [];
 
-	// 1. 如果提供了自定义图标，优先使用
-	if (customIcon) {
-		candidates.push(customIcon);
-	}
-
 	const urlInfo = extractUrlInfo(url);
 	if (!urlInfo) return candidates;
+
+	// 1. 如果提供了自定义图标，优先处理相对路径
+	if (customIcon) {
+		// 检查是否为相对路径（以 / 开头但不是以 // 或 http/https 开头）
+		if (customIcon.startsWith('/') && !customIcon.startsWith('//') && !customIcon.startsWith('http')) {
+			// 优先从对应网站获取相对路径图标
+			candidates.push(`${urlInfo.baseUrl}${customIcon}`);
+			// 其次从本地获取
+			candidates.push(customIcon);
+		} else {
+			// 如果不是相对路径，直接添加原路径
+			candidates.push(customIcon);
+		}
+	}
 
 	// 2. 尝试网站根目录的常见 favicon 路径（按常见程度排序）
 	const commonPaths = [
@@ -97,14 +106,23 @@ export function getFaviconCandidates(url: string, customIcon?: string): string[]
 
 /**
  * 获取图标 URL（优先使用提供的 icon，否则自动生成）
- * 
+ *
  * 注意：由于浏览器跨域限制，无法直接获取网站的 meta 标签
  * 这里优先使用网站根目录的 favicon.ico（标准位置）
  * 如果失败，组件会自动尝试其他路径
  */
 export function getIconUrl(itemIcon: string | undefined, itemUrl: string): string {
-	// 如果提供了图标，直接使用
+	// 如果提供了图标，优先检查是否为相对路径
 	if (itemIcon) {
+		// 检查是否为相对路径（以 / 开头但不是以 // 或 http/https 开头）
+		if (itemIcon.startsWith('/') && !itemIcon.startsWith('//') && !itemIcon.startsWith('http')) {
+			// 优先从对应网站获取相对路径图标
+			const urlInfo = extractUrlInfo(itemUrl);
+			if (urlInfo) {
+				return `${urlInfo.baseUrl}${itemIcon}`;
+			}
+		}
+		// 如果不是相对路径或无法提取URL信息，直接返回原图标路径
 		return itemIcon;
 	}
 
