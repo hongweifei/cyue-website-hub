@@ -1,7 +1,7 @@
 ---
 name: AI工具集
 url: https://ai-bot.cn
-icon: https://ai-bot.cn/wp-content/uploads/2023/04/ai-bot-baidu-logo.png
+icon: /wp-content/uploads/2023/04/ai-bot-baidu-logo.png
 info: 收录500+AI工具的中文导航平台，分类覆盖AI写作、图像、编程等领域
 tags:
   - AI工具
@@ -10,7 +10,7 @@ tags:
   - 效率工具
 ---
 
-AI工具集（https://ai-bot.cn）是一个专注于AI工具导航的中文平台，致力于为用户提供全面的人工智能工具资源聚合服务。网站收录超过500款各类AI应用，通过系统化分类帮助用户快速找到所需工具，是AI爱好者、数字创作者和效率追求者的实用资源入口。
+[AI工具集](https://ai-bot.cn)是一个专注于AI工具导航的中文平台，致力于为用户提供全面的人工智能工具资源聚合服务。网站收录超过500款各类AI应用，通过系统化分类帮助用户快速找到所需工具，是AI爱好者、数字创作者和效率追求者的实用资源入口。
 
 ### 核心功能与资源
 - **工具导航**：整合全球主流AI工具，提供直达链接与简介说明
