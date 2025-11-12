@@ -9,6 +9,7 @@ export const load: LayoutServerLoad = () => {
   const tags = getAllTags();
   const navItems = loadAllNavItems();
   const config = (() => {
+    const defaultDomain = "hub.cyue.net";
     const defaultWebsiteName = "鸽子导航网";
     const defaultDescription = `${defaultWebsiteName} - 精选网站导航，快速找到你需要的网站`;
     const defaultIcon = "/favicon.png";
@@ -24,10 +25,12 @@ export const load: LayoutServerLoad = () => {
     let config = module["/src/data/config.json"];
     if (!config) {
       config = {
+        domain: defaultDomain,
         name: defaultWebsiteName,
       };
     }
     return {
+      domain: config.domain || defaultDomain,
       name: config.name || defaultWebsiteName,
       description: config.description || defaultDescription,
       icon: config.icon || defaultIcon,
