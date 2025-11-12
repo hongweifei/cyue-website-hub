@@ -4,7 +4,7 @@
   import MarkdownRenderer from "./MarkdownRenderer.svelte";
   import { getFaviconCandidates } from "../utils/icon";
   import { onMount } from "svelte";
-  import { page } from '$app/state';
+  import { page } from "$app/state";
 
   interface Props {
     item: NavItemType;
@@ -173,7 +173,8 @@
   <div class="nav-item-footer">
     <a href="/item/{item.id}" class="detail-link">查看详情</a>
     <a
-      href="{item.url}?utm_source={page.url.hostname}&utm_medium=navigation"
+      href="{item.url}?utm_source={page.data?.site
+        ?.domain}&utm_medium=navigation"
       target="_blank"
       rel="noopener noreferrer"
       class="external-link"

@@ -158,7 +158,8 @@
       </div>
       <div class="item-actions">
         <a
-          href={data.item.url}
+          href="{data.item.url}?utm_source={data.site
+            ?.domain}&utm_medium=navigation"
           target="_blank"
           rel="noopener noreferrer"
           class="visit-btn"
