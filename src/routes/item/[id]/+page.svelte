@@ -87,7 +87,7 @@
 </script>
 
 <svelte:head>
-  <title>{data.item.name} - 鸽子导航网</title>
+  <title>{data.item.name} - {data.site?.name}</title>
   <meta
     name="description"
     content={data.item.info || `${data.item.name} - ${data.item.group}分组`}

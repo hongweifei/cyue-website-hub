@@ -1,3 +1,11 @@
+export interface WebsiteConfig {
+	name: string;
+	domain?: string;
+	description?: string;
+	author?: string;
+	version?: string;
+}
+
 export interface NavItem {
 	id: string;
 	name: string;

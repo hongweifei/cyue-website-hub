@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.group.name} - 鸽子导航网</title>
+	<title>{data.group.name} - {data.site?.name}</title>
 	<meta name="description" content={`${data.group.name} 分组下的所有网站导航`} />
 </svelte:head>
 

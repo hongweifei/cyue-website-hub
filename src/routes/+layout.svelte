@@ -39,16 +39,16 @@
 <svelte:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="鸽子导航网 - 精选网站导航，快速找到你需要的网站" />
+	<meta name="description" content="{data.site?.name} - 精选网站导航，快速找到你需要的网站" />
 	<meta name="keywords" content="导航,网站导航,网址导航,导航网站" />
-	<title>鸽子导航网</title>
+	<title>{data.site?.name}</title>
 </svelte:head>
 
 <div class="app">
 	<header class="header">
 		<div class="container">
 			<h1 class="logo">
-				<a href="/" data-sveltekit-preload-data="hover" onclick={(e) => handleNavClick(e, '/')}>🕊️ 鸽子导航网</a>
+				<a href="/" data-sveltekit-preload-data="hover" onclick={(e) => handleNavClick(e, '/')}>🕊️ {data.site?.name}</a>
 			</h1>
 		<nav class="nav">
 			<a href="/" class="nav-link" data-sveltekit-preload-data="hover" onclick={(e) => handleNavClick(e, '/')}>首页</a>
@@ -66,7 +66,7 @@
 
 	<footer class="footer">
 		<div class="container">
-			<p>&copy; 2025 鸽子导航网. 让导航更简单。</p>
+			<p>&copy; 2025 {data?.site?.name}. 让导航更简单。</p>
 		</div>
 	</footer>
 </div>
