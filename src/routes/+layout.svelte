@@ -13,8 +13,10 @@
 
   const { children, data } = $props<{ data: LayoutData }>();
 
-  // 在 layout 级别初始化 navigation context，确保所有页面都能访问
-  useNavigation(data?.navigation);
+  // 在 layout 级别初始化 navigation context，仅在需要时提供导航数据
+  if (data?.navigation) {
+    useNavigation(data.navigation);
+  }
 
   let currentLayout: LayoutMode = $state("sidebar");
 

@@ -9,11 +9,19 @@ import {
 
 export const prerender = true;
 
-export const load: LayoutServerLoad = () => {
-  const groups = loadGroups();
-  const tagSummaries = getTagSummaries();
-  const tags = getAllTags();
-  const navItems = loadAllNavItems();
+export const load: LayoutServerLoad = ({ url }) => {
+  const shouldLoadNavigation =
+    url.pathname === "/" || url.pathname.startsWith("/favorites");
+
+  const navigation = shouldLoadNavigation
+    ? {
+        groups: loadGroups(),
+        tags: getAllTags(),
+        tagSummaries: getTagSummaries(),
+        navItems: loadAllNavItems(),
+      }
+    : null;
+
   const config = (() => {
     const defaultDomain = "hub.cyue.net";
     const defaultWebsiteName = "鸽子导航网";
@@ -50,12 +58,7 @@ export const load: LayoutServerLoad = () => {
   })();
 
   return {
-    navigation: {
-      groups,
-      tags,
-      tagSummaries,
-      navItems,
-    },
+    navigation,
     site: config,
   };
 };
