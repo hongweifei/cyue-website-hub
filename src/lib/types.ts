@@ -7,6 +7,7 @@ export interface WebsiteConfig {
   keywords?: string;
   locale?: string;
   author?: string;
+  contactEmail?: string;
   version?: string;
 }
 

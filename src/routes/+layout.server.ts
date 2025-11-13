@@ -44,6 +44,7 @@ export const load: LayoutServerLoad = () => {
       keywords: config.keywords || defaultKeywords,
       locale: config.locale || defaultLocale,
       author: config.author || defaultAuthor,
+      contactEmail: config.contactEmail,
       version: config.version || defaultVersion,
     };
   })();
