@@ -1,4 +1,12 @@
-import type { NavItem, SearchFilters } from '../types';
+import type { NavItem, SearchFilters } from "../types";
+
+interface NormalizedItem {
+  key: string;
+  snapshot: string;
+  groupId: string;
+  tagSet: Set<string>;
+  searchText: string;
+}
 
 /**
  * 搜索服务
@@ -6,67 +14,181 @@ import type { NavItem, SearchFilters } from '../types';
  * 将搜索逻辑从数据加载器中分离，提高可维护性
  */
 export class SearchService {
-	/**
-	 * 搜索导航项
-	 * @param items 要搜索的导航项列表
-	 * @param filters 搜索过滤器
-	 * @returns 匹配的导航项列表
-	 */
-	search(items: NavItem[], filters: SearchFilters): NavItem[] {
-		let filtered = items;
+  private normalizedCache = new Map<NavItem, NormalizedItem>();
+  private keyCache = new Map<string, NormalizedItem>();
 
-		// 分组筛选
-		if (filters.group) {
-			filtered = filtered.filter((item) => item.group === filters.group);
-		}
+  /**
+   * 搜索导航项
+   * @param items 要搜索的导航项列表
+   * @param filters 搜索过滤器
+   * @returns 匹配的导航项列表
+   */
+  search(items: NavItem[], filters: SearchFilters): NavItem[] {
+    if (!items.length) return [];
 
-		// 标签筛选
-		if (filters.tags.length > 0) {
-			filtered = filtered.filter((item) =>
-				filters.tags.some((tag) => item.tags.includes(tag))
-			);
-		}
+    const targetGroup = filters.group?.trim() ?? "";
+    const hasGroup = targetGroup.length > 0;
 
-		// 关键词搜索
-		if (filters.query.trim()) {
-			filtered = this.filterByQuery(filtered, filters.query);
-		}
+    const tagFilters =
+      filters.tags && filters.tags.length > 0
+        ? this.buildTagSet(filters.tags)
+        : null;
 
-		return filtered;
-	}
+    const queryTokens = this.tokenize(filters.query);
+    const hasQuery = queryTokens.length > 0;
 
-	/**
-	 * 根据查询字符串过滤项目
-	 * @param items 要过滤的项目列表
-	 * @param query 查询字符串
-	 * @returns 匹配的项目列表
-	 */
-	private filterByQuery(items: NavItem[], query: string): NavItem[] {
-		const lowerQuery = query.toLowerCase().trim();
-		
-		return items.filter(
-			(item) =>
-				item.name.toLowerCase().includes(lowerQuery) ||
-				item.info?.toLowerCase().includes(lowerQuery) ||
-				item.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
-				item.group.toLowerCase().includes(lowerQuery)
-		);
-	}
+    // 如果没有任何筛选条件，直接返回原数组以避免不必要的创建
+    if (!hasGroup && !tagFilters && !hasQuery) {
+      return items;
+    }
 
-	/**
-	 * 获取所有唯一的标签
-	 * @param items 导航项列表
-	 * @returns 排序后的标签列表
-	 */
-	getAllTags(items: NavItem[]): string[] {
-		const tagSet = new Set<string>();
+    const results: NavItem[] = [];
 
-		items.forEach((item) => {
-			item.tags.forEach((tag) => tagSet.add(tag));
-		});
+    for (const item of items) {
+      const normalized = this.getNormalized(item);
+      if (!normalized) continue;
 
-		return Array.from(tagSet).sort();
-	}
+      if (hasGroup && normalized.groupId !== targetGroup) {
+        continue;
+      }
+
+      if (tagFilters && !this.matchTags(normalized, tagFilters)) {
+        continue;
+      }
+
+      if (hasQuery && !this.matchQuery(normalized, queryTokens)) {
+        continue;
+      }
+
+      results.push(item);
+    }
+
+    return results;
+  }
+
+  /**
+   * 获取所有唯一的标签
+   * @param items 导航项列表
+   * @returns 排序后的标签列表
+   */
+  getAllTags(items: NavItem[]): string[] {
+    const tagSet = new Set<string>();
+
+    items.forEach((item) => {
+      item.tags.forEach((tag) => tagSet.add(tag));
+    });
+
+    return Array.from(tagSet).sort();
+  }
+
+  private buildTagSet(tags: string[]): Set<string> {
+    const set = new Set<string>();
+    for (const tag of tags) {
+      const normalized = tag.trim().toLowerCase();
+      if (normalized) {
+        set.add(normalized);
+      }
+    }
+    return set;
+  }
+
+  private tokenize(rawQuery: string | undefined): string[] {
+    if (!rawQuery) return [];
+    return rawQuery
+      .toLowerCase()
+      .split(/[\s,，。；;]+/)
+      .map((token) => token.trim())
+      .filter(Boolean);
+  }
+
+  private getNormalized(item: NavItem): NormalizedItem | null {
+    const existing = this.normalizedCache.get(item);
+    const snapshot = this.createSnapshot(item);
+
+    if (existing && existing.snapshot === snapshot) {
+      return existing;
+    }
+
+    const key = this.createKey(item);
+    const fallback = existing ?? this.keyCache.get(key);
+    if (fallback && fallback.snapshot === snapshot) {
+      this.normalizedCache.set(item, fallback);
+      return fallback;
+    }
+
+    const normalized = this.createNormalized(item, key, snapshot);
+    if (!normalized) return null;
+
+    this.normalizedCache.set(item, normalized);
+    this.keyCache.set(key, normalized);
+    return normalized;
+  }
+
+  private createNormalized(
+    item: NavItem,
+    key: string,
+    snapshot: string,
+  ): NormalizedItem | null {
+    const tagsLower = item.tags.map((tag) => tag.trim().toLowerCase());
+    const searchSegments = [
+      item.name,
+      item.info,
+      item.url,
+      item.group,
+      ...item.tags.map((tag) => tag.trim()),
+    ]
+      .filter(Boolean)
+      .map((segment) => segment!.toLowerCase());
+
+    return {
+      key,
+      snapshot,
+      groupId: item.group,
+      tagSet: new Set(tagsLower),
+      searchText: searchSegments.join(" "),
+    };
+  }
+
+  private createSnapshot(item: NavItem): string {
+    return [
+      item.id,
+      item.group,
+      item.name,
+      item.info ?? "",
+      item.url,
+      item.tags.join("|"),
+    ].join("¶");
+  }
+
+  private createKey(item: NavItem): string {
+    return `${item.group}::${item.id}`;
+  }
+
+  private matchTags(
+    normalized: NormalizedItem,
+    tagFilters: Set<string>,
+  ): boolean {
+    for (const tag of tagFilters) {
+      if (normalized.tagSet.has(tag)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private matchQuery(
+    normalized: NormalizedItem,
+    queryTokens: string[],
+  ): boolean {
+    if (!queryTokens.length) return true;
+    const text = normalized.searchText;
+    for (const token of queryTokens) {
+      if (!text.includes(token)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 // 导出单例实例
