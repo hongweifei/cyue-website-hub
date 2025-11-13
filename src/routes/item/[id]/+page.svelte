@@ -2,6 +2,7 @@
   import type { PageData } from "./$types";
   import { favorites } from "$lib/stores/favorites";
   import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
+  import RelatedRecommendations from "$lib/components/RelatedRecommendations.svelte";
   import SiteIcon from "$lib/components/SiteIcon.svelte";
 
   let { data }: { data: PageData } = $props();
@@ -123,6 +124,9 @@
       </a>
     </div>
   </article>
+  <RelatedRecommendations
+    recommendations={data.recommendations}
+  />
 </div>
 
 <style>

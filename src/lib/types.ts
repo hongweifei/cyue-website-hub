@@ -21,6 +21,12 @@ export interface NavItem {
   tags: string[];
 }
 
+export interface ItemRecommendation {
+  item: NavItem;
+  commonTags: string[];
+  isSameGroup: boolean;
+}
+
 export interface GroupMetadata {
   id: string;
   name: string;
