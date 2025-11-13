@@ -1,4 +1,5 @@
-import adapter from "@sveltejs/adapter-auto";
+import adapterAuto from "@sveltejs/adapter-auto";
+import adapterStatic from "@sveltejs/adapter-static";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { mdsvex } from "mdsvex";
 
@@ -11,7 +12,21 @@ const config = {
     paths: {
       base: "",
     },
-    adapter: adapter(),
+    adapter: (() => {
+      const adapterPreference = process.env.SVELTEKIT_ADAPTER?.toLowerCase();
+      const isCi = process.env.CI === "true";
+      const useStatic =
+        adapterPreference === "static" ||
+        (!adapterPreference && !isCi);
+
+      return useStatic ? adapterStatic({
+        pages: "build",
+        assets: "build",
+        fallback: undefined,
+        precompress: false,
+        strict: true,
+      }) : adapterAuto();
+    })(),
     prerender: {
       handleHttpError: "warn",
     },
