@@ -1,5 +1,5 @@
 import { searchService } from '../services/searchService';
-import type { NavItem, NavGroup } from '../types';
+import type { NavItem, NavGroup, TagSummary } from '../types';
 import { getContext, setContext } from 'svelte';
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
@@ -9,6 +9,7 @@ const NAVIGATION_CONTEXT_KEY = Symbol('navigation');
 type NavigationInitialData = {
 	groups: NavGroup[];
 	tags: string[];
+	tagSummaries: TagSummary[];
 	navItems: NavItem[];
 };
 
@@ -35,10 +36,12 @@ export function useNavigation(initialData?: NavigationInitialData) {
 function createNavigationStore(initialData: NavigationInitialData) {
 	const initialGroups = initialData.groups;
 	const initialTags = initialData.tags;
+	const initialTagSummaries = initialData.tagSummaries;
 	const initialItems = initialData.navItems;
 
 	const groups = writable<NavGroup[]>(initialGroups);
 	const allTags = writable<string[]>(initialTags);
+	const tagSummaries = writable<TagSummary[]>(initialTagSummaries);
 	const navItems = writable<NavItem[]>(initialItems);
 	const searchQuery = writable('');
 	const selectedTags = writable<string[]>([]);
@@ -90,6 +93,7 @@ function createNavigationStore(initialData: NavigationInitialData) {
 	return {
 		groups,
 		allTags,
+		tagSummaries,
 		navItems,
 		searchQuery,
 		selectedTags,

@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { NavGroup as NavGroupType } from '../types';
 	import SearchBar from './SearchBar.svelte';
-	import TagList from './TagList.svelte';
+	import TagFilterPanel from './TagFilterPanel.svelte';
 	import SidebarGroupTree from './SidebarGroupTree.svelte';
 	import { countGroupItems } from '../utils/group';
+	import type { TagSummary } from '../types';
 
 	interface Props {
 		groups: NavGroupType[];
 		selectedGroupId: string | null;
-		allTags: string[];
+		tagSummaries: TagSummary[];
 		selectedTags: string[];
 		searchQuery: string;
 		onGroupSelect: (groupId: string | null) => void;
@@ -19,7 +20,7 @@
 	let {
 		groups,
 		selectedGroupId,
-		allTags,
+		tagSummaries,
 		selectedTags,
 		searchQuery,
 		onGroupSelect,
@@ -44,11 +45,12 @@ const totalGroups = $derived(groups.length);
 		<SearchBar value={searchQuery} onInput={onSearch} />
 	</div>
 	<div class="sidebar-section filters">
-		<div class="sidebar-section-header">
-			<h3 class="sidebar-section-title">标签筛选</h3>
-			<span class="sidebar-section-subtitle">{allTags.length} 个标签</span>
-		</div>
-		<TagList tags={allTags} {selectedTags} onToggle={onTagToggle} />
+		<TagFilterPanel
+			tags={tagSummaries}
+			{selectedTags}
+			onToggle={onTagToggle}
+			panelLayout="stack"
+		/>
 	</div>
 	<nav class="sidebar-nav">
 		<!-- TODO 使用 TreeItem 替代 -->
@@ -127,11 +129,6 @@ const totalGroups = $derived(groups.length);
 		font-size: 0.875rem;
 		font-weight: 600;
 		color: var(--text-primary);
-	}
-
-	.sidebar-section-subtitle {
-		font-size: 0.75rem;
-		color: var(--text-tertiary);
 	}
 
 	.sidebar-section.filters {

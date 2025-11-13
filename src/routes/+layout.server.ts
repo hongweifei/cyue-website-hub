@@ -1,11 +1,17 @@
 import type { LayoutServerLoad } from "./$types";
 import type { WebsiteConfig } from "$lib/types";
-import { loadAllNavItems, loadGroups, getAllTags } from "$lib/dataLoader";
+import {
+  loadAllNavItems,
+  loadGroups,
+  getAllTags,
+  getTagSummaries,
+} from "$lib/dataLoader";
 
 export const prerender = true;
 
 export const load: LayoutServerLoad = () => {
   const groups = loadGroups();
+  const tagSummaries = getTagSummaries();
   const tags = getAllTags();
   const navItems = loadAllNavItems();
   const config = (() => {
@@ -46,6 +52,7 @@ export const load: LayoutServerLoad = () => {
     navigation: {
       groups,
       tags,
+      tagSummaries,
       navItems,
     },
     site: config,

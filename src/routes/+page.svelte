@@ -3,14 +3,15 @@
 	import LayoutToggle from '$lib/components/LayoutToggle.svelte';
 	import ContentArea from '$lib/components/ContentArea.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
-	import TagList from '$lib/components/TagList.svelte';
+	import TagFilterPanel from '$lib/components/TagFilterPanel.svelte';
+	import GroupFilterPanel from '$lib/components/GroupFilterPanel.svelte';
 	import { useLayout } from '$lib/hooks/useLayout';
 	import { useNavigation } from '$lib/hooks/useNavigation';
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { get } from 'svelte/store';
-import type { NavItem as NavItemType, NavGroup as NavGroupType } from '$lib/types';
-import { findGroupInTree } from '$lib/utils/group';
+	import type { NavItem as NavItemType, NavGroup as NavGroupType } from '$lib/types';
+	import { findGroupInTree } from '$lib/utils/group';
 
 	// 使用 Hooks 管理状态，减少耦合
 	const { layoutMode, toggleLayout } = useLayout();
@@ -24,7 +25,7 @@ import { findGroupInTree } from '$lib/utils/group';
 	// 监听路由变化，确保在返回首页时重置状态
 	if (browser) {
 		$effect(() => {
-			const currentPath = $page.url.pathname;
+			const currentPath = page.url.pathname;
 			if (currentPath === '/') {
 				// 返回首页时重置选中分组
 				selectedGroupId = null;
@@ -67,7 +68,7 @@ import { findGroupInTree } from '$lib/utils/group';
 
 	// 使用 $state 和 $effect 来响应式地订阅 stores
 	let groups = $state<NavGroupType[]>(get(navigation.groups));
-	let allTags = $state<string[]>(get(navigation.allTags));
+	let tagSummaries = $state(get(navigation.tagSummaries));
 	let selectedTags = $state<string[]>(get(navigation.selectedTags));
 	let searchQuery = $state<string>(get(navigation.searchQuery));
 	let showFilteredResults = $state<boolean>(get(navigation.showFilteredResults));
@@ -79,8 +80,8 @@ import { findGroupInTree } from '$lib/utils/group';
 			const unsubscribeGroups = navigation.groups.subscribe((value) => {
 				groups = value;
 			});
-			const unsubscribeAllTags = navigation.allTags.subscribe((value) => {
-				allTags = value;
+			const unsubscribeTagSummaries = navigation.tagSummaries.subscribe((value) => {
+				tagSummaries = value;
 			});
 			const unsubscribeSelectedTags = navigation.selectedTags.subscribe((value) => {
 				selectedTags = value;
@@ -97,7 +98,7 @@ import { findGroupInTree } from '$lib/utils/group';
 
 			return () => {
 				unsubscribeGroups();
-				unsubscribeAllTags();
+				unsubscribeTagSummaries();
 				unsubscribeSelectedTags();
 				unsubscribeSearchQuery();
 				unsubscribeShowFilteredResults();
@@ -124,7 +125,7 @@ const currentGroup = $derived.by(() => {
 			<Sidebar
 				{groups}
 				{selectedGroupId}
-				{allTags}
+				{tagSummaries}
 				{selectedTags}
 				{searchQuery}
 				onGroupSelect={handleGroupSelect}
@@ -147,17 +148,26 @@ const currentGroup = $derived.by(() => {
 			</div>
 
 			<div class="filters-section">
-				<TagList
-					tags={allTags}
+				<GroupFilterPanel
+					{groups}
+					{selectedGroupId}
+					onSelect={handleGroupSelect}
+					panelVariant="vertical"
+				/>
+				<TagFilterPanel
+					tags={tagSummaries}
 					{selectedTags}
 					onToggle={navigation.handleTagToggle}
+					{selectedGroupId}
+					panelLayout="grid"
+					limit={24}
 				/>
 			</div>
 
 			<ContentArea
 				{showFilteredResults}
 				{filteredItems}
-				currentGroup={null}
+				{currentGroup}
 				allGroups={groups}
 			/>
 		</div>
@@ -194,6 +204,9 @@ const currentGroup = $derived.by(() => {
 
 	.filters-section {
 		margin-bottom: var(--spacing-xl);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-lg);
 	}
 
 	@media (max-width: 1024px) {

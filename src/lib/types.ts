@@ -21,6 +21,13 @@ export interface NavItem {
   tags: string[];
 }
 
+export interface TagSummary {
+  name: string;
+  count: number;
+  groupIds: string[];
+  groupCount: number;
+}
+
 export interface ItemRecommendation {
   item: NavItem;
   commonTags: string[];

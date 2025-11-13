@@ -1,4 +1,4 @@
-import type { NavItem, NavGroup, GroupMetadata } from "./types";
+import type { NavItem, NavGroup, GroupMetadata, TagSummary } from "./types";
 import { searchService } from "./services/searchService";
 import { DEFAULTS } from "./constants";
 import matter from "gray-matter";
@@ -42,6 +42,7 @@ const markdownModules = import.meta.glob<string>("/src/data/groups/**/*.md", {
 let cachedNavItems: NavItem[] | null = null;
 let cachedGroups: NavGroup[] | null = null;
 let cachedTags: string[] | null = null;
+let cachedTagSummaries: TagSummary[] | null = null;
 let cachedGroupDefinitions: Map<string, GroupDefinition> | null = null;
 let cachedGroupSegmentMap: Map<string, string> | null = null;
 
@@ -381,6 +382,8 @@ export function loadMarkdownContent(item: NavItem): string {
       return rawContent.replace(frontmatterRegex, "").trim();
     }
   }
+
+  return rawContent;
 }
 
 /**
@@ -514,13 +517,52 @@ export function getAllTags(): string[] {
   if (cachedTags !== null) {
     return cachedTags;
   }
+  return getTagSummaries().map((summary) => summary.name);
+}
+
+export function getTagSummaries(): TagSummary[] {
+  if (cachedTagSummaries !== null) {
+    return cachedTagSummaries;
+  }
 
   const items = loadAllNavItems();
-  const tags = searchService.getAllTags(items);
+  const frequencyMap = new Map<string, { count: number; groupIds: Set<string> }>();
 
-  // 缓存结果
-  cachedTags = tags;
-  return tags;
+  items.forEach((item) => {
+    item.tags.forEach((tag) => {
+      const normalizedTag = tag.trim();
+      if (!normalizedTag) return;
+
+      if (!frequencyMap.has(normalizedTag)) {
+        frequencyMap.set(normalizedTag, { count: 0, groupIds: new Set<string>() });
+      }
+
+      const entry = frequencyMap.get(normalizedTag)!;
+      entry.count += 1;
+      entry.groupIds.add(item.group);
+    });
+  });
+
+  const summaries: TagSummary[] = Array.from(frequencyMap.entries()).map(
+    ([name, data]) => ({
+      name,
+      count: data.count,
+      groupIds: Array.from(data.groupIds),
+      groupCount: data.groupIds.size,
+    }),
+  );
+
+  summaries.sort((a, b) => {
+    if (b.count !== a.count) {
+      return b.count - a.count;
+    }
+    return a.name.localeCompare(b.name, "zh-CN");
+  });
+
+  cachedTagSummaries = summaries;
+  cachedTags = summaries.map((summary) => summary.name);
+
+  return summaries;
 }
 
 /**
