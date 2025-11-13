@@ -1,28 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import { favorites } from "$lib/stores/favorites";
-  import { getFaviconCandidates } from "$lib/utils/icon";
-  import { onMount } from "svelte";
   import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
+  import SiteIcon from "$lib/components/SiteIcon.svelte";
 
-  interface Props {
-    data: PageData;
-  }
-
-  let { data }: Props = $props();
-
-  // 图标加载超时时间（毫秒）
-  const ICON_TIMEOUT = 3000; // 3秒
-
-  // 获取所有可能的图标 URL（按优先级排序）
-  const iconCandidates = $derived(
-    getFaviconCandidates(data.item.url, data.item.icon),
-  );
-  let currentIconIndex = $state(0);
-  let currentIconUrl = $derived(iconCandidates[currentIconIndex] || "");
-  let hasError = $state(false);
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-  let imgElement = $state<HTMLImageElement | null>(null);
+  let { data }: { data: PageData } = $props();
 
   let favoriteIds = $state<string[]>([]);
 
@@ -38,52 +20,6 @@
   function toggleFavorite() {
     favorites.toggle(data.item.id);
   }
-
-  // 尝试下一个图标
-  function tryNextIcon() {
-    // 清除当前超时
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-
-    if (currentIconIndex < iconCandidates.length - 1) {
-      currentIconIndex++;
-    } else {
-      hasError = true;
-    }
-  }
-
-  // 设置图标加载超时
-  function setupIconTimeout() {
-    // 清除之前的超时
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    // 如果当前图标 URL 存在，设置超时
-    if (currentIconUrl && !hasError) {
-      timeoutId = setTimeout(() => {
-        // 检查图片是否已加载完成
-        if (imgElement && !imgElement.complete) {
-          // 图片仍在加载，超时了，尝试下一个
-          tryNextIcon();
-        }
-      }, ICON_TIMEOUT);
-    }
-  }
-
-  // 监听图标 URL 变化，设置超时
-  $effect(() => {
-    if (currentIconUrl) {
-      setupIconTimeout();
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  });
 </script>
 
 <svelte:head>
@@ -117,29 +53,12 @@
 
   <article class="item-detail">
     <div class="item-detail-header">
-      <div class="item-icon">
-        {#if hasError}
-          <div class="icon-placeholder">{data.item.name[0]}</div>
-        {:else if currentIconUrl}
-          <img
-            bind:this={imgElement}
-            src={currentIconUrl}
-            alt={data.item.name}
-            loading="lazy"
-            onload={() => {
-              // 图片加载成功，清除超时
-              if (timeoutId) {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-              }
-            }}
-            onerror={() => {
-              // 图片加载失败，尝试下一个
-              tryNextIcon();
-            }}
-          />
-        {/if}
-      </div>
+      <SiteIcon
+        item={data.item}
+        size={96}
+        appearance="muted"
+        radius={16}
+      />
       <div class="item-info">
         <h1 class="item-name">{data.item.name}</h1>
         {#if data.item.info}
@@ -270,36 +189,6 @@
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
     border-bottom: 2px solid var(--border-color, #e5e7eb);
-  }
-
-  .item-icon {
-    flex-shrink: 0;
-    width: 96px;
-    height: 96px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(
-      135deg,
-      var(--icon-bg, #f3f4f6) 0%,
-      #e5e7eb 100%
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-  }
-
-  .item-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .icon-placeholder {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--text-secondary, #6b7280);
   }
 
   .item-info {
@@ -487,15 +376,6 @@
 
     .item-detail-header {
       flex-direction: column;
-    }
-
-    .item-icon {
-      width: 64px;
-      height: 64px;
-    }
-
-    .icon-placeholder {
-      font-size: 2rem;
     }
 
     .item-name {

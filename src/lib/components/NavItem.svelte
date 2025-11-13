@@ -2,9 +2,8 @@
   import type { NavItem as NavItemType } from "../types";
   import { favorites } from "../stores/favorites";
   import MarkdownRenderer from "./MarkdownRenderer.svelte";
-  import { getFaviconCandidates } from "../utils/icon";
-  import { onMount } from "svelte";
   import { page } from "$app/state";
+  import SiteIcon from "./SiteIcon.svelte";
 
   interface Props {
     item: NavItemType;
@@ -12,20 +11,6 @@
   }
 
   let { item, showDescription = false }: Props = $props();
-
-  import { ICON_CONFIG } from "../constants";
-  import { loadMarkdownContent } from "$lib/dataLoader";
-
-  // 图标加载超时时间（毫秒）
-  const ICON_TIMEOUT = ICON_CONFIG.TIMEOUT;
-
-  // 获取所有可能的图标 URL（按优先级排序）
-  const iconCandidates = $derived(getFaviconCandidates(item.url, item.icon));
-  let currentIconIndex = $state(0);
-  let currentIconUrl = $derived(iconCandidates[currentIconIndex] || "");
-  let hasError = $state(false);
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-  let imgElement = $state<HTMLImageElement | null>(null);
 
   let showFullDescription = $state(false);
   let favoriteIds = $state<string[]>([]);
@@ -42,79 +27,15 @@
   function toggleFavorite() {
     favorites.toggle(item.id);
   }
-
-  // 尝试下一个图标
-  function tryNextIcon() {
-    // 清除当前超时
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-
-    if (currentIconIndex < iconCandidates.length - 1) {
-      currentIconIndex++;
-    } else {
-      hasError = true;
-    }
-  }
-
-  // 设置图标加载超时
-  function setupIconTimeout() {
-    // 清除之前的超时
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    // 如果当前图标 URL 存在，设置超时
-    if (currentIconUrl && !hasError) {
-      timeoutId = setTimeout(() => {
-        // 检查图片是否已加载完成
-        if (imgElement && !imgElement.complete) {
-          // 图片仍在加载，超时了，尝试下一个
-          tryNextIcon();
-        }
-      }, ICON_TIMEOUT);
-    }
-  }
-
-  // 监听图标 URL 变化，设置超时
-  $effect(() => {
-    if (currentIconUrl) {
-      setupIconTimeout();
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  });
 </script>
 
 <article class="nav-item">
   <div class="nav-item-header">
-    <div class="nav-item-icon">
-      {#if hasError}
-        <div class="icon-placeholder">{item.name[0]}</div>
-      {:else if currentIconUrl}
-        <img
-          bind:this={imgElement}
-          src={currentIconUrl}
-          alt={item.name}
-          loading="lazy"
-          onload={() => {
-            // 图片加载成功，清除超时
-            if (timeoutId) {
-              clearTimeout(timeoutId);
-              timeoutId = null;
-            }
-          }}
-          onerror={() => {
-            // 图片加载失败，尝试下一个
-            tryNextIcon();
-          }}
-        />
-      {/if}
-    </div>
+    <SiteIcon
+      item={item}
+      size={56}
+      interactive
+    />
     <div class="nav-item-info">
       <h3 class="nav-item-name">
         <a href="/item/{item.id}" class="item-link">
@@ -216,39 +137,6 @@
     align-items: flex-start;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-  }
-
-  .nav-item-icon {
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--primary-light) 0%, #e0e7ff 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-sm);
-    border: 2px solid var(--border-light);
-    transition: all var(--transition-base);
-  }
-
-  .nav-item:hover .nav-item-icon {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
-  }
-
-  .nav-item-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .icon-placeholder {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: var(--text-secondary);
-    text-transform: uppercase;
   }
 
   .nav-item-info {
@@ -429,11 +317,6 @@
       padding: var(--spacing-md);
     }
 
-    .nav-item-icon {
-      width: 48px;
-      height: 48px;
-    }
-
     .nav-item-name {
       font-size: 1rem;
     }
@@ -462,15 +345,6 @@
   @media (max-width: 480px) {
     .nav-item {
       padding: var(--spacing-sm);
-    }
-
-    .nav-item-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .icon-placeholder {
-      font-size: 1.5rem;
     }
 
     .nav-item-name {
