@@ -31,7 +31,7 @@
 		flex-direction: column;
 		gap: var(--spacing-xl);
 		padding-left: calc(var(--spacing-lg) + var(--child-level) * 12px);
-		border-left: 2px dashed rgba(148, 163, 184, 0.35);
+		border-left: 2px dashed var(--border-soft);
 	}
 
 	.subgroups::before {
@@ -42,8 +42,8 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 999px;
-		background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
-		box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.08);
+		background: var(--gradient-brand);
+		box-shadow: 0 0 0 6px var(--layer-primary-soft);
 	}
 
 	@media (max-width: 768px) {

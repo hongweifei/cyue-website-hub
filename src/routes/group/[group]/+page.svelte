@@ -46,33 +46,45 @@
 	}
 
 	.back-link {
-		color: var(--text-secondary, #6b7280);
+		color: var(--text-secondary);
 		text-decoration: none;
 		font-size: 0.875rem;
-		transition: all 0.2s;
+		transition:
+			color var(--transition-fast),
+			background var(--transition-fast),
+			border-color var(--transition-fast),
+			transform var(--transition-fast),
+			box-shadow var(--transition-fast);
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
 		padding: 0.625rem 1.25rem;
-		border-radius: 8px;
+		border-radius: var(--radius-md);
 		font-weight: 500;
-		background: var(--card-bg, #fff);
-		border: 1px solid var(--border-color, #e5e7eb);
+		background: var(--card-bg);
+		border: 1px solid var(--border-color);
 		cursor: pointer;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
 	}
 
 	.back-link:hover {
-		color: var(--primary-color, #3b82f6);
-		background: rgba(59, 130, 246, 0.05);
-		border-color: var(--primary-color, #3b82f6);
+		color: var(--primary-color);
+		background: var(--layer-primary-soft);
+		border-color: var(--primary-color);
 		transform: translateX(-4px);
-		box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.back-link:active {
 		transform: translateX(-2px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.back-link:hover,
+		.back-link:active {
+			transform: none;
+		}
 	}
 
 	.back-link svg {

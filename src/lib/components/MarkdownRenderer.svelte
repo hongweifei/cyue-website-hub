@@ -73,7 +73,7 @@ const htmlContent = $derived.by(() => {
   .markdown-content {
     font-size: 0.95rem;
     line-height: 1.75;
-    color: var(--text-secondary, #374151);
+    color: var(--text-secondary);
     display: grid;
     gap: 0.75rem;
   }
@@ -90,7 +90,7 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(h6) {
     margin: 1.5rem 0 0.75rem;
     font-weight: 700;
-    color: var(--text-primary, #111827);
+    color: var(--text-primary);
     line-height: 1.3;
     scroll-margin-top: 5rem;
   }
@@ -103,7 +103,7 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(h2) {
     font-size: 1.5rem;
     letter-spacing: -0.01em;
-    border-bottom: 1px solid var(--border-light, rgba(148, 163, 184, 0.35));
+    border-bottom: 1px solid var(--border-light);
     padding-bottom: 0.4rem;
   }
 
@@ -120,7 +120,7 @@ const htmlContent = $derived.by(() => {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--text-muted, #6b7280);
+    color: var(--text-muted);
   }
 
   .markdown-content :global(p) {
@@ -129,11 +129,11 @@ const htmlContent = $derived.by(() => {
 
   .markdown-content :global(strong) {
     font-weight: 600;
-    color: var(--text-primary, #111827);
+    color: var(--text-primary);
   }
 
   .markdown-content :global(em) {
-    color: var(--text-primary, #1f2937);
+    color: var(--text-primary);
   }
 
   .markdown-content :global(hr) {
@@ -143,7 +143,7 @@ const htmlContent = $derived.by(() => {
     background-image: linear-gradient(
       90deg,
       transparent,
-      rgba(148, 163, 184, 0.4),
+      var(--border-light),
       transparent
     );
   }
@@ -161,16 +161,16 @@ const htmlContent = $derived.by(() => {
   }
 
   .markdown-content :global(li::marker) {
-    color: var(--primary-color, #2563eb);
+    color: var(--primary-color);
   }
 
   .markdown-content :global(blockquote) {
     margin: 0.75rem 0;
     padding: 0.75rem 1rem;
-    background: var(--blockquote-bg, rgba(59, 130, 246, 0.05));
-    border-left: 3px solid var(--primary-color, #2563eb);
+    background: var(--layer-primary-soft);
+    border-left: 3px solid var(--primary-color);
     border-radius: 0 0.5rem 0.5rem 0;
-    color: var(--text-primary, #1f2937);
+    color: var(--text-primary);
     font-style: italic;
   }
 
@@ -183,21 +183,22 @@ const htmlContent = $derived.by(() => {
       Monaco,
       "Courier New",
       monospace;
-    background: var(--code-bg, rgba(30, 64, 175, 0.08));
+    background: var(--chip-contrast-surface);
     padding: 0.15rem 0.35rem;
     border-radius: 4px;
-    border: 1px solid rgba(59, 130, 246, 0.15);
+    border: 1px solid var(--border-accent);
+    color: var(--text-primary);
   }
 
   .markdown-content :global(pre) {
-    background: var(--code-surface, #0f172a);
-    color: var(--code-foreground, #e2e8f0);
+    background: var(--surface-solid);
+    color: var(--text-primary);
     padding: 1rem;
     border-radius: 0.75rem;
     overflow-x: auto;
     margin: 0.75rem 0;
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-sm);
   }
 
   .markdown-content :global(pre code) {
@@ -206,6 +207,7 @@ const htmlContent = $derived.by(() => {
     padding: 0;
     line-height: 1.6;
     font-size: 0.9rem;
+    color: inherit;
   }
 
   .markdown-content :global(table) {
@@ -213,31 +215,31 @@ const htmlContent = $derived.by(() => {
     border-collapse: collapse;
     border-radius: 0.75rem;
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, 0.3);
+    border: 1px solid var(--border-light);
   }
 
   .markdown-content :global(th),
   .markdown-content :global(td) {
     padding: 0.65rem 0.9rem;
     text-align: left;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    border-bottom: 1px solid var(--border-light);
   }
 
   .markdown-content :global(thead th) {
-    background: rgba(37, 99, 235, 0.08);
-    color: var(--text-primary, #111827);
+    background: var(--layer-primary-soft);
+    color: var(--text-primary);
     font-weight: 600;
   }
 
   .markdown-content :global(tbody tr:nth-child(2n)) {
-    background: rgba(148, 163, 184, 0.08);
+    background: var(--bg-tertiary);
   }
 
   .markdown-content :global(img) {
     display: block;
     margin: 1rem auto;
     border-radius: 0.75rem;
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+    box-shadow: var(--shadow-md);
   }
 
   .markdown-content :global(figure) {
@@ -248,18 +250,20 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(figcaption) {
     margin-top: 0.5rem;
     font-size: 0.85rem;
-    color: var(--text-muted, #6b7280);
+    color: var(--text-muted);
   }
 
   .markdown-content :global(a) {
-    color: var(--primary-color, #2563eb);
+    color: var(--primary-color);
     text-decoration: none;
-    border-bottom: 1px dashed rgba(37, 99, 235, 0.5);
-    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+    border-bottom: 1px dashed var(--border-accent);
+    transition:
+      color var(--transition-fast),
+      border-bottom-color var(--transition-fast);
   }
 
   .markdown-content :global(a:hover) {
-    color: var(--primary-color-strong, #1d4ed8);
+    color: var(--primary-color-strong);
     border-bottom-color: currentColor;
   }
 
@@ -267,12 +271,12 @@ const htmlContent = $derived.by(() => {
     display: inline-block;
     padding: 0.2rem 0.45rem;
     border-radius: 6px;
-    border: 1px solid rgba(107, 114, 128, 0.35);
-    background: rgba(226, 232, 240, 0.65);
+    border: 1px solid var(--border-light);
+    background: var(--chip-contrast-surface);
     font-size: 0.75rem;
     font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
-    color: var(--text-primary, #111827);
-    box-shadow: inset 0 -1px 0 rgba(107, 114, 128, 0.35);
+    color: var(--text-primary);
+    box-shadow: inset 0 -1px 0 var(--chip-contrast-surface-strong);
   }
 </style>

@@ -199,7 +199,7 @@
 
   .favorite-btn.favorited {
     color: var(--accent-color);
-    background: rgba(239, 68, 68, 0.1);
+    background: var(--layer-accent-soft);
   }
 
   .favorite-btn:active {
@@ -289,15 +289,15 @@
   }
 
   .detail-link:hover {
-    background: var(--primary-color);
+    background: var(--gradient-brand);
     color: var(--text-inverse);
-    border-color: var(--primary-color);
+    border-color: transparent;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
   }
 
   .external-link {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
+    background: var(--gradient-brand);
     color: var(--text-inverse);
     box-shadow: var(--shadow-sm);
   }

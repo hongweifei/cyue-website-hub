@@ -177,25 +177,37 @@ const currentGroup = $derived.by(() => {
 <style>
 	.home-page {
 		padding: var(--spacing-md) 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-xl);
 	}
 
 	.layout-controls {
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: var(--spacing-lg);
+		align-items: center;
+		padding: 0 var(--spacing-sm);
+	}
+
+	.layout-controls :global(.layout-toggle-btn) {
+		box-shadow: var(--shadow-sm);
 	}
 
 	/* 侧边栏布局 */
 	.sidebar-layout-container {
 		display: grid;
-		grid-template-columns: 280px 1fr;
+		grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
 		gap: var(--spacing-xl);
+		align-items: flex-start;
 		min-height: 600px;
 	}
 
 	/* 垂直布局 */
 	.vertical-layout-container {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-xl);
 	}
 
 	.search-section {
@@ -203,26 +215,45 @@ const currentGroup = $derived.by(() => {
 	}
 
 	.filters-section {
-		margin-bottom: var(--spacing-xl);
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-lg);
 	}
 
+	@media (max-width: 1280px) {
+		.sidebar-layout-container {
+			grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+			gap: var(--spacing-lg);
+		}
+
+		.filters-section {
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		}
+	}
+
 	@media (max-width: 1024px) {
 		.sidebar-layout-container {
-			grid-template-columns: 240px 1fr;
+			grid-template-columns: 1fr;
 			gap: var(--spacing-lg);
+		}
+
+		.vertical-layout-container {
+			gap: var(--spacing-lg);
+		}
+
+		.filters-section {
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 		}
 	}
 
 	@media (max-width: 768px) {
 		.home-page {
 			padding: var(--spacing-sm) 0;
+			gap: var(--spacing-lg);
 		}
 
 		.layout-controls {
-			margin-bottom: var(--spacing-md);
+			justify-content: center;
 		}
 
 		.sidebar-layout-container {
@@ -235,7 +266,14 @@ const currentGroup = $derived.by(() => {
 		}
 
 		.filters-section {
-			margin-bottom: var(--spacing-lg);
+			grid-template-columns: 1fr;
+			gap: var(--spacing-md);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.layout-controls {
+			padding: 0;
 		}
 	}
 </style>

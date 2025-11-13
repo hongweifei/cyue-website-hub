@@ -68,6 +68,28 @@
 
   const resolvedVariant = $derived(panelVariant ?? layoutMode);
   const isVertical = $derived(resolvedVariant === "vertical");
+  const VERTICAL_PREVIEW_LIMIT = 12;
+
+  let expandAll = $state(false);
+  let lastVariant = $state<LayoutMode>("sidebar");
+
+  const visibleGroups = $derived.by(() => {
+    if (!isVertical || expandAll) {
+      return flatGroups;
+    }
+    return flatGroups.slice(0, VERTICAL_PREVIEW_LIMIT);
+  });
+
+  const shouldShowToggle = $derived.by(
+    () => isVertical && flatGroups.length > VERTICAL_PREVIEW_LIMIT,
+  );
+
+  $effect(() => {
+    if (resolvedVariant !== lastVariant) {
+      expandAll = resolvedVariant !== "vertical";
+      lastVariant = resolvedVariant;
+    }
+  });
 
   function handleSelect(groupId: string | null) {
     if (groupId === selectedGroupId) {
@@ -101,7 +123,7 @@
         <span class="group-chip-name">全部</span>
       </button>
     {/if}
-    {#each flatGroups as group (group.id)}
+    {#each visibleGroups as group (group.id)}
       <button
         class="group-chip"
         class:active={selectedGroupId === group.id}
@@ -113,6 +135,15 @@
       </button>
     {/each}
   </div>
+  {#if shouldShowToggle}
+    <button
+      class="group-toggle"
+      type="button"
+      onclick={() => (expandAll = !expandAll)}
+    >
+      {expandAll ? "收起分组" : `展开更多分组（共 ${flatGroups.length} 个）`}
+    </button>
+  {/if}
 </section>
 
 <style>
@@ -124,7 +155,7 @@
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-light);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: inset 0 1px 0 var(--chip-contrast-surface);
   }
 
   .filter-bar {
@@ -177,19 +208,15 @@
   }
 
   .group-chip:hover {
-    border-color: var(--primary-color);
+    border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--primary-light);
+    background: var(--layer-primary-soft);
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
   }
 
   .group-chip.active {
-    background: linear-gradient(
-      135deg,
-      var(--primary-color) 0%,
-      var(--accent-color, #8b5cf6) 100%
-    );
+    background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
     box-shadow: var(--shadow-md);
@@ -202,13 +229,13 @@
     min-width: 1.5rem;
     padding: 0.1rem 0.35rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--chip-contrast-surface);
     font-size: 0.7rem;
     font-weight: 600;
   }
 
   .group-chip.active .group-chip-count {
-    background: rgba(255, 255, 255, 0.24);
+    background: var(--chip-contrast-surface-strong);
   }
 
   .group-chip-name {
@@ -221,6 +248,25 @@
   .group-filter-panel.vertical .group-chip-name {
     max-width: 100%;
     white-space: normal;
+  }
+
+  .group-toggle {
+    margin-top: var(--spacing-sm);
+    align-self: flex-start;
+    border: none;
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .group-toggle:hover {
+    color: var(--primary-hover);
+    background: var(--layer-primary-soft);
   }
 
   @media (max-width: 768px) {

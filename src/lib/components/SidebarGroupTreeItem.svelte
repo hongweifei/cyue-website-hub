@@ -114,7 +114,7 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active .sidebar-group-icon) {
-		background: rgba(255, 255, 255, 0.2);
+		background: var(--chip-contrast-surface);
 		color: var(--text-inverse);
 	}
 
@@ -142,7 +142,7 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active .sidebar-group-meta) {
-		color: rgba(255, 255, 255, 0.85);
+		color: var(--text-inverse);
 	}
 
 	:global(.sidebar-group-count) {
@@ -168,9 +168,9 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active .sidebar-group-count) {
-		background: rgba(255, 255, 255, 0.18);
+		background: var(--chip-contrast-surface-strong);
 		color: var(--text-inverse);
-		border-color: rgba(255, 255, 255, 0.24);
+		border-color: transparent;
 	}
 
 	@media (max-width: 768px) {

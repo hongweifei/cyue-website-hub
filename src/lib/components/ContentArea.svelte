@@ -52,15 +52,15 @@
 
 	.results-section {
 		margin-bottom: var(--spacing-xl);
-		animation: fadeIn 0.3s ease;
+		animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
 	}
 
 	.group-content {
-		animation: fadeIn 0.3s ease;
+		animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
 	}
 
 	.all-groups-content {
-		animation: fadeIn 0.5s ease;
+		animation: fadeIn var(--motion-duration-slow) var(--motion-easing-standard);
 	}
 
 	@keyframes fadeIn {
@@ -88,7 +88,7 @@
 		content: '';
 		width: 4px;
 		height: 1.5rem;
-		background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
+		background: var(--gradient-brand);
 		border-radius: var(--radius-sm);
 	}
 
@@ -142,6 +142,14 @@
 	@media (max-width: 480px) {
 		.results-title {
 			font-size: 1.125rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.results-section,
+		.group-content,
+		.all-groups-content {
+			animation: none;
 		}
 	}
 </style>

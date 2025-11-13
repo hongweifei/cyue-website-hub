@@ -48,13 +48,13 @@
 		font-size: 1.5rem;
 		font-weight: 700;
 		margin: 0 0 1.5rem 0;
-		color: var(--text-primary, #111827);
+		color: var(--text-primary);
 	}
 
 	.empty-state {
 		text-align: center;
 		padding: 3rem 1rem;
-		color: var(--text-secondary, #6b7280);
+		color: var(--text-secondary);
 	}
 
 	.empty-hint {

@@ -69,12 +69,12 @@
     font-size: 1.75rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    color: var(--text-primary, #111827);
+    color: var(--text-primary);
   }
 
   .section-subtitle {
     margin: 0 0 1.5rem 0;
-    color: var(--text-secondary, #6b7280);
+    color: var(--text-secondary);
     font-size: 0.95rem;
   }
 
@@ -87,18 +87,21 @@
   .recommendation-card {
     display: flex;
     flex-direction: column;
-    background: var(--card-bg, #fff);
-    border: 1px solid var(--border-color, #e5e7eb);
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      border-color var(--transition-base);
   }
 
   .recommendation-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-    border-color: rgba(59, 130, 246, 0.35);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-accent);
   }
 
   .card-main {
@@ -118,14 +121,14 @@
     margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-primary, #111827);
+    color: var(--text-primary);
     line-height: 1.4;
   }
 
   .card-brief {
     margin: 0 0 0.75rem 0;
     font-size: 0.875rem;
-    color: var(--text-secondary, #6b7280);
+    color: var(--text-secondary);
     line-height: 1.55;
   }
 
@@ -141,8 +144,8 @@
     gap: 0.35rem;
     padding: 0.35rem 0.65rem;
     border-radius: 999px;
-    background: var(--tag-bg, #f3f4f6);
-    color: var(--text-secondary, #6b7280);
+    background: var(--tag-bg);
+    color: var(--text-secondary);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.02em;
@@ -157,8 +160,8 @@
   .tag {
     padding: 0.35rem 0.7rem;
     font-size: 0.75rem;
-    color: var(--primary-color, #3b82f6);
-    background: rgba(59, 130, 246, 0.12);
+    color: var(--primary-color);
+    background: var(--layer-primary-soft);
     border-radius: 999px;
     font-weight: 500;
   }
@@ -172,15 +175,15 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--primary-color, #3b82f6);
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 0.9rem;
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: color var(--transition-fast), transform var(--transition-fast);
   }
 
   .visit-link:hover {
-    color: var(--primary-hover, #2563eb);
+    color: var(--primary-hover);
     transform: translateX(4px);
   }
 

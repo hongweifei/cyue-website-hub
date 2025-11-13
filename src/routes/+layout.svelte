@@ -46,7 +46,7 @@
   <meta name="keywords" content={data.site?.keywords} />
   <meta name="author" content={data.site?.author} />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#6366f1" />
+  <meta name="theme-color" content="#0a59f7" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -88,28 +88,30 @@
 <div class="app">
   <header class="header">
     <div class="container">
-      <h1 class="logo">
-        <a
-          href="/"
-          data-sveltekit-preload-data="hover"
-          onclick={(e) => handleNavClick(e, "/")}>🕊️ {data.site?.name}</a
-        >
-      </h1>
-      <nav class="nav">
-        <a
-          href="/"
-          class="nav-link"
-          data-sveltekit-preload-data="hover"
-          onclick={(e) => handleNavClick(e, "/")}>首页</a
-        >
-        <a
-          href="/favorites"
-          class="nav-link"
-          data-sveltekit-preload-data="hover"
-          onclick={(e) => handleNavClick(e, "/favorites")}>收藏</a
-        >
-        <ThemeToggle />
-      </nav>
+      <div class="header-shell">
+        <h1 class="logo">
+          <a
+            href="/"
+            data-sveltekit-preload-data="hover"
+            onclick={(e) => handleNavClick(e, "/")}>🕊️ {data.site?.name}</a
+          >
+        </h1>
+        <nav class="nav">
+          <a
+            href="/"
+            class="nav-link"
+            data-sveltekit-preload-data="hover"
+            onclick={(e) => handleNavClick(e, "/")}>首页</a
+          >
+          <a
+            href="/favorites"
+            class="nav-link"
+            data-sveltekit-preload-data="hover"
+            onclick={(e) => handleNavClick(e, "/favorites")}>收藏</a
+          >
+          <ThemeToggle />
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -132,43 +134,53 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: var(--app-background);
   }
 
   .container {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
   }
 
   .header {
-    background: var(--header-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-light);
-    padding: var(--spacing-md) 0;
     position: sticky;
-    top: 0;
+    top: calc(var(--spacing-sm) * 0.75);
     z-index: 100;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
+    padding: 0;
   }
 
-  .header .container {
+  .header-shell {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: var(--spacing-lg);
+    padding: calc(var(--spacing-sm) * 1.5) var(--spacing-lg);
+    background: var(--surface-glass);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .header-shell:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
   }
 
   .logo {
     margin: 0;
-    font-size: 1.75rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #8b5cf6 100%);
+    font-size: 1.625rem;
+    font-weight: 720;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: 0.04em;
   }
 
   .logo a {
@@ -180,93 +192,161 @@
 
   .nav {
     display: flex;
-    gap: var(--spacing-xl);
     align-items: center;
+    gap: var(--spacing-md);
   }
 
   .nav-link {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
     position: relative;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: calc(var(--spacing-xs) * 1.6) calc(var(--spacing-sm) * 1.6);
+    border-radius: var(--radius-lg);
+    letter-spacing: 0.015em;
+    transition:
+      color var(--transition-fast),
+      background var(--transition-fast),
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--spacing-2xs) * -1);
+    right: calc(var(--spacing-2xs) * -1);
+    bottom: calc(var(--spacing-2xs) * -1.5);
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
   }
 
   .nav-link:hover {
     color: var(--primary-color);
-    background: var(--primary-light);
+    background: var(--layer-primary-soft);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .nav-link:active {
-    transform: scale(0.98);
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .nav-link:focus-visible {
+    outline: none;
+    color: var(--primary-color);
+    background: var(--layer-primary-soft);
   }
 
   .main {
     flex: 1;
-    padding: var(--spacing-2xl) 0;
-    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main .container {
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
+  }
+
+  .main .container:hover {
+    box-shadow: var(--shadow-lg);
   }
 
   .footer {
+    border-radius: var(--radius-lg);
     background: var(--footer-bg);
-    border-top: 1px solid var(--border-color);
-    padding: var(--spacing-xl) 0;
+    border: 1px solid var(--border-light);
+    padding: var(--spacing-lg);
     margin-top: auto;
     text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1024px) {
+    .app {
+      padding: var(--spacing-lg) var(--spacing-md);
+      gap: var(--spacing-lg);
+    }
+
+    .main .container {
+      padding: var(--spacing-lg);
+    }
   }
 
   @media (max-width: 768px) {
-    .container {
-      padding: 0 var(--spacing-md);
+    .app {
+      padding: var(--spacing-lg) var(--spacing-sm);
     }
 
     .header {
-      padding: var(--spacing-sm) 0;
+      position: static;
     }
 
-    .header .container {
-      flex-wrap: wrap;
+    .header-shell {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
     }
 
     .logo {
-      font-size: 1.375rem;
+      font-size: 1.4rem;
     }
 
     .nav {
-      gap: var(--spacing-md);
       width: 100%;
-      justify-content: center;
-      padding-top: var(--spacing-sm);
-      border-top: 1px solid var(--border-light);
+      justify-content: space-between;
+      gap: var(--spacing-xs);
     }
 
     .nav-link {
+      flex: 1;
+      text-align: center;
       font-size: 0.875rem;
       padding: var(--spacing-xs) var(--spacing-sm);
     }
 
-    .main {
-      padding: var(--spacing-lg) 0;
+    .main .container {
+      padding: var(--spacing-md);
     }
 
     .footer {
-      padding: var(--spacing-lg) 0;
-      font-size: 0.8125rem;
+      font-size: 0.8rem;
+      padding: var(--spacing-md);
     }
   }
 
   @media (max-width: 480px) {
     .logo {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
     }
 
     .nav {
-      gap: var(--spacing-sm);
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .nav-link {
+      width: 100%;
     }
   }
 </style>

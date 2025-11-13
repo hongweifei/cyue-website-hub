@@ -82,7 +82,7 @@
 	.search-input:focus {
 		outline: none;
 		border-color: var(--primary-color);
-		box-shadow: var(--shadow-md), 0 0 0 3px rgba(59, 130, 246, 0.1);
+		box-shadow: var(--shadow-md), 0 0 0 3px var(--layer-primary-soft);
 		transform: translateY(-2px);
 	}
 

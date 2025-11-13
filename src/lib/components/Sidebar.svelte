@@ -115,7 +115,7 @@
 		background: var(--bg-secondary);
 		border-radius: var(--radius-md);
 		border: 1px solid var(--border-light);
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+		box-shadow: inset 0 1px 0 var(--chip-contrast-surface);
 	}
 
 	.sidebar-section-header {
@@ -180,12 +180,8 @@
 	}
 
 	.sidebar-group-btn.root {
-		background: linear-gradient(
-			135deg,
-			var(--primary-lightest, rgba(101, 117, 255, 0.12)) 0%,
-			var(--primary-light, rgba(101, 117, 255, 0.28)) 100%
-		);
-		border: 1px solid rgba(101, 117, 255, 0.28);
+		background: var(--gradient-brand-soft);
+		border: 1px solid var(--border-accent);
 		box-shadow: var(--shadow-sm);
 	}
 
@@ -194,35 +190,31 @@
 	}
 
 	.sidebar-group-btn.root .sidebar-group-icon {
-		background: rgba(255, 255, 255, 0.6);
+		background: var(--chip-contrast-surface);
 		color: var(--primary-color);
 	}
 
 	.sidebar-group-btn.root .sidebar-group-count {
-		background: rgba(255, 255, 255, 0.28);
-		border-color: rgba(255, 255, 255, 0.32);
+		background: var(--chip-contrast-surface);
+		border-color: transparent;
 		color: var(--primary-color);
 	}
 
 	.sidebar-group-btn.root.active {
-		background: linear-gradient(
-			135deg,
-			var(--primary-color) 0%,
-			var(--accent-color, #8b5cf6) 100%
-		);
+		background: var(--gradient-brand);
 		border-color: transparent;
 		color: var(--text-inverse);
 		box-shadow: var(--shadow-md);
 	}
 
 	.sidebar-group-btn.root.active .sidebar-group-count {
-		background: rgba(255, 255, 255, 0.18);
-		border-color: rgba(255, 255, 255, 0.24);
+		background: var(--chip-contrast-surface-strong);
+		border-color: transparent;
 		color: var(--text-inverse);
 	}
 
 	.sidebar-group-btn.root.active .sidebar-group-meta {
-		color: rgba(255, 255, 255, 0.85);
+		color: var(--text-inverse);
 	}
 </style>
 

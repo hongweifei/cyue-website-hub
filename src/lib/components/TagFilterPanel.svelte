@@ -311,9 +311,9 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .meta-chip.selected-chip {
-    background: rgba(59, 130, 246, 0.18);
+    background: var(--layer-primary-soft);
     color: var(--primary-color);
-    border-color: rgba(59, 130, 246, 0.24);
+    border-color: var(--border-accent);
     font-weight: 600;
   }
 
@@ -400,7 +400,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .group-toggle-btn.active {
     background: var(--bg-primary);
     color: var(--primary-color);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--shadow-sm);
     font-weight: 600;
   }
 
@@ -414,7 +414,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-light);
     background: var(--bg-primary);
-    box-shadow: var(--shadow-inner);
+    box-shadow: inset 0 1px 2px var(--chip-contrast-surface);
     font-size: 0.875rem;
     transition: all var(--transition-base);
   }
@@ -422,7 +422,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .search-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 3px var(--layer-primary-soft);
   }
 
   .quick-tags {
@@ -456,17 +456,13 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .quick-tag:hover {
-    border-color: var(--primary-color);
+    border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--primary-light);
+    background: var(--layer-primary-soft);
   }
 
   .quick-tag.selected {
-    background: linear-gradient(
-      135deg,
-      var(--primary-color) 0%,
-      var(--accent-color, #8b5cf6) 100%
-    );
+    background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
     box-shadow: var(--shadow-sm);
@@ -514,27 +510,23 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .tag-pill:hover {
-    border-color: var(--primary-color);
+    border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--primary-light);
+    background: var(--layer-primary-soft);
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
   }
 
   .tag-pill.selected {
-    background: linear-gradient(
-      135deg,
-      var(--primary-color) 0%,
-      var(--accent-color, #8b5cf6) 100%
-    );
+    background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
     box-shadow: var(--shadow-md);
   }
 
   .tag-pill.ingroup {
-    border-color: rgba(59, 130, 246, 0.48);
-    background: rgba(59, 130, 246, 0.08);
+    border-color: var(--border-accent);
+    background: var(--layer-primary-soft);
     color: var(--primary-color);
   }
 
@@ -571,12 +563,12 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     min-width: 1.75rem;
     padding: 0.1rem 0.35rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--chip-contrast-surface);
     color: inherit;
   }
 
   .tag-pill.selected .tag-count-badge {
-    background: rgba(255, 255, 255, 0.28);
+    background: var(--chip-contrast-surface-strong);
   }
 
   .tag-group-count {
@@ -586,13 +578,13 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     min-width: 1.5rem;
     padding: 0.1rem 0.35rem;
     border-radius: 999px;
-    background: rgba(148, 163, 184, 0.18);
+    background: var(--layer-primary-soft);
     color: inherit;
     font-size: 0.7rem;
   }
 
   .tag-pill.selected .tag-group-count {
-    background: rgba(255, 255, 255, 0.22);
+    background: var(--chip-contrast-surface-strong);
   }
 
   .toggle-btn {
