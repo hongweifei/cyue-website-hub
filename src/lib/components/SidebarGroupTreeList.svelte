@@ -2,14 +2,14 @@
 	import type { NavGroup as NavGroupType } from '../types';
 	import SidebarGroupTreeItem from './SidebarGroupTreeItem.svelte';
 
-	interface Props {
-		groups: NavGroupType[];
-		selectedGroupId: string | null;
-		onSelect: (groupId: string) => void;
-		level?: number;
-	}
+interface Props {
+	groups: NavGroupType[];
+	selectedGroupId: string | null;
+	onSelect: (groupId: string | null) => void;
+	level?: number;
+}
 
-	let { groups, selectedGroupId, onSelect, level = 0 }: Props = $props();
+let { groups, selectedGroupId, onSelect, level = 0 }: Props = $props();
 </script>
 
 {#if groups.length > 0}

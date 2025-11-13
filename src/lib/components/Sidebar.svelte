@@ -31,7 +31,7 @@
 	const totalItems = $derived(
 		groups.reduce((sum, group) => sum + countGroupItems(group), 0)
 	);
-const totalGroups = $derived(groups.length);
+	const totalGroups = $derived(groups.length);
 </script>
 
 <aside class="sidebar">
@@ -53,19 +53,20 @@ const totalGroups = $derived(groups.length);
 		/>
 	</div>
 	<nav class="sidebar-nav">
-		<!-- TODO 使用 TreeItem 替代 -->
-		<!-- <button
+		<button
 			class="sidebar-group-btn root"
 			class:active={selectedGroupId === null}
 			onclick={() => onGroupSelect(null)}
+			aria-pressed={selectedGroupId === null}
+			type="button"
 		>
-			<span class="sidebar-group-icon">📁</span>
+			<span class="sidebar-group-icon root-icon" aria-hidden="true">📚</span>
 			<div class="sidebar-group-content">
-				<span class="sidebar-group-name">全部分组</span>
+				<span class="sidebar-group-name">全部</span>
 				<span class="sidebar-group-meta">{totalGroups} 个分组 · {totalItems} 个网站</span>
 			</div>
-			<span class="sidebar-group-count">浏览全部</span>
-		</button> -->
+			<span class="sidebar-group-count">{totalItems}</span>
+		</button>
 		<SidebarGroupTree
 			{groups}
 			{selectedGroupId}
@@ -176,6 +177,52 @@ const totalGroups = $derived(groups.length);
 		.sidebar {
 			padding: var(--spacing-md);
 		}
+	}
+
+	.sidebar-group-btn.root {
+		background: linear-gradient(
+			135deg,
+			var(--primary-lightest, rgba(101, 117, 255, 0.12)) 0%,
+			var(--primary-light, rgba(101, 117, 255, 0.28)) 100%
+		);
+		border: 1px solid rgba(101, 117, 255, 0.28);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.sidebar-group-btn.root:hover {
+		transform: translateY(-1px);
+	}
+
+	.sidebar-group-btn.root .sidebar-group-icon {
+		background: rgba(255, 255, 255, 0.6);
+		color: var(--primary-color);
+	}
+
+	.sidebar-group-btn.root .sidebar-group-count {
+		background: rgba(255, 255, 255, 0.28);
+		border-color: rgba(255, 255, 255, 0.32);
+		color: var(--primary-color);
+	}
+
+	.sidebar-group-btn.root.active {
+		background: linear-gradient(
+			135deg,
+			var(--primary-color) 0%,
+			var(--accent-color, #8b5cf6) 100%
+		);
+		border-color: transparent;
+		color: var(--text-inverse);
+		box-shadow: var(--shadow-md);
+	}
+
+	.sidebar-group-btn.root.active .sidebar-group-count {
+		background: rgba(255, 255, 255, 0.18);
+		border-color: rgba(255, 255, 255, 0.24);
+		color: var(--text-inverse);
+	}
+
+	.sidebar-group-btn.root.active .sidebar-group-meta {
+		color: rgba(255, 255, 255, 0.85);
 	}
 </style>
 

@@ -1,18 +1,22 @@
 <script lang="ts">
-	import type { NavGroup as NavGroupType } from '../types';
-	import SidebarGroupTreeList from './SidebarGroupTreeList.svelte';
+import type { NavGroup as NavGroupType } from '../types';
+import SidebarGroupTreeList from './SidebarGroupTreeList.svelte';
 import { countGroupItems } from '../utils/group';
 
-	interface Props {
-		group: NavGroupType;
-		selectedGroupId: string | null;
-		onSelect: (groupId: string) => void;
-		level: number;
-	}
+interface Props {
+	group: NavGroupType;
+	selectedGroupId: string | null;
+	onSelect: (groupId: string | null) => void;
+	level: number;
+}
 
 let { group, selectedGroupId, onSelect, level }: Props = $props();
 
 const handleSelect = (groupId: string) => {
+	if (groupId === selectedGroupId) {
+		onSelect(null);
+		return;
+	}
 	onSelect(groupId);
 };
 
@@ -49,6 +53,8 @@ const childGroupCount = $derived((group.children ?? []).length);
 		/>
 	{/if}
 
+</li>
+
 <style>
 	li {
 		display: flex;
@@ -56,12 +62,11 @@ const childGroupCount = $derived((group.children ?? []).length);
 		gap: var(--spacing-xs);
 	}
 
-	.sidebar-group-btn {
+	:global(.sidebar-group-btn) {
 		display: flex;
 		align-items: center;
 		gap: var(--spacing-md);
 		padding: var(--spacing-sm) var(--spacing-md);
-		padding-left: var(--spacing-md);
 		width: 100%;
 		text-align: left;
 		background: var(--bg-secondary);
@@ -73,25 +78,25 @@ const childGroupCount = $derived((group.children ?? []).length);
 			transform var(--transition-fast);
 	}
 
-	.sidebar-group-btn:hover {
+	:global(.sidebar-group-btn:hover) {
 		background: var(--primary-light);
 		border-color: var(--primary-light);
 		color: var(--primary-hover);
 		transform: translateX(4px);
 	}
 
-	.sidebar-group-btn:focus-visible {
+	:global(.sidebar-group-btn:focus-visible) {
 		outline: 2px solid var(--primary-color);
 		outline-offset: 3px;
 	}
 
-	.sidebar-group-btn.active {
+	:global(.sidebar-group-btn.active) {
 		background: var(--primary-color);
 		border-color: var(--primary-color);
 		color: var(--text-inverse);
 	}
 
-	.sidebar-group-icon {
+	:global(.sidebar-group-icon) {
 		width: 36px;
 		height: 36px;
 		border-radius: 50%;
@@ -104,16 +109,16 @@ const childGroupCount = $derived((group.children ?? []).length);
 		color: var(--primary-color);
 	}
 
-	.sidebar-group-icon.placeholder {
+	:global(.sidebar-group-icon.placeholder) {
 		text-transform: uppercase;
 	}
 
-	.sidebar-group-btn.active .sidebar-group-icon {
+	:global(.sidebar-group-btn.active .sidebar-group-icon) {
 		background: rgba(255, 255, 255, 0.2);
 		color: var(--text-inverse);
 	}
 
-	.sidebar-group-content {
+	:global(.sidebar-group-content) {
 		flex: 1;
 		min-width: 0;
 		display: flex;
@@ -121,7 +126,7 @@ const childGroupCount = $derived((group.children ?? []).length);
 		gap: var(--spacing-2xs);
 	}
 
-	.sidebar-group-name {
+	:global(.sidebar-group-name) {
 		margin: 0;
 		font-size: 0.95rem;
 		font-weight: 600;
@@ -131,16 +136,16 @@ const childGroupCount = $derived((group.children ?? []).length);
 		text-overflow: ellipsis;
 	}
 
-	.sidebar-group-meta {
+	:global(.sidebar-group-meta) {
 		font-size: 0.75rem;
 		color: var(--text-secondary);
 	}
 
-	.sidebar-group-btn.active .sidebar-group-meta {
+	:global(.sidebar-group-btn.active .sidebar-group-meta) {
 		color: rgba(255, 255, 255, 0.85);
 	}
 
-	.sidebar-group-count {
+	:global(.sidebar-group-count) {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -155,38 +160,39 @@ const childGroupCount = $derived((group.children ?? []).length);
 		border: 1px solid var(--border-light);
 	}
 
-	.sidebar-group-count::after {
+	:global(.sidebar-group-count::after) {
 		content: '项';
 		margin-left: 2px;
 		font-size: 0.7rem;
 		color: var(--text-tertiary);
 	}
 
-	.sidebar-group-btn.active .sidebar-group-count {
+	:global(.sidebar-group-btn.active .sidebar-group-count) {
 		background: rgba(255, 255, 255, 0.18);
 		color: var(--text-inverse);
 		border-color: rgba(255, 255, 255, 0.24);
 	}
 
 	@media (max-width: 768px) {
-		.sidebar-group-btn {
-			flex-direction: column;
+		:global(.sidebar-group-btn) {
 			align-items: flex-start;
+			gap: var(--spacing-sm);
 			padding: var(--spacing-sm) var(--spacing-md);
-			padding-left: var(--spacing-sm);
 		}
 
-		.sidebar-group-count {
+		:global(.sidebar-group-name) {
+			white-space: normal;
+		}
+
+		:global(.sidebar-group-count) {
+			margin-left: auto;
 			align-self: flex-start;
-			margin-left: 0;
 		}
 	}
 
 	@media (max-width: 480px) {
-		.sidebar-group-btn {
-			padding: var(--spacing-md);
+		:global(.sidebar-group-btn) {
+			padding: var(--spacing-sm) var(--spacing-md);
 		}
 	}
 </style>
-</li>
-
