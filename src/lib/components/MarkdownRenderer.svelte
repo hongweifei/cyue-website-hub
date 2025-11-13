@@ -2,6 +2,7 @@
 import { marked } from "marked";
 import { loadMarkdownContent } from "../dataLoader";
 import type { NavItem } from "../types";
+import { page } from "$app/state";
 
 interface Props {
   item: NavItem;
@@ -30,7 +31,7 @@ function getMarkdown(key: string, navItem: NavItem): string {
   if (markdownCache.has(key)) {
     return markdownCache.get(key) ?? "";
   }
-  const content = loadMarkdownContent(navItem);
+  const content = loadMarkdownContent(navItem, page.data?.site?.domain);
   markdownCache.set(key, content);
   return content;
 }

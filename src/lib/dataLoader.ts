@@ -337,11 +337,43 @@ export function loadAllNavItems(): NavItem[] {
   return items;
 }
 
+function appendUtmSource(markdown: string, source?: string): string {
+  if (!markdown || !source) return markdown;
+
+  const appendParam = (link: string) => {
+    try {
+      const url = new URL(link);
+      if (!url.searchParams.has("utm_source")) {
+        url.searchParams.append("utm_source", source);
+      }
+      if (!url.searchParams.has("utm_medium")) {
+        url.searchParams.append("utm_medium", "navigation");
+      }
+      return url.toString();
+    } catch (error) {
+      return link;
+    }
+  };
+
+  const inlineLinkRegex = /\]\((https?:\/\/[^)\s]+)\)/g;
+  const autoLinkRegex = /<(https?:\/\/[^>\s]+)>/g;
+
+  const withInline = markdown.replace(inlineLinkRegex, (match, url) => {
+    const updated = appendParam(url);
+    return match.replace(url, updated);
+  });
+
+  return withInline.replace(autoLinkRegex, (match, url) => {
+    const updated = appendParam(url);
+    return match.replace(url, updated);
+  });
+}
+
 /**
  * 加载指定导航项的 Markdown 内容
  * 如果Markdown文件包含frontmatter，则只返回内容部分（排除frontmatter）
  */
-export function loadMarkdownContent(item: NavItem): string {
+export function loadMarkdownContent(item: NavItem, source?: string): string {
   if (!item.desc_md) return "";
 
   // 构建 Markdown 文件路径
@@ -373,17 +405,17 @@ export function loadMarkdownContent(item: NavItem): string {
   // 解析frontmatter，只返回内容部分
   try {
     const parsed = matter(rawContent);
-    return parsed.content.trim();
+    return appendUtmSource(parsed.content.trim(), source);
   } catch (error) {
     console.error(error);
     // 如果解析失败，尝试手动去除frontmatter
     const frontmatterRegex = /^---[\s\S]*?---\s*/;
     if (frontmatterRegex.test(rawContent)) {
-      return rawContent.replace(frontmatterRegex, "").trim();
+      return appendUtmSource(rawContent.replace(frontmatterRegex, "").trim(), source);
     }
   }
 
-  return rawContent;
+  return appendUtmSource(rawContent, source);
 }
 
 /**
