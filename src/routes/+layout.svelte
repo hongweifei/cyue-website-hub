@@ -122,6 +122,7 @@
   <footer class="footer">
     <div class="container">
       <p>&copy; 2025 {data?.site?.name}. 让导航更简单。</p>
+      <p>Powered by <a href="https://gitee.com/hongweifei/cyue-website-hub">cyue-website-hub</a></p>
     </div>
   </footer>
 </div>
