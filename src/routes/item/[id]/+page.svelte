@@ -192,7 +192,6 @@
     gap: 2rem;
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
-    border-bottom: 2px solid var(--border-color, #e5e7eb);
   }
 
   .item-info {
