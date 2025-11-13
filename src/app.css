@@ -157,6 +157,32 @@ body {
 		color var(--transition-slow);
 }
 
+@supports (scrollbar-width: thin) {
+	body {
+		scrollbar-width: thin;
+		scrollbar-color: var(--border-soft) transparent;
+	}
+}
+
+body::-webkit-scrollbar {
+	width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: var(--border-soft);
+	border-radius: var(--radius-md);
+	border: 2px solid transparent;
+	background-clip: padding-box;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+	background: var(--border-color);
+}
+
 @media (max-width: 768px) {
 	body {
 		font-size: 14px;
