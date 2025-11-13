@@ -91,13 +91,12 @@
     {/if}
   </div>
 
-  <div class="group-chip-list" role="list">
+  <div class="group-chip-list">
     {#if showAllOption}
       <button
         class="group-chip"
         class:active={selectedGroupId === null}
         onclick={() => handleSelect(null)}
-        role="listitem"
       >
         <span class="group-chip-name">全部</span>
       </button>
@@ -107,7 +106,6 @@
         class="group-chip"
         class:active={selectedGroupId === group.id}
         onclick={() => handleSelect(group.id)}
-        role="listitem"
         title={`该分组包含 ${group.count} 个网站`}
       >
         <span class="group-chip-name">{group.label}</span>
