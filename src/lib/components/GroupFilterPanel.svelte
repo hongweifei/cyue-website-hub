@@ -72,6 +72,7 @@
 
   let expandAll = $state(false);
   let lastVariant = $state<LayoutMode>("sidebar");
+  let hasInitialized = $state(false);
 
   const visibleGroups = $derived.by(() => {
     if (!isVertical || expandAll) {
@@ -85,9 +86,10 @@
   );
 
   $effect(() => {
-    if (resolvedVariant !== lastVariant) {
+    if (!hasInitialized || resolvedVariant !== lastVariant) {
       expandAll = resolvedVariant !== "vertical";
       lastVariant = resolvedVariant;
+      hasInitialized = true;
     }
   });
 
@@ -102,6 +104,7 @@
 <section
   class="group-filter-panel"
   class:vertical={isVertical}
+  class:collapsed={isVertical && shouldShowToggle && !expandAll}
   aria-labelledby="group-filter-heading"
 >
   <div class="filter-bar">
@@ -140,8 +143,11 @@
       class="group-toggle"
       type="button"
       onclick={() => (expandAll = !expandAll)}
+      aria-expanded={expandAll}
     >
-      {expandAll ? "收起分组" : `展开更多分组（共 ${flatGroups.length} 个）`}
+      {expandAll
+        ? "收起分组"
+        : `展开更多分组（共 ${flatGroups.length} 个）`}
     </button>
   {/if}
 </section>
@@ -248,6 +254,28 @@
   .group-filter-panel.vertical .group-chip-name {
     max-width: 100%;
     white-space: normal;
+  }
+
+  .group-filter-panel.vertical .group-chip-list {
+    width: 100%;
+  }
+
+  .group-filter-panel.vertical.collapsed .group-chip-list {
+    max-height: clamp(180px, 32vh, 320px);
+    overflow-y: auto;
+    padding-right: var(--spacing-xs);
+    margin-right: calc(var(--spacing-xs) * -1);
+  }
+
+  .group-filter-panel.vertical.collapsed
+    .group-chip-list::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .group-filter-panel.vertical.collapsed
+    .group-chip-list::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 999px;
   }
 
   .group-toggle {

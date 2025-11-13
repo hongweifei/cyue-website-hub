@@ -48,16 +48,16 @@
 
 	@media (max-width: 768px) {
 		.subgroups {
-			margin-top: var(--spacing-lg);
-			gap: var(--spacing-lg);
-			padding-left: calc(var(--spacing-md) + var(--child-level) * 10px);
+			margin-top: var(--spacing-md);
+			gap: var(--spacing-md);
+			padding-left: calc(var(--spacing-sm) + var(--child-level) * 8px);
 		}
 	}
 
 	@media (max-width: 480px) {
 		.subgroups {
 			border-left-width: 1px;
-			gap: var(--spacing-md);
+			gap: var(--spacing-sm);
 		}
 	}
 </style>

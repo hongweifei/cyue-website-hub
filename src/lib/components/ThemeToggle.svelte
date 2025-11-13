@@ -65,7 +65,7 @@
 
 <style>
 	.theme-toggle-btn {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		gap: var(--spacing-sm);
 		padding: calc(var(--spacing-xs) * 1.4) calc(var(--spacing-sm) * 1.25);
@@ -108,7 +108,13 @@
 	@media (max-width: 768px) {
 		.theme-toggle-btn {
 			font-size: 0.8rem;
-			padding: var(--spacing-xs) calc(var(--spacing-sm) * 0.9);
+			padding: var(--spacing-xs);
+			border: none;
+			background: transparent;
+			box-shadow: none;
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+			color: var(--text-secondary);
 		}
 
 		.theme-toggle-btn span {

@@ -76,46 +76,44 @@
 		position: relative;
 		margin-bottom: var(--spacing-2xl);
 		margin-left: calc(var(--group-level, 0) * var(--spacing-xl));
-		background: var(--card-bg);
-		border: 1px solid var(--border-light);
-		border-radius: var(--radius-lg);
-		padding: var(--spacing-xl);
-		padding-left: calc(var(--spacing-xl) + 16px);
-		box-shadow: var(--shadow-sm);
+		padding: var(--spacing-xl) 0;
+		padding-left: calc(var(--spacing-lg) + 18px);
+		background: transparent;
+		border: none;
+		border-bottom: 1px solid var(--border-light);
+		border-radius: 0;
+		box-shadow: none;
 		animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
-		transition: box-shadow var(--transition-base), transform var(--transition-base);
 	}
 
 	.nav-group::before {
 		content: '';
 		position: absolute;
-		left: var(--spacing-md);
+		left: var(--spacing-sm);
 		top: var(--spacing-md);
 		bottom: var(--spacing-md);
-		width: 4px;
+		width: 3px;
 		border-radius: var(--radius-sm);
 		background: var(--gradient-brand);
-		opacity: 0.75;
+		opacity: 0.6;
 	}
 
 	.nav-group:hover {
-		box-shadow: var(--shadow-lg);
-		transform: translateY(-2px);
+		transform: none;
 	}
 
 	.nav-group.nested {
 		margin-bottom: var(--spacing-xl);
-		background: var(--bg-tertiary);
-		border-color: var(--border-soft);
-		box-shadow: none;
-		padding: var(--spacing-lg);
-		padding-left: calc(var(--spacing-lg) + 12px);
+		padding: var(--spacing-lg) 0;
+		padding-left: calc(var(--spacing-lg) + 14px);
+		border-bottom: none;
 	}
 
 	.nav-group.nested::before {
-		left: var(--spacing-sm);
-		width: 3px;
-		opacity: 0.45;
+		left: var(--spacing-xs);
+		width: 2px;
+		background: var(--border-soft);
+		opacity: 0.6;
 	}
 
 	@keyframes fadeIn {
@@ -135,29 +133,11 @@
 		gap: var(--spacing-md);
 		margin-bottom: var(--spacing-lg);
 		padding-bottom: var(--spacing-md);
-		border-bottom: 1px dashed var(--border-soft);
-		position: relative;
-	}
-
-	.group-header::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		bottom: -1px;
-		width: 140px;
-		height: 3px;
-		background: var(--gradient-brand);
-		border-radius: var(--radius-sm);
-		opacity: 0.3;
+		border-bottom: 1px solid var(--border-light);
 	}
 
 	.nav-group.nested .group-header {
-		border-bottom: 1px dashed var(--border-soft);
-	}
-
-	.nav-group.nested .group-header::after {
-		width: 92px;
-		opacity: 0.2;
+		border-bottom: 1px solid var(--border-light);
 	}
 
 	.group-icon {
@@ -166,12 +146,12 @@
 		height: 56px;
 		border-radius: var(--radius-lg);
 		overflow: hidden;
-		background: var(--gradient-brand-soft);
+		background: var(--bg-secondary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		box-shadow: var(--shadow-sm);
-		border: 2px solid var(--border-accent);
+		border: 1px solid var(--border-light);
 		transition: all var(--transition-base);
 	}
 
@@ -182,8 +162,8 @@
 	}
 
 	.group-header:hover .group-icon {
-		transform: scale(1.08) rotate(4deg);
-		box-shadow: var(--shadow-md);
+		transform: scale(1.05);
+		box-shadow: var(--shadow-sm);
 		border-color: var(--border-accent);
 	}
 
@@ -287,13 +267,14 @@
 
 	@media (max-width: 768px) {
 		.nav-group {
-			margin-bottom: var(--spacing-xl);
-			padding: var(--spacing-lg);
-			padding-left: calc(var(--spacing-lg) + 12px);
+			margin-left: calc(var(--group-level, 0) * var(--spacing-lg));
+			margin-bottom: var(--spacing-lg);
+			padding: var(--spacing-md) 0;
+			padding-left: calc(var(--spacing-md) + 10px);
 		}
 
 		.nav-group::before {
-			left: var(--spacing-sm);
+			display: none;
 		}
 
 		.nav-items-grid {
@@ -327,17 +308,22 @@
 			width: 48px;
 			height: 48px;
 		}
+
+		.group-header:hover .group-icon {
+			transform: none;
+			box-shadow: none;
+		}
 	}
 
 	@media (max-width: 480px) {
 		.nav-group {
-			padding: var(--spacing-md);
-			padding-left: calc(var(--spacing-md) + 10px);
+			margin-left: calc(var(--group-level, 0) * var(--spacing-md));
+			padding: var(--spacing-sm) 0;
 		}
 
 		.nav-group.nested {
-			padding: var(--spacing-md);
-			padding-left: calc(var(--spacing-md) + 8px);
+			padding: var(--spacing-sm) 0;
+			padding-left: calc(var(--spacing-sm) + 6px);
 		}
 
 		.group-header {

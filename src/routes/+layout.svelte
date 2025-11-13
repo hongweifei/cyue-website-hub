@@ -6,6 +6,8 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/state";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
+  import LayoutToggle from "$lib/components/LayoutToggle.svelte";
+  import { layout, type LayoutMode } from "$lib/stores/layout";
   import "../app.css";
   import type { LayoutData } from "./$types";
 
@@ -13,6 +15,19 @@
 
   // 在 layout 级别初始化 navigation context，确保所有页面都能访问
   useNavigation(data?.navigation);
+
+  let currentLayout: LayoutMode = $state("sidebar");
+
+  $effect(() => {
+    const unsubscribe = layout.subscribe((mode) => {
+      currentLayout = mode;
+    });
+    return unsubscribe;
+  });
+
+  function handleLayoutToggle() {
+    layout.toggle();
+  }
 
   function handleNavClick(event: MouseEvent, href: string) {
     // 如果当前已经在目标页面，不需要导航
@@ -28,9 +43,7 @@
   onMount(() => {
     favorites.init();
     // 初始化布局
-    import("$lib/stores/layout").then(({ layout }) => {
-      layout.init();
-    });
+    layout.init();
     // 初始化主题
     theme.init();
   });
@@ -97,19 +110,24 @@
           >
         </h1>
         <nav class="nav">
-          <a
-            href="/"
-            class="nav-link"
-            data-sveltekit-preload-data="hover"
-            onclick={(e) => handleNavClick(e, "/")}>首页</a
-          >
-          <a
-            href="/favorites"
-            class="nav-link"
-            data-sveltekit-preload-data="hover"
-            onclick={(e) => handleNavClick(e, "/favorites")}>收藏</a
-          >
-          <ThemeToggle />
+          <div class="nav-links">
+            <a
+              href="/"
+              class="nav-link"
+              data-sveltekit-preload-data="hover"
+              onclick={(e) => handleNavClick(e, "/")}>首页</a
+            >
+            <a
+              href="/favorites"
+              class="nav-link"
+              data-sveltekit-preload-data="hover"
+              onclick={(e) => handleNavClick(e, "/favorites")}>收藏</a
+            >
+          </div>
+          <div class="nav-controls">
+            <LayoutToggle currentMode={currentLayout} onToggle={handleLayoutToggle} />
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </div>
@@ -193,7 +211,20 @@
   .nav {
     display: flex;
     align-items: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
     gap: var(--spacing-md);
+  }
+
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
   }
 
   .nav-link {
@@ -297,6 +328,9 @@
     .app {
       padding: var(--spacing-lg) var(--spacing-sm);
     }
+    .main .container:hover {
+      box-shadow: none;
+    }
 
     .header {
       position: static;
@@ -306,6 +340,13 @@
       flex-direction: column;
       align-items: flex-start;
       gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-radius: 0;
     }
 
     .logo {
@@ -314,19 +355,50 @@
 
     .nav {
       width: 100%;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-sm);
+    }
+
+    .nav-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-xs);
+      width: 100%;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
       gap: var(--spacing-xs);
     }
 
     .nav-link {
-      flex: 1;
-      text-align: center;
-      font-size: 0.875rem;
+      flex: none;
+      font-size: 0.85rem;
       padding: var(--spacing-xs) var(--spacing-sm);
+      margin: 0;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      background: var(--bg-secondary);
+    }
+
+    .nav-link::after {
+      display: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      transform: none;
+      box-shadow: none;
+      background: var(--bg-secondary);
     }
 
     .main .container {
-      padding: var(--spacing-md);
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
 
     .footer {
@@ -340,13 +412,8 @@
       font-size: 1.3rem;
     }
 
-    .nav {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .nav-link {
-      width: 100%;
+    .nav-links {
+      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -294,7 +294,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .meta-summary {
     display: inline-flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.35rem;
     align-items: center;
   }
 
@@ -302,7 +302,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.2rem 0.65rem;
+    padding: 0.18rem 0.6rem;
     border-radius: 999px;
     font-size: 0.75rem;
     background: var(--bg-secondary);
@@ -328,10 +328,10 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     background: var(--bg-secondary);
     color: var(--text-secondary);
     font-size: 0.75rem;
-    padding: 0.35rem 0.75rem;
+    padding: 0.3rem 0.7rem;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast), background var(--transition-fast);
   }
 
   .secondary-action:hover {
@@ -449,10 +449,10 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     background: var(--bg-secondary);
     color: var(--text-secondary);
     border-radius: 999px;
-    padding: 0.35rem 0.65rem;
+    padding: 0.3rem 0.6rem;
     font-size: 0.75rem;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
   }
 
   .quick-tag:hover {
@@ -486,19 +486,19 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     align-items: center;
     justify-content: flex-start;
     gap: var(--spacing-xs);
-    padding: 0.55rem 0.75rem;
+    padding: 0.5rem 0.7rem;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-light);
     background: var(--bg-secondary);
     color: var(--text-secondary);
     cursor: pointer;
-    transition: all var(--transition-fast);
-    font-size: 0.8125rem;
+    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+    font-size: 0.8rem;
     text-align: left;
     flex: 0 1 auto;
     max-width: 100%;
     flex-wrap: wrap;
-    row-gap: 0.35rem;
+    row-gap: 0.3rem;
   }
 
   .tag-filter-panel.stacked .tag-pill {
@@ -513,15 +513,15 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     border-color: var(--border-accent);
     color: var(--primary-color);
     background: var(--layer-primary-soft);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    transform: none;
+    box-shadow: none;
   }
 
   .tag-pill.selected {
     background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
   }
 
   .tag-pill.ingroup {
@@ -568,22 +568,6 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .tag-pill.selected .tag-count-badge {
-    background: var(--chip-contrast-surface-strong);
-  }
-
-  .tag-group-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.5rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 999px;
-    background: var(--layer-primary-soft);
-    color: inherit;
-    font-size: 0.7rem;
-  }
-
-  .tag-pill.selected .tag-group-count {
     background: var(--chip-contrast-surface-strong);
   }
 

@@ -24,37 +24,51 @@
 
 <style>
 	.layout-toggle-btn {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		gap: var(--spacing-sm);
-		padding: var(--spacing-sm) var(--spacing-md);
-		background: var(--card-bg);
-		border: 2px solid var(--border-color);
-		border-radius: var(--radius-md);
+		padding: calc(var(--spacing-xs) * 1.5) calc(var(--spacing-sm) * 1.4);
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-light);
+		border-radius: var(--radius-lg);
 		color: var(--text-secondary);
 		font-size: 0.875rem;
 		font-weight: 500;
 		cursor: pointer;
-		transition: all var(--transition-base);
+		transition:
+			color var(--transition-fast),
+			background var(--transition-fast),
+			border-color var(--transition-fast),
+			transform var(--transition-fast),
+			box-shadow var(--transition-fast);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.layout-toggle-btn:hover {
-		border-color: var(--primary-color);
+		border-color: var(--border-accent);
 		color: var(--primary-color);
-		background: var(--primary-light);
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
+		background: var(--layer-primary-soft);
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.layout-toggle-btn:active {
 		transform: translateY(0);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.layout-toggle-btn svg {
+		color: currentColor;
 	}
 
 	@media (max-width: 768px) {
 		.layout-toggle-btn {
 			font-size: 0.8125rem;
 			padding: var(--spacing-xs) var(--spacing-sm);
+			background: transparent;
+			border: none;
+			box-shadow: none;
+			color: var(--text-secondary);
 		}
 
 		.layout-toggle-btn span {

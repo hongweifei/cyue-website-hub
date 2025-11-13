@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Sidebar from '$lib/components/Sidebar.svelte';
-	import LayoutToggle from '$lib/components/LayoutToggle.svelte';
 	import ContentArea from '$lib/components/ContentArea.svelte';
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import TagFilterPanel from '$lib/components/TagFilterPanel.svelte';
@@ -14,7 +13,7 @@
 	import { findGroupInTree } from '$lib/utils/group';
 
 	// 使用 Hooks 管理状态，减少耦合
-	const { layoutMode, toggleLayout } = useLayout();
+	const { layoutMode } = useLayout();
 	const navigation = useNavigation();
 
 	let selectedGroupId = $state<string | null>(null);
@@ -39,9 +38,7 @@
 			if (layoutMode && typeof layoutMode.subscribe === 'function') {
 				const unsubscribe = layoutMode.subscribe((mode) => {
 					currentLayoutMode = mode;
-					if (mode === 'vertical') {
-						selectedGroupId = null;
-					}
+					selectedGroupId = null;
 				});
 				return unsubscribe;
 			}
@@ -52,18 +49,6 @@
 		selectedGroupId = groupId;
 		// 清除搜索和筛选
 		navigation.clearFilters();
-	}
-
-	function handleLayoutToggle() {
-		const currentMode = currentLayoutMode;
-		toggleLayout();
-		// 根据切换后的模式调整选中分组
-		if (currentMode === 'sidebar') {
-			selectedGroupId = null;
-		} else {
-			// 切换到侧边栏时，默认显示全部分组
-			selectedGroupId = null;
-		}
 	}
 
 	// 使用 $state 和 $effect 来响应式地订阅 stores
@@ -115,10 +100,6 @@ const currentGroup = $derived.by(() => {
 </script>
 
 <div class="home-page" class:sidebar-layout={currentLayoutMode === 'sidebar'} class:vertical-layout={currentLayoutMode === 'vertical'}>
-	<div class="layout-controls">
-		<LayoutToggle currentMode={currentLayoutMode} onToggle={handleLayoutToggle} />
-	</div>
-
 	{#if currentLayoutMode === 'sidebar'}
 		<!-- 侧边栏布局 -->
 		<div class="sidebar-layout-container">
@@ -182,17 +163,6 @@ const currentGroup = $derived.by(() => {
 		gap: var(--spacing-xl);
 	}
 
-	.layout-controls {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		padding: 0 var(--spacing-sm);
-	}
-
-	.layout-controls :global(.layout-toggle-btn) {
-		box-shadow: var(--shadow-sm);
-	}
-
 	/* 侧边栏布局 */
 	.sidebar-layout-container {
 		display: grid;
@@ -211,23 +181,29 @@ const currentGroup = $derived.by(() => {
 	}
 
 	.search-section {
-		margin-bottom: var(--spacing-xl);
+		margin-bottom: var(--spacing-md);
 	}
 
 	.filters-section {
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-lg);
+		align-items: stretch;
+	}
+
+	@media (min-width: 1024px) {
+		.filters-section {
+			display: grid;
+			grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+			gap: var(--spacing-xl);
+			align-items: start;
+		}
 	}
 
 	@media (max-width: 1280px) {
 		.sidebar-layout-container {
 			grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
 			gap: var(--spacing-lg);
-		}
-
-		.filters-section {
-			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		}
 	}
 
@@ -240,20 +216,12 @@ const currentGroup = $derived.by(() => {
 		.vertical-layout-container {
 			gap: var(--spacing-lg);
 		}
-
-		.filters-section {
-			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		}
 	}
 
 	@media (max-width: 768px) {
 		.home-page {
 			padding: var(--spacing-sm) 0;
-			gap: var(--spacing-lg);
-		}
-
-		.layout-controls {
-			justify-content: center;
+			gap: var(--spacing-md);
 		}
 
 		.sidebar-layout-container {
@@ -266,14 +234,11 @@ const currentGroup = $derived.by(() => {
 		}
 
 		.filters-section {
-			grid-template-columns: 1fr;
 			gap: var(--spacing-md);
 		}
-	}
 
-	@media (max-width: 480px) {
-		.layout-controls {
-			padding: 0;
+		.vertical-layout-container {
+			gap: var(--spacing-md);
 		}
 	}
 </style>
