@@ -141,8 +141,75 @@
 
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 {data?.site?.name}. 让导航更简单。</p>
-      <p>Powered by <a href="https://gitee.com/hongweifei/cyue-website-hub">cyue-website-hub</a></p>
+      <div class="footer-shell">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" data-sveltekit-preload-data="hover" onclick={(e) => handleNavClick(e, "/")}>
+            <span class="logo-mark">🕊️</span>
+            <div class="logo-text">
+              <strong>{data?.site?.name}</strong>
+              <small>{data?.site?.description}</small>
+            </div>
+          </a>
+          <div class="footer-badges">
+            {#if data?.site?.version}
+              <span class="badge">版本 {data.site.version}</span>
+            {/if}
+            <span class="badge">
+              构建于 {
+                new Intl.DateTimeFormat(
+                  'zh-CN',
+                  {
+                    year: 'numeric',       // 四位数年份（如：2025）
+                    month: 'numeric',      // 数字月份（如：3，不带前导零）
+                    day: 'numeric',        // 数字日期（如：5，不带前导零）
+                    hour: '2-digit',       // 24小时制的两位数小时（如：08，15）
+                    minute: '2-digit',     // 两位数分钟（如：05，30）
+                    second: '2-digit',     // 两位数秒（如：09，59）
+                    hour12: false          // 禁用12小时制，使用24小时制
+                  }
+                ).format(new Date())
+              }
+            </span>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h3>快速访问</h3>
+          <ul>
+            <li><a href="/" data-sveltekit-preload-data="hover" onclick={(e) => handleNavClick(e, "/")}>首页</a></li>
+            <li>
+              <a
+                href="/favorites"
+                data-sveltekit-preload-data="hover"
+                onclick={(e) => handleNavClick(e, "/favorites")}>收藏夹</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h3>联系我们</h3>
+          <ul>
+            {#if data?.site?.contactEmail}
+              <li>
+                <a href={`mailto:${data.site.contactEmail}`}>{data.site.contactEmail}</a>
+              </li>
+            {/if}
+            <li>
+              <a href="https://gitee.com/hongweifei/cyue-website-hub" rel="noopener" target="_blank"
+                >项目仓库</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-meta">
+        <span>
+          &copy; {new Date().getFullYear()} {data?.site?.name}. 让发现更简单。
+        </span>
+        <span class="footer-theme-hint">Light & Dark · 自适应颜色主题</span>
+      </div>
     </div>
   </footer>
 </div>
@@ -297,20 +364,194 @@
   }
 
   .footer {
-    border-radius: var(--radius-lg);
-    background: var(--footer-bg);
-    border: 1px solid var(--border-light);
-    padding: var(--spacing-lg);
     margin-top: auto;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+    background: var(--gradient-brand-soft);
+    opacity: 0.55;
+    filter: blur(48px);
+    z-index: -2;
+  }
+
+  .footer .container {
+    position: relative;
+  }
+
+  .footer-shell {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+    padding: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+    border-radius: var(--radius-xl);
+    background: linear-gradient(
+        140deg,
+        color-mix(in srgb, var(--surface-glass) 88%, transparent),
+        color-mix(in srgb, var(--card-bg) 94%, transparent)
+      );
+    border: 1px solid color-mix(in srgb, var(--border-light) 82%, transparent);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    color: var(--text-secondary);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .footer-logo .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    background: var(--gradient-brand);
+    color: var(--text-inverse);
+    font-size: 1.35rem;
     box-shadow: var(--shadow-sm);
   }
 
-  .footer a {
+  .footer-logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-logo strong {
+    font-size: 1rem;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  .footer-logo small {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+  }
+
+  .footer-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .badge {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    background: color-mix(in srgb, var(--primary-light) 60%, transparent);
     color: var(--primary-color);
-    font-weight: 600;
+    border: 1px solid color-mix(in srgb, var(--primary-color) 28%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .footer-links,
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .footer-links h3,
+  .footer-contact h3 {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 650;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-links ul,
+  .footer-contact ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .footer-links a,
+  .footer-contact a {
+    position: relative;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .footer-links a::after,
+  .footer-contact a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0;
+    transform: scaleX(0.5);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .footer-links a:hover,
+  .footer-links a:focus-visible,
+  .footer-contact a:hover,
+  .footer-contact a:focus-visible {
+    color: var(--primary-color);
+    transform: translateY(-1px);
+  }
+
+  .footer-links a:hover::after,
+  .footer-links a:focus-visible::after,
+  .footer-contact a:hover::after,
+  .footer-contact a:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .footer-meta {
+    margin-top: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    padding: var(--spacing-md) clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+  }
+
+  .footer-theme-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .footer-theme-hint::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
   }
 
   @media (max-width: 1024px) {
@@ -401,9 +642,37 @@
       box-shadow: none;
     }
 
-    .footer {
-      font-size: 0.8rem;
-      padding: var(--spacing-md);
+    .footer::before {
+      inset: var(--spacing-sm);
+      filter: blur(36px);
+    }
+
+    .footer-shell {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+      background: none;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      color: var(--text-secondary);
+    }
+
+    .footer-logo .logo-mark {
+      width: 36px;
+      height: 36px;
+    }
+
+    .footer-badges {
+      gap: var(--spacing-2xs);
+    }
+
+    .footer-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-xs);
+      padding: 0 var(--spacing-sm) var(--spacing-lg);
     }
   }
 
@@ -414,6 +683,10 @@
 
     .nav-links {
       grid-template-columns: 1fr;
+    }
+
+    .footer-shell {
+      padding: var(--spacing-md) var(--spacing-sm);
     }
   }
 </style>
