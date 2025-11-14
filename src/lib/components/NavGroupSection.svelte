@@ -3,6 +3,7 @@
 	import NavItem from './NavItem.svelte';
 	import NavGroupChildren from './NavGroupChildren.svelte';
 	import { countGroupItems } from '../utils/group';
+	import { encodeGroupIdForUrl } from '../dataLoader';
 
 	interface Props {
 		group: NavGroupType;
@@ -46,7 +47,7 @@
 		{/if}
 		<div class="group-info">
 			<h2 class="group-title">
-				<a href={`/group/${group.id}`} class="group-link">{group.name}</a>
+				<a href={`/group/${encodeGroupIdForUrl(group.id)}`} class="group-link">{group.name}</a>
 			</h2>
 			<div class="group-meta">
 				{#if group.description}

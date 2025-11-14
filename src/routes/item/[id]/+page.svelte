@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import { favorites } from "$lib/stores/favorites";
+  import { encodeGroupIdForUrl } from "$lib/dataLoader";
   import MarkdownRenderer from "$lib/components/MarkdownRenderer.svelte";
   import RelatedRecommendations from "$lib/components/RelatedRecommendations.svelte";
   import SiteIcon from "$lib/components/SiteIcon.svelte";
@@ -94,7 +95,7 @@
             <p class="item-brief">{data.item.info}</p>
           {/if}
           <div class="item-meta">
-            <a href="/group/{data.item.group}" class="item-group">
+            <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="item-group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -154,7 +155,7 @@
     {/if}
 
     <div class="item-footer">
-      <a href="/group/{data.item.group}" class="group-link">
+      <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="group-link">
         查看 {data.item.group} 分组下的所有网站 →
       </a>
     </div>

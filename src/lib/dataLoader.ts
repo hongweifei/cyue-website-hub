@@ -46,14 +46,20 @@ let cachedTagSummaries: TagSummary[] | null = null;
 let cachedGroupDefinitions: Map<string, GroupDefinition> | null = null;
 let cachedGroupSegmentMap: Map<string, string> | null = null;
 
-interface GroupDefinition extends GroupMetadata {
+interface GroupDefinition {
+  id: string; // 基于路径生成的唯一ID
+  name: string;
+  description?: string;
+  icon?: string;
+  order?: number;
+  parentId: string | null; // 基于路径自动推断的父级ID
   pathSegments: string[];
   segmentKey: string;
 }
 
 type RawNavItem = Partial<NavItem> & {
   tags?: unknown;
-  group?: string;
+  group?: string; // 将被忽略，分组始终基于文件路径自动推断
 };
 
 /**
@@ -138,8 +144,8 @@ function createNavItemFromMarkdown(
     url: metadata.url || "",
     icon: metadata.icon || "",
     info: metadata.info || "",
-    desc_md: `${fallbackId}.md`, // 保持desc_md字段用于兼容
-    group: metadata.group || "", // 暂时占位，稍后统一赋值
+    desc_md: `${fallbackId}.md`,
+    group: "", // 占位符，将在 loadAllNavItems 中基于路径统一赋值
     tags: Array.isArray(metadata.tags)
       ? metadata.tags
       : typeof metadata.tags === "string"
@@ -156,7 +162,39 @@ function createNavItemFromMarkdown(
 }
 
 /**
+ * 基于路径生成唯一的分组ID
+ * 使用完整路径确保唯一性，避免子分组重名问题
+ * 例如：AI/工具 -> ai/tools，工具 -> tools
+ */
+function generateUniqueGroupId(pathSegments: string[]): string {
+  if (pathSegments.length === 0) {
+    return "";
+  }
+  // 将路径段转换为小写并用斜杠连接，确保唯一性
+  return pathSegments.map(segment => segment.toLowerCase()).join("/");
+}
+
+/**
+ * 将分组ID编码为URL安全的格式
+ * 将斜杠替换为双横线，用于URL路由参数
+ * 例如：ai/tools -> ai--tools
+ */
+export function encodeGroupIdForUrl(groupId: string): string {
+  return groupId.replace(/\//g, "--");
+}
+
+/**
+ * 将URL中的分组ID解码回原始格式
+ * 将双横线替换回斜杠
+ * 例如：ai--tools -> ai/tools
+ */
+export function decodeGroupIdFromUrl(encodedId: string): string {
+  return encodedId.replace(/--/g, "/");
+}
+
+/**
  * 构建分组定义映射
+ * 为每个分组生成基于完整路径的唯一ID，避免子分组重名问题
  */
 function getGroupDefinitions(): Map<string, GroupDefinition> {
   if (cachedGroupDefinitions) {
@@ -164,7 +202,10 @@ function getGroupDefinitions(): Map<string, GroupDefinition> {
   }
 
   const definitions = new Map<string, GroupDefinition>();
+  const segmentKeyToIdMap = new Map<string, string>(); // 路径到ID的映射
 
+  // 收集所有有_group.json的分组
+  // 注意：metadata中的id和parentId将被忽略，始终基于路径自动生成和推断
   for (const path in groupMetadataModules) {
     const module = groupMetadataModules[path];
     if (!module?.default) continue;
@@ -172,18 +213,60 @@ function getGroupDefinitions(): Map<string, GroupDefinition> {
     const metadata = module.default;
     const pathSegments = getGroupSegmentsFromPath(path);
     const segmentKey = pathSegments.join("/");
+    const uniqueId = generateUniqueGroupId(pathSegments);
 
     const definition: GroupDefinition = {
-      ...metadata,
-      parentId: metadata.parentId ?? null,
+      id: uniqueId, // 基于路径生成，忽略metadata.id
+      name: metadata.name,
+      description: metadata.description,
+      icon: metadata.icon,
+      order: metadata.order,
+      parentId: null, // 稍后基于路径自动推断，忽略metadata.parentId
       pathSegments,
       segmentKey,
     };
 
-    definitions.set(definition.id, definition);
+    definitions.set(uniqueId, definition);
+    segmentKeyToIdMap.set(segmentKey, uniqueId);
   }
 
-  // 构建路径到分组ID的映射
+  // 为没有_group.json但存在数据文件的目录创建默认分组
+  const discoveredSegments = new Set<string>();
+  
+  // 从数据文件路径发现所有分组层级
+  const discoverSegments = (path: string) => {
+    const pathSegments = getGroupSegmentsFromPath(path);
+    for (let i = 1; i <= pathSegments.length; i++) {
+      discoveredSegments.add(pathSegments.slice(0, i).join("/"));
+    }
+  };
+  
+  for (const path in filteredNavItemsModules) discoverSegments(path);
+  for (const path in markdownModules) discoverSegments(path);
+
+  // 为发现的但还没有定义的分组创建默认定义
+  discoveredSegments.forEach((segmentKey) => {
+    if (segmentKeyToIdMap.has(segmentKey)) return;
+    
+    const pathSegments = segmentKey.split("/");
+    const uniqueId = generateUniqueGroupId(pathSegments);
+    
+    if (definitions.has(uniqueId)) {
+      segmentKeyToIdMap.set(segmentKey, uniqueId);
+      return;
+    }
+
+    definitions.set(uniqueId, {
+      id: uniqueId,
+      name: pathSegments[pathSegments.length - 1],
+      pathSegments,
+      segmentKey,
+      parentId: null,
+    });
+    segmentKeyToIdMap.set(segmentKey, uniqueId);
+  });
+
+  // 构建路径到分组ID的映射（用于查找父级）
   const segmentMap = new Map<string, string>();
   definitions.forEach((definition) => {
     if (definition.segmentKey) {
@@ -191,20 +274,12 @@ function getGroupDefinitions(): Map<string, GroupDefinition> {
     }
   });
 
-  // 根据路径推断父级分组（除非显式指定 parentId）
+  // 根据路径自动推断父级分组（不允许显式指定）
   definitions.forEach((definition) => {
-    if (definition.parentId !== null && definition.parentId !== undefined) {
-      if (definition.parentId === "") {
-        definition.parentId = null;
-      }
-      return;
-    }
-
     if (definition.pathSegments.length > 1) {
       const parentSegments = definition.pathSegments.slice(0, -1);
       const parentKey = parentSegments.join("/");
-      const parentId = segmentMap.get(parentKey);
-      definition.parentId = parentId ?? null;
+      definition.parentId = segmentMap.get(parentKey) ?? null;
     } else {
       definition.parentId = null;
     }
@@ -245,20 +320,15 @@ export function loadAllNavItems(): NavItem[] {
   const itemMap = new Map<string, NavItem>(); // 用于去重，key为 group:id
   const groupSegmentMap = getGroupSegmentMap();
 
-  const deriveGroupId = (path: string, explicitGroup?: string): string => {
-    if (explicitGroup && explicitGroup.trim()) {
-      return explicitGroup.trim();
-    }
+  // 基于文件路径推导分组ID，始终使用路径生成唯一ID
+  const deriveGroupId = (path: string): string => {
     const segments = getGroupSegmentsFromPath(path);
     if (segments.length === 0) {
       return "";
     }
     const segmentKey = segments.join("/");
-    const derived = groupSegmentMap.get(segmentKey);
-    if (derived) {
-      return derived;
-    }
-    return segments[segments.length - 1];
+    // 从映射表中获取唯一ID，如果不存在则基于路径生成
+    return groupSegmentMap.get(segmentKey) ?? generateUniqueGroupId(segments);
   };
 
   // 首先从JSON文件加载（作为后备）
@@ -271,7 +341,7 @@ export function loadAllNavItems(): NavItem[] {
         : [data as RawNavItem];
 
       jsonItems.forEach((item) => {
-        const normalizedGroup = deriveGroupId(path, item.group);
+        const normalizedGroup = deriveGroupId(path);
         if (!normalizedGroup || !item.id || !item.name || !item.url) {
           return;
         }
@@ -315,7 +385,7 @@ export function loadAllNavItems(): NavItem[] {
 
     const item = createNavItemFromMarkdown(path, content);
     if (item) {
-      const normalizedGroup = deriveGroupId(path, item.group);
+      const normalizedGroup = deriveGroupId(path);
       if (!normalizedGroup) {
         continue;
       }

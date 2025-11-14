@@ -36,12 +36,12 @@ export interface ItemRecommendation {
 }
 
 export interface GroupMetadata {
-  id: string;
+  id?: string; // 将被忽略，始终基于路径生成唯一ID
   name: string;
   description?: string;
   icon?: string;
   order?: number;
-  parentId?: string | null;
+  parentId?: string | null; // 将被忽略，始终基于路径自动推断
 }
 
 export interface NavGroup {
