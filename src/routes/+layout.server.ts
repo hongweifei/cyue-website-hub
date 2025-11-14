@@ -10,6 +10,8 @@ import {
 export const prerender = true;
 
 export const load: LayoutServerLoad = ({ url }) => {
+  // 按需加载 navigation 数据，只在需要导航功能的页面加载
+  // 这样可以减少不必要的内存占用和加载时间
   const shouldLoadNavigation =
     url.pathname === "/" || url.pathname.startsWith("/favorites");
 

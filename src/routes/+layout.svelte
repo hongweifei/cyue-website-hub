@@ -4,7 +4,9 @@
   import { theme } from "$lib/stores/theme";
   import { useNavigation } from "$lib/hooks/useNavigation";
   import { goto } from "$app/navigation";
+  import { invalidateAll } from "$app/navigation";
   import { page } from "$app/state";
+  import { browser } from "$app/environment";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   import LayoutToggle from "$lib/components/LayoutToggle.svelte";
   import { layout, type LayoutMode } from "$lib/stores/layout";
@@ -13,9 +15,32 @@
 
   const { children, data } = $props<{ data: LayoutData }>();
 
-  // 在 layout 级别初始化 navigation context，仅在需要时提供导航数据
-  if (data?.navigation) {
-    useNavigation(data.navigation);
+  // 在 layout 级别初始化 navigation context
+  // 如果当前页面有 navigation 数据则使用，否则创建空状态
+  const navigation = useNavigation(data.navigation);
+
+  // 监听数据变化和路由变化
+  if (browser) {
+    // 当 navigation 数据从 null 变为有值时，更新 store
+    $effect(() => {
+      if (data.navigation) {
+        navigation.groups.set(data.navigation.groups);
+        navigation.allTags.set(data.navigation.tags);
+        navigation.tagSummaries.set(data.navigation.tagSummaries);
+        navigation.navItems.set(data.navigation.navItems);
+      }
+    });
+
+    // 监听路由变化，当导航到需要数据的页面时，如果数据不存在则重新加载
+    $effect(() => {
+      const currentPath = page.url.pathname;
+      const needsNavigation = currentPath === "/" || currentPath.startsWith("/favorites");
+      
+      if (needsNavigation && !data.navigation) {
+        // 如果导航到需要数据的页面但数据不存在，重新加载
+        invalidateAll();
+      }
+    });
   }
 
   let currentLayout: LayoutMode = $state("sidebar");
