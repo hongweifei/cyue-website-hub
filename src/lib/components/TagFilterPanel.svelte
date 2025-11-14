@@ -581,14 +581,18 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     align-items: center;
     justify-content: center;
     min-width: 1.75rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 999px;
-    background: var(--chip-contrast-surface);
-    color: inherit;
+    padding: calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75);
+    border-radius: var(--radius-full);
+    background: var(--primary-lighter);
+    color: var(--primary-color);
+    border: 1px solid var(--border-accent);
+    font-weight: 500;
   }
 
   .tag-pill.selected .tag-count-badge {
-    background: var(--chip-contrast-surface-strong);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--text-inverse);
   }
 
   .toggle-btn {
