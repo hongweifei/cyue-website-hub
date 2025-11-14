@@ -280,4 +280,114 @@ const htmlContent = $derived.by(() => {
     color: var(--text-primary);
     box-shadow: inset 0 -1px 0 var(--chip-contrast-surface-strong);
   }
+
+  @media (max-width: 768px) {
+    .markdown-content {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    .markdown-content :global(h1) {
+      font-size: 1.5rem;
+      margin-top: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .markdown-content :global(h2) {
+      font-size: 1.25rem;
+      margin-top: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+      padding-bottom: var(--spacing-xs);
+    }
+
+    .markdown-content :global(h3) {
+      font-size: 1.125rem;
+      margin-top: var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .markdown-content :global(h4) {
+      font-size: 1rem;
+      margin-top: var(--spacing-sm);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .markdown-content :global(h5),
+    .markdown-content :global(h6) {
+      font-size: 0.9375rem;
+      margin-top: var(--spacing-sm);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .markdown-content :global(p) {
+      margin: var(--spacing-sm) 0;
+    }
+
+    .markdown-content :global(hr) {
+      margin: var(--spacing-lg) 0;
+    }
+
+    .markdown-content :global(ul),
+    .markdown-content :global(ol) {
+      margin: var(--spacing-sm) 0;
+      padding-left: 1.25rem;
+      gap: var(--spacing-xs);
+    }
+
+    .markdown-content :global(blockquote) {
+      margin: var(--spacing-sm) 0;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-left-width: 2px;
+    }
+
+    .markdown-content :global(code) {
+      font-size: 0.8em;
+      padding: 0.125rem 0.25rem;
+    }
+
+    .markdown-content :global(pre) {
+      padding: var(--spacing-md);
+      border-radius: var(--radius-md);
+      font-size: 0.8125rem;
+      margin: var(--spacing-md) 0;
+    }
+
+    .markdown-content :global(pre code) {
+      font-size: 0.8125rem;
+    }
+
+    .markdown-content :global(table) {
+      font-size: 0.875rem;
+      border-radius: var(--radius-md);
+      display: block;
+      overflow-x: auto;
+    }
+
+    .markdown-content :global(th),
+    .markdown-content :global(td) {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      white-space: nowrap;
+    }
+
+    .markdown-content :global(img) {
+      max-width: 100%;
+      height: auto;
+      margin: var(--spacing-md) auto;
+      border-radius: var(--radius-md);
+    }
+
+    .markdown-content :global(figure) {
+      margin: var(--spacing-md) 0;
+    }
+
+    .markdown-content :global(figcaption) {
+      font-size: 0.8125rem;
+      margin-top: var(--spacing-xs);
+    }
+
+    .markdown-content :global(kbd) {
+      font-size: 0.6875rem;
+      padding: 0.15rem 0.35rem;
+    }
+  }
 </style>

@@ -187,21 +187,99 @@
     transform: translateX(4px);
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .recommendations {
-      margin-top: 2.5rem;
+      margin-top: var(--spacing-xl);
+    }
+
+    .section-title {
+      font-size: 1.375rem;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-md);
     }
 
     .recommendation-grid {
-      gap: 1rem;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .recommendation-card {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: var(--spacing-md);
+    }
+
+    .recommendation-card:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--border-color);
+    }
+
+    .recommendation-card:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .card-main {
-      padding: 1rem;
+      padding: 0;
+      gap: var(--spacing-sm);
+    }
+
+    .card-main :global(.site-icon) {
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px;
+      min-height: 48px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .card-brief {
+      font-size: 0.8125rem;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card-meta {
+      gap: var(--spacing-xs);
+    }
+
+    .card-group {
+      font-size: 0.6875rem;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.6875rem;
+      padding: 0.25rem 0.5rem;
     }
 
     .card-actions {
-      padding: 0 1rem 1rem 1rem;
+      padding: var(--spacing-sm) 0 0 0;
+      margin-top: var(--spacing-xs);
+    }
+
+    .visit-link {
+      font-size: 0.8125rem;
+    }
+
+    .visit-link:hover {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .recommendations {
+      margin-top: var(--spacing-lg);
     }
   }
 </style>
