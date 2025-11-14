@@ -235,7 +235,7 @@
         <span>
           &copy; {new Date().getFullYear()} {data?.site?.name}. 让发现更简单。
         </span>
-        <span class="footer-theme-hint">Light & Dark · 自适应颜色主题</span>
+        <span class="footer-theme-hint">多风格主题 · 色彩 × 质感 × 排版</span>
       </div>
     </div>
   </footer>

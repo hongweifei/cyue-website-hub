@@ -5,23 +5,36 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>鸽子导航网</title>
 		<script>
-			// 在页面加载前立即应用主题，避免闪烁
+			// 在页面加载前应用主题，避免闪烁
 			(function() {
-				const stored = localStorage.getItem('nav-theme');
+				const STORAGE_KEY = 'nav-theme';
+				const DEFAULT_LIGHT = 'harmony';
+				const DEFAULT_DARK = 'harmony-dark';
+				const KNOWN_THEMES = new Set(['auto', 'harmony', 'harmony-dark', 'aqua', 'noir', 'mono']);
 				const root = document.documentElement;
-				
-				if (stored === 'dark') {
-					root.classList.add('dark');
-				} else if (stored === 'light') {
-					root.classList.remove('dark');
-				} else {
-					// auto 模式：使用系统偏好
+
+				const isDarkTheme = (value) => value.endsWith('dark') || value === 'noir';
+
+				const applyTheme = (value) => {
+					root.dataset.theme = value;
+					root.dataset.themeMode = isDarkTheme(value) ? 'dark' : 'light';
+				};
+
+				const normalize = (value) => {
+					if (!value) return 'auto';
+					if (value === 'light') return DEFAULT_LIGHT;
+					if (value === 'dark') return DEFAULT_DARK;
+					if (value === 'harmony') return DEFAULT_LIGHT;
+					return KNOWN_THEMES.has(value) ? value : 'auto';
+				};
+
+				const stored = normalize(localStorage.getItem(STORAGE_KEY));
+
+				if (stored === 'auto') {
 					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					if (prefersDark) {
-						root.classList.add('dark');
-					} else {
-						root.classList.remove('dark');
-					}
+					applyTheme(prefersDark ? DEFAULT_DARK : DEFAULT_LIGHT);
+				} else {
+					applyTheme(stored);
 				}
 			})();
 		</script>

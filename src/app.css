@@ -44,7 +44,7 @@
 }
 
 :root,
-:root[data-theme="light"] {
+:root[data-theme="harmony"] {
 	/* 鸿蒙设计规范主色调 - 更柔和的蓝色系 */
 	--primary-color: #007DFF;
 	--primary-color-strong: #0051D5;
@@ -102,7 +102,7 @@
 	--gradient-brand-soft: linear-gradient(135deg, rgba(0, 125, 255, 0.12) 0%, rgba(0, 217, 255, 0.16) 100%);
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="harmony-dark"] {
 	color-scheme: dark;
 
 	/* 鸿蒙设计规范暗色主题主色调 */
@@ -160,6 +160,198 @@
 	--chip-contrast-surface-strong: rgba(29, 33, 41, 0.8);
 	--gradient-brand: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
 	--gradient-brand-soft: linear-gradient(135deg, rgba(64, 169, 255, 0.18) 0%, rgba(54, 207, 201, 0.22) 100%);
+}
+
+:root[data-theme="aqua"] {
+	color-scheme: light;
+
+	--font-sans-primary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	--font-sans-secondary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+	--radius-xs: 10px;
+	--radius-sm: 16px;
+	--radius-md: 20px;
+	--radius-lg: 26px;
+	--radius-xl: 32px;
+	--radius-2xl: 40px;
+
+	--primary-color: #7c3aed;
+	--primary-color-strong: #4c1d95;
+	--primary-hover: #a855f7;
+	--primary-light: rgba(124, 58, 237, 0.18);
+	--primary-lighter: rgba(124, 58, 237, 0.12);
+	--accent-color: #22d3ee;
+	--accent-hover: #0ea5e9;
+
+	--text-primary: #0f172a;
+	--text-secondary: #475569;
+	--text-tertiary: #94a3b8;
+	--text-muted: #a5b4fc;
+	--text-inverse: #ffffff;
+
+	--border-color: rgba(124, 58, 237, 0.25);
+	--border-soft: rgba(14, 165, 233, 0.2);
+	--border-light: rgba(15, 23, 42, 0.08);
+	--border-accent: rgba(14, 165, 233, 0.35);
+
+	--bg-primary: rgba(247, 250, 255, 0.92);
+	--bg-secondary: rgba(237, 233, 254, 0.9);
+	--bg-tertiary: rgba(224, 231, 255, 0.7);
+	--surface-glass: rgba(252, 252, 255, 0.65);
+	--surface-solid: #eef2ff;
+	--card-bg: rgba(248, 248, 255, 0.9);
+	--card-overlay: linear-gradient(135deg, rgba(252, 252, 255, 0.96), rgba(237, 233, 254, 0.96));
+	--tag-bg: rgba(124, 58, 237, 0.12);
+	--icon-bg: rgba(14, 165, 233, 0.15);
+	--input-bg: rgba(255, 255, 255, 0.96);
+	--code-bg: rgba(15, 23, 42, 0.08);
+	--header-bg: rgba(247, 250, 255, 0.9);
+	--footer-bg: rgba(224, 231, 255, 0.85);
+	--app-background: radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.18), transparent 45%), radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.2), transparent 40%), linear-gradient(135deg, #ecfeff 0%, #ede9fe 45%, #e0f2fe 100%);
+
+	--shadow-xs: 0 5px 18px rgba(79, 70, 229, 0.12);
+	--shadow-sm: 0 10px 28px rgba(79, 70, 229, 0.18);
+	--shadow-md: 0 16px 36px rgba(14, 165, 233, 0.16);
+	--shadow-lg: 0 24px 48px rgba(14, 165, 233, 0.2);
+	--shadow-xl: 0 32px 60px rgba(79, 70, 229, 0.25);
+	--shadow-soft: 0 8px 32px rgba(124, 58, 237, 0.18);
+	--shadow-glow: 0 0 40px rgba(34, 211, 238, 0.35);
+
+	--layer-primary-soft: rgba(124, 58, 237, 0.12);
+	--layer-primary-strong: rgba(124, 58, 237, 0.2);
+	--layer-accent-soft: rgba(34, 211, 238, 0.12);
+	--chip-contrast-surface: rgba(255, 255, 255, 0.78);
+	--chip-contrast-surface-strong: rgba(255, 255, 255, 0.92);
+	--gradient-brand: linear-gradient(135deg, #f472b6 0%, #60a5fa 100%);
+	--gradient-brand-soft: linear-gradient(150deg, rgba(244, 114, 182, 0.2) 0%, rgba(96, 165, 250, 0.18) 100%);
+}
+
+:root[data-theme="noir"] {
+	color-scheme: dark;
+
+	--font-sans-primary: "JetBrains Mono", "HarmonyOS Sans", "SFMono-Regular", "Menlo", "PingFang SC", "Microsoft YaHei", monospace;
+	--font-sans-secondary: "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 14px;
+	--radius-lg: 18px;
+	--radius-xl: 22px;
+	--radius-2xl: 28px;
+
+	--primary-color: #f97316;
+	--primary-color-strong: #fb923c;
+	--primary-hover: #fb923c;
+	--primary-light: rgba(249, 115, 22, 0.22);
+	--primary-lighter: rgba(249, 115, 22, 0.12);
+	--accent-color: #22d3ee;
+	--accent-hover: #06b6d4;
+
+	--text-primary: #f8fafc;
+	--text-secondary: #cbd5f5;
+	--text-tertiary: #94a3b8;
+	--text-muted: #475569;
+	--text-inverse: #050816;
+
+	--border-color: rgba(15, 23, 42, 0.7);
+	--border-soft: rgba(15, 23, 42, 0.55);
+	--border-light: rgba(148, 163, 184, 0.2);
+	--border-accent: rgba(34, 211, 238, 0.45);
+
+	--bg-primary: rgba(5, 8, 22, 0.96);
+	--bg-secondary: rgba(9, 12, 28, 0.9);
+	--bg-tertiary: rgba(15, 23, 42, 0.85);
+	--surface-glass: rgba(10, 15, 35, 0.7);
+	--surface-solid: #050816;
+	--card-bg: rgba(6, 9, 22, 0.92);
+	--card-overlay: linear-gradient(140deg, rgba(5, 8, 22, 0.92), rgba(14, 23, 51, 0.92));
+	--tag-bg: rgba(34, 211, 238, 0.2);
+	--icon-bg: rgba(249, 115, 22, 0.22);
+	--input-bg: rgba(4, 6, 20, 0.9);
+	--code-bg: rgba(3, 6, 32, 0.95);
+	--header-bg: rgba(5, 8, 22, 0.9);
+	--footer-bg: rgba(5, 8, 22, 0.88);
+	--app-background: linear-gradient(125deg, #030712 0%, #050816 45%, #0f172a 100%), radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.16), transparent 55%), radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.18), transparent 50%);
+
+	--shadow-xs: 0 10px 20px rgba(2, 6, 23, 0.8);
+	--shadow-sm: 0 18px 32px rgba(2, 6, 23, 0.78);
+	--shadow-md: 0 24px 48px rgba(249, 115, 22, 0.2);
+	--shadow-lg: 0 28px 56px rgba(34, 211, 238, 0.25);
+	--shadow-xl: 0 40px 70px rgba(15, 23, 42, 0.85);
+	--shadow-soft: 0 0 40px rgba(34, 211, 238, 0.3);
+	--shadow-glow: 0 0 60px rgba(249, 115, 22, 0.35), 0 0 90px rgba(34, 211, 238, 0.35);
+
+	--layer-primary-soft: rgba(249, 115, 22, 0.22);
+	--layer-primary-strong: rgba(249, 115, 22, 0.32);
+	--layer-accent-soft: rgba(34, 211, 238, 0.24);
+	--chip-contrast-surface: rgba(8, 10, 26, 0.7);
+	--chip-contrast-surface-strong: rgba(8, 10, 26, 0.9);
+	--gradient-brand: linear-gradient(135deg, #f97316 0%, #22d3ee 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(34, 211, 238, 0.2) 100%);
+}
+
+:root[data-theme="mono"] {
+	color-scheme: light;
+
+	--font-sans-primary: "Source Serif 4", "Noto Serif SC", "Songti SC", "STSong", "HarmonyOS Sans", "Microsoft YaHei", serif;
+	--font-sans-secondary: "Source Sans 3", "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+
+	--radius-xs: 4px;
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--radius-xl: 18px;
+	--radius-2xl: 22px;
+
+	--primary-color: #b45309;
+	--primary-color-strong: #92400e;
+	--primary-hover: #c2410c;
+	--primary-light: rgba(180, 83, 9, 0.18);
+	--primary-lighter: rgba(180, 83, 9, 0.12);
+	--accent-color: #8b5cf6;
+	--accent-hover: #7c3aed;
+
+	--text-primary: #3c2f25;
+	--text-secondary: #5b4636;
+	--text-tertiary: #a68a73;
+	--text-muted: #c9b6a0;
+	--text-inverse: #fff8f0;
+
+	--border-color: rgba(92, 64, 51, 0.35);
+	--border-soft: rgba(149, 121, 101, 0.3);
+	--border-light: rgba(180, 83, 9, 0.12);
+	--border-accent: rgba(180, 83, 9, 0.28);
+
+	--bg-primary: rgba(255, 250, 245, 0.97);
+	--bg-secondary: rgba(250, 241, 229, 0.94);
+	--bg-tertiary: rgba(244, 232, 216, 0.84);
+	--surface-glass: rgba(255, 248, 237, 0.8);
+	--surface-solid: #f7efe4;
+	--card-bg: rgba(255, 249, 239, 0.94);
+	--card-overlay: linear-gradient(140deg, rgba(255, 250, 245, 0.96), rgba(247, 231, 214, 0.96));
+	--tag-bg: rgba(180, 83, 9, 0.15);
+	--icon-bg: rgba(139, 92, 246, 0.12);
+	--input-bg: rgba(255, 252, 245, 0.96);
+	--code-bg: rgba(60, 47, 37, 0.08);
+	--header-bg: rgba(255, 249, 239, 0.9);
+	--footer-bg: rgba(247, 233, 214, 0.92);
+	--app-background: linear-gradient(135deg, #fdf4e3 0%, #f5ebe0 40%, #fef9f3 100%), radial-gradient(circle at 20% 20%, rgba(180, 83, 9, 0.12), transparent 45%);
+
+	--shadow-xs: 0 6px 18px rgba(60, 47, 37, 0.08);
+	--shadow-sm: 0 10px 28px rgba(60, 47, 37, 0.12);
+	--shadow-md: 0 14px 36px rgba(92, 64, 51, 0.12);
+	--shadow-lg: 0 18px 42px rgba(92, 64, 51, 0.15);
+	--shadow-xl: 0 26px 56px rgba(92, 64, 51, 0.18);
+	--shadow-soft: 0 12px 32px rgba(180, 83, 9, 0.12);
+	--shadow-glow: 0 0 35px rgba(139, 92, 246, 0.18);
+
+	--layer-primary-soft: rgba(180, 83, 9, 0.14);
+	--layer-primary-strong: rgba(180, 83, 9, 0.24);
+	--layer-accent-soft: rgba(139, 92, 246, 0.15);
+	--chip-contrast-surface: rgba(255, 255, 255, 0.82);
+	--chip-contrast-surface-strong: rgba(255, 255, 255, 0.92);
+	--gradient-brand: linear-gradient(135deg, #b45309 0%, #8b5cf6 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(180, 83, 9, 0.18) 0%, rgba(139, 92, 246, 0.18) 100%);
 }
 
 * {
