@@ -104,17 +104,20 @@
 	}
 
 	.nav-group.nested {
-		margin-bottom: var(--spacing-xl);
-		padding: var(--spacing-lg) 0;
-		padding-left: calc(var(--spacing-lg) + 14px);
-		border-bottom: none;
+		margin-bottom: 0;
+		margin-left: 0;
+		padding: 0;
+		padding-top: var(--spacing-xl);
+		border-bottom: 1px solid var(--border-light);
+		position: relative;
+	}
+
+	.nav-group.nested:first-child {
+		padding-top: 0;
 	}
 
 	.nav-group.nested::before {
-		left: var(--spacing-xs);
-		width: 2px;
-		background: var(--border-soft);
-		opacity: 0.6;
+		display: none;
 	}
 
 	@keyframes fadeIn {
@@ -138,7 +141,10 @@
 	}
 
 	.nav-group.nested .group-header {
+		margin-bottom: var(--spacing-lg);
+		padding-bottom: var(--spacing-md);
 		border-bottom: 1px solid var(--border-light);
+		gap: var(--spacing-md);
 	}
 
 	.group-icon {
@@ -191,7 +197,16 @@
 	}
 
 	.nav-group.nested .group-title {
-		font-size: 1.55rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+		line-height: 1.3;
+		position: relative;
+	}
+
+	@media (min-width: 769px) {
+		.nav-group.nested .group-title::before {
+			display: none;
+		}
 	}
 
 	.group-link {
@@ -224,6 +239,11 @@
 		flex: 1 1 220px;
 	}
 
+	.nav-group.nested .group-description {
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
+
 	.group-count {
 		display: inline-flex;
 		align-items: center;
@@ -238,10 +258,16 @@
 		white-space: nowrap;
 	}
 
+	.nav-group.nested .group-count {
+		font-size: 0.75rem;
+		padding: 0.25rem 0.625rem;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.nav-group {
 			animation: none;
 		}
+
 
 		.group-header:hover .group-icon {
 			transform: none;
@@ -256,8 +282,9 @@
 	}
 
 	.nav-group.nested .nav-items-grid {
-		margin-top: var(--spacing-md);
-		gap: var(--spacing-md);
+		margin-top: var(--spacing-lg);
+		gap: var(--spacing-lg);
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	}
 
 	@media (max-width: 1024px) {
@@ -278,6 +305,57 @@
 			display: none;
 		}
 
+		.nav-group.nested {
+			margin-left: 0;
+			margin-bottom: 0;
+			padding: 0;
+			padding-top: var(--spacing-lg);
+			position: relative;
+		}
+
+		.nav-group.nested:first-child {
+			padding-top: 0;
+		}
+
+		.nav-group.nested::after {
+			content: '';
+			position: absolute;
+			left: calc(-1 * var(--spacing-md) - 2px);
+			top: 0;
+			bottom: 0;
+			width: 2px;
+			background: var(--border-light);
+			opacity: 0.3;
+		}
+
+		.nav-group.nested .group-header {
+			margin-bottom: var(--spacing-md);
+			gap: var(--spacing-sm);
+			padding-left: var(--spacing-xs);
+		}
+
+		.nav-group.nested .group-title {
+			font-size: 1.375rem;
+		}
+
+		.nav-group.nested .group-title::before {
+			content: '└';
+			display: inline-block;
+			margin-right: var(--spacing-xs);
+			color: var(--text-tertiary);
+			font-size: 0.9em;
+			vertical-align: baseline;
+		}
+
+		.nav-group.nested .group-icon {
+			width: 40px;
+			height: 40px;
+		}
+
+		.nav-group.nested .nav-items-grid {
+			margin-top: var(--spacing-md);
+		}
+
 		.nav-items-grid {
 			grid-template-columns: 1fr;
 		}
@@ -290,6 +368,10 @@
 
 		.group-title {
 			font-size: 1.55rem;
+		}
+
+		.nav-group.nested .group-title {
+			font-size: 1.35rem;
 		}
 
 		.group-meta {
@@ -310,6 +392,11 @@
 			height: 48px;
 		}
 
+		.nav-group.nested .group-icon {
+			width: 40px;
+			height: 40px;
+		}
+
 		.group-header:hover .group-icon {
 			transform: none;
 			box-shadow: none;
@@ -323,8 +410,38 @@
 		}
 
 		.nav-group.nested {
-			padding: var(--spacing-sm) 0;
-			padding-left: calc(var(--spacing-sm) + 6px);
+			padding: 0;
+			padding-top: var(--spacing-md);
+			margin-bottom: 0;
+		}
+
+		.nav-group.nested:first-child {
+			padding-top: 0;
+		}
+
+		.nav-group.nested::after {
+			left: calc(-1 * var(--spacing-sm) - 1.5px);
+			width: 1.5px;
+		}
+
+		.nav-group.nested .group-header {
+			margin-bottom: var(--spacing-sm);
+			padding-bottom: var(--spacing-xs);
+			padding-left: var(--spacing-2xs);
+		}
+
+		.nav-group.nested .group-title {
+			font-size: 1.25rem;
+		}
+
+		.nav-group.nested .group-title::before {
+			margin-right: calc(var(--spacing-xs) / 2);
+			font-size: 0.85em;
+		}
+
+		.nav-group.nested .group-icon {
+			width: 36px;
+			height: 36px;
 		}
 
 		.group-header {
