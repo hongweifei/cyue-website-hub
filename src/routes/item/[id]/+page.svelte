@@ -54,29 +54,73 @@
 
   <article class="item-detail">
     <div class="item-detail-header">
-      <SiteIcon
-        item={data.item}
-        size={96}
-        appearance="muted"
-        radius={16}
-      />
-      <div class="item-info">
-        <h1 class="item-name">{data.item.name}</h1>
-        {#if data.item.info}
-          <p class="item-brief">{data.item.info}</p>
-        {/if}
-        <div class="item-meta">
-          <span class="item-group">分组：{data.item.group}</span>
-          {#if data.item.tags.length > 0}
-            <div class="item-tags">
-              {#each data.item.tags as tag}
-                <span class="tag">{tag}</span>
-              {/each}
+      <div class="header-main">
+        <div class="icon-wrapper">
+          <SiteIcon
+            item={data.item}
+            size={96}
+            appearance="muted"
+            radius={16}
+          />
+        </div>
+        <div class="item-info">
+          <div class="info-header">
+            <h1 class="item-name">{data.item.name}</h1>
+            <div class="item-actions">
+              <button
+                class="favorite-btn"
+                class:favorited={isFavorite}
+                onclick={toggleFavorite}
+                aria-label={isFavorite ? "取消收藏" : "收藏"}
+                title={isFavorite ? "取消收藏" : "收藏"}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill={isFavorite ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+              </button>
             </div>
+          </div>
+          {#if data.item.info}
+            <p class="item-brief">{data.item.info}</p>
           {/if}
+          <div class="item-meta">
+            <a href="/group/{data.item.group}" class="item-group">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+              </svg>
+              <span>{data.item.group}</span>
+            </a>
+            {#if data.item.tags.length > 0}
+              <div class="item-tags">
+                {#each data.item.tags as tag}
+                  <span class="tag">{tag}</span>
+                {/each}
+              </div>
+            {/if}
+          </div>
         </div>
       </div>
-      <div class="item-actions">
+      <div class="header-actions">
         <a
           href="{data.item.url}?utm_source={data.site
             ?.domain}&utm_medium=navigation"
@@ -84,30 +128,21 @@
           rel="noopener noreferrer"
           class="visit-btn"
         >
-          访问网站 →
-        </a>
-        <button
-          class="favorite-btn"
-          class:favorited={isFavorite}
-          onclick={toggleFavorite}
-          aria-label={isFavorite ? "取消收藏" : "收藏"}
-          title={isFavorite ? "取消收藏" : "收藏"}
-        >
+          <span>访问网站</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
-            fill={isFavorite ? "currentColor" : "none"}
+            fill="none"
             stroke="currentColor"
             stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            />
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
           </svg>
-          <span>{isFavorite ? "已收藏" : "收藏"}</span>
-        </button>
+        </a>
       </div>
     </div>
 
@@ -134,6 +169,9 @@
     padding: 2rem 0 4rem 0;
     max-width: 1000px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
   }
 
   .item-header {
@@ -180,52 +218,264 @@
   }
 
   .item-detail {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 2.5rem;
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--transition-base);
+    padding: 0;
   }
 
-  .item-detail:hover {
-    box-shadow: var(--shadow-md);
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .item-info {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .info-header {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .item-name {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .item-detail-page {
+      max-width: 1200px;
+    }
+
+    .item-name {
+      font-size: 2.375rem;
+    }
+
+    .item-brief {
+      font-size: 1.1875rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .item-detail-page {
+      max-width: 1400px;
+    }
+
+    .back-link {
+      font-size: 0.9375rem;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .item-detail-header {
+      padding-bottom: 3rem;
+      gap: 2.5rem;
+    }
+
+    .header-main {
+      gap: 2.5rem;
+    }
+
+    .icon-wrapper :global(.site-icon) {
+      width: 112px;
+      height: 112px;
+      min-width: 112px;
+      min-height: 112px;
+    }
+
+    .item-name {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .item-brief {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.75;
+    }
+
+    .item-meta {
+      gap: 1.25rem;
+      margin-top: 0.75rem;
+    }
+
+    .item-group {
+      font-size: 0.9375rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .item-tags {
+      gap: 0.625rem;
+    }
+
+    .tag {
+      font-size: 0.9375rem;
+      padding: 0.625rem 1rem;
+    }
+
+    .item-actions {
+      gap: 1rem;
+    }
+
+    .visit-btn {
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+    }
+
+    .favorite-btn {
+      padding: 1rem 1.5rem;
+      font-size: 0.9375rem;
+    }
+
+    .item-description {
+      margin-top: 3rem;
+    }
+
+    .description-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+    }
+
+    .item-footer {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+    }
+
+    .group-link {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .item-detail-page {
+      max-width: 1600px;
+    }
+
+    .item-detail-header {
+      padding-bottom: 3.5rem;
+      gap: 3rem;
+    }
+
+    .header-main {
+      gap: 3rem;
+    }
+
+    .icon-wrapper :global(.site-icon) {
+      width: 128px;
+      height: 128px;
+      min-width: 128px;
+      min-height: 128px;
+    }
+
+    .item-name {
+      font-size: 2.75rem;
+    }
+
+    .item-brief {
+      font-size: 1.375rem;
+    }
   }
 
   .item-detail-header {
     display: flex;
+    flex-direction: column;
     gap: 2rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .item-detail-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 120px;
+    height: 2px;
+    background: var(--gradient-brand);
+    border-radius: 2px;
+  }
+
+  .header-main {
+    display: flex;
+    gap: 2rem;
     align-items: flex-start;
+  }
+
+  .icon-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .icon-wrapper :global(.site-icon) {
+    position: relative;
+    transition: transform var(--transition-base);
+  }
+
+  .icon-wrapper :global(.site-icon)::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: var(--gradient-brand-soft);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+  }
+
+  .icon-wrapper:hover :global(.site-icon) {
+    transform: scale(1.05);
+  }
+
+  .icon-wrapper:hover :global(.site-icon)::after {
+    opacity: 0.5;
   }
 
   .item-info {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
     min-width: 0;
   }
 
   .item-name {
     font-size: 2.25rem;
     font-weight: 800;
-    margin: 0 0 0.75rem 0;
+    margin: 0;
     color: var(--text-primary);
     letter-spacing: -0.02em;
     line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .item-brief {
     font-size: 1.125rem;
     color: var(--text-secondary);
-    margin: 0 0 1.25rem 0;
-    line-height: 1.7;
+    margin: 0;
+    line-height: 1.75;
     font-weight: 400;
   }
 
   .item-meta {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-md);
     margin-top: 0.5rem;
   }
 
@@ -235,40 +485,84 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
+    padding: 0.5rem 1rem;
     background: var(--tag-bg);
+    border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background var(--transition-fast),
+      border-color var(--transition-fast),
+      color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .item-group:hover {
+    background: var(--layer-primary-soft);
+    border-color: var(--border-accent);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+  }
+
+  .item-group svg {
+    flex-shrink: 0;
   }
 
   .item-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.625rem;
+    align-items: center;
   }
 
   .tag {
     font-size: 0.875rem;
-    padding: 0.5rem 0.875rem;
+    padding: 0.5625rem 1rem;
     background: var(--gradient-brand);
     color: var(--text-inverse);
     border-radius: var(--radius-md);
-    font-weight: 500;
+    font-weight: 600;
     box-shadow: var(--shadow-sm);
     transition:
       transform var(--transition-fast),
-      box-shadow var(--transition-fast);
+      box-shadow var(--transition-fast),
+      opacity var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tag::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
   }
 
   .tag:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+  }
+
+  .tag:hover::before {
+    opacity: 1;
   }
 
   .item-actions {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border-light);
   }
 
   .visit-btn {
@@ -278,6 +572,7 @@
     text-decoration: none;
     border-radius: var(--radius-lg);
     font-weight: 600;
+    font-size: 0.9375rem;
     transition:
       background var(--transition-base),
       box-shadow var(--transition-base),
@@ -287,7 +582,18 @@
     box-shadow: var(--shadow-md);
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .visit-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
   }
 
   .visit-btn:hover {
@@ -296,14 +602,29 @@
     transform: translateY(-2px);
   }
 
+  .visit-btn:hover::before {
+    opacity: 1;
+  }
+
+  .visit-btn svg {
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+  }
+
+  .visit-btn:hover svg {
+    transform: translate(2px, -2px);
+  }
+
   .favorite-btn {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.25rem;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
     background: var(--tag-bg);
     border: 2px solid var(--border-color);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     cursor: pointer;
     color: var(--text-secondary);
     transition:
@@ -312,16 +633,39 @@
       box-shadow var(--transition-base),
       transform var(--transition-base),
       border-color var(--transition-base);
-    font-size: 0.875rem;
-    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .favorite-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--layer-primary-soft);
+    opacity: 0;
+    transition: opacity var(--transition-base);
   }
 
   .favorite-btn:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
-    transform: translateY(-1px);
+    transform: scale(1.1);
     box-shadow: var(--shadow-sm);
+  }
+
+  .favorite-btn:hover::before {
+    opacity: 1;
+  }
+
+  .favorite-btn svg {
+    position: relative;
+    z-index: 1;
+    transition: transform var(--transition-base);
+  }
+
+  .favorite-btn:hover svg {
+    transform: scale(1.15);
   }
 
   .favorite-btn.favorited {
@@ -331,16 +675,18 @@
     box-shadow: var(--shadow-sm);
   }
 
+  .favorite-btn.favorited::before {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+  }
+
   .favorite-btn.favorited:hover {
     background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: scale(1.1);
   }
 
   .item-description {
     margin-top: 2.5rem;
-    padding-top: 2.5rem;
-    border-top: 2px solid var(--border-color);
   }
 
   .description-title {
@@ -427,19 +773,25 @@
     }
 
     .item-detail-header {
-      flex-direction: column;
-      gap: var(--spacing-md);
-      margin-bottom: var(--spacing-lg);
       padding-bottom: var(--spacing-lg);
+      gap: 1.5rem;
+      margin-bottom: var(--spacing-lg);
     }
 
-    .item-detail-header :global(.site-icon) {
+    .header-main {
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .icon-wrapper {
+      align-self: flex-start;
+    }
+
+    .icon-wrapper :global(.site-icon) {
       width: 64px !important;
       height: 64px !important;
       min-width: 64px;
       min-height: 64px;
-      align-self: flex-start;
-      flex-shrink: 0;
     }
 
     .item-name {
@@ -476,20 +828,27 @@
       box-shadow: none;
     }
 
-    .item-actions {
-      width: 100%;
+    .info-header {
       flex-direction: row;
-      justify-content: stretch;
-      gap: var(--spacing-sm);
-      margin-top: var(--spacing-md);
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
 
-    .visit-btn,
-    .favorite-btn {
-      flex: 1;
-      padding: 0.75rem var(--spacing-md);
+    .header-actions {
+      padding-top: 0.75rem;
+    }
+
+    .visit-btn {
+      width: 100%;
+      padding: 0.875rem var(--spacing-md);
       font-size: 0.875rem;
       justify-content: center;
+    }
+
+    .favorite-btn {
+      width: 2.25rem;
+      height: 2.25rem;
     }
 
     .visit-btn:hover {
@@ -509,8 +868,6 @@
 
     .item-description {
       margin-top: var(--spacing-lg);
-      padding-top: var(--spacing-lg);
-      border-top: 1px solid var(--border-color);
     }
 
     .description-title {

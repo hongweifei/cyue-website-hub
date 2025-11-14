@@ -62,7 +62,41 @@
 
 <style>
   .recommendations {
-    margin-top: 3rem;
+    margin-top: 0;
+  }
+
+  @media (min-width: 1280px) {
+    .recommendations {
+      margin-top: 0;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9375rem;
+    }
+
+    .recommendation-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .recommendations {
+      margin-top: 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .recommendation-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
   }
 
   .section-title {
