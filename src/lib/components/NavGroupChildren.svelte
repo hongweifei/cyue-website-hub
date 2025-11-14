@@ -4,19 +4,18 @@
 
 	interface Props {
 		groups: NavGroupType[];
-		showDescription?: boolean;
 		level: number;
 	}
 
-	let { groups, showDescription = false, level }: Props = $props();
+	let { groups, level }: Props = $props();
 </script>
 
 {#if groups.length > 0}
 	<div class="subgroups">
 		<div class="subgroups-list">
-			{#each groups as child}
-				<NavGroupSection group={child} {showDescription} level={level} />
-			{/each}
+		{#each groups as child}
+			<NavGroupSection group={child} level={level} />
+		{/each}
 		</div>
 	</div>
 {/if}

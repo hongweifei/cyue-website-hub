@@ -33,7 +33,7 @@
 			<span>返回首页</span>
 		</a>
 	</div>
-	<NavGroup group={data.group} showDescription={true} />
+	<NavGroup group={data.group} />
 </div>
 
 <style>

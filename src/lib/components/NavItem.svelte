@@ -1,18 +1,14 @@
 <script lang="ts">
   import type { NavItem as NavItemType } from "../types";
   import { favorites } from "../stores/favorites";
-  import MarkdownRenderer from "./MarkdownRenderer.svelte";
   import { page } from "$app/state";
   import SiteIcon from "./SiteIcon.svelte";
 
   interface Props {
     item: NavItemType;
-    showDescription?: boolean;
   }
 
-  let { item, showDescription = false }: Props = $props();
-
-  let showFullDescription = $state(false);
+  let { item }: Props = $props();
   let favoriteIds = $state<string[]>([]);
 
   $effect(() => {
@@ -77,20 +73,6 @@
     </div>
   {/if}
 
-  {#if showDescription && item.desc_md}
-    <div class="nav-item-description">
-      <button
-        class="toggle-description"
-        onclick={() => (showFullDescription = !showFullDescription)}
-      >
-        {showFullDescription ? "收起介绍" : "展开介绍"}
-      </button>
-      <div class:hidden={!showFullDescription}>
-        <MarkdownRenderer {item} />
-      </div>
-    </div>
-  {/if}
-
   <div class="nav-item-footer">
     <a href="/item/{item.id}" class="detail-link">查看详情</a>
     <a
@@ -106,10 +88,6 @@
 </article>
 
 <style>
-  .hidden {
-    display: none;
-  }
-
   .nav-item {
     background: var(--card-bg);
     border: 1px solid var(--border-light);
@@ -234,29 +212,6 @@
     border-color: var(--primary-color);
     transform: translateY(-1px);
     box-shadow: var(--shadow-xs);
-  }
-
-  .nav-item-description {
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--border-light);
-  }
-
-  .toggle-description {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-size: 0.875rem;
-    padding: var(--spacing-sm) 0;
-    margin-bottom: var(--spacing-sm);
-    font-weight: 500;
-    transition: all var(--transition-base);
-  }
-
-  .toggle-description:hover {
-    color: var(--primary-hover);
-    transform: translateX(4px);
   }
 
   .nav-item-footer {

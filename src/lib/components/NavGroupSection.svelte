@@ -7,11 +7,10 @@
 
 	interface Props {
 		group: NavGroupType;
-		showDescription?: boolean;
 		level: number;
 	}
 
-	let { group, showDescription = false, level }: Props = $props();
+	let { group, level }: Props = $props();
 
 	// 只在明确提供了图标时才显示
 	const groupIconUrl = $derived(group.icon || '');
@@ -63,12 +62,12 @@
 	{#if group.items.length > 0}
 		<div class="nav-items-grid">
 			{#each group.items as item}
-				<NavItem {item} {showDescription} />
+				<NavItem {item} />
 			{/each}
 		</div>
 	{/if}
 	{#if hasChildren}
-		<NavGroupChildren groups={childGroups} {showDescription} level={level + 1} />
+		<NavGroupChildren groups={childGroups} level={level + 1} />
 	{/if}
 </section>
 

@@ -4,10 +4,9 @@
 
 	interface Props {
 		group: NavGroupType;
-		showDescription?: boolean;
 	}
 
-	let { group, showDescription = false }: Props = $props();
+	let { group }: Props = $props();
 </script>
 
-<NavGroupSection {group} {showDescription} level={0} />
+<NavGroupSection {group} level={0} />

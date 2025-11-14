@@ -33,7 +33,7 @@
 	{:else}
 		<div class="favorite-items">
 			{#each favoriteItems as item}
-				<NavItemComponent {item} showDescription={true} />
+				<NavItemComponent {item} />
 			{/each}
 		</div>
 	{/if}

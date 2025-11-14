@@ -26,20 +26,20 @@
 			{:else}
 				<div class="results-grid">
 					{#each filteredItems as item}
-						<NavItem {item} showDescription={true} />
+						<NavItem {item} />
 					{/each}
 				</div>
 			{/if}
 		</div>
 	{:else if currentGroup}
 		<div class="group-content">
-			<NavGroup group={currentGroup} showDescription={false} />
+			<NavGroup group={currentGroup} />
 		</div>
 	{:else}
 		<!-- 显示全部分组 -->
 		<div class="all-groups-content">
 			{#each allGroups as group}
-				<NavGroup {group} showDescription={false} />
+				<NavGroup {group} />
 			{/each}
 		</div>
 	{/if}
