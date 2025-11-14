@@ -82,23 +82,27 @@
 		display: flex;
 		align-items: center;
 		gap: var(--spacing-sm);
+		background: var(--gradient-brand);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
 	.results-title::before {
 		content: '';
-		width: 4px;
+		width: 3px;
 		height: 1.5rem;
 		background: var(--gradient-brand);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-full);
 	}
 
 	.no-results {
 		text-align: center;
 		padding: var(--spacing-2xl) var(--spacing-md);
 		color: var(--text-secondary);
-		background: var(--card-bg);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
+		background: var(--bg-secondary);
+		border-radius: var(--radius-2xl);
+		border: 1px dashed var(--border-light);
 	}
 
 	.no-results p {

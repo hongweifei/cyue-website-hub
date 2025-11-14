@@ -112,24 +112,26 @@
 
   .nav-item {
     background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
     padding: var(--spacing-lg);
     transition: all var(--transition-base);
     position: relative;
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-xs);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .nav-item:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-    border-color: var(--primary-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--border-accent);
+    background: var(--surface-glass);
   }
 
   .nav-item:active {
-    transform: translateY(-2px);
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
   }
 
   .nav-item-header {
@@ -178,11 +180,11 @@
   .favorite-btn {
     flex-shrink: 0;
     background: var(--bg-tertiary);
-    border: none;
+    border: 1px solid var(--border-light);
     cursor: pointer;
     padding: var(--spacing-sm);
     color: var(--text-tertiary);
-    transition: all var(--transition-base);
+    transition: all var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,17 +195,19 @@
 
   .favorite-btn:hover {
     color: var(--primary-color);
-    background: var(--primary-light);
-    transform: scale(1.1);
+    background: var(--primary-lighter);
+    border-color: var(--border-accent);
+    transform: scale(1.05);
   }
 
   .favorite-btn.favorited {
     color: var(--accent-color);
     background: var(--layer-accent-soft);
+    border-color: var(--accent-color);
   }
 
   .favorite-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
 
   .nav-item-tags {
@@ -215,14 +219,10 @@
 
   .tag {
     font-size: 0.75rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: linear-gradient(
-      135deg,
-      var(--tag-bg) 0%,
-      var(--bg-tertiary) 100%
-    );
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    background: var(--tag-bg);
     color: var(--text-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-full);
     font-weight: 500;
     border: 1px solid var(--border-light);
     transition: all var(--transition-fast);
@@ -233,6 +233,7 @@
     color: var(--primary-color);
     border-color: var(--primary-color);
     transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   .nav-item-description {
@@ -285,31 +286,34 @@
   .detail-link {
     background: var(--bg-tertiary);
     color: var(--text-secondary);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-light);
   }
 
   .detail-link:hover {
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    border-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   .external-link {
     background: var(--gradient-brand);
     color: var(--text-inverse);
-    box-shadow: var(--shadow-sm);
+    border: none;
+    box-shadow: var(--shadow-xs);
   }
 
   .external-link:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+    opacity: 0.95;
   }
 
   .external-link:active,
   .detail-link:active {
     transform: translateY(0);
+    box-shadow: var(--shadow-xs);
   }
 
   @media (max-width: 768px) {

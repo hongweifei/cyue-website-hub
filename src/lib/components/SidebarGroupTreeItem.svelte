@@ -66,40 +66,41 @@ const childGroupCount = $derived((group.children ?? []).length);
 		display: flex;
 		align-items: center;
 		gap: var(--spacing-md);
-		padding: var(--spacing-sm) var(--spacing-md);
+		padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
 		width: 100%;
 		text-align: left;
-		background: var(--bg-secondary);
-		border-radius: var(--radius-md);
-		border: 1px solid transparent;
+		background: var(--bg-tertiary);
+		border-radius: var(--radius-xl);
+		border: 1px solid var(--border-light);
 		color: var(--text-primary);
 		cursor: pointer;
-		transition: background var(--transition-base), border var(--transition-base), color var(--transition-base),
-			transform var(--transition-fast);
+		transition: all var(--transition-fast);
 	}
 
 	:global(.sidebar-group-btn:hover) {
-		background: var(--primary-light);
-		border-color: var(--primary-light);
-		color: var(--primary-hover);
-		transform: translateX(4px);
+		background: var(--primary-lighter);
+		border-color: var(--border-accent);
+		color: var(--primary-color);
+		transform: translateX(2px);
 	}
 
 	:global(.sidebar-group-btn:focus-visible) {
 		outline: 2px solid var(--primary-color);
-		outline-offset: 3px;
+		outline-offset: 2px;
+		border-radius: var(--radius-xl);
 	}
 
 	:global(.sidebar-group-btn.active) {
-		background: var(--primary-color);
-		border-color: var(--primary-color);
+		background: var(--gradient-brand);
+		border-color: transparent;
 		color: var(--text-inverse);
+		box-shadow: var(--shadow-xs);
 	}
 
 	:global(.sidebar-group-icon) {
 		width: 36px;
 		height: 36px;
-		border-radius: 50%;
+		border-radius: var(--radius-lg);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -107,6 +108,8 @@ const childGroupCount = $derived((group.children ?? []).length);
 		font-weight: 600;
 		background: var(--icon-bg);
 		color: var(--primary-color);
+		border: 1px solid var(--border-light);
+		transition: all var(--transition-fast);
 	}
 
 	:global(.sidebar-group-icon.placeholder) {
@@ -152,12 +155,12 @@ const childGroupCount = $derived((group.children ?? []).length);
 		min-width: 44px;
 		height: 26px;
 		padding: 0 var(--spacing-sm);
-		border-radius: 999px;
+		border-radius: var(--radius-full);
 		font-size: 0.75rem;
-		font-weight: 600;
-		background: var(--bg-primary);
-		color: var(--text-secondary);
-		border: 1px solid var(--border-light);
+		font-weight: 500;
+		background: var(--primary-lighter);
+		color: var(--primary-color);
+		border: 1px solid var(--border-accent);
 	}
 
 	:global(.sidebar-group-count::after) {

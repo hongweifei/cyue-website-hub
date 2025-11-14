@@ -123,18 +123,17 @@
     flex-direction: column;
     background: var(--card-bg);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xs);
     overflow: hidden;
-    transition:
-      transform var(--transition-base),
-      box-shadow var(--transition-base),
-      border-color var(--transition-base);
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .recommendation-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
     border-color: var(--border-accent);
   }
 
@@ -175,14 +174,14 @@
   .card-group {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.65rem;
-    border-radius: 999px;
-    background: var(--tag-bg);
+    gap: var(--spacing-2xs);
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    background: var(--primary-lighter);
     color: var(--text-secondary);
     font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.02em;
+    border: 1px solid var(--border-light);
   }
 
   .card-tags {
@@ -192,12 +191,13 @@
   }
 
   .tag {
-    padding: 0.35rem 0.7rem;
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
     font-size: 0.75rem;
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
-    border-radius: 999px;
+    background: var(--primary-lighter);
+    border-radius: var(--radius-full);
     font-weight: 500;
+    border: 1px solid var(--border-accent);
   }
 
   .card-actions {

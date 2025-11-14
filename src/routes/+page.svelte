@@ -157,17 +157,17 @@ const currentGroup = $derived.by(() => {
 
 <style>
 	.home-page {
-		padding: var(--spacing-md) 0;
+		padding: var(--spacing-lg) 0;
 		display: flex;
 		flex-direction: column;
-		gap: var(--spacing-xl);
+		gap: var(--spacing-2xl);
 	}
 
 	/* 侧边栏布局 */
 	.sidebar-layout-container {
 		display: grid;
 		grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-		gap: var(--spacing-xl);
+		gap: var(--spacing-2xl);
 		align-items: flex-start;
 		min-height: 600px;
 	}
@@ -177,7 +177,7 @@ const currentGroup = $derived.by(() => {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: var(--spacing-xl);
+		gap: var(--spacing-2xl);
 	}
 
 	.search-section {
@@ -203,42 +203,42 @@ const currentGroup = $derived.by(() => {
 	@media (max-width: 1280px) {
 		.sidebar-layout-container {
 			grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-			gap: var(--spacing-lg);
+			gap: var(--spacing-xl);
 		}
 	}
 
 	@media (max-width: 1024px) {
 		.sidebar-layout-container {
 			grid-template-columns: 1fr;
-			gap: var(--spacing-lg);
+			gap: var(--spacing-xl);
 		}
 
 		.vertical-layout-container {
-			gap: var(--spacing-lg);
+			gap: var(--spacing-xl);
 		}
 	}
 
 	@media (max-width: 768px) {
 		.home-page {
-			padding: var(--spacing-sm) 0;
-			gap: var(--spacing-md);
+			padding: var(--spacing-md) 0;
+			gap: var(--spacing-lg);
 		}
 
 		.sidebar-layout-container {
 			grid-template-columns: 1fr;
-			gap: var(--spacing-md);
+			gap: var(--spacing-lg);
 		}
 
 		.search-section {
-			margin-bottom: var(--spacing-lg);
+			margin-bottom: var(--spacing-md);
 		}
 
 		.filters-section {
-			gap: var(--spacing-md);
+			gap: var(--spacing-lg);
 		}
 
 		.vertical-layout-container {
-			gap: var(--spacing-md);
+			gap: var(--spacing-lg);
 		}
 	}
 </style>

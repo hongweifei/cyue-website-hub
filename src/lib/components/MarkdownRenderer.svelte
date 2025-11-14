@@ -167,12 +167,14 @@ const htmlContent = $derived.by(() => {
 
   .markdown-content :global(blockquote) {
     margin: 0.75rem 0;
-    padding: 0.75rem 1rem;
-    background: var(--layer-primary-soft);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--primary-lighter);
     border-left: 3px solid var(--primary-color);
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     color: var(--text-primary);
     font-style: italic;
+    border: 1px solid var(--border-light);
+    border-left-width: 3px;
   }
 
   .markdown-content :global(code) {
@@ -184,22 +186,22 @@ const htmlContent = $derived.by(() => {
       Monaco,
       "Courier New",
       monospace;
-    background: var(--chip-contrast-surface);
-    padding: 0.15rem 0.35rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-accent);
+    background: var(--code-bg);
+    padding: calc(var(--spacing-2xs) * 0.75) var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
     color: var(--text-primary);
   }
 
   .markdown-content :global(pre) {
-    background: var(--surface-solid);
+    background: var(--code-bg);
     color: var(--text-primary);
-    padding: 1rem;
-    border-radius: 0.75rem;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
     overflow-x: auto;
     margin: 0.75rem 0;
-    border: 1px solid var(--border-soft);
-    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-xs);
   }
 
   .markdown-content :global(pre code) {
@@ -214,9 +216,10 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(table) {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-xl);
     overflow: hidden;
     border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-xs);
   }
 
   .markdown-content :global(th),
@@ -227,7 +230,7 @@ const htmlContent = $derived.by(() => {
   }
 
   .markdown-content :global(thead th) {
-    background: var(--layer-primary-soft);
+    background: var(--primary-lighter);
     color: var(--text-primary);
     font-weight: 600;
   }
@@ -239,8 +242,9 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(img) {
     display: block;
     margin: 1rem auto;
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
   }
 
   .markdown-content :global(figure) {
@@ -270,15 +274,15 @@ const htmlContent = $derived.by(() => {
 
   .markdown-content :global(kbd) {
     display: inline-block;
-    padding: 0.2rem 0.45rem;
-    border-radius: 6px;
+    padding: calc(var(--spacing-2xs) * 0.75) var(--spacing-xs);
+    border-radius: var(--radius-sm);
     border: 1px solid var(--border-light);
-    background: var(--chip-contrast-surface);
+    background: var(--bg-tertiary);
     font-size: 0.75rem;
     font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
     color: var(--text-primary);
-    box-shadow: inset 0 -1px 0 var(--chip-contrast-surface-strong);
+    box-shadow: var(--shadow-xs);
   }
 
   @media (max-width: 768px) {

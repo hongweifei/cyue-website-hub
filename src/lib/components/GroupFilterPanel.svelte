@@ -159,9 +159,14 @@
     gap: var(--spacing-sm);
     padding: var(--spacing-md);
     background: var(--bg-secondary);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-xl);
     border: 1px solid var(--border-light);
-    box-shadow: inset 0 1px 0 var(--chip-contrast-surface);
+    transition: all var(--transition-fast);
+  }
+
+  .group-filter-panel:hover {
+    border-color: var(--border-accent);
+    background: var(--surface-glass);
   }
 
   .filter-bar {
@@ -180,17 +185,22 @@
 
   .filter-clear {
     border: none;
-    background: none;
+    background: var(--bg-tertiary);
     color: var(--primary-color);
     font-size: 0.8125rem;
     cursor: pointer;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-base);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-light);
+    font-weight: 500;
   }
 
   .filter-clear:hover {
-    text-decoration: underline;
+    background: var(--primary-lighter);
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   .group-chip-list {
@@ -201,31 +211,33 @@
 
   .group-chip {
     border: 1px solid var(--border-light);
-    background: var(--bg-primary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
-    border-radius: 999px;
-    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-full);
+    padding: calc(var(--spacing-xs) * 0.875) var(--spacing-md);
     font-size: 0.8125rem;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
     transition: all var(--transition-fast);
+    font-weight: 500;
   }
 
   .group-chip:hover {
     border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
+    background: var(--primary-lighter);
     transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
   }
 
   .group-chip.active {
     background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-xs);
+    font-weight: 600;
   }
 
   .group-chip-count {
@@ -233,15 +245,19 @@
     align-items: center;
     justify-content: center;
     min-width: 1.5rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 999px;
-    background: var(--chip-contrast-surface);
+    padding: calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75);
+    border-radius: var(--radius-full);
+    background: var(--primary-lighter);
+    border: 1px solid var(--border-accent);
     font-size: 0.7rem;
-    font-weight: 600;
+    font-weight: 500;
+    color: var(--primary-color);
   }
 
   .group-chip.active .group-chip-count {
-    background: var(--chip-contrast-surface-strong);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--text-inverse);
   }
 
   .group-chip-name {
@@ -282,19 +298,23 @@
     margin-top: var(--spacing-sm);
     align-self: flex-start;
     border: none;
-    background: transparent;
+    background: var(--bg-tertiary);
     color: var(--primary-color);
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    transition: color var(--transition-fast), background var(--transition-fast);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-light);
   }
 
   .group-toggle:hover {
-    color: var(--primary-hover);
-    background: var(--layer-primary-soft);
+    color: var(--primary-color);
+    background: var(--primary-lighter);
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   @media (max-width: 768px) {

@@ -49,20 +49,15 @@
 		color: var(--text-secondary);
 		text-decoration: none;
 		font-size: 0.875rem;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast),
-			border-color var(--transition-fast),
-			transform var(--transition-fast),
-			box-shadow var(--transition-fast);
+		transition: all var(--transition-fast);
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.625rem 1.25rem;
-		border-radius: var(--radius-md);
+		gap: var(--spacing-sm);
+		padding: calc(var(--spacing-sm) * 0.875) var(--spacing-lg);
+		border-radius: var(--radius-full);
 		font-weight: 500;
-		background: var(--card-bg);
-		border: 1px solid var(--border-color);
+		background: var(--bg-tertiary);
+		border: 1px solid var(--border-light);
 		cursor: pointer;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
@@ -70,14 +65,14 @@
 
 	.back-link:hover {
 		color: var(--primary-color);
-		background: var(--layer-primary-soft);
-		border-color: var(--primary-color);
-		transform: translateX(-4px);
-		box-shadow: var(--shadow-sm);
+		background: var(--primary-lighter);
+		border-color: var(--border-accent);
+		transform: translateX(-2px);
+		box-shadow: var(--shadow-xs);
 	}
 
 	.back-link:active {
-		transform: translateX(-2px);
+		transform: translateX(0);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

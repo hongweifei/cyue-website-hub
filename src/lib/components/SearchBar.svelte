@@ -67,23 +67,32 @@
 
 	.search-input {
 		width: 100%;
-		padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 3.5rem;
-		font-size: 1rem;
-		border: 2px solid var(--border-color);
-		border-radius: var(--radius-xl);
-		background: var(--card-bg);
+		padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg) calc(var(--spacing-md) * 0.875) 3.5rem;
+		font-size: 0.9375rem;
+		border: 1px solid var(--border-light);
+		border-radius: var(--radius-2xl);
+		background: var(--input-bg);
 		color: var(--text-primary);
-		transition: all var(--transition-base);
-		box-shadow: var(--shadow-sm);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
+		transition: all var(--transition-fast);
+		box-shadow: var(--shadow-xs);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	.search-input::placeholder {
+		color: var(--text-tertiary);
 	}
 
 	.search-input:focus {
 		outline: none;
 		border-color: var(--primary-color);
-		box-shadow: var(--shadow-md), 0 0 0 3px var(--layer-primary-soft);
-		transform: translateY(-2px);
+		box-shadow: var(--shadow-sm), 0 0 0 2px var(--primary-lighter);
+		background: var(--card-bg);
+	}
+
+	.search-input:hover:not(:focus) {
+		border-color: var(--border-color);
+		box-shadow: var(--shadow-xs);
 	}
 
 	.search-bar:has(.search-input:focus) .search-icon {
@@ -93,7 +102,7 @@
 	.clear-btn {
 		position: absolute;
 		right: var(--spacing-md);
-		background: var(--bg-tertiary);
+		background: transparent;
 		border: none;
 		cursor: pointer;
 		padding: var(--spacing-xs);
@@ -101,8 +110,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all var(--transition-base);
-		border-radius: var(--radius-md);
+		transition: all var(--transition-fast);
+		border-radius: var(--radius-full);
 		width: 28px;
 		height: 28px;
 		z-index: 1;
@@ -110,12 +119,13 @@
 
 	.clear-btn:hover {
 		color: var(--text-primary);
-		background: var(--primary-light);
-		transform: scale(1.1);
+		background: var(--primary-lighter);
+		transform: scale(1.05);
 	}
 
 	.clear-btn:active {
-		transform: scale(0.95);
+		transform: scale(0.98);
+		background: var(--primary-light);
 	}
 
 	@media (max-width: 768px) {
@@ -124,9 +134,9 @@
 		}
 
 		.search-input {
-			padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) 3rem;
+			padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md) calc(var(--spacing-sm) * 0.875) 3rem;
 			font-size: 0.9375rem;
-			border-radius: var(--radius-lg);
+			border-radius: var(--radius-xl);
 		}
 
 		.search-icon {

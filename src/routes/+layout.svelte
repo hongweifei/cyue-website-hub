@@ -271,17 +271,18 @@
     gap: var(--spacing-lg);
     padding: calc(var(--spacing-sm) * 1.5) var(--spacing-lg);
     background: var(--surface-glass);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-2xl);
     border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all var(--transition-base);
   }
 
   .header-shell:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-accent);
   }
 
   .logo {
@@ -324,49 +325,43 @@
   .nav-link {
     position: relative;
     color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: calc(var(--spacing-xs) * 1.6) calc(var(--spacing-sm) * 1.6);
-    border-radius: var(--radius-lg);
-    letter-spacing: 0.015em;
-    transition:
-      color var(--transition-fast),
-      background var(--transition-fast),
-      transform var(--transition-fast),
-      box-shadow var(--transition-fast);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: calc(var(--spacing-xs) * 1.25) var(--spacing-md);
+    border-radius: var(--radius-full);
+    letter-spacing: 0.01em;
+    transition: all var(--transition-fast);
   }
 
   .nav-link::after {
     content: "";
     position: absolute;
-    left: calc(var(--spacing-2xs) * -1);
-    right: calc(var(--spacing-2xs) * -1);
-    bottom: calc(var(--spacing-2xs) * -1.5);
-    height: 3px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+    left: 50%;
+    bottom: calc(var(--spacing-2xs) * -1);
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 2px;
+    border-radius: var(--radius-full);
+    background: var(--primary-color);
     opacity: 0;
-    transform: scaleX(0.6);
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    transition: all var(--transition-fast);
   }
 
   .nav-link:hover {
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    background: var(--primary-lighter);
   }
 
   .nav-link:hover::after,
   .nav-link:focus-visible::after {
     opacity: 1;
-    transform: scaleX(1);
+    transform: translateX(-50%) scaleX(1);
   }
 
   .nav-link:focus-visible {
     outline: none;
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
+    background: var(--primary-lighter);
   }
 
   .main {
@@ -377,17 +372,18 @@
 
   .main .container {
     background: var(--card-bg);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-2xl);
     padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
-    border: 1px solid var(--border-soft);
-    box-shadow: var(--shadow-md);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    transition: box-shadow var(--transition-base), transform var(--transition-base);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all var(--transition-base);
   }
 
   .main .container:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-accent);
   }
 
   .footer {
@@ -416,16 +412,16 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
     padding: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-2xl);
     background: linear-gradient(
         140deg,
-        color-mix(in srgb, var(--surface-glass) 88%, transparent),
-        color-mix(in srgb, var(--card-bg) 94%, transparent)
+        color-mix(in srgb, var(--surface-glass) 90%, transparent),
+        color-mix(in srgb, var(--card-bg) 95%, transparent)
       );
-    border: 1px solid color-mix(in srgb, var(--border-light) 82%, transparent);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     color: var(--text-secondary);
   }
 
@@ -480,13 +476,14 @@
   }
 
   .badge {
-    padding: 0.35rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    background: color-mix(in srgb, var(--primary-light) 60%, transparent);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    background: var(--primary-lighter);
     color: var(--primary-color);
-    border: 1px solid color-mix(in srgb, var(--primary-color) 28%, transparent);
+    border: 1px solid var(--border-accent);
     backdrop-filter: blur(8px);
+    font-weight: 500;
   }
 
   .footer-links,

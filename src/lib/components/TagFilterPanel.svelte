@@ -302,19 +302,20 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.18rem 0.6rem;
-    border-radius: 999px;
+    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
+    border-radius: var(--radius-full);
     font-size: 0.75rem;
-    background: var(--bg-secondary);
-    color: var(--text-tertiary);
-    border: 1px solid transparent;
+    background: var(--primary-lighter);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-fast);
   }
 
   .meta-chip.selected-chip {
-    background: var(--layer-primary-soft);
+    background: var(--primary-light);
     color: var(--primary-color);
     border-color: var(--border-accent);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .meta-chip.muted {
@@ -325,18 +326,20 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .secondary-action {
     border: none;
-    background: var(--bg-secondary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
     font-size: 0.75rem;
-    padding: 0.3rem 0.7rem;
-    border-radius: var(--radius-md);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: color var(--transition-fast), background var(--transition-fast);
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-light);
   }
 
   .secondary-action:hover {
-    background: var(--primary-light);
+    background: var(--primary-lighter);
     color: var(--primary-color);
+    border-color: var(--border-accent);
   }
 
   .header-title {
@@ -387,20 +390,22 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     background: transparent;
     color: var(--text-tertiary);
     font-size: 0.8125rem;
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--radius-md);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--transition-fast);
+    font-weight: 500;
   }
 
   .group-toggle-btn:hover {
     color: var(--primary-color);
+    background: var(--primary-lighter);
   }
 
   .group-toggle-btn.active {
-    background: var(--bg-primary);
+    background: var(--primary-light);
     color: var(--primary-color);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
     font-weight: 600;
   }
 
@@ -410,19 +415,28 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .search-input {
     width: 100%;
-    padding: 0.625rem 0.875rem;
-    border-radius: var(--radius-lg);
+    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
+    border-radius: var(--radius-xl);
     border: 1px solid var(--border-light);
-    background: var(--bg-primary);
-    box-shadow: inset 0 1px 2px var(--chip-contrast-surface);
+    background: var(--input-bg);
+    box-shadow: var(--shadow-xs);
     font-size: 0.875rem;
-    transition: all var(--transition-base);
+    transition: all var(--transition-fast);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-tertiary);
   }
 
   .search-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px var(--layer-primary-soft);
+    box-shadow: var(--shadow-xs), 0 0 0 2px var(--primary-lighter);
+    background: var(--card-bg);
+  }
+
+  .search-input:hover:not(:focus) {
+    border-color: var(--border-color);
   }
 
   .quick-tags {
@@ -446,26 +460,30 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .quick-tag {
     border: 1px solid var(--border-light);
-    background: var(--bg-secondary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
-    border-radius: 999px;
-    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-full);
+    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
     font-size: 0.75rem;
     cursor: pointer;
-    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+    transition: all var(--transition-fast);
+    font-weight: 500;
   }
 
   .quick-tag:hover {
     border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
+    background: var(--primary-lighter);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   .quick-tag.selected {
     background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
+    font-weight: 600;
   }
 
   .tag-grid {
@@ -486,18 +504,19 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     align-items: center;
     justify-content: flex-start;
     gap: var(--spacing-xs);
-    padding: 0.5rem 0.7rem;
-    border-radius: var(--radius-lg);
+    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
+    border-radius: var(--radius-xl);
     border: 1px solid var(--border-light);
-    background: var(--bg-secondary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
     cursor: pointer;
-    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-    font-size: 0.8rem;
+    transition: all var(--transition-fast);
+    font-size: 0.8125rem;
     text-align: left;
     flex: 0 1 auto;
     max-width: 100%;
     flex-wrap: wrap;
+    font-weight: 500;
     row-gap: 0.3rem;
   }
 
@@ -512,21 +531,22 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .tag-pill:hover {
     border-color: var(--border-accent);
     color: var(--primary-color);
-    background: var(--layer-primary-soft);
-    transform: none;
-    box-shadow: none;
+    background: var(--primary-lighter);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
   }
 
   .tag-pill.selected {
     background: var(--gradient-brand);
     color: var(--text-inverse);
     border-color: transparent;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
+    font-weight: 600;
   }
 
   .tag-pill.ingroup {
     border-color: var(--border-accent);
-    background: var(--layer-primary-soft);
+    background: var(--primary-lighter);
     color: var(--primary-color);
   }
 

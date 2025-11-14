@@ -17,7 +17,7 @@ export const ICON_CONFIG = {
 
 // 默认值
 export const DEFAULTS = {
-	THEME: 'light' as const,
+	THEME: 'auto' as const,
 	LAYOUT_MODE: 'sidebar' as const,
 	GROUP_ORDER: 999
 } as const;

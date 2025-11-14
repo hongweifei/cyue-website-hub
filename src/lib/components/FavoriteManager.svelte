@@ -41,31 +41,39 @@
 
 <style>
 	.favorite-manager {
-		padding: 2rem 0;
+		padding: var(--spacing-xl) 0;
 	}
 
 	.favorite-title {
-		font-size: 1.5rem;
+		font-size: 1.75rem;
 		font-weight: 700;
-		margin: 0 0 1.5rem 0;
+		margin: 0 0 var(--spacing-2xl) 0;
 		color: var(--text-primary);
+		background: var(--gradient-brand);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
 	.empty-state {
 		text-align: center;
-		padding: 3rem 1rem;
+		padding: var(--spacing-2xl) var(--spacing-lg);
 		color: var(--text-secondary);
+		background: var(--bg-secondary);
+		border-radius: var(--radius-2xl);
+		border: 1px dashed var(--border-light);
 	}
 
 	.empty-hint {
 		font-size: 0.875rem;
-		margin-top: 0.5rem;
+		margin-top: var(--spacing-sm);
+		color: var(--text-tertiary);
 	}
 
 	.favorite-items {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1.5rem;
+		gap: var(--spacing-xl);
 	}
 
 	@media (max-width: 768px) {

@@ -10,20 +10,31 @@
 	--spacing-xl: calc(var(--grid-unit) * 4);
 	--spacing-2xl: calc(var(--grid-unit) * 5);
 
+	/* 鸿蒙设计规范圆角系统 */
+	--radius-xs: 8px;
 	--radius-sm: 12px;
 	--radius-md: 16px;
 	--radius-lg: 20px;
-	--radius-xl: 28px;
+	--radius-xl: 24px;
+	--radius-2xl: 32px;
+	--radius-full: 9999px;
 
-	--motion-duration-fast: 120ms;
-	--motion-duration-medium: 200ms;
-	--motion-duration-slow: 360ms;
-	--motion-easing-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-	--motion-easing-emphasized: cubic-bezier(0.34, 1.56, 0.64, 1);
+	/* 鸿蒙设计规范动画时长 */
+	--motion-duration-fast: 150ms;
+	--motion-duration-medium: 250ms;
+	--motion-duration-slow: 350ms;
+	--motion-duration-extra-slow: 500ms;
+	
+	/* 鸿蒙设计规范缓动函数 */
+	--motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+	--motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+	--motion-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+	--motion-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
 
 	--transition-fast: var(--motion-duration-fast) var(--motion-easing-standard);
 	--transition-base: var(--motion-duration-medium) var(--motion-easing-standard);
 	--transition-slow: var(--motion-duration-slow) var(--motion-easing-standard);
+	--transition-extra-slow: var(--motion-duration-extra-slow) var(--motion-easing-decelerate);
 
 	--font-sans-primary: "HarmonyOS Sans", "HarmonyOS Sans SC", "HarmonyOS Sans CN",
 		"HarmonyOS Sans TC", "HarmonyOS Sans HK", "PingFang SC", "Microsoft YaHei",
@@ -34,103 +45,121 @@
 
 :root,
 :root[data-theme="light"] {
-	--primary-color: #0a59f7;
-	--primary-color-strong: #0843cb;
-	--primary-hover: #0c6bff;
-	--primary-light: rgba(10, 89, 247, 0.16);
-	--accent-color: #00c6ff;
-	--accent-hover: #07a6d7;
+	/* 鸿蒙设计规范主色调 - 更柔和的蓝色系 */
+	--primary-color: #007DFF;
+	--primary-color-strong: #0051D5;
+	--primary-hover: #1890FF;
+	--primary-light: rgba(0, 125, 255, 0.12);
+	--primary-lighter: rgba(0, 125, 255, 0.08);
+	--accent-color: #00D9FF;
+	--accent-hover: #00B8D9;
 
-	--text-primary: #11193d;
-	--text-secondary: #3d4662;
-	--text-tertiary: #7c8599;
-	--text-muted: #9ba3bb;
-	--text-inverse: #ffffff;
+	/* 鸿蒙设计规范文字颜色 - 更柔和的对比度 */
+	--text-primary: #182431;
+	--text-secondary: #4D5963;
+	--text-tertiary: #86909C;
+	--text-muted: #A8ADB4;
+	--text-inverse: #FFFFFF;
 
-	--border-color: rgba(12, 80, 204, 0.18);
-	--border-soft: rgba(12, 80, 204, 0.12);
-	--border-light: rgba(12, 80, 204, 0.1);
-	--border-accent: rgba(10, 89, 247, 0.25);
+	/* 鸿蒙设计规范边框颜色 */
+	--border-color: rgba(0, 0, 0, 0.08);
+	--border-soft: rgba(0, 0, 0, 0.06);
+	--border-light: rgba(0, 0, 0, 0.04);
+	--border-accent: rgba(0, 125, 255, 0.2);
 
-	--bg-primary: rgba(255, 255, 255, 0.92);
-	--bg-secondary: rgba(244, 248, 255, 0.78);
-	--bg-tertiary: rgba(228, 238, 255, 0.6);
-	--surface-glass: rgba(255, 255, 255, 0.76);
-	--surface-solid: #eef2ff;
-	--card-bg: rgba(255, 255, 255, 0.92);
-	--card-overlay: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(236, 242, 255, 0.92));
-	--tag-bg: rgba(10, 89, 247, 0.12);
-	--icon-bg: rgba(10, 89, 247, 0.16);
-	--input-bg: rgba(255, 255, 255, 0.96);
-	--code-bg: rgba(11, 27, 64, 0.06);
-	--header-bg: rgba(244, 248, 255, 0.82);
-	--footer-bg: rgba(242, 246, 255, 0.9);
-	--app-background: radial-gradient(circle at 20% 20%, rgba(10, 89, 247, 0.16), transparent 48%), radial-gradient(circle at 80% 10%, rgba(0, 198, 255, 0.18), transparent 52%), linear-gradient(135deg, #eef3ff 0%, #f5f8ff 40%, #e8f0ff 100%);
+	/* 鸿蒙设计规范背景颜色 - 更柔和的白色系 */
+	--bg-primary: rgba(255, 255, 255, 0.95);
+	--bg-secondary: rgba(247, 248, 250, 0.8);
+	--bg-tertiary: rgba(240, 242, 245, 0.6);
+	--surface-glass: rgba(255, 255, 255, 0.8);
+	--surface-solid: #F7F8FA;
+	--card-bg: rgba(255, 255, 255, 0.95);
+	--card-overlay: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(247, 250, 255, 0.95));
+	--tag-bg: rgba(0, 125, 255, 0.1);
+	--icon-bg: rgba(0, 125, 255, 0.12);
+	--input-bg: rgba(255, 255, 255, 0.98);
+	--code-bg: rgba(0, 0, 0, 0.04);
+	--header-bg: rgba(255, 255, 255, 0.85);
+	--footer-bg: rgba(247, 248, 250, 0.9);
+	--app-background: radial-gradient(circle at 20% 20%, rgba(0, 125, 255, 0.08), transparent 50%), radial-gradient(circle at 80% 10%, rgba(0, 217, 255, 0.1), transparent 50%), linear-gradient(135deg, #F7F8FA 0%, #FFFFFF 40%, #F0F2F5 100%);
 
-	--shadow-sm: 0 10px 25px rgba(10, 89, 247, 0.08);
-	--shadow-md: 0 18px 40px rgba(10, 89, 247, 0.12);
-	--shadow-lg: 0 26px 50px rgba(14, 48, 128, 0.18);
-	--shadow-soft: 0 20px 45px rgba(10, 89, 247, 0.14);
-	--shadow-glow: 0 28px 75px rgba(10, 89, 247, 0.22);
+	/* 鸿蒙设计规范阴影 - 更柔和的阴影效果 */
+	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.04);
+	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
+	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+	--shadow-soft: 0 6px 20px rgba(0, 125, 255, 0.08);
+	--shadow-glow: 0 8px 32px rgba(0, 125, 255, 0.15);
 
-	--layer-primary-soft: rgba(10, 89, 247, 0.12);
-	--layer-primary-strong: rgba(10, 89, 247, 0.24);
-	--layer-accent-soft: rgba(239, 68, 68, 0.12);
-	--chip-contrast-surface: rgba(255, 255, 255, 0.22);
-	--chip-contrast-surface-strong: rgba(255, 255, 255, 0.32);
+	/* 鸿蒙设计规范层级颜色 */
+	--layer-primary-soft: rgba(0, 125, 255, 0.1);
+	--layer-primary-strong: rgba(0, 125, 255, 0.2);
+	--layer-accent-soft: rgba(0, 217, 255, 0.1);
+	--chip-contrast-surface: rgba(255, 255, 255, 0.8);
+	--chip-contrast-surface-strong: rgba(255, 255, 255, 0.95);
 	--gradient-brand: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-	--gradient-brand-soft: linear-gradient(135deg, rgba(10, 89, 247, 0.16) 0%, rgba(0, 198, 255, 0.24) 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(0, 125, 255, 0.12) 0%, rgba(0, 217, 255, 0.16) 100%);
 }
 
 :root[data-theme="dark"] {
 	color-scheme: dark;
 
-	--primary-color: #5c8dff;
-	--primary-color-strong: #8aa8ff;
-	--primary-hover: #6c9cff;
-	--primary-light: rgba(92, 141, 255, 0.26);
-	--accent-color: #1fd4ff;
-	--accent-hover: #12a5c6;
+	/* 鸿蒙设计规范暗色主题主色调 */
+	--primary-color: #40A9FF;
+	--primary-color-strong: #69C0FF;
+	--primary-hover: #5AB8FF;
+	--primary-light: rgba(64, 169, 255, 0.2);
+	--primary-lighter: rgba(64, 169, 255, 0.12);
+	--accent-color: #36CFC9;
+	--accent-hover: #5CDBD3;
 
-	--text-primary: #f4f7ff;
-	--text-secondary: #c7d2ff;
-	--text-tertiary: #9aa7c8;
-	--text-muted: #7b88aa;
-	--text-inverse: #040812;
+	/* 鸿蒙设计规范暗色主题文字颜色 */
+	--text-primary: #E5E6EB;
+	--text-secondary: #C9CDD4;
+	--text-tertiary: #86909C;
+	--text-muted: #6B7785;
+	--text-inverse: #1D2129;
 
-	--border-color: rgba(107, 137, 228, 0.32);
-	--border-soft: rgba(68, 84, 144, 0.38);
-	--border-light: rgba(107, 137, 228, 0.24);
-	--border-accent: rgba(124, 157, 255, 0.4);
+	/* 鸿蒙设计规范暗色主题边框颜色 */
+	--border-color: rgba(255, 255, 255, 0.12);
+	--border-soft: rgba(255, 255, 255, 0.08);
+	--border-light: rgba(255, 255, 255, 0.06);
+	--border-accent: rgba(64, 169, 255, 0.3);
 
-	--bg-primary: rgba(10, 16, 36, 0.92);
-	--bg-secondary: rgba(8, 12, 26, 0.9);
-	--bg-tertiary: rgba(36, 52, 92, 0.72);
-	--surface-glass: rgba(14, 20, 42, 0.86);
-	--surface-solid: #0d1429;
-	--card-bg: rgba(14, 20, 42, 0.94);
-	--card-overlay: linear-gradient(140deg, rgba(18, 32, 58, 0.96), rgba(10, 16, 32, 0.92));
-	--tag-bg: rgba(92, 141, 255, 0.28);
-	--icon-bg: rgba(92, 141, 255, 0.32);
-	--input-bg: rgba(12, 18, 34, 0.92);
-	--code-bg: rgba(4, 8, 18, 0.85);
-	--header-bg: rgba(12, 18, 34, 0.92);
-	--footer-bg: rgba(6, 10, 24, 0.92);
-	--app-background: radial-gradient(circle at 12% 18%, rgba(38, 60, 110, 0.48), transparent 52%), radial-gradient(circle at 86% 12%, rgba(26, 44, 92, 0.55), transparent 56%), linear-gradient(160deg, #050914 0%, #040812 40%, #03050b 100%);
+	/* 鸿蒙设计规范暗色主题背景颜色 */
+	--bg-primary: rgba(29, 33, 41, 0.95);
+	--bg-secondary: rgba(22, 24, 35, 0.9);
+	--bg-tertiary: rgba(17, 20, 30, 0.8);
+	--surface-glass: rgba(29, 33, 41, 0.85);
+	--surface-solid: #1D2129;
+	--card-bg: rgba(29, 33, 41, 0.95);
+	--card-overlay: linear-gradient(140deg, rgba(34, 38, 48, 0.96), rgba(29, 33, 41, 0.95));
+	--tag-bg: rgba(64, 169, 255, 0.2);
+	--icon-bg: rgba(64, 169, 255, 0.25);
+	--input-bg: rgba(22, 24, 35, 0.95);
+	--code-bg: rgba(17, 20, 30, 0.9);
+	--header-bg: rgba(29, 33, 41, 0.9);
+	--footer-bg: rgba(22, 24, 35, 0.9);
+	--app-background: radial-gradient(circle at 12% 18%, rgba(64, 169, 255, 0.15), transparent 50%), radial-gradient(circle at 86% 12%, rgba(54, 207, 201, 0.12), transparent 50%), linear-gradient(160deg, #1D2129 0%, #161823 40%, #11141E 100%);
 
-	--shadow-sm: 0 14px 32px rgba(5, 12, 32, 0.48);
-	--shadow-md: 0 22px 48px rgba(5, 10, 26, 0.58);
-	--shadow-lg: 0 32px 70px rgba(2, 6, 18, 0.64);
-	--shadow-soft: 0 24px 62px rgba(6, 12, 32, 0.58);
-	--shadow-glow: 0 38px 96px rgba(10, 28, 72, 0.6);
+	/* 鸿蒙设计规范暗色主题阴影 */
+	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.3);
+	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+	--shadow-soft: 0 6px 20px rgba(64, 169, 255, 0.15);
+	--shadow-glow: 0 8px 32px rgba(64, 169, 255, 0.25);
 
-	--layer-primary-soft: rgba(92, 141, 255, 0.22);
-	--layer-primary-strong: rgba(92, 141, 255, 0.32);
-	--layer-accent-soft: rgba(239, 120, 120, 0.28);
-	--chip-contrast-surface: rgba(12, 18, 34, 0.46);
-	--chip-contrast-surface-strong: rgba(12, 18, 34, 0.6);
+	/* 鸿蒙设计规范暗色主题层级颜色 */
+	--layer-primary-soft: rgba(64, 169, 255, 0.18);
+	--layer-primary-strong: rgba(64, 169, 255, 0.28);
+	--layer-accent-soft: rgba(54, 207, 201, 0.18);
+	--chip-contrast-surface: rgba(29, 33, 41, 0.6);
+	--chip-contrast-surface-strong: rgba(29, 33, 41, 0.8);
 	--gradient-brand: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-	--gradient-brand-soft: linear-gradient(135deg, rgba(92, 141, 255, 0.2) 0%, rgba(31, 212, 255, 0.32) 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(64, 169, 255, 0.18) 0%, rgba(54, 207, 201, 0.22) 100%);
 }
 
 * {

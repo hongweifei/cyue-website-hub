@@ -78,7 +78,7 @@
 		margin-bottom: var(--spacing-2xl);
 		margin-left: calc(var(--group-level, 0) * var(--spacing-xl));
 		padding: var(--spacing-xl) 0;
-		padding-left: calc(var(--spacing-lg) + 18px);
+		padding-left: calc(var(--spacing-lg) + 16px);
 		background: transparent;
 		border: none;
 		border-bottom: 1px solid var(--border-light);
@@ -93,10 +93,15 @@
 		left: var(--spacing-sm);
 		top: var(--spacing-md);
 		bottom: var(--spacing-md);
-		width: 3px;
-		border-radius: var(--radius-sm);
+		width: 2px;
+		border-radius: var(--radius-full);
 		background: var(--gradient-brand);
-		opacity: 0.6;
+		opacity: 0.5;
+		transition: opacity var(--transition-fast);
+	}
+
+	.nav-group:hover::before {
+		opacity: 0.8;
 	}
 
 	.nav-group:hover {
@@ -138,6 +143,11 @@
 		margin-bottom: var(--spacing-lg);
 		padding-bottom: var(--spacing-md);
 		border-bottom: 1px solid var(--border-light);
+		transition: border-color var(--transition-fast);
+	}
+
+	.nav-group:hover .group-header {
+		border-bottom-color: var(--border-accent);
 	}
 
 	.nav-group.nested .group-header {
@@ -151,25 +161,25 @@
 		flex-shrink: 0;
 		width: 56px;
 		height: 56px;
-		border-radius: var(--radius-lg);
+		border-radius: var(--radius-xl);
 		overflow: hidden;
 		background: var(--bg-secondary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--shadow-xs);
 		border: 1px solid var(--border-light);
-		transition: all var(--transition-base);
+		transition: all var(--transition-fast);
 	}
 
 	.nav-group.nested .group-icon {
 		width: 48px;
 		height: 48px;
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-lg);
 	}
 
 	.group-header:hover .group-icon {
-		transform: scale(1.05);
+		transform: scale(1.03);
 		box-shadow: var(--shadow-sm);
 		border-color: var(--border-accent);
 	}
@@ -249,18 +259,18 @@
 		align-items: center;
 		gap: var(--spacing-2xs);
 		font-size: 0.8125rem;
-		font-weight: 600;
+		font-weight: 500;
 		color: var(--primary-color);
-		background: var(--layer-primary-soft);
-		padding: var(--spacing-xs) var(--spacing-sm);
-		border-radius: var(--radius-md);
+		background: var(--primary-lighter);
+		padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+		border-radius: var(--radius-full);
 		border: 1px solid var(--border-accent);
 		white-space: nowrap;
 	}
 
 	.nav-group.nested .group-count {
 		font-size: 0.75rem;
-		padding: 0.25rem 0.625rem;
+		padding: calc(var(--spacing-xs) * 0.5) calc(var(--spacing-sm) * 0.875);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -298,7 +308,6 @@
 			margin-left: calc(var(--group-level, 0) * var(--spacing-lg));
 			margin-bottom: var(--spacing-lg);
 			padding: var(--spacing-md) 0;
-			padding-left: calc(var(--spacing-md) + 10px);
 		}
 
 		.nav-group::before {

@@ -84,12 +84,20 @@
 		flex-direction: column;
 		gap: var(--spacing-lg);
 		padding: var(--spacing-lg);
-		background: var(--bg-primary);
+		background: var(--card-bg);
 		border: 1px solid var(--border-light);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
+		border-radius: var(--radius-2xl);
+		box-shadow: var(--shadow-xs);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
 		overflow-x: hidden;
 		overflow-y: auto;
+		transition: all var(--transition-base);
+	}
+
+	.sidebar:hover {
+		box-shadow: var(--shadow-sm);
+		border-color: var(--border-accent);
 	}
 
 	.sidebar-header {
@@ -113,9 +121,14 @@
 		gap: var(--spacing-sm);
 		padding: var(--spacing-md);
 		background: var(--bg-secondary);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-xl);
 		border: 1px solid var(--border-light);
-		box-shadow: inset 0 1px 0 var(--chip-contrast-surface);
+		transition: all var(--transition-fast);
+	}
+
+	.sidebar-section:hover {
+		border-color: var(--border-accent);
+		background: var(--surface-glass);
 	}
 
 	.sidebar-section-header {
@@ -144,7 +157,8 @@
 	.sidebar-section :global(.search-input) {
 		box-shadow: none;
 		border-width: 1px;
-		border-radius: var(--radius-lg);
+		border-radius: var(--radius-xl);
+		background: var(--input-bg);
 	}
 
 	.sidebar-section :global(.clear-btn) {
@@ -180,23 +194,26 @@
 	}
 
 	.sidebar-group-btn.root {
-		background: var(--gradient-brand-soft);
+		background: var(--primary-lighter);
 		border: 1px solid var(--border-accent);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--shadow-xs);
 	}
 
 	.sidebar-group-btn.root:hover {
-		transform: translateY(-1px);
+		background: var(--primary-light);
+		transform: translateX(2px);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.sidebar-group-btn.root .sidebar-group-icon {
-		background: var(--chip-contrast-surface);
+		background: var(--primary-light);
 		color: var(--primary-color);
+		border-color: var(--border-accent);
 	}
 
 	.sidebar-group-btn.root .sidebar-group-count {
-		background: var(--chip-contrast-surface);
-		border-color: transparent;
+		background: var(--primary-light);
+		border-color: var(--border-accent);
 		color: var(--primary-color);
 	}
 
@@ -204,12 +221,12 @@
 		background: var(--gradient-brand);
 		border-color: transparent;
 		color: var(--text-inverse);
-		box-shadow: var(--shadow-md);
+		box-shadow: var(--shadow-xs);
 	}
 
 	.sidebar-group-btn.root.active .sidebar-group-count {
-		background: var(--chip-contrast-surface-strong);
-		border-color: transparent;
+		background: rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 255, 255, 0.3);
 		color: var(--text-inverse);
 	}
 
