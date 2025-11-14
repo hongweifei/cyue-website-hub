@@ -54,15 +54,14 @@ npm run preview
 
 ## 使用说明
 
-> **说明**：在 `_group.json` 中可以通过 `parentId` 显式指定父级；若留空，系统会按照目录层级自动推断父子关系。
+> **重要**：所有分组ID和父子关系都基于文件系统路径自动生成和推断，不允许显式指定。
 
 ### 添加新分组
 
-1. 在 `src/data/groups/[分组id]/` 目录下创建分组元数据文件 `_group.json`：
+1. 在 `src/data/groups/[分组目录名]/` 目录下创建分组元数据文件 `_group.json`：
 
 ```json
 {
-  "id": "tools",
   "name": "开发工具",
   "description": "开发相关的工具和平台",
   "icon": "/assets/icons/tools.ico",
@@ -71,26 +70,28 @@ npm run preview
 ```
 
 **字段说明**：
-- `id` (必需): 分组唯一标识符，与末级目录名一致
 - `name` (必需): 分组显示名称
 - `description` (可选): 分组描述
 - `icon` (可选): 分组图标路径
 - `order` (可选): 同级排序权重，数字越小越靠前，默认为 999
-- `parentId` (可选): 父级分组 ID；若留空则按目录层级自动推断
 
-2. 子分组可以直接通过嵌套目录创建。例如：
+**注意**：
+- `id` 字段将被忽略，系统会基于目录路径自动生成唯一ID（如 `tools`、`ai/tools`）
+- `parentId` 字段将被忽略，系统会基于目录层级自动推断父子关系
+
+2. 子分组通过嵌套目录自动创建。例如：
 
 ```
 src/data/groups/
 └── search/
-    ├── _group.json            # 顶级分组
+    ├── _group.json            # 顶级分组，ID: "search"
     ├── sites.json
     └── international/
-        ├── _group.json        # 子分组，parentId 可省略
+        ├── _group.json        # 子分组，ID: "search/international"，自动继承 search 作为父级
         └── sites.json
 ```
 
-上例中，`international/_group.json` 会自动继承 `search` 作为父级分组。如果需要跨目录引用其他父级，可在文件中设置 `parentId`。
+上例中，`international/_group.json` 会自动继承 `search` 作为父级分组，分组ID为 `search/international`。
 
 ### 添加新导航项
 
@@ -109,7 +110,6 @@ name: 示例网站
 url: https://example.com
 icon: /assets/icons/example.ico
 info: 网站简介
-group: tools
 tags:
   - 工具
   - 开发
@@ -128,8 +128,10 @@ tags:
 - `url` (必需): 网站链接
 - `icon` (可选): 图标路径
 - `info` (可选): 简短介绍
-- `group` (可选): 分组ID，如果不提供则从文件路径推断
 - `tags` (可选): 标签列表，可以是数组或逗号分隔的字符串
+
+**注意**：
+- `group` 字段将被忽略，分组始终基于文件路径自动推断（如文件在 `tools/` 目录下，则属于 `tools` 分组）
 
 **优势**：
 - 一个文件包含所有信息，无需维护 JSON 和 Markdown 两个文件
@@ -152,12 +154,12 @@ tags:
   "icon": "/assets/icons/example.ico",
   "info": "网站简介",
   "desc_md": "example.md",
-  "group": "tools",
   "tags": ["工具", "开发"]
 }
 ```
 
-**提示**：如果 JSON 位于具体分组目录（含子分组）内，可以省略 `group` 字段，系统会按照目录层级自动推断所属分组。
+**注意**：
+- `group` 字段将被忽略，分组始终基于文件路径自动推断（如文件在 `tools/` 目录下，则属于 `tools` 分组）
 
 #### 方式三：批量文件（推荐用于大量网站）
 
@@ -175,7 +177,6 @@ tags:
     "url": "https://example1.com",
     "info": "网站简介1",
     "desc_md": "example1.md",
-    "group": "tools",
     "tags": ["工具", "开发"]
   },
   {
@@ -184,13 +185,13 @@ tags:
     "url": "https://example2.com",
     "info": "网站简介2",
     "desc_md": "example2.md",
-    "group": "tools",
     "tags": ["工具", "设计"]
   }
 ]
 ```
 
-**提示**：批量 JSON 同样可省略 `group` 字段，系统会按文件路径推断分组；仅在需要跨目录共享数据时再显式指定。
+**注意**：
+- `group` 字段将被忽略，分组始终基于文件路径自动推断
 
 **注意**：
 - 三种方式可以混合使用
@@ -270,10 +271,11 @@ src/
   "icon": "/assets/icons/icon.ico",
   "info": "简要信息",
   "desc_md": "description.md",
-  "group": "分组名",
   "tags": ["标签1", "标签2"]
 }
 ```
+
+**注意**：`group` 字段将被忽略，分组基于文件路径自动推断。
 
 3. Markdown 文件（可选）：用于详细介绍
 

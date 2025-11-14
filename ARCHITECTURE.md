@@ -185,10 +185,16 @@ ContentArea (结果展示)
 - `findGroupById()` - 在分组树中查找指定分组
 
 **分组解析流程概述**：
-1. 通过 `import.meta.glob` 读取所有 `_group.json`，构建 `GroupDefinition`，并记录路径片段和显式 `parentId`。
-2. 若未显式提供 `parentId`，根据目录层级自动推断父级分组，实现零配置嵌套结构。
+1. 通过 `import.meta.glob` 读取所有 `_group.json`，基于文件路径生成唯一分组ID（如 `ai/tools`）。
+2. 根据目录层级自动推断父级分组，实现零配置嵌套结构（如 `ai/tools` 的父级为 `ai`）。
 3. `loadGroups()` 根据导航项所属分组 ID 与 `GroupDefinition` 合并，生成包含 `children` 数组的树形结构，并按 `order` 与名称排序。
 4. Markdown 内容加载会复用分组路径信息，确保子分组 Markdown 可放在对应目录下。
+
+**重要规则**：
+- 分组ID完全基于文件路径自动生成（小写路径段，用斜杠连接）
+- 父子关系完全基于目录层级自动推断
+- `_group.json` 中的 `id` 和 `parentId` 字段将被忽略
+- 导航项数据文件中的 `group` 字段将被忽略，始终基于文件路径推断
 
 #### 3.2 状态管理模块 (`stores/`)
 
@@ -300,14 +306,16 @@ interface NavItem {
 #### GroupMetadata（分组元数据）
 ```typescript
 interface GroupMetadata {
-  id: string;          // 分组 ID
-  name: string;        // 分组名称
+  id?: string;          // 将被忽略，始终基于路径生成唯一ID
+  name: string;         // 分组名称
   description?: string; // 分组描述（可选）
-  icon?: string;       // 分组图标（可选）
-  order?: number;      // 排序顺序（可选）
-  parentId?: string | null; // 父级分组 ID（可选，默认按目录推断）
+  icon?: string;        // 分组图标（可选）
+  order?: number;       // 排序顺序（可选）
+  parentId?: string | null; // 将被忽略，始终基于路径自动推断
 }
 ```
+
+**注意**：`id` 和 `parentId` 字段在 `_group.json` 中可以存在，但会被系统忽略。系统会基于文件路径自动生成唯一ID（如 `ai/tools`）并推断父子关系。
 
 #### NavGroup（导航分组）
 ```typescript
@@ -333,10 +341,10 @@ interface NavGroup {
 ```
 groups/
   ├── search/
-  │   ├── _group.json          # 顶级分组元数据
+  │   ├── _group.json          # 顶级分组元数据，ID: "search"
   │   ├── sites.json           # 同级导航项（可选）
   │   └── international/       # 子分组目录（可继续嵌套）
-  │       ├── _group.json      # 子分组元数据，parentId 可省略
+  │       ├── _group.json      # 子分组元数据，ID: "search/international"，父级: "search"
   │       └── sites.json       # 子分组导航项
   └── social/
       └── ...
@@ -347,23 +355,22 @@ groups/
 `search/_group.json`:
 ```json
 {
-  "id": "search",
   "name": "搜索引擎",
   "description": "各种搜索引擎和搜索工具",
   "order": 1
 }
 ```
+> 注意：`id` 和 `parentId` 字段将被忽略，系统会自动生成 ID `"search"`。
 
 `search/international/_group.json`:
 ```json
 {
-  "id": "search-international",
   "name": "国际搜索",
   "description": "海外与多语言搜索服务",
-  "parentId": "search",
   "order": 2
 }
 ```
+> 注意：系统会自动生成 ID `"search/international"`，并自动推断父级为 `"search"`。
 
 `search/sites.json`:
 ```json
@@ -378,6 +385,7 @@ groups/
   }
 ]
 ```
+> 注意：`group` 字段将被忽略，系统会自动推断分组为 `"search"`。
 
 `search/international/sites.json`:
 ```json
@@ -392,8 +400,12 @@ groups/
   }
 ]
 ```
+> 注意：系统会自动推断分组为 `"search/international"`。
 
-> **提示**：若数据文件位于具体分组目录中，可省略 `group` 字段；系统会依据目录层级推断所属分组，仅在跨目录共用数据时需要显式指定。
+**重要规则**：
+- 所有分组ID基于文件路径自动生成（小写，用斜杠连接，如 `ai/tools`）
+- 所有父子关系基于目录层级自动推断
+- 数据文件中的 `group` 字段将被忽略，始终基于文件路径推断
 
 #### 浏览器存储
 
