@@ -9,9 +9,6 @@ import {
 
 export const prerender = true;
 
-// 构建时间缓存（只在构建时生成一次）
-let cachedBuildTime: string | null = null;
-
 function loadConfig() {
   const defaultDomain = "hub.cyue.net";
   const defaultWebsiteName = "鸽子导航网";
@@ -49,11 +46,19 @@ function loadConfig() {
 }
 
 function getBuildTime(): string {
-  // 在构建时生成一次，运行时复用
-  if (cachedBuildTime === null) {
-    cachedBuildTime = new Date().toISOString();
+  // 尝试使用Vite注入的构建时间常量
+  // @ts-ignore - __BUILD_TIME__ 是在构建时注入的全局常量
+  if (typeof __BUILD_TIME__ !== 'undefined') {
+    return __BUILD_TIME__;
   }
-  return cachedBuildTime;
+  
+  // 在开发模式下，使用当前时间（因为没有构建时注入）
+  if (process.env.NODE_ENV !== 'production') {
+    return new Date().toISOString();
+  }
+  
+  // 在生产环境中，__BUILD_TIME__ 应该总是可用的
+  throw new Error('Build time constant not found. This should never happen in production builds.');
 }
 
 export const load: LayoutServerLoad = ({ url }) => {
