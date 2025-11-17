@@ -6,6 +6,7 @@ import { page } from "$app/state";
 
 interface Props {
   item: NavItem;
+  markdownContent?: string; // 可选的预加载 markdown 内容
 }
 
 const markdownCache = new Map<string, string>();
@@ -18,7 +19,7 @@ marked.setOptions({
   gfm: true,
 });
 
-let { item }: Props = $props();
+let { item, markdownContent: preloadedContent }: Props = $props();
 
 function resolveCacheKey(navItem: NavItem | undefined): string {
   if (!navItem?.group || !navItem?.desc_md) {
@@ -28,6 +29,18 @@ function resolveCacheKey(navItem: NavItem | undefined): string {
 }
 
 function getMarkdown(key: string, navItem: NavItem): string {
+  // 如果提供了预加载的内容，优先使用
+  if (preloadedContent !== undefined && preloadedContent !== null) {
+    if (preloadedContent.trim()) {
+      markdownCache.set(key, preloadedContent);
+      return preloadedContent;
+    }
+    // 如果预加载的内容为空，也缓存空字符串，避免重复尝试加载
+    markdownCache.set(key, "");
+    return "";
+  }
+  
+  // 回退到原来的逻辑：从缓存或文件系统加载
   if (markdownCache.has(key)) {
     return markdownCache.get(key) ?? "";
   }

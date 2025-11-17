@@ -1,11 +1,11 @@
 export const prerender = true;
 
 import { error } from "@sveltejs/kit";
-import { loadAllNavItems } from "$lib/dataLoader";
+import { loadAllNavItems, loadMarkdownContent } from "$lib/dataLoader";
 import type { ItemRecommendation, NavItem } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = ({ params }) => {
+export const load: PageServerLoad = async ({ params, parent }) => {
   const allItems = loadAllNavItems();
   const tagFrequency = buildTagFrequency(allItems);
   const item = allItems.find((i) => i.id === params.id);
@@ -14,9 +14,20 @@ export const load: PageServerLoad = ({ params }) => {
     throw error(404, "导航项不存在");
   }
 
+  // 在服务器端预加载 markdown 内容
+  let markdownContent = "";
+  if (item.desc_md) {
+    // 获取 site domain 用于 UTM 参数
+    const parentData = await parent();
+    const source = parentData.site?.domain;
+    // 在服务器端，loadMarkdownContent 可以访问文件系统
+    markdownContent = loadMarkdownContent(item, source);
+  }
+
   return {
     item,
     recommendations: generateRecommendations(allItems, tagFrequency, item, 6),
+    markdownContent,
   };
 };
 

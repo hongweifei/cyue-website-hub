@@ -150,7 +150,7 @@
     {#if data.item.desc_md}
       <div class="item-description">
         <h2 class="description-title">详细介绍</h2>
-        <MarkdownRenderer item={data.item} />
+        <MarkdownRenderer item={data.item} markdownContent={data.markdownContent} />
       </div>
     {/if}
 
