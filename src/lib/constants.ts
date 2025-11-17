@@ -12,7 +12,8 @@ export const STORAGE_KEYS = {
 // 图标加载配置
 export const ICON_CONFIG = {
 	TIMEOUT: 3000, // 图标加载超时时间（毫秒）
-	FALLBACK_SERVICE: 'https://icons.duckduckgo.com/ip3'
+	FALLBACK_SERVICE: 'https://icons.duckduckgo.com/ip3',
+	MAX_ICON_CANDIDATES: 3 // 限制候选图标数量，避免过多请求
 } as const;
 
 // 默认值

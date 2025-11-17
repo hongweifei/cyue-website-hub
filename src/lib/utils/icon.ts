@@ -65,6 +65,14 @@ export function getFaviconUrlFallback(url: string): string {
  */
 export function getFaviconCandidates(url: string, customIcon?: string): string[] {
 	const candidates: string[] = [];
+	const visited = new Set<string>();
+
+	const pushCandidate = (value: string | null | undefined) => {
+		if (!value) return;
+		if (visited.has(value)) return;
+		visited.add(value);
+		candidates.push(value);
+	};
 
 	const urlInfo = extractUrlInfo(url);
 	if (!urlInfo) return candidates;
@@ -74,34 +82,24 @@ export function getFaviconCandidates(url: string, customIcon?: string): string[]
 		// 检查是否为相对路径（以 / 开头但不是以 // 或 http/https 开头）
 		if (customIcon.startsWith('/') && !customIcon.startsWith('//') && !customIcon.startsWith('http')) {
 			// 优先从对应网站获取相对路径图标
-			candidates.push(`${urlInfo.baseUrl}${customIcon}`);
+			pushCandidate(`${urlInfo.baseUrl}${customIcon}`);
 			// 其次从本地获取
-			candidates.push(customIcon);
+			pushCandidate(customIcon);
 		} else {
 			// 如果不是相对路径，直接添加原路径
-			candidates.push(customIcon);
+			pushCandidate(customIcon);
 		}
 	}
 
-	// 2. 尝试网站根目录的常见 favicon 路径（按常见程度排序）
-	const commonPaths = [
-		`${urlInfo.baseUrl}/favicon.ico`, // 最常见
-		`${urlInfo.baseUrl}/favicon.png`,
-		`${urlInfo.baseUrl}/favicon.svg`,
-		`${urlInfo.baseUrl}/apple-touch-icon.png`,
-		`${urlInfo.baseUrl}/icon.png`,
-		`${urlInfo.baseUrl}/icon.svg`
-	];
-
-	candidates.push(...commonPaths);
+	// 2. 网站根目录的常见 favicon 路径：优先 ico，再尝试 png/svg
+	pushCandidate(`${urlInfo.baseUrl}/favicon.ico`);
+	pushCandidate(`${urlInfo.baseUrl}/favicon.png`);
+	pushCandidate(`${urlInfo.baseUrl}/favicon.svg`);
 
 	// 3. 最后使用备用图标服务
-	const fallbackUrl = getFaviconUrlFallback(url);
-	if (fallbackUrl && !candidates.includes(fallbackUrl)) {
-		candidates.push(fallbackUrl);
-	}
+	pushCandidate(getFaviconUrlFallback(url));
 
-	return candidates;
+	return candidates.slice(0, ICON_CONFIG.MAX_ICON_CANDIDATES);
 }
 
 /**

@@ -1,4 +1,10 @@
+<script lang="ts" module>
+  const iconUrlCache = new Map<string, string>();
+  const iconFailureCache = new Set<string>();
+</script>
+
 <script lang="ts">
+  import { browser } from "$app/environment";
   import type { NavItem } from "$lib/types";
   import { ICON_CONFIG } from "$lib/constants";
   import { getFaviconCandidates } from "$lib/utils/icon";
@@ -35,12 +41,16 @@
   const resetSignature = $derived(
     `${item.id}:${item.icon ?? ""}:${item.url}:${iconCandidates.join("|")}`,
   );
+  const cacheKey = $derived(item.id || item.url || "");
 
   let currentIconIndex = $state(0);
-  let currentIconUrl = $derived(iconCandidates[currentIconIndex] || "");
+  let cachedIconUrl = $state("");
+  let activeIconUrl = $derived(cachedIconUrl || iconCandidates[currentIconIndex] || "");
   let hasError = $state(false);
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let imgElement = $state<HTMLImageElement | null>(null);
+  let hostElement = $state<HTMLDivElement | null>(null);
+  let isVisible = $state(!browser);
 
   const placeholderContent = $derived(
     (fallbackText ?? item.name?.[0] ?? "?").toUpperCase(),
@@ -56,17 +66,28 @@
   function tryNextIcon() {
     clearTimeoutIfNeeded();
 
+    if (cachedIconUrl) {
+      return;
+    }
+
     if (currentIconIndex < iconCandidates.length - 1) {
       currentIconIndex++;
     } else {
       hasError = true;
+      if (cacheKey) {
+        iconFailureCache.add(cacheKey);
+      }
     }
   }
 
   function setupIconTimeout() {
     clearTimeoutIfNeeded();
 
-    if (currentIconUrl && !hasError) {
+    if (!isVisible || cachedIconUrl || !activeIconUrl || hasError) {
+      return;
+    }
+
+    if (activeIconUrl && !hasError) {
       timeoutId = setTimeout(() => {
         if (imgElement && !imgElement.complete) {
           tryNextIcon();
@@ -77,14 +98,50 @@
 
   $effect(() => {
     const _signature = resetSignature;
+    const key = cacheKey;
     currentIconIndex = 0;
+    cachedIconUrl = "";
     hasError = false;
     imgElement = null;
     clearTimeoutIfNeeded();
+
+    if (key && iconUrlCache.has(key)) {
+      cachedIconUrl = iconUrlCache.get(key) ?? "";
+    } else if (key && iconFailureCache.has(key)) {
+      hasError = true;
+    }
   });
 
   $effect(() => {
-    if (currentIconUrl && !hasError) {
+    if (!browser) {
+      return;
+    }
+
+    if (!hostElement || isVisible) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
+          isVisible = true;
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "150px" },
+    );
+
+    observer.observe(hostElement);
+    return () => observer.disconnect();
+  });
+
+  $effect(() => {
+    if (!isVisible) {
+      clearTimeoutIfNeeded();
+      return;
+    }
+
+    if (activeIconUrl && !hasError) {
       setupIconTimeout();
     }
 
@@ -122,11 +179,12 @@
 </script>
 
 <div
+  bind:this={hostElement}
   class={combinedClass}
   style={dimensionStyle}
   aria-hidden="true"
 >
-  {#if hasError || !currentIconUrl}
+  {#if hasError || !isVisible || !activeIconUrl}
     <div class={`site-icon-placeholder ${placeholderClass}`.trim()}>
       {placeholderContent}
     </div>
@@ -134,12 +192,18 @@
     <img
       bind:this={imgElement}
       class={`site-icon-image ${imageClass}`.trim()}
-      src={currentIconUrl}
+      src={activeIconUrl}
       alt={item.name}
       loading="lazy"
       width={size ?? undefined}
       height={size ?? undefined}
       onload={() => {
+        if (!cachedIconUrl) {
+          cachedIconUrl = activeIconUrl;
+          if (cacheKey) {
+            iconUrlCache.set(cacheKey, activeIconUrl);
+          }
+        }
         clearTimeoutIfNeeded();
       }}
       onerror={() => {
