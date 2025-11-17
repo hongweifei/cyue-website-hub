@@ -2,41 +2,172 @@ import type { NavItem, NavGroup, GroupMetadata, TagSummary } from "./types";
 import { searchService } from "./services/searchService";
 import { DEFAULTS } from "./constants";
 import matter from "gray-matter";
+import * as fsModule from "fs";
+import * as pathModule from "path";
+import * as urlModule from "url";
 
-// 动态导入所有导航项数据（排除分组元数据文件）
-// 支持单个对象或数组格式
-const navItemsModules = import.meta.glob<{ default: NavItem | NavItem[] }>(
-  "/src/data/groups/**/*.json",
-  {
-    eager: true,
-  },
-);
 
-// 过滤掉分组元数据文件
-const filteredNavItemsModules: Record<
-  string,
-  { default: NavItem | NavItem[] }
-> = {};
-for (const path in navItemsModules) {
-  if (!path.includes("_group.json")) {
-    filteredNavItemsModules[path] = navItemsModules[path];
+// 环境检测：确保只在服务器端运行
+const isServer = typeof window === "undefined";
+
+// 获取项目根目录
+function getProjectRoot(): string {
+  if (!isServer) {
+    throw new Error("dataLoader 只能在服务器端运行");
   }
+  
+  // 优先使用 process.cwd()，这在构建时更可靠
+  if (typeof process !== "undefined" && process.cwd) {
+    const cwd = process.cwd();
+    // 验证是否是项目根目录（检查是否存在 src/data/groups 目录）
+    const testPath = pathModule.join(cwd, "src", "data", "groups");
+    if (fsModule.existsSync(testPath)) {
+      return cwd;
+    }
+  }
+  
+  // 备选方案：从当前文件位置推导项目根目录
+  const currentFile = urlModule.fileURLToPath(import.meta.url);
+  const currentDir = pathModule.dirname(currentFile);
+  // 从 src/lib 回到项目根目录
+  const root = pathModule.join(currentDir, "..", "..");
+  
+  // 验证路径是否正确
+  const testPath = pathModule.join(root, "src", "data", "groups");
+  if (fsModule.existsSync(testPath)) {
+    return root;
+  }
+  
+  // 如果都不行，返回推导的路径（可能会失败，但至少不会崩溃）
+  return root;
 }
 
-// 动态导入所有分组元数据文件
-const groupMetadataModules = import.meta.glob<{ default: GroupMetadata }>(
-  "/src/data/groups/**/_group.json",
-  {
-    eager: true,
-  },
-);
+// 获取数据目录路径
+function getDataDir(): string {
+  const root = getProjectRoot();
+  return pathModule.join(root, "src", "data", "groups");
+}
 
-// 动态导入所有 Markdown 文件
-const markdownModules = import.meta.glob<string>("/src/data/groups/**/*.md", {
-  eager: true,
-  query: "?raw",
-  import: "default",
-});
+// 递归读取目录下的所有文件
+function getAllFiles(dir: string, fileList: string[] = []): string[] {
+  if (!isServer) {
+    return fileList;
+  }
+  
+  if (!fsModule.existsSync(dir)) {
+    return fileList;
+  }
+
+  const files = fsModule.readdirSync(dir);
+  files.forEach((file: string) => {
+    const filePath = pathModule.join(dir, file);
+    const stat = fsModule.statSync(filePath);
+    if (stat.isDirectory()) {
+      getAllFiles(filePath, fileList);
+    } else {
+      fileList.push(filePath);
+    }
+  });
+  return fileList;
+}
+
+// 读取所有 JSON 文件（排除分组元数据文件）
+function loadJsonFiles(): Map<string, NavItem | NavItem[]> {
+  const files = new Map<string, NavItem | NavItem[]>();
+  if (!isServer) return files;
+
+  const dataDir = getDataDir();
+  const allFiles = getAllFiles(dataDir);
+  const jsonFiles = allFiles.filter(
+    (file) => pathModule.extname(file) === ".json" && !pathModule.basename(file).includes("_group.json")
+  );
+
+  jsonFiles.forEach((filePath) => {
+    try {
+      const content = fsModule.readFileSync(filePath, "utf-8");
+      const data = JSON.parse(content);
+      const relativePath = pathModule.relative(pathModule.join(getProjectRoot(), "src"), filePath);
+      files.set(`/src/${relativePath.replace(/\\/g, "/")}`, data);
+    } catch (error) {
+      console.error(`读取 JSON 文件失败: ${filePath}`, error);
+    }
+  });
+
+  return files;
+}
+
+// 读取所有分组元数据文件
+function loadGroupMetadataFiles(): Map<string, GroupMetadata> {
+  const files = new Map<string, GroupMetadata>();
+  if (!isServer) return files;
+
+  const dataDir = getDataDir();
+  const allFiles = getAllFiles(dataDir);
+  const metadataFiles = allFiles.filter((file) =>
+    pathModule.basename(file).includes("_group.json")
+  );
+
+  metadataFiles.forEach((filePath) => {
+    try {
+      const content = fsModule.readFileSync(filePath, "utf-8");
+      const data = JSON.parse(content);
+      const relativePath = pathModule.relative(pathModule.join(getProjectRoot(), "src"), filePath);
+      files.set(`/src/${relativePath.replace(/\\/g, "/")}`, data);
+    } catch (error) {
+      console.error(`读取分组元数据文件失败: ${filePath}`, error);
+    }
+  });
+
+  return files;
+}
+
+// 读取所有 Markdown 文件
+function loadMarkdownFiles(): Map<string, string> {
+  const files = new Map<string, string>();
+  if (!isServer) return files;
+
+  const dataDir = getDataDir();
+  const allFiles = getAllFiles(dataDir);
+  const mdFiles = allFiles.filter((file) => pathModule.extname(file) === ".md");
+
+  mdFiles.forEach((filePath) => {
+    try {
+      const content = fsModule.readFileSync(filePath, "utf-8");
+      const relativePath = pathModule.relative(pathModule.join(getProjectRoot(), "src"), filePath);
+      files.set(`/src/${relativePath.replace(/\\/g, "/")}`, content);
+    } catch (error) {
+      console.error(`读取 Markdown 文件失败: ${filePath}`, error);
+    }
+  });
+
+  return files;
+}
+
+// 延迟加载文件数据（只在需要时读取）
+let cachedJsonFiles: Map<string, NavItem | NavItem[]> | null = null;
+let cachedGroupMetadataFiles: Map<string, GroupMetadata> | null = null;
+let cachedMarkdownFiles: Map<string, string> | null = null;
+
+function getJsonFiles(): Map<string, NavItem | NavItem[]> {
+  if (!cachedJsonFiles) {
+    cachedJsonFiles = loadJsonFiles();
+  }
+  return cachedJsonFiles;
+}
+
+function getGroupMetadataFiles(): Map<string, GroupMetadata> {
+  if (!cachedGroupMetadataFiles) {
+    cachedGroupMetadataFiles = loadGroupMetadataFiles();
+  }
+  return cachedGroupMetadataFiles;
+}
+
+function getMarkdownFiles(): Map<string, string> {
+  if (!cachedMarkdownFiles) {
+    cachedMarkdownFiles = loadMarkdownFiles();
+  }
+  return cachedMarkdownFiles;
+}
 
 // 缓存机制
 let cachedNavItems: NavItem[] | null = null;
@@ -71,10 +202,27 @@ function isArray(value: unknown): value is unknown[] {
 
 /**
  * 从路径中提取相对于 `/src/data/groups/` 的子路径
+ * 支持多种路径格式：
+ * - `/src/data/groups/...` (相对路径格式)
+ * - `D:\Projects\...\src\data\groups\...` (Windows绝对路径)
+ * - `/Users/.../src/data/groups/...` (Unix绝对路径)
  */
 function extractRelativeGroupPath(path: string): string | null {
-  const match = path.match(/\/src\/data\/groups\/(.+)$/);
-  return match ? match[1] : null;
+  // 先尝试匹配相对路径格式
+  let match = path.match(/\/src\/data\/groups\/(.+)$/);
+  if (match) {
+    return match[1];
+  }
+  
+  // 尝试匹配绝对路径格式（Windows和Unix）
+  // 匹配路径中包含 src/data/groups 的部分
+  const normalizedPath = path.replace(/\\/g, "/");
+  match = normalizedPath.match(/src\/data\/groups\/(.+)$/);
+  if (match) {
+    return match[1];
+  }
+  
+  return null;
 }
 
 /**
@@ -206,11 +354,10 @@ function getGroupDefinitions(): Map<string, GroupDefinition> {
 
   // 收集所有有_group.json的分组
   // 注意：metadata中的id和parentId将被忽略，始终基于路径自动生成和推断
-  for (const path in groupMetadataModules) {
-    const module = groupMetadataModules[path];
-    if (!module?.default) continue;
+  const groupMetadataFiles = getGroupMetadataFiles();
+  for (const [path, metadata] of groupMetadataFiles) {
+    if (!metadata) continue;
 
-    const metadata = module.default;
     const pathSegments = getGroupSegmentsFromPath(path);
     const segmentKey = pathSegments.join("/");
     const uniqueId = generateUniqueGroupId(pathSegments);
@@ -241,8 +388,11 @@ function getGroupDefinitions(): Map<string, GroupDefinition> {
     }
   };
   
-  for (const path in filteredNavItemsModules) discoverSegments(path);
-  for (const path in markdownModules) discoverSegments(path);
+  const jsonFiles = getJsonFiles();
+  for (const path of jsonFiles.keys()) discoverSegments(path);
+  
+  const markdownFiles = getMarkdownFiles();
+  for (const path of markdownFiles.keys()) discoverSegments(path);
 
   // 为发现的但还没有定义的分组创建默认定义
   discoveredSegments.forEach((segmentKey) => {
@@ -319,6 +469,14 @@ export function loadAllNavItems(): NavItem[] {
   const items: NavItem[] = [];
   const itemMap = new Map<string, NavItem>(); // 用于去重，key为 group:id
   const groupSegmentMap = getGroupSegmentMap();
+  
+  // 调试信息：检查数据目录
+  const dataDir = getDataDir();
+  if (!fsModule.existsSync(dataDir)) {
+    console.error(`[loadAllNavItems] 数据目录不存在: ${dataDir}`);
+    cachedNavItems = [];
+    return [];
+  }
 
   // 基于文件路径推导分组ID，始终使用路径生成唯一ID
   const deriveGroupId = (path: string): string => {
@@ -332,10 +490,9 @@ export function loadAllNavItems(): NavItem[] {
   };
 
   // 首先从JSON文件加载（作为后备）
-  for (const path in filteredNavItemsModules) {
-    const module = filteredNavItemsModules[path];
-    if (module?.default) {
-      const data = module.default;
+  const jsonFiles = getJsonFiles();
+  for (const [path, data] of jsonFiles) {
+    if (data) {
       const jsonItems: RawNavItem[] = isArray(data)
         ? (data as RawNavItem[])
         : [data as RawNavItem];
@@ -379,8 +536,8 @@ export function loadAllNavItems(): NavItem[] {
   }
 
   // 然后从Markdown frontmatter加载（优先级更高）
-  for (const path in markdownModules) {
-    const content = markdownModules[path] as string;
+  const markdownFiles = getMarkdownFiles();
+  for (const [path, content] of markdownFiles) {
     if (!content) continue;
 
     const item = createNavItemFromMarkdown(path, content);
@@ -401,6 +558,14 @@ export function loadAllNavItems(): NavItem[] {
 
   // 转换为数组
   items.push(...Array.from(itemMap.values()));
+
+  // 调试信息
+  if (items.length === 0) {
+    console.warn(`[loadAllNavItems] 未找到任何导航项。数据目录: ${dataDir}`);
+    console.warn(`[loadAllNavItems] JSON文件数: ${getJsonFiles().size}, Markdown文件数: ${getMarkdownFiles().size}`);
+  } else {
+    console.log(`[loadAllNavItems] 成功加载 ${items.length} 个导航项`);
+  }
 
   // 缓存结果
   cachedNavItems = items;
@@ -455,16 +620,17 @@ export function loadMarkdownContent(item: NavItem, source?: string): string {
       : item.group;
   const mdPath = `/src/data/groups/${groupPath}/${item.desc_md}`;
 
+  const markdownFiles = getMarkdownFiles();
   let rawContent = "";
 
   // 尝试直接匹配
-  if (markdownModules[mdPath]) {
-    rawContent = markdownModules[mdPath] as string;
+  if (markdownFiles.has(mdPath)) {
+    rawContent = markdownFiles.get(mdPath) || "";
   } else {
     // 尝试匹配完整路径
-    for (const path in markdownModules) {
+    for (const [path, content] of markdownFiles) {
       if (path.includes(`${item.group}/${item.desc_md}`)) {
-        rawContent = markdownModules[path] as string;
+        rawContent = content;
         break;
       }
     }

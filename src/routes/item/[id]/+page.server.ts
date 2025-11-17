@@ -21,10 +21,21 @@ export const load: PageServerLoad = ({ params }) => {
 };
 
 export async function entries() {
-  const allItems = loadAllNavItems();
-  return allItems.map((item) => ({
-    id: item.id,
-  }));
+  try {
+    const allItems = loadAllNavItems();
+    if (!allItems || allItems.length === 0) {
+      console.warn("[entries] loadAllNavItems() 返回空数组，请检查数据文件是否存在");
+      return [];
+    }
+    const entries = allItems.map((item) => ({
+      id: item.id,
+    }));
+    console.log(`[entries] 为 /item/[id] 生成了 ${entries.length} 个条目`);
+    return entries;
+  } catch (error) {
+    console.error("[entries] 加载导航项时出错:", error);
+    return [];
+  }
 }
 
 function generateRecommendations(
