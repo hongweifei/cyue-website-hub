@@ -29,6 +29,13 @@ const config = {
     })(),
     prerender: {
       handleHttpError: "warn",
+      handleUnseenRoutes: "warn",
+    },
+    // SSR 优化配置
+    // 对于静态站点，大部分页面都是预渲染的
+    // 但对于 SSR 模式，可以优化响应时间
+    csp: {
+      mode: "auto",
     },
   },
 };

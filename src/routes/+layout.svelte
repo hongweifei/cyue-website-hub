@@ -181,22 +181,24 @@
             {#if data?.site?.version}
               <span class="badge">版本 {data.site.version}</span>
             {/if}
-            <span class="badge">
-              构建于 {
-                new Intl.DateTimeFormat(
-                  'zh-CN',
-                  {
-                    year: 'numeric',       // 四位数年份（如：2025）
-                    month: 'numeric',      // 数字月份（如：3，不带前导零）
-                    day: 'numeric',        // 数字日期（如：5，不带前导零）
-                    hour: '2-digit',       // 24小时制的两位数小时（如：08，15）
-                    minute: '2-digit',     // 两位数分钟（如：05，30）
-                    second: '2-digit',     // 两位数秒（如：09，59）
-                    hour12: false          // 禁用12小时制，使用24小时制
-                  }
-                ).format(new Date())
-              }
-            </span>
+            {#if data?.buildTime}
+              <span class="badge">
+                构建于 {
+                  new Intl.DateTimeFormat(
+                    'zh-CN',
+                    {
+                      year: 'numeric',       // 四位数年份（如：2025）
+                      month: 'numeric',      // 数字月份（如：3，不带前导零）
+                      day: 'numeric',        // 数字日期（如：5，不带前导零）
+                      hour: '2-digit',       // 24小时制的两位数小时（如：08，15）
+                      minute: '2-digit',     // 两位数分钟（如：05，30）
+                      second: '2-digit',     // 两位数秒（如：09，59）
+                      hour12: false          // 禁用12小时制，使用24小时制
+                    }
+                  ).format(new Date(data.buildTime))
+                }
+              </span>
+            {/if}
           </div>
         </div>
 

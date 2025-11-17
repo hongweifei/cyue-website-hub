@@ -9,6 +9,53 @@ import {
 
 export const prerender = true;
 
+// 构建时间缓存（只在构建时生成一次）
+let cachedBuildTime: string | null = null;
+
+function loadConfig() {
+  const defaultDomain = "hub.cyue.net";
+  const defaultWebsiteName = "鸽子导航网";
+  const defaultDescription = `${defaultWebsiteName} - 精选网站导航，快速找到你需要的网站`;
+  const defaultIcon = "/favicon.png";
+  const defaultImage = "/favicon.png";
+  const defaultKeywords =
+    "导航,网站导航,网址导航,导航网站,网站收藏,书签,工具";
+  const defaultLocale = "zh_CN";
+  const defaultAuthor = "尘跃";
+  const defaultVersion = "0.1";
+  
+  const module = import.meta.glob<WebsiteConfig>("/src/data/config.json", {
+    eager: true,
+  });
+  let config = module["/src/data/config.json"];
+  if (!config) {
+    config = {
+      domain: defaultDomain,
+      name: defaultWebsiteName,
+    };
+  }
+  return {
+    domain: config.domain || defaultDomain,
+    name: config.name || defaultWebsiteName,
+    description: config.description || defaultDescription,
+    icon: config.icon || defaultIcon,
+    image: config.image || defaultImage,
+    keywords: config.keywords || defaultKeywords,
+    locale: config.locale || defaultLocale,
+    author: config.author || defaultAuthor,
+    contactEmail: config.contactEmail,
+    version: config.version || defaultVersion,
+  };
+}
+
+function getBuildTime(): string {
+  // 在构建时生成一次，运行时复用
+  if (cachedBuildTime === null) {
+    cachedBuildTime = new Date().toISOString();
+  }
+  return cachedBuildTime;
+}
+
 export const load: LayoutServerLoad = ({ url }) => {
   // 按需加载 navigation 数据，只在需要导航功能的页面加载
   // 这样可以减少不必要的内存占用和加载时间
@@ -24,43 +71,15 @@ export const load: LayoutServerLoad = ({ url }) => {
       }
     : null;
 
-  const config = (() => {
-    const defaultDomain = "hub.cyue.net";
-    const defaultWebsiteName = "鸽子导航网";
-    const defaultDescription = `${defaultWebsiteName} - 精选网站导航，快速找到你需要的网站`;
-    const defaultIcon = "/favicon.png";
-    const defaultImage = "/favicon.png";
-    const defaultKeywords =
-      "导航,网站导航,网址导航,导航网站,网站收藏,书签,工具";
-    const defaultLocale = "zh_CN";
-    const defaultAuthor = "尘跃";
-    const defaultVersion = "0.1";
-    const module = import.meta.glob<WebsiteConfig>("/src/data/config.json", {
-      eager: true,
-    });
-    let config = module["/src/data/config.json"];
-    if (!config) {
-      config = {
-        domain: defaultDomain,
-        name: defaultWebsiteName,
-      };
-    }
-    return {
-      domain: config.domain || defaultDomain,
-      name: config.name || defaultWebsiteName,
-      description: config.description || defaultDescription,
-      icon: config.icon || defaultIcon,
-      image: config.image || defaultImage,
-      keywords: config.keywords || defaultKeywords,
-      locale: config.locale || defaultLocale,
-      author: config.author || defaultAuthor,
-      contactEmail: config.contactEmail,
-      version: config.version || defaultVersion,
-    };
-  })();
+  // 每次请求都重新加载配置（不缓存）
+  const config = loadConfig();
+
+  // 获取构建时间（构建时生成，运行时复用）
+  const buildTime = getBuildTime();
 
   return {
     navigation,
     site: config,
+    buildTime,
   };
 };
