@@ -93,23 +93,29 @@
     border: 1px solid var(--border-light);
     border-radius: var(--radius-xl);
     padding: var(--spacing-lg);
-    transition: all var(--transition-base);
+    /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
     position: relative;
     box-shadow: var(--shadow-xs);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    /* GPU 加速 */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    /* 限制重排范围 */
+    contain: layout style paint;
   }
 
   .nav-item:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    /* 保留所有视觉效果 */
+    transform: translateY(-2px) translateZ(0);
     border-color: var(--border-accent);
+    box-shadow: var(--shadow-md);
     background: var(--surface-glass);
   }
 
   .nav-item:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
   }
 
   .nav-item-header {
@@ -134,8 +140,12 @@
   .nav-item-name a.item-link {
     color: var(--text-primary);
     text-decoration: none;
-    transition: all var(--transition-base);
+    /* 只过渡颜色和 transform */
+    transition: color var(--transition-base), transform var(--transition-base);
     display: inline-block;
+    /* 优化渲染 */
+    will-change: transform;
+    contain: layout style;
   }
 
   .nav-item-name a.item-link:hover {
@@ -162,13 +172,17 @@
     cursor: pointer;
     padding: var(--spacing-sm);
     color: var(--text-tertiary);
-    transition: all var(--transition-fast);
+    /* 只过渡颜色、背景、边框和 transform */
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-md);
     width: 36px;
     height: 36px;
+    /* 优化渲染 */
+    will-change: transform;
+    contain: layout style paint;
   }
 
   .favorite-btn:hover {
@@ -203,14 +217,18 @@
     border-radius: var(--radius-full);
     font-weight: 500;
     border: 1px solid var(--border-light);
-    transition: all var(--transition-fast);
+    /* 只过渡颜色、背景、边框和 transform */
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    /* 优化渲染 */
+    will-change: transform;
+    contain: layout style;
   }
 
   .tag:hover {
     background: var(--primary-light);
     color: var(--primary-color);
     border-color: var(--primary-color);
-    transform: translateY(-1px);
+    transform: translateY(-1px) translateZ(0);
     box-shadow: var(--shadow-xs);
   }
 
@@ -230,12 +248,17 @@
     font-size: 0.875rem;
     border-radius: var(--radius-md);
     text-decoration: none;
-    transition: all var(--transition-base);
+    /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
+    transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base), opacity var(--transition-base), box-shadow var(--transition-base);
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
+    /* GPU 加速 */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    contain: layout style;
   }
 
   .detail-link {
@@ -248,7 +271,7 @@
     background: var(--primary-light);
     color: var(--primary-color);
     border-color: var(--primary-color);
-    transform: translateY(-1px);
+    transform: translateY(-1px) translateZ(0);
     box-shadow: var(--shadow-xs);
   }
 
@@ -260,15 +283,14 @@
   }
 
   .external-link:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px) translateZ(0);
     opacity: 0.95;
+    box-shadow: var(--shadow-sm);
   }
 
   .external-link:active,
   .detail-link:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-xs);
   }
 
   @media (max-width: 768px) {

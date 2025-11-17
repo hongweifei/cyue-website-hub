@@ -278,11 +278,17 @@
     box-shadow: var(--shadow-sm);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    transition: all var(--transition-base);
+    /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    /* GPU 加速 backdrop-filter */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    /* 限制重排范围 */
+    contain: layout style paint;
   }
 
   .header-shell:hover {
-    transform: translateY(-1px);
+    transform: translateY(-1px) translateZ(0);
     box-shadow: var(--shadow-md);
     border-color: var(--border-accent);
   }
@@ -291,10 +297,6 @@
     margin: 0;
     font-size: 1.625rem;
     font-weight: 720;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     letter-spacing: 0.04em;
   }
 
@@ -303,6 +305,16 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    /* 将渐变背景应用到链接上，确保文字可见 */
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* 后备方案，确保文字透明以显示渐变 */
+    /* 优化渐变文字渲染性能 */
+    transform: translateZ(0);
+    will-change: background;
+    contain: layout style;
   }
 
   .nav {
@@ -332,7 +344,10 @@
     padding: calc(var(--spacing-xs) * 1.25) var(--spacing-md);
     border-radius: var(--radius-full);
     letter-spacing: 0.01em;
-    transition: all var(--transition-fast);
+    /* 优化 transition - 只过渡会变化的属性 */
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+    /* 优化渲染 */
+    contain: layout style;
   }
 
   .nav-link::after {
@@ -340,13 +355,15 @@
     position: absolute;
     left: 50%;
     bottom: calc(var(--spacing-2xs) * -1);
-    transform: translateX(-50%) scaleX(0);
+    transform: translateX(-50%) scaleX(0) translateZ(0);
     width: 60%;
     height: 2px;
     border-radius: var(--radius-full);
     background: var(--primary-color);
     opacity: 0;
-    transition: all var(--transition-fast);
+    /* 优化 transition - 只过渡 transform 和 opacity（GPU 加速） */
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    will-change: transform, opacity;
   }
 
   .nav-link:hover {
@@ -380,7 +397,13 @@
     box-shadow: var(--shadow-sm);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    transition: all var(--transition-base);
+    /* 优化 transition - 只过渡会变化的属性 */
+    transition: box-shadow var(--transition-base), border-color var(--transition-base);
+    /* GPU 加速 backdrop-filter */
+    transform: translateZ(0);
+    will-change: box-shadow;
+    /* 限制重排范围 */
+    contain: layout style paint;
   }
 
   .main .container:hover {
@@ -425,6 +448,10 @@
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     color: var(--text-secondary);
+    /* GPU 加速 backdrop-filter */
+    transform: translateZ(0);
+    /* 限制重排范围 */
+    contain: layout style paint;
   }
 
   .footer-brand {
@@ -520,7 +547,11 @@
     font-weight: 500;
     text-decoration: none;
     padding: 0.25rem 0;
+    /* 优化 transition - 只过渡会变化的属性 */
     transition: color var(--transition-fast), transform var(--transition-fast);
+    /* 优化渲染 */
+    contain: layout style;
+    will-change: transform;
   }
 
   .footer-links a::after,
@@ -534,8 +565,10 @@
     border-radius: 999px;
     background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
     opacity: 0;
-    transform: scaleX(0.5);
+    transform: scaleX(0.5) translateZ(0);
+    /* 优化 transition - 只过渡 transform 和 opacity（GPU 加速） */
     transition: opacity var(--transition-fast), transform var(--transition-fast);
+    will-change: transform, opacity;
   }
 
   .footer-links a:hover,
@@ -543,7 +576,7 @@
   .footer-contact a:hover,
   .footer-contact a:focus-visible {
     color: var(--primary-color);
-    transform: translateY(-1px);
+    transform: translateY(-1px) translateZ(0);
   }
 
   .footer-links a:hover::after,

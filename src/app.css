@@ -373,9 +373,14 @@ body {
 	line-height: 1.6;
 	font-size: 16px;
 	font-family: var(--font-sans-primary);
+	/* 只过渡颜色相关属性，避免重排 */
 	transition:
-		background var(--transition-slow),
+		background-color var(--transition-slow),
 		color var(--transition-slow);
+	/* 优化渲染性能 */
+	contain: layout style paint;
+	/* 优化滚动性能 */
+	overscroll-behavior: contain;
 }
 
 @supports (scrollbar-width: thin) {
@@ -413,7 +418,10 @@ body:hover::-webkit-scrollbar-thumb {
 a {
 	color: var(--primary-color);
 	text-decoration: none;
+	/* 只过渡颜色，避免重排 */
 	transition: color var(--transition-fast);
+	/* 优化链接渲染 */
+	contain: layout style;
 }
 
 button {
@@ -442,6 +450,33 @@ img {
 a, button {
 	-webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
 	touch-action: manipulation;
+	/* 优化交互性能 */
+	will-change: transform;
+}
+
+/* 性能优化：减少重排的通用类 */
+.gpu-accelerated {
+	transform: translateZ(0);
+	will-change: transform;
+	backface-visibility: hidden;
+	perspective: 1000px;
+}
+
+/* 优化动画性能 */
+@media (prefers-reduced-motion: no-preference) {
+	.animate-transform {
+		transition: transform var(--transition-fast);
+		will-change: transform;
+	}
+	
+	.animate-opacity {
+		transition: opacity var(--transition-fast);
+		will-change: opacity;
+	}
+	
+	.animate-color {
+		transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+	}
 }
 
 /* 移动端滚动优化 */
@@ -453,6 +488,8 @@ a, button {
 	body {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		/* 移动端禁用 contain，避免兼容性问题 */
+		contain: none;
 	}
 }
 

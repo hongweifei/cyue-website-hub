@@ -73,6 +73,13 @@
 			transform: translateY(0);
 		}
 	}
+	
+	/* 优化动画性能 - 使用 GPU 加速 */
+	.results-section,
+	.group-content,
+	.all-groups-content {
+		will-change: transform, opacity;
+	}
 
 	.results-title {
 		font-size: 1.5rem;
@@ -114,6 +121,9 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 		gap: var(--spacing-lg);
+		/* 优化大量元素渲染 - 使用 content-visibility 懒加载 */
+		content-visibility: auto;
+		contain-intrinsic-size: 0 400px;
 	}
 
 	@media (max-width: 1024px) {

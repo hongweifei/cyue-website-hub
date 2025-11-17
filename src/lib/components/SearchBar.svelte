@@ -73,10 +73,16 @@
 		border-radius: var(--radius-2xl);
 		background: var(--input-bg);
 		color: var(--text-primary);
-		transition: all var(--transition-fast);
+		/* 优化 transition - 只过渡会变化的属性 */
+		transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
 		box-shadow: var(--shadow-xs);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
+		/* GPU 加速 */
+		transform: translateZ(0);
+		will-change: box-shadow;
+		/* 优化渲染 */
+		contain: layout style;
 	}
 
 	.search-input::placeholder {
@@ -92,7 +98,7 @@
 
 	.search-input:hover:not(:focus) {
 		border-color: var(--border-color);
-		box-shadow: var(--shadow-xs);
+		/* 保持 box-shadow 不变，减少重绘 */
 	}
 
 	.search-bar:has(.search-input:focus) .search-icon {
@@ -110,11 +116,15 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all var(--transition-fast);
+		/* 只过渡颜色、背景和 transform */
+		transition: color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
 		border-radius: var(--radius-full);
 		width: 28px;
 		height: 28px;
 		z-index: 1;
+		/* 优化渲染 */
+		will-change: transform;
+		contain: layout style paint;
 	}
 
 	.clear-btn:hover {

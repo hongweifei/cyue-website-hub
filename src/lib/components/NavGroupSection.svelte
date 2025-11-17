@@ -84,6 +84,11 @@
 		border-radius: 0;
 		box-shadow: none;
 		animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
+		/* 优化大量分组渲染 - 使用 content-visibility 懒加载 */
+		content-visibility: auto;
+		contain-intrinsic-size: 0 300px;
+		/* 优化动画性能 */
+		will-change: transform, opacity;
 	}
 
 	.nav-group::before {
@@ -168,7 +173,11 @@
 		justify-content: center;
 		box-shadow: var(--shadow-xs);
 		border: 1px solid var(--border-light);
-		transition: all var(--transition-fast);
+		/* 优化 transition - 只过渡会变化的属性 */
+		transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+		/* GPU 加速 */
+		transform: translateZ(0);
+		will-change: transform, box-shadow;
 	}
 
 	.nav-group.nested .group-icon {
@@ -178,7 +187,7 @@
 	}
 
 	.group-header:hover .group-icon {
-		transform: scale(1.03);
+		transform: scale(1.03) translateZ(0);
 		box-shadow: var(--shadow-sm);
 		border-color: var(--border-accent);
 	}
@@ -288,6 +297,9 @@
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 		gap: var(--spacing-lg);
 		margin-top: var(--spacing-lg);
+		/* 优化大量元素渲染 - 使用 content-visibility 懒加载 */
+		content-visibility: auto;
+		contain-intrinsic-size: 0 400px;
 	}
 
 	.nav-group.nested .nav-items-grid {

@@ -92,12 +92,18 @@
 		-webkit-backdrop-filter: blur(16px);
 		overflow-x: hidden;
 		overflow-y: auto;
-		transition: all var(--transition-base);
+		/* 优化 transition - 只过渡会变化的属性 */
+		transition: border-color var(--transition-base), box-shadow var(--transition-base);
+		/* GPU 加速 */
+		transform: translateZ(0);
+		will-change: box-shadow;
+		/* 限制重排范围 */
+		contain: layout style paint;
 	}
 
 	.sidebar:hover {
-		box-shadow: var(--shadow-sm);
 		border-color: var(--border-accent);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.sidebar-header {
@@ -123,7 +129,10 @@
 		background: var(--bg-secondary);
 		border-radius: var(--radius-xl);
 		border: 1px solid var(--border-light);
-		transition: all var(--transition-fast);
+		/* 只过渡边框和背景颜色，避免重排 */
+		transition: border-color var(--transition-fast), background-color var(--transition-fast);
+		/* 优化渲染 */
+		contain: layout style;
 	}
 
 	.sidebar-section:hover {
@@ -201,7 +210,7 @@
 
 	.sidebar-group-btn.root:hover {
 		background: var(--primary-light);
-		transform: translateX(2px);
+		transform: translateX(2px) translateZ(0);
 		box-shadow: var(--shadow-sm);
 	}
 
