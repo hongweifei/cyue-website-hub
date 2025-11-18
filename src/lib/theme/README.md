@@ -217,3 +217,65 @@ JSON配置文件必须包含以下字段：
 
 参考现有主题文件了解完整的变量列表。
 
+## 组件样式系统
+
+主题系统现在支持**组件样式系统**，允许主题定义不同组件的样式变体，实现高维护性和低耦合的样式管理。
+
+### 快速开始
+
+在主题 CSS 文件中定义组件样式变量：
+
+```css
+:root[data-theme="my-theme"] {
+  /* Button 组件 - Primary 变体 */
+  --component-button-primary-bg: linear-gradient(135deg, #007DFF, #00D9FF);
+  --component-button-primary-color: #FFFFFF;
+  --component-button-primary-border: transparent;
+  --component-button-primary-shadow: 0 4px 12px rgba(0, 125, 255, 0.3);
+  --component-button-primary-bg-hover: linear-gradient(135deg, #1890FF, #00B8D9);
+  --component-button-primary-shadow-hover: 0 6px 20px rgba(0, 125, 255, 0.4);
+  --component-button-primary-radius: 16px;
+  --component-button-primary-padding: 12px 24px;
+  --component-button-primary-transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+```
+
+在组件中使用：
+
+```svelte
+<button class="my-button">点击我</button>
+
+<style>
+  .my-button {
+    background: var(--component-button-primary-bg);
+    color: var(--component-button-primary-color);
+    border: 1px solid var(--component-button-primary-border);
+    border-radius: var(--component-button-primary-radius);
+    padding: var(--component-button-primary-padding);
+    box-shadow: var(--component-button-primary-shadow);
+    transition: var(--component-button-primary-transition);
+  }
+
+  .my-button:hover {
+    background: var(--component-button-primary-bg-hover);
+    box-shadow: var(--component-button-primary-shadow-hover);
+  }
+</style>
+```
+
+### 详细文档
+
+查看 [组件样式系统使用指南](./COMPONENT_STYLES.md) 了解：
+- 完整的命名规范
+- 支持的组件类型和样式属性
+- 工具函数使用方法
+- 最佳实践和示例
+
+### 核心特性
+
+- ✅ **低耦合**：组件通过 CSS 变量获取样式，不依赖主题实现细节
+- ✅ **高维护性**：统一的命名规范和类型系统
+- ✅ **灵活扩展**：轻松添加新组件和变体
+- ✅ **类型安全**：完整的 TypeScript 类型支持
+- ✅ **向后兼容**：与现有 CSS 变量系统完全兼容
+

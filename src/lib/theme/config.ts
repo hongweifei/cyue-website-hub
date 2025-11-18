@@ -8,6 +8,61 @@ export type ConcreteThemeId = string;
 
 export type ThemeId = ConcreteThemeId | "auto";
 
+/**
+ * 组件类型定义
+ */
+export type ComponentType =
+	| "button"
+	| "card"
+	| "input"
+	| "tag"
+	| "link"
+	| "badge"
+	| "tooltip"
+	| "modal"
+	| "sidebar"
+	| "header";
+
+/**
+ * 组件样式变体定义
+ * 每个组件可以有多个变体，如 button 可以有 primary, secondary, outline 等
+ */
+export interface ComponentStyleVariant {
+	/** 变体名称，如 "primary", "secondary", "outline" */
+	variant: string;
+	/** 变体描述（可选，用于文档和开发工具） */
+	description?: string;
+	/** 样式属性映射（可选，用于类型检查和文档） */
+	properties?: Record<string, string>;
+}
+
+/**
+ * 组件样式配置
+ * 定义某个组件在不同主题下的样式变体
+ */
+export interface ComponentStyleConfig {
+	/** 组件类型 */
+	component: ComponentType;
+	/** 组件描述（可选） */
+	description?: string;
+	/** 该组件的样式变体列表 */
+	variants?: ComponentStyleVariant[];
+	/** 默认变体名称（如果不指定，使用第一个变体） */
+	defaultVariant?: string;
+}
+
+/**
+ * 组件样式系统配置
+ * 主题可以定义自己的组件样式配置，用于类型检查和文档生成
+ * 实际的样式通过 CSS 变量实现，保持低耦合
+ */
+export interface ComponentStylesConfig {
+	/** 组件样式配置列表 */
+	components?: ComponentStyleConfig[];
+	/** 样式命名空间前缀（默认: "component"） */
+	namespace?: string;
+}
+
 export interface ThemeOption {
 	id: ThemeId;
 	label: string;
@@ -22,6 +77,8 @@ export interface ThemeOption {
 		border: string;
 	};
 	features: string[];
+	/** 组件样式配置（可选，用于类型检查和文档） */
+	componentStyles?: ComponentStylesConfig;
 }
 
 /**
