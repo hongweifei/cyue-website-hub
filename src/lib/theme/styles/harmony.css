@@ -1,5 +1,16 @@
 :root,
 :root[data-theme="harmony"] {
+	/* 主题元数据 */
+	--theme-label: "鸿蒙·晨曦";
+	--theme-description: "官方浅色，柔和玻璃质感";
+	--theme-mode: light;
+	--theme-family: harmony;
+	--theme-order: 1;
+	--theme-preview-background: linear-gradient(135deg, #f5fbff, #dbeafe);
+	--theme-preview-accent: linear-gradient(120deg, #0ea5e9, #6366f1);
+	--theme-preview-border: rgba(14,165,233,.25);
+	--theme-features: "玻璃拟态,圆角系统";
+
 	/* 鸿蒙设计规范主色调 - 更柔和的蓝色系 */
 	--primary-color: #007DFF;
 	--primary-color-strong: #0051D5;

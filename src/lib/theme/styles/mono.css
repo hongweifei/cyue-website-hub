@@ -1,6 +1,17 @@
 :root[data-theme="mono"] {
 	color-scheme: light;
 
+	/* 主题元数据 */
+	--theme-label: "留白手稿";
+	--theme-description: "极简纸感，衬线排版";
+	--theme-mode: light;
+	--theme-family: mono;
+	--theme-order: 11;
+	--theme-preview-background: linear-gradient(145deg, #fdf4e3, #f5ebe0);
+	--theme-preview-accent: linear-gradient(120deg, #b45309, #92400e);
+	--theme-preview-border: rgba(146,64,14,.25);
+	--theme-features: "纸张纹理,衬线标题";
+
 	--font-sans-primary: "Source Serif 4", "Noto Serif SC", "Songti SC", "STSong", "HarmonyOS Sans", "Microsoft YaHei", serif;
 	--font-sans-secondary: "Source Sans 3", "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
 

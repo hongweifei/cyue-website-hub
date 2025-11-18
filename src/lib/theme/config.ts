@@ -24,6 +24,24 @@ export interface ThemeOption {
 	features: string[];
 }
 
+/**
+ * 从 CSS 文件中提取的主题元数据
+ */
+interface CSSThemeMetadata {
+	label?: string;
+	description?: string;
+	mode?: ThemeMode;
+	family?: "system" | "harmony" | "glass" | "neo" | "mono";
+	order?: number;
+	badge?: string;
+	preview?: {
+		background?: string;
+		accent?: string;
+		border?: string;
+	};
+	features?: string[];
+}
+
 export interface ThemeGroup {
 	title: string;
 	description?: string;
@@ -44,6 +62,118 @@ const themeConfigModules = import.meta.glob<ThemeOption>(
 );
 
 /**
+ * 使用 Vite 的 import.meta.glob 自动扫描所有主题CSS文件（作为文本）
+ * 用于从 CSS 变量中提取主题元数据
+ */
+const themeCSSTextModules = import.meta.glob<string>(
+	"/src/lib/theme/styles/*.css",
+	{
+		eager: true,
+		query: "?raw",
+		import: "default"
+	}
+);
+
+/**
+ * 从 CSS 文本中解析主题元数据
+ * 支持以下 CSS 变量：
+ * - --theme-label: 主题名称
+ * - --theme-description: 主题描述
+ * - --theme-mode: 主题模式 (light/dark)
+ * - --theme-family: 主题家族
+ * - --theme-order: 排序值（数字）
+ * - --theme-badge: 徽章文本
+ * - --theme-preview-background: 预览背景
+ * - --theme-preview-accent: 预览强调色
+ * - --theme-preview-border: 预览边框色
+ * - --theme-features: 特性列表（逗号分隔）
+ */
+function parseCSSThemeMetadata(cssText: string, themeId: string): CSSThemeMetadata {
+	const metadata: CSSThemeMetadata = {};
+	
+	// 匹配 :root[data-theme="themeId"] 或 :root 选择器中的 CSS 变量
+	const rootSelector = `:root[data-theme="${themeId}"]`;
+	const rootOnlySelector = `:root`;
+	
+	// 查找包含主题选择器的规则块
+	const rootMatch = cssText.match(new RegExp(`${rootSelector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^{]*\\{([^}]+)\\}`, 's'));
+	const rootOnlyMatch = cssText.match(new RegExp(`${rootOnlySelector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^{]*\\{([^}]+)\\}`, 's'));
+	
+	const cssContent = (rootMatch?.[1] || rootOnlyMatch?.[1] || '').trim();
+	
+	// 解析 CSS 变量
+	const varPattern = /--theme-(\w+(?:-\w+)*)\s*:\s*([^;]+);/g;
+	let match;
+	
+	while ((match = varPattern.exec(cssContent)) !== null) {
+		const [, varName, value] = match;
+		const trimmedValue = value.trim().replace(/^["']|["']$/g, ''); // 移除引号
+		
+		switch (varName) {
+			case 'label':
+				metadata.label = trimmedValue;
+				break;
+			case 'description':
+				metadata.description = trimmedValue;
+				break;
+			case 'mode':
+				if (trimmedValue === 'light' || trimmedValue === 'dark') {
+					metadata.mode = trimmedValue;
+				}
+				break;
+			case 'family':
+				if (['system', 'harmony', 'glass', 'neo', 'mono'].includes(trimmedValue)) {
+					metadata.family = trimmedValue as ThemeOption['family'];
+				}
+				break;
+			case 'order':
+				const orderNum = parseInt(trimmedValue, 10);
+				if (!isNaN(orderNum)) {
+					metadata.order = orderNum;
+				}
+				break;
+			case 'badge':
+				metadata.badge = trimmedValue;
+				break;
+			case 'preview-background':
+				if (!metadata.preview) metadata.preview = {};
+				metadata.preview.background = trimmedValue;
+				break;
+			case 'preview-accent':
+				if (!metadata.preview) metadata.preview = {};
+				metadata.preview.accent = trimmedValue;
+				break;
+			case 'preview-border':
+				if (!metadata.preview) metadata.preview = {};
+				metadata.preview.border = trimmedValue;
+				break;
+			case 'features':
+				metadata.features = trimmedValue.split(',').map(f => f.trim()).filter(Boolean);
+				break;
+		}
+	}
+	
+	return metadata;
+}
+
+/**
+ * 从 CSS 文件提取主题元数据映射
+ */
+const cssThemeMetadataMap = new Map<ConcreteThemeId, CSSThemeMetadata>();
+
+// 解析所有 CSS 文件中的主题元数据
+for (const [filePath, cssText] of Object.entries(themeCSSTextModules)) {
+	const fileName = filePath.split("/").pop() || "";
+	const themeId = fileName.replace(/\.css(\?.*)?$/, "") as ConcreteThemeId;
+	if (themeId && cssText) {
+		const metadata = parseCSSThemeMetadata(cssText, themeId);
+		if (Object.keys(metadata).length > 0) {
+			cssThemeMetadataMap.set(themeId, metadata);
+		}
+	}
+}
+
+/**
  * 从文件路径提取主题ID
  * 例如：./configs/harmony.json -> harmony
  */
@@ -58,13 +188,93 @@ function extractThemeIdFromConfigPath(filePath: string): string {
  */
 const loadedThemeConfigs = new Map<ConcreteThemeId, ThemeOption>();
 
-// 初始化主题配置映射
-for (const [filePath, config] of Object.entries(themeConfigModules)) {
+/**
+ * 合并 CSS 元数据和 JSON 配置
+ * JSON 配置优先，CSS 元数据作为补充
+ */
+function mergeThemeConfig(
+	cssMetadata: CSSThemeMetadata | undefined,
+	jsonConfig: ThemeOption | undefined,
+	themeId: ConcreteThemeId
+): ThemeOption | null {
+	// 如果两者都不存在，返回 null
+	if (!cssMetadata && !jsonConfig) {
+		return null;
+	}
+	
+	// 如果只有 CSS 元数据，尝试构建完整配置
+	if (!jsonConfig && cssMetadata) {
+		// 检查是否有足够的信息构建配置
+		if (!cssMetadata.label || !cssMetadata.mode) {
+			return null; // 缺少必需字段
+		}
+		
+		return {
+			id: themeId,
+			label: cssMetadata.label,
+			description: cssMetadata.description || '',
+			mode: cssMetadata.mode,
+			family: cssMetadata.family || 'harmony',
+			badge: cssMetadata.badge,
+			order: cssMetadata.order,
+			preview: {
+				background: cssMetadata.preview?.background ?? 'transparent',
+				accent: cssMetadata.preview?.accent ?? 'transparent',
+				border: cssMetadata.preview?.border ?? 'transparent'
+			},
+			features: cssMetadata.features || []
+		};
+	}
+	
+	// 如果只有 JSON 配置，直接使用
+	if (jsonConfig && !cssMetadata) {
+		jsonConfig.id = themeId;
+		return jsonConfig;
+	}
+	
+	// 两者都存在，合并（JSON 优先）
+	if (jsonConfig && cssMetadata) {
+		return {
+			...jsonConfig,
+			id: themeId,
+			// JSON 中的字段优先，如果 JSON 中没有则使用 CSS 中的
+			label: jsonConfig.label || cssMetadata.label || themeId,
+			description: jsonConfig.description || cssMetadata.description || '',
+			mode: jsonConfig.mode || cssMetadata.mode || 'light',
+			family: jsonConfig.family || cssMetadata.family || 'harmony',
+			badge: jsonConfig.badge || cssMetadata.badge,
+			order: jsonConfig.order ?? cssMetadata.order,
+			preview: {
+				background: jsonConfig.preview.background || (cssMetadata.preview?.background ?? 'transparent'),
+				accent: jsonConfig.preview.accent || (cssMetadata.preview?.accent ?? 'transparent'),
+				border: jsonConfig.preview.border || (cssMetadata.preview?.border ?? 'transparent')
+			},
+			features: jsonConfig.features.length > 0 ? jsonConfig.features : (cssMetadata.features || [])
+		};
+	}
+	
+	return null;
+}
+
+// 初始化主题配置映射（合并 CSS 和 JSON 配置）
+for (const [filePath, jsonConfig] of Object.entries(themeConfigModules)) {
 	const themeId = extractThemeIdFromConfigPath(filePath);
-	if (themeId && config) {
-		// 确保配置中的ID与文件名一致
-		config.id = themeId as ConcreteThemeId;
-		loadedThemeConfigs.set(themeId as ConcreteThemeId, config);
+	if (themeId) {
+		const cssMetadata = cssThemeMetadataMap.get(themeId as ConcreteThemeId);
+		const mergedConfig = mergeThemeConfig(cssMetadata, jsonConfig, themeId as ConcreteThemeId);
+		if (mergedConfig) {
+			loadedThemeConfigs.set(themeId as ConcreteThemeId, mergedConfig);
+		}
+	}
+}
+
+// 处理只有 CSS 文件但没有 JSON 配置的主题
+for (const [themeId, cssMetadata] of cssThemeMetadataMap.entries()) {
+	if (!loadedThemeConfigs.has(themeId)) {
+		const mergedConfig = mergeThemeConfig(cssMetadata, undefined, themeId);
+		if (mergedConfig) {
+			loadedThemeConfigs.set(themeId, mergedConfig);
+		}
 	}
 }
 

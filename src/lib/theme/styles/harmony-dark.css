@@ -1,6 +1,17 @@
 :root[data-theme="harmony-dark"] {
 	color-scheme: dark;
 
+	/* 主题元数据 */
+	--theme-label: "鸿蒙·星辉";
+	--theme-description: "官方暗色，夜空霓虹渐变";
+	--theme-mode: dark;
+	--theme-family: harmony;
+	--theme-order: 2;
+	--theme-preview-background: linear-gradient(135deg, #0f172a, #111827);
+	--theme-preview-accent: linear-gradient(120deg, #38bdf8, #6366f1);
+	--theme-preview-border: rgba(56,189,248,.35);
+	--theme-features: "夜间护眼,高对比文本";
+
 	/* 鸿蒙设计规范暗色主题主色调 */
 	--primary-color: #40A9FF;
 	--primary-color-strong: #69C0FF;

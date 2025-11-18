@@ -1,6 +1,17 @@
 :root[data-theme="aqua"] {
 	color-scheme: light;
 
+	/* 主题元数据 */
+	--theme-label: "云上霓虹";
+	--theme-description: "高饱和玻璃，漂浮渐变背景";
+	--theme-mode: light;
+	--theme-family: glass;
+	--theme-order: 10;
+	--theme-preview-background: linear-gradient(135deg, #ecfeff, #ede9fe);
+	--theme-preview-accent: linear-gradient(120deg, #f472b6, #60a5fa);
+	--theme-preview-border: rgba(244,114,182,.3);
+	--theme-features: "渐变轮廓,霓虹描边";
+
 	--font-sans-primary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 	--font-sans-secondary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
