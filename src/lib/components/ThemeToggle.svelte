@@ -177,6 +177,8 @@
     .theme-toggle-wrapper {
         position: relative;
         display: inline-flex;
+        /* 确保 wrapper 在正确的层级，以便弹出面板可以显示 */
+        z-index: 1;
     }
 
     .theme-toggle-btn {
@@ -295,7 +297,8 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
-        z-index: 30;
+        /* 确保弹出面板在 header 之上，header 的 z-index 是 100 */
+        z-index: 101;
     }
 
     .theme-option {

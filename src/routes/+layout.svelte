@@ -283,8 +283,8 @@
     /* GPU 加速 backdrop-filter */
     transform: translateZ(0);
     will-change: transform, box-shadow;
-    /* 限制重排范围 */
-    contain: layout style paint;
+    /* 限制重排范围，但不限制 paint 以避免层叠上下文问题 */
+    contain: layout style;
   }
 
   .header-shell:hover {
