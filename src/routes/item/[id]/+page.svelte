@@ -169,10 +169,15 @@
   .item-detail-page {
     padding: 2rem 0 4rem 0;
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
+  }
+
+  .item-detail-page > * {
+    min-width: 0;
   }
 
   .item-header {
@@ -238,6 +243,7 @@
   @media (min-width: 1024px) {
     .item-detail-page {
       max-width: 1200px;
+      width: 100%;
     }
 
     .item-name {
@@ -252,6 +258,7 @@
   @media (min-width: 1280px) {
     .item-detail-page {
       max-width: 1400px;
+      width: 100%;
     }
 
     .back-link {
@@ -342,6 +349,7 @@
   @media (min-width: 1600px) {
     .item-detail-page {
       max-width: 1600px;
+      width: 100%;
     }
 
     .item-detail-header {
@@ -689,7 +697,8 @@
     .item-detail-page {
       padding: 0 0 var(--spacing-lg) 0;
       max-width: 100%;
-      overflow-x: hidden;
+      width: 100%;
+      overflow: auto;
     }
 
     .item-header {
