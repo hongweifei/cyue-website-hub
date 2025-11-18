@@ -14,18 +14,21 @@ const config = {
     },
     adapter: (() => {
       const adapterPreference = process.env.SVELTEKIT_ADAPTER?.toLowerCase();
-      const isCi = process.env.CI === "true";
-      const useStatic =
-        adapterPreference === "static" ||
-        (!adapterPreference && !isCi);
+      // 默认使用静态适配器，除非明确指定其他适配器
+      const useStatic = !adapterPreference || adapterPreference === "static";
 
-      return useStatic ? adapterStatic({
-        pages: "build",
-        assets: "build",
-        fallback: undefined,
-        precompress: false,
-        strict: true,
-      }) : adapterAuto();
+      if (useStatic) {
+        return adapterStatic({
+          pages: "build",
+          assets: "build",
+          fallback: undefined,
+          precompress: false,
+          strict: true,
+        });
+      }
+      
+      // 只有在明确指定非 static 时才使用 adapterAuto
+      return adapterAuto();
     })(),
     prerender: {
       handleHttpError: "warn",
