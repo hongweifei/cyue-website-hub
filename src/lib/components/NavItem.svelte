@@ -48,8 +48,8 @@
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill={isFavorite ? "currentColor" : "none"}
         stroke="currentColor"
@@ -175,7 +175,7 @@
     background: var(--component-button-ghost-bg, var(--bg-tertiary));
     border: 1px solid var(--component-button-ghost-border, var(--border-light));
     cursor: pointer;
-    padding: var(--component-button-ghost-padding, var(--spacing-sm));
+    padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
     color: var(--component-button-ghost-color, var(--text-tertiary));
     /* 只过渡颜色、背景、边框和 transform */
     transition: var(
@@ -189,10 +189,15 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--component-button-ghost-radius, var(--radius-md));
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     /* 优化渲染 */
     contain: layout style paint;
+  }
+
+  .favorite-btn svg {
+    width: 22px;
+    height: 22px;
   }
 
   .favorite-btn:hover {
@@ -340,9 +345,9 @@
     }
 
     .favorite-btn {
-      width: 32px;
-      height: 32px;
-      padding: var(--spacing-xs);
+      width: 40px;
+      height: 40px;
+      padding: var(--spacing-xs) var(--spacing-sm);
     }
   }
 

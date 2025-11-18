@@ -77,8 +77,8 @@
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+          width="24"
+          height="24"
                   viewBox="0 0 24 24"
                   fill={isFavorite ? "currentColor" : "none"}
                   stroke="currentColor"
@@ -593,8 +593,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
     background: var(--component-button-ghost-bg, transparent);
     border: var(--component-button-ghost-border, transparent);
@@ -604,6 +604,11 @@
     transition: var(--component-button-ghost-transition, all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1));
     flex-shrink: 0;
     box-shadow: var(--component-button-ghost-shadow, none);
+  }
+
+  .favorite-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .favorite-btn:hover {
@@ -811,8 +816,8 @@
     }
 
     .favorite-btn {
-      width: 2.25rem;
-      height: 2.25rem;
+      width: 2.75rem;
+      height: 2.75rem;
     }
 
     .visit-btn:hover {
