@@ -86,16 +86,18 @@
 	 * 命名规范：--component-{component}-{variant}-{property}
 	 * ============================================ */
 
-	/* Button 组件样式 */
+	/* Button 组件样式 - 赛博朋克，强烈霓虹光效 */
 	--component-button-primary-bg: var(--gradient-brand);
 	--component-button-primary-color: var(--text-inverse);
 	--component-button-primary-border: transparent;
 	--component-button-primary-shadow: var(--shadow-soft);
 	--component-button-primary-bg-hover: linear-gradient(135deg, #fb923c 0%, #06b6d4 100%);
 	--component-button-primary-shadow-hover: var(--shadow-glow);
+	--component-button-primary-transform-hover: translateY(-3px) scale(1.03);
+	--component-button-primary-transform-active: translateY(0) scale(0.97);
 	--component-button-primary-radius: var(--radius-md);
 	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
-	--component-button-primary-transition: all var(--transition-base);
+	--component-button-primary-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-button-secondary-bg: var(--bg-tertiary);
 	--component-button-secondary-color: var(--text-primary);
@@ -104,20 +106,24 @@
 	--component-button-secondary-bg-hover: var(--primary-light);
 	--component-button-secondary-color-hover: var(--primary-color);
 	--component-button-secondary-border-hover: var(--primary-color);
-	--component-button-secondary-shadow-hover: var(--shadow-sm);
+	--component-button-secondary-shadow-hover: 0 0 16px rgba(249, 115, 22, 0.3), 0 0 24px rgba(34, 211, 238, 0.2);
+	--component-button-secondary-transform-hover: translateY(-2px);
+	--component-button-secondary-transform-active: translateY(0);
 	--component-button-secondary-radius: var(--radius-md);
 	--component-button-secondary-padding: var(--spacing-sm) var(--spacing-lg);
-	--component-button-secondary-transition: all var(--transition-base);
+	--component-button-secondary-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-button-outline-bg: transparent;
 	--component-button-outline-color: var(--primary-color);
 	--component-button-outline-border: var(--primary-color);
-	--component-button-outline-shadow: none;
+	--component-button-outline-shadow: 0 0 12px rgba(249, 115, 22, 0.2);
 	--component-button-outline-bg-hover: var(--primary-lighter);
-	--component-button-outline-shadow-hover: var(--shadow-xs);
+	--component-button-outline-shadow-hover: 0 0 20px rgba(249, 115, 22, 0.4), 0 0 30px rgba(34, 211, 238, 0.3);
+	--component-button-outline-transform-hover: translateY(-2px);
+	--component-button-outline-transform-active: translateY(0);
 	--component-button-outline-radius: var(--radius-md);
 	--component-button-outline-padding: var(--spacing-sm) var(--spacing-lg);
-	--component-button-outline-transition: all var(--transition-base);
+	--component-button-outline-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-button-ghost-bg: transparent;
 	--component-button-ghost-color: var(--text-secondary);
@@ -125,52 +131,61 @@
 	--component-button-ghost-shadow: none;
 	--component-button-ghost-bg-hover: var(--bg-tertiary);
 	--component-button-ghost-color-hover: var(--text-primary);
+	--component-button-ghost-transform-hover: scale(1.08);
+	--component-button-ghost-transform-active: scale(0.95);
 	--component-button-ghost-radius: var(--radius-md);
 	--component-button-ghost-padding: var(--spacing-sm) var(--spacing-md);
-	--component-button-ghost-transition: all var(--transition-fast);
+	--component-button-ghost-transition: all var(--transition-fast) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-	/* Card 组件样式 */
+	/* Card 组件样式 - 赛博朋克霓虹描边 */
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 24px rgba(249, 115, 22, 0.15), 0 0 32px rgba(34, 211, 238, 0.1);
+	--component-card-default-border-hover: var(--border-accent);
+	--component-card-default-transform-hover: translateY(-4px);
 	--component-card-default-radius: var(--radius-xl);
 	--component-card-default-padding: var(--spacing-lg);
 	--component-card-default-backdrop: blur(8px);
-	--component-card-default-transition: all var(--transition-base);
+	--component-card-default-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-card-elevated-bg: var(--card-bg);
 	--component-card-elevated-border: var(--border-accent);
 	--component-card-elevated-shadow: var(--shadow-md);
-	--component-card-elevated-shadow-hover: var(--shadow-lg);
+	--component-card-elevated-shadow-hover: var(--shadow-lg), 0 0 40px rgba(249, 115, 22, 0.2), 0 0 60px rgba(34, 211, 238, 0.15);
+	--component-card-elevated-border-hover: rgba(34, 211, 238, 0.6);
+	--component-card-elevated-transform-hover: translateY(-6px);
 	--component-card-elevated-radius: var(--radius-xl);
 	--component-card-elevated-padding: var(--spacing-lg);
 	--component-card-elevated-backdrop: blur(12px);
-	--component-card-elevated-transition: all var(--transition-base);
+	--component-card-elevated-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-card-glass-bg: var(--surface-glass);
 	--component-card-glass-border: var(--border-soft);
 	--component-card-glass-shadow: var(--shadow-xs);
-	--component-card-glass-shadow-hover: var(--shadow-sm);
+	--component-card-glass-shadow-hover: var(--shadow-sm), 0 0 28px rgba(34, 211, 238, 0.2);
+	--component-card-glass-border-hover: var(--border-accent);
+	--component-card-glass-transform-hover: translateY(-4px);
 	--component-card-glass-radius: var(--radius-xl);
 	--component-card-glass-padding: var(--spacing-lg);
 	--component-card-glass-backdrop: blur(16px);
-	--component-card-glass-transition: all var(--transition-base);
+	--component-card-glass-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-	/* Input 组件样式 */
+	/* Input 组件样式 - 霓虹描边光效 */
 	--component-input-default-bg: var(--input-bg);
 	--component-input-default-color: var(--text-primary);
 	--component-input-default-border: var(--border-light);
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: var(--border-accent);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter);
+	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter), 0 0 20px rgba(249, 115, 22, 0.3), 0 0 30px rgba(34, 211, 238, 0.2);
+	--component-input-default-transform-focus: scale(1.02);
 	--component-input-default-radius: var(--radius-2xl);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
 	--component-input-default-backdrop: blur(12px);
-	--component-input-default-transition: all var(--transition-fast);
+	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-	/* Tag 组件样式 */
+	/* Tag 组件样式 - 霓虹光效 */
 	--component-tag-default-bg: var(--tag-bg);
 	--component-tag-default-color: var(--text-secondary);
 	--component-tag-default-border: var(--border-light);
@@ -178,55 +193,75 @@
 	--component-tag-default-bg-hover: var(--primary-light);
 	--component-tag-default-color-hover: var(--primary-color);
 	--component-tag-default-border-hover: var(--primary-color);
-	--component-tag-default-shadow-hover: var(--shadow-xs);
+	--component-tag-default-shadow-hover: 0 0 12px rgba(249, 115, 22, 0.25);
+	--component-tag-default-transform-hover: translateY(-2px) scale(1.05);
 	--component-tag-default-radius: var(--radius-full);
 	--component-tag-default-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-	--component-tag-default-transition: all var(--transition-fast);
+	--component-tag-default-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-tag-primary-bg: var(--primary-light);
 	--component-tag-primary-color: var(--primary-color);
 	--component-tag-primary-border: var(--primary-color);
-	--component-tag-primary-shadow: none;
+	--component-tag-primary-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: var(--shadow-xs);
+	--component-tag-primary-shadow-hover: 0 0 16px rgba(249, 115, 22, 0.4), 0 0 24px rgba(34, 211, 238, 0.3);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.08);
 	--component-tag-primary-radius: var(--radius-full);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-	--component-tag-primary-transition: all var(--transition-fast);
+	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-	/* Link 组件样式 */
+	/* Link 组件样式 - 霓虹光晕效果 */
 	--component-link-default-color: var(--primary-color);
 	--component-link-default-color-hover: var(--primary-hover);
-	--component-link-default-transition: color var(--transition-fast);
+	--component-link-default-underline: linear-gradient(transparent, transparent), linear-gradient(var(--primary-color), var(--primary-color));
+	--component-link-default-underline-hover: linear-gradient(transparent, transparent), linear-gradient(var(--primary-hover), var(--primary-hover));
+	--component-link-default-transform-hover: translateY(-2px);
+	--component-link-default-transition: color var(--transition-base), transform var(--transition-base), background-size var(--transition-base), text-shadow var(--transition-base);
+	--component-link-default-text-decoration: underline;
+	--component-link-default-text-decoration-thickness: 2px;
+	--component-link-default-text-underline-offset: 3px;
+	--component-link-default-text-shadow-hover: 0 0 12px rgba(249, 115, 22, 0.5), 0 0 20px rgba(34, 211, 238, 0.3);
 
 	--component-link-secondary-color: var(--text-secondary);
 	--component-link-secondary-color-hover: var(--text-primary);
-	--component-link-secondary-transition: color var(--transition-fast);
+	--component-link-secondary-underline: linear-gradient(transparent, transparent), linear-gradient(var(--text-secondary), var(--text-secondary));
+	--component-link-secondary-underline-hover: linear-gradient(transparent, transparent), linear-gradient(var(--text-primary), var(--text-primary));
+	--component-link-secondary-transition: color var(--transition-base), transform var(--transition-base), background-size var(--transition-base), text-shadow var(--transition-base);
+	--component-link-secondary-text-decoration: underline;
+	--component-link-secondary-text-decoration-thickness: 1px;
+	--component-link-secondary-text-underline-offset: 2px;
+	--component-link-secondary-text-shadow-hover: 0 0 8px rgba(34, 211, 238, 0.4);
 
 	/* Badge 组件样式 */
 	--component-badge-default-bg: var(--bg-tertiary);
 	--component-badge-default-color: var(--text-secondary);
 	--component-badge-default-border: var(--border-light);
+	--component-badge-default-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05);
 	--component-badge-default-radius: var(--radius-full);
 
 	--component-badge-primary-bg: var(--primary-color);
 	--component-badge-primary-color: var(--text-inverse);
 	--component-badge-primary-border: var(--primary-color);
+	--component-badge-primary-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 	--component-badge-primary-radius: var(--radius-full);
 
 	--component-badge-success-bg: var(--success-color, #52c41a);
 	--component-badge-success-color: var(--text-inverse);
 	--component-badge-success-border: var(--success-color, #52c41a);
+	--component-badge-success-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 	--component-badge-success-radius: var(--radius-full);
 
 	--component-badge-warning-bg: var(--warning-color, #faad14);
 	--component-badge-warning-color: var(--text-inverse);
 	--component-badge-warning-border: var(--warning-color, #faad14);
+	--component-badge-warning-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 	--component-badge-warning-radius: var(--radius-full);
 
 	--component-badge-error-bg: var(--error-color, #ff4d4f);
 	--component-badge-error-color: var(--text-inverse);
 	--component-badge-error-border: var(--error-color, #ff4d4f);
+	--component-badge-error-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 	--component-badge-error-radius: var(--radius-full);
 }
 
