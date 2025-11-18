@@ -292,6 +292,7 @@
         right: 0;
         min-width: 360px;
         max-width: 420px;
+        max-height: calc(100vh - 120px);
         padding: var(--component-card-glass-padding, var(--spacing-md));
         background: var(--component-card-glass-bg, var(--bg-elevated, var(--bg-primary)));
         border: 1px solid var(--component-card-glass-border, var(--border-light));
@@ -302,9 +303,38 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
+        overflow-y: auto;
+        overflow-x: hidden;
         transition: var(--component-card-glass-transition, border-color var(--transition-base));
         /* 确保弹出面板在 header 之上，header 的 z-index 是 100 */
         z-index: 101;
+    }
+
+    /* 自定义滚动条样式 */
+    @supports (scrollbar-width: thin) {
+        .theme-panel {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-soft) transparent;
+        }
+    }
+
+    .theme-panel::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .theme-panel::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: var(--radius-md);
+    }
+
+    .theme-panel::-webkit-scrollbar-thumb {
+        background: var(--border-soft);
+        border-radius: var(--radius-md);
+        transition: background var(--transition-fast);
+    }
+
+    .theme-panel::-webkit-scrollbar-thumb:hover {
+        background: var(--border-color);
     }
 
     .theme-option {
