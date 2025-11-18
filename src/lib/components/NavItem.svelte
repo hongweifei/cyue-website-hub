@@ -1,22 +1,19 @@
 <script lang="ts">
+  import { page } from "$app/state";
   import type { NavItem as NavItemType } from "../types";
   import { favorites } from "../stores/favorites";
-  import { page } from "$app/state";
   import SiteIcon from "./SiteIcon.svelte";
 
   interface Props {
     item: NavItemType;
+    favoriteIds?: string[];
+    siteDomain?: string;
   }
 
-  let { item }: Props = $props();
-  let favoriteIds = $state<string[]>([]);
+  let { item, favoriteIds = [], siteDomain = "" }: Props = $props();
 
-  $effect(() => {
-    const unsubscribe = favorites.subscribe((favs) => {
-      favoriteIds = favs;
-    });
-    return unsubscribe;
-  });
+  const fallbackDomain = $derived(page.data?.site?.domain ?? "");
+  const resolvedSiteDomain = $derived(siteDomain || fallbackDomain);
 
   let isFavorite = $derived(favoriteIds.includes(item.id));
 
@@ -76,8 +73,7 @@
   <div class="nav-item-footer">
     <a href="/item/{item.id}" class="detail-link">查看详情</a>
     <a
-      href="{item.url}?utm_source={page.data?.site
-        ?.domain}&utm_medium=navigation"
+      href="{item.url}?utm_source={resolvedSiteDomain}&utm_medium=navigation"
       target="_blank"
       rel="noopener noreferrer"
       class="external-link"
@@ -97,8 +93,8 @@
     transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
     position: relative;
     box-shadow: var(--shadow-xs);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     /* GPU 加速 */
     transform: translateZ(0);
     will-change: transform, box-shadow;
@@ -144,7 +140,6 @@
     transition: color var(--transition-base), transform var(--transition-base);
     display: inline-block;
     /* 优化渲染 */
-    will-change: transform;
     contain: layout style;
   }
 
@@ -181,7 +176,6 @@
     width: 36px;
     height: 36px;
     /* 优化渲染 */
-    will-change: transform;
     contain: layout style paint;
   }
 
@@ -220,7 +214,6 @@
     /* 只过渡颜色、背景、边框和 transform */
     transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
     /* 优化渲染 */
-    will-change: transform;
     contain: layout style;
   }
 
@@ -257,7 +250,6 @@
     gap: var(--spacing-xs);
     /* GPU 加速 */
     transform: translateZ(0);
-    will-change: transform, box-shadow;
     contain: layout style;
   }
 

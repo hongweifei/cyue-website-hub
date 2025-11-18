@@ -8,9 +8,10 @@
 	interface Props {
 		group: NavGroupType;
 		level: number;
+		favoriteIds?: string[];
 	}
 
-	let { group, level }: Props = $props();
+	let { group, level, favoriteIds = [] }: Props = $props();
 
 	// 只在明确提供了图标时才显示
 	const groupIconUrl = $derived(group.icon || '');
@@ -61,13 +62,13 @@
 	</div>
 	{#if group.items.length > 0}
 		<div class="nav-items-grid">
-			{#each group.items as item}
-				<NavItem {item} />
+			{#each group.items as item (item.id)}
+				<NavItem {item} {favoriteIds} />
 			{/each}
 		</div>
 	{/if}
 	{#if hasChildren}
-		<NavGroupChildren groups={childGroups} level={level + 1} />
+		<NavGroupChildren groups={childGroups} level={level + 1} {favoriteIds} />
 	{/if}
 </section>
 
@@ -86,9 +87,9 @@
 		animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
 		/* 优化大量分组渲染 - 使用 content-visibility 懒加载 */
 		content-visibility: auto;
-		contain-intrinsic-size: 0 300px;
-		/* 优化动画性能 */
-		will-change: transform, opacity;
+		contain-intrinsic-size: 0 400px;
+		/* 优化滚动性能 */
+		contain: layout style paint;
 	}
 
 	.nav-group::before {
@@ -177,7 +178,6 @@
 		transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 		/* GPU 加速 */
 		transform: translateZ(0);
-		will-change: transform, box-shadow;
 	}
 
 	.nav-group.nested .group-icon {

@@ -4,9 +4,10 @@
 
 	interface Props {
 		group: NavGroupType;
+		favoriteIds?: string[];
 	}
 
-	let { group }: Props = $props();
+	let { group, favoriteIds = [] }: Props = $props();
 </script>
 
-<NavGroupSection {group} level={0} />
+<NavGroupSection {group} level={0} {favoriteIds} />

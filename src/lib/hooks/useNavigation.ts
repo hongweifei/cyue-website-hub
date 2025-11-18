@@ -57,7 +57,8 @@ function createNavigationStore(initialData: NavigationInitialData) {
 	const navItems = writable<NavItem[]>(initialItems);
 	const searchQuery = writable('');
 	const selectedTags = writable<string[]>([]);
-	
+	let searchDebounceId: ReturnType<typeof setTimeout> | null = null;
+
 	const filteredItems = derived(
 		[searchQuery, selectedTags, navItems],
 		([$searchQuery, $selectedTags, $navItems]) => {
@@ -79,6 +80,14 @@ function createNavigationStore(initialData: NavigationInitialData) {
 
 	function handleSearch(value: string) {
 		if (browser) {
+			if (searchDebounceId) {
+				clearTimeout(searchDebounceId);
+			}
+			searchDebounceId = setTimeout(() => {
+				searchQuery.set(value);
+				searchDebounceId = null;
+			}, 60);
+		} else {
 			searchQuery.set(value);
 		}
 	}
@@ -97,6 +106,10 @@ function createNavigationStore(initialData: NavigationInitialData) {
 
 	function clearFilters() {
 		if (browser) {
+			if (searchDebounceId) {
+				clearTimeout(searchDebounceId);
+				searchDebounceId = null;
+			}
 			searchQuery.set('');
 			selectedTags.set([]);
 		}

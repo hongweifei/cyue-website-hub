@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import { get, derived } from 'svelte/store';
 	import { favorites } from '../stores/favorites';
 	import type { NavItem } from '../types';
 	import { useNavigation } from '$lib/hooks/useNavigation';
 	import NavItemComponent from './NavItem.svelte';
-	import { derived } from 'svelte/store';
 
 	const navigation = useNavigation();
 
@@ -14,10 +15,19 @@
 	}, [] as NavItem[]);
 
 	let favoriteItems = $state<NavItem[]>([]);
+	let favoriteIds = $state<string[]>(get(favorites));
+	const siteDomain = $derived(page.data?.site?.domain ?? '');
 
 	$effect(() => {
 		const unsubscribe = favoriteItemsStore.subscribe((value) => {
 			favoriteItems = value ?? [];
+		});
+		return unsubscribe;
+	});
+
+	$effect(() => {
+		const unsubscribe = favorites.subscribe((ids) => {
+			favoriteIds = ids ?? [];
 		});
 		return unsubscribe;
 	});
@@ -33,7 +43,7 @@
 	{:else}
 		<div class="favorite-items">
 			{#each favoriteItems as item}
-				<NavItemComponent {item} />
+				<NavItemComponent {item} {favoriteIds} siteDomain={siteDomain} />
 			{/each}
 		</div>
 	{/if}

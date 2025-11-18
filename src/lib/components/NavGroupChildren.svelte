@@ -5,16 +5,18 @@
 	interface Props {
 		groups: NavGroupType[];
 		level: number;
+		favoriteIds?: string[];
+		siteDomain?: string;
 	}
 
-	let { groups, level }: Props = $props();
+	let { groups, level, favoriteIds = [] }: Props = $props();
 </script>
 
 {#if groups.length > 0}
 	<div class="subgroups">
 		<div class="subgroups-list">
-		{#each groups as child}
-			<NavGroupSection group={child} level={level} />
+		{#each groups as child (child.id)}
+			<NavGroupSection group={child} level={level} {favoriteIds} />
 		{/each}
 		</div>
 	</div>

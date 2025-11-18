@@ -88,17 +88,19 @@
 		border: 1px solid var(--border-light);
 		border-radius: var(--radius-2xl);
 		box-shadow: var(--shadow-xs);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
 		overflow-x: hidden;
 		overflow-y: auto;
 		/* 优化 transition - 只过渡会变化的属性 */
 		transition: border-color var(--transition-base), box-shadow var(--transition-base);
 		/* GPU 加速 */
 		transform: translateZ(0);
-		will-change: box-shadow;
 		/* 限制重排范围 */
 		contain: layout style paint;
+		/* 优化滚动 */
+		-webkit-overflow-scrolling: touch;
+		scroll-behavior: smooth;
 	}
 
 	.sidebar:hover {

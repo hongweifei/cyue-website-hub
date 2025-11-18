@@ -1,7 +1,11 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { page } from '$app/state';
+	import { get } from 'svelte/store';
 	import type { NavItem as NavItemType, NavGroup as NavGroupType } from '../types';
 	import NavGroup from './NavGroup.svelte';
 	import NavItem from './NavItem.svelte';
+	import { favorites } from '../stores/favorites';
 
 	interface Props {
 		showFilteredResults: boolean;
@@ -11,6 +15,18 @@
 	}
 
 	let { showFilteredResults, filteredItems, currentGroup, allGroups }: Props = $props();
+
+	let favoriteIds = $state<string[]>(browser ? get(favorites) : []);
+	const siteDomain = $derived(page.data?.site?.domain ?? '');
+
+	if (browser) {
+		$effect(() => {
+			const unsubscribe = favorites.subscribe((ids) => {
+				favoriteIds = ids ?? [];
+			});
+			return unsubscribe;
+		});
+	}
 </script>
 
 <main class="content-area">
@@ -25,21 +41,21 @@
 				</div>
 			{:else}
 				<div class="results-grid">
-					{#each filteredItems as item}
-						<NavItem {item} />
+					{#each filteredItems as item (item.id)}
+						<NavItem {item} {favoriteIds} siteDomain={siteDomain} />
 					{/each}
 				</div>
 			{/if}
 		</div>
 	{:else if currentGroup}
 		<div class="group-content">
-			<NavGroup group={currentGroup} />
+			<NavGroup group={currentGroup} {favoriteIds} />
 		</div>
 	{:else}
 		<!-- 显示全部分组 -->
 		<div class="all-groups-content">
-			{#each allGroups as group}
-				<NavGroup {group} />
+			{#each allGroups as group (group.id)}
+				<NavGroup {group} {favoriteIds} />
 			{/each}
 		</div>
 	{/if}
@@ -61,6 +77,8 @@
 
 	.all-groups-content {
 		animation: fadeIn var(--motion-duration-slow) var(--motion-easing-standard);
+		/* 使用content-visibility优化已在NavGroupSection中实现 */
+		contain: layout style;
 	}
 
 	@keyframes fadeIn {
@@ -72,13 +90,6 @@
 			opacity: 1;
 			transform: translateY(0);
 		}
-	}
-	
-	/* 优化动画性能 - 使用 GPU 加速 */
-	.results-section,
-	.group-content,
-	.all-groups-content {
-		will-change: transform, opacity;
 	}
 
 	.results-title {
