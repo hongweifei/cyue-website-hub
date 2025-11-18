@@ -1,0 +1,309 @@
+:root[data-theme="retro"] {
+	color-scheme: light;
+
+	/* 主题元数据 */
+	--theme-label: "怀旧复古";
+	--theme-description: "90年代网站，经典怀旧风格";
+	--theme-mode: light;
+	--theme-family: classic;
+	--theme-order: 15;
+	--theme-preview-background: linear-gradient(145deg, #ffd700, #ffb347);
+	--theme-preview-accent: linear-gradient(120deg, #8b00ff, #ff00ff);
+	--theme-preview-border: rgba(139,0,255,.4);
+	--theme-features: "高饱和度,3D按钮,经典字体";
+
+	/* 90年代经典字体 - Times New Roman 和 Arial */
+	--font-sans-primary: "Times New Roman", "Georgia", "SimSun", "Microsoft YaHei", serif;
+	--font-sans-secondary: "Arial", "Helvetica", "Comic Sans MS", "Microsoft YaHei", sans-serif;
+
+	/* 90年代风格 - 几乎无圆角，方正设计 */
+	--radius-xs: 0px;
+	--radius-sm: 2px;
+	--radius-md: 3px;
+	--radius-lg: 4px;
+	--radius-xl: 6px;
+	--radius-2xl: 8px;
+	--radius-full: 9999px;
+
+	/* 90年代主色调 - 高饱和度的紫色和品红色 */
+	--primary-color: #8b00ff;
+	--primary-color-strong: #6a00cc;
+	--primary-hover: #9f1aff;
+	--primary-light: rgba(139, 0, 255, 0.2);
+	--primary-lighter: rgba(139, 0, 255, 0.1);
+	--accent-color: #ff00ff;
+	--accent-hover: #ff33ff;
+
+	/* 90年代文字颜色 - 深色文字 */
+	--text-primary: #000000;
+	--text-secondary: #333333;
+	--text-tertiary: #666666;
+	--text-muted: #999999;
+	--text-inverse: #ffffff;
+
+	/* 90年代边框颜色 - 明显的边框 */
+	--border-color: #000000;
+	--border-soft: #666666;
+	--border-light: #999999;
+	--border-accent: #8b00ff;
+
+	/* 90年代背景颜色 - 明亮的高饱和度背景 */
+	--bg-primary: #ffffcc;
+	--bg-secondary: #ffe6cc;
+	--bg-tertiary: #ffe0cc;
+	--surface-glass: rgba(255, 255, 204, 0.95);
+	--surface-solid: #ffffff;
+	--card-bg: #ffffff;
+	--card-overlay: linear-gradient(180deg, #ffffff 0%, #fff5e6 100%);
+	--tag-bg: rgba(139, 0, 255, 0.15);
+	--icon-bg: rgba(139, 0, 255, 0.2);
+	--input-bg: #ffffff;
+	--code-bg: #ffffcc;
+	--header-bg: rgba(255, 215, 0, 0.95);
+	--footer-bg: rgba(255, 215, 0, 0.9);
+	--app-background: linear-gradient(180deg, #ffd700 0%, #ffb347 25%, #ff69b4 50%, #9370db 75%, #8b00ff 100%);
+
+	/* 90年代阴影 - 简单的3D效果，内阴影和外阴影 */
+	--shadow-xs: 2px 2px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+	--shadow-sm: 3px 3px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+	--shadow-md: 4px 4px 0px #000000, inset 2px 2px 0px rgba(255, 255, 255, 0.7);
+	--shadow-lg: 5px 5px 0px #000000, inset 2px 2px 0px rgba(255, 255, 255, 0.8);
+	--shadow-xl: 6px 6px 0px #000000, inset 3px 3px 0px rgba(255, 255, 255, 0.9);
+	--shadow-soft: 2px 2px 4px rgba(139, 0, 255, 0.3), inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+	--shadow-glow: 0 0 10px rgba(139, 0, 255, 0.5), 2px 2px 0px #000000;
+
+	/* 90年代层级颜色 */
+	--layer-primary-soft: rgba(139, 0, 255, 0.15);
+	--layer-primary-strong: rgba(139, 0, 255, 0.3);
+	--layer-accent-soft: rgba(255, 0, 255, 0.2);
+	--chip-contrast-surface: rgba(255, 255, 255, 0.95);
+	--chip-contrast-surface-strong: #ffffff;
+	--gradient-brand: linear-gradient(180deg, #8b00ff 0%, #ff00ff 100%);
+	--gradient-brand-soft: linear-gradient(180deg, rgba(139, 0, 255, 0.2) 0%, rgba(255, 0, 255, 0.2) 100%);
+
+	/* 状态颜色 - 90年代高饱和度 */
+	--success-color: #00ff00;
+	--warning-color: #ffaa00;
+	--error-color: #ff0000;
+	--info-color: #0000ff;
+
+	/* ============================================
+	 * 组件样式系统 - Component Styles System
+	 * ============================================
+	 * 通过 CSS 变量定义组件样式，支持不同变体
+	 * 命名规范：--component-{component}-{variant}-{property}
+	 * ============================================ */
+
+	/* Button 组件样式 - 90年代3D浮雕按钮 */
+	--component-button-primary-bg: linear-gradient(180deg, #8b00ff 0%, #6a00cc 50%, #4a0099 100%);
+	--component-button-primary-color: var(--text-inverse);
+	--component-button-primary-border: 2px outset #8b00ff;
+	--component-button-primary-shadow: 3px 3px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.4);
+	--component-button-primary-bg-hover: linear-gradient(180deg, #9f1aff 0%, #7a0ae6 50%, #5a00cc 100%);
+	--component-button-primary-shadow-hover: 4px 4px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+	--component-button-primary-transform-hover: translate(-1px, -1px);
+	--component-button-primary-transform-active: translate(2px, 2px);
+	--component-button-primary-radius: var(--radius-sm);
+	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
+	--component-button-primary-transition: all 0.1s linear;
+
+	--component-button-secondary-bg: linear-gradient(180deg, #ffffff 0%, #e6e6e6 50%, #cccccc 100%);
+	--component-button-secondary-color: var(--text-primary);
+	--component-button-secondary-border: 2px outset #999999;
+	--component-button-secondary-shadow: 2px 2px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+	--component-button-secondary-bg-hover: linear-gradient(180deg, #f0f0f0 0%, #d0d0d0 50%, #b0b0b0 100%);
+	--component-button-secondary-color-hover: var(--text-primary);
+	--component-button-secondary-border-hover: 2px outset #666666;
+	--component-button-secondary-shadow-hover: 3px 3px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.7);
+	--component-button-secondary-transform-hover: translate(-1px, -1px);
+	--component-button-secondary-transform-active: translate(2px, 2px);
+	--component-button-secondary-radius: var(--radius-sm);
+	--component-button-secondary-padding: var(--spacing-sm) var(--spacing-lg);
+	--component-button-secondary-transition: all 0.1s linear;
+
+	--component-button-outline-bg: var(--bg-primary);
+	--component-button-outline-color: var(--primary-color);
+	--component-button-outline-border: 2px solid var(--primary-color);
+	--component-button-outline-shadow: 2px 2px 0px #000000;
+	--component-button-outline-bg-hover: var(--primary-light);
+	--component-button-outline-shadow-hover: 3px 3px 0px #000000;
+	--component-button-outline-transform-hover: translate(-1px, -1px);
+	--component-button-outline-transform-active: translate(2px, 2px);
+	--component-button-outline-radius: var(--radius-sm);
+	--component-button-outline-padding: var(--spacing-sm) var(--spacing-lg);
+	--component-button-outline-transition: all 0.1s linear;
+
+	--component-button-ghost-bg: transparent;
+	--component-button-ghost-color: var(--text-primary);
+	--component-button-ghost-border: 1px dashed var(--border-color);
+	--component-button-ghost-shadow: none;
+	--component-button-ghost-bg-hover: var(--bg-tertiary);
+	--component-button-ghost-color-hover: var(--text-primary);
+	--component-button-ghost-transform-hover: translate(-1px, -1px);
+	--component-button-ghost-transform-active: translate(1px, 1px);
+	--component-button-ghost-radius: var(--radius-sm);
+	--component-button-ghost-padding: var(--spacing-sm) var(--spacing-md);
+	--component-button-ghost-transition: all 0.1s linear;
+
+	/* Card 组件样式 - 90年代风格卡片，明显边框和阴影 */
+	--component-card-default-bg: var(--card-bg);
+	--component-card-default-border: 3px solid var(--border-color);
+	--component-card-default-shadow: 4px 4px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+	--component-card-default-shadow-hover: 5px 5px 0px #000000, inset 2px 2px 0px rgba(255, 255, 255, 0.6);
+	--component-card-default-border-hover: 3px solid var(--border-accent);
+	--component-card-default-transform-hover: translate(-2px, -2px);
+	--component-card-default-radius: var(--radius-sm);
+	--component-card-default-padding: var(--spacing-lg);
+	--component-card-default-backdrop: none;
+	--component-card-default-transition: all 0.15s linear;
+
+	--component-card-elevated-bg: var(--card-bg);
+	--component-card-elevated-border: 4px solid var(--border-color);
+	--component-card-elevated-shadow: 6px 6px 0px #000000, inset 2px 2px 0px rgba(255, 255, 255, 0.6);
+	--component-card-elevated-shadow-hover: 8px 8px 0px #000000, inset 3px 3px 0px rgba(255, 255, 255, 0.7);
+	--component-card-elevated-border-hover: 4px solid var(--border-accent);
+	--component-card-elevated-transform-hover: translate(-3px, -3px);
+	--component-card-elevated-radius: var(--radius-sm);
+	--component-card-elevated-padding: var(--spacing-lg);
+	--component-card-elevated-backdrop: none;
+	--component-card-elevated-transition: all 0.15s linear;
+
+	--component-card-glass-bg: var(--surface-glass);
+	--component-card-glass-border: 2px solid var(--border-color);
+	--component-card-glass-shadow: 3px 3px 0px #000000, inset 1px 1px 0px rgba(255, 255, 255, 0.4);
+	--component-card-glass-shadow-hover: 4px 4px 0px #000000, inset 2px 2px 0px rgba(255, 255, 255, 0.5);
+	--component-card-glass-border-hover: 2px solid var(--border-accent);
+	--component-card-glass-transform-hover: translate(-2px, -2px);
+	--component-card-glass-radius: var(--radius-sm);
+	--component-card-glass-padding: var(--spacing-lg);
+	--component-card-glass-backdrop: none;
+	--component-card-glass-transition: all 0.15s linear;
+
+	/* Tag 组件样式 - 90年代标签，简单边框 */
+	--component-tag-primary-bg: var(--primary-light);
+	--component-tag-primary-color: var(--primary-color-strong);
+	--component-tag-primary-border: 1px solid var(--primary-color);
+	--component-tag-primary-shadow: 1px 1px 0px #000000;
+	--component-tag-primary-shadow-hover: 2px 2px 0px #000000;
+	--component-tag-primary-bg-hover: var(--primary-color);
+	--component-tag-primary-color-hover: var(--text-inverse);
+	--component-tag-primary-transform-hover: translate(-1px, -1px);
+	--component-tag-primary-radius: var(--radius-sm);
+	--component-tag-primary-padding: var(--spacing-xs) var(--spacing-sm);
+	--component-tag-primary-transition: all 0.1s linear;
+
+	--component-tag-default-bg: var(--bg-secondary);
+	--component-tag-default-color: var(--text-primary);
+	--component-tag-default-border: 1px solid var(--border-color);
+	--component-tag-default-shadow: 1px 1px 0px #000000;
+	--component-tag-default-shadow-hover: 2px 2px 0px #000000;
+	--component-tag-default-bg-hover: var(--bg-tertiary);
+	--component-tag-default-color-hover: var(--text-primary);
+	--component-tag-default-transform-hover: translate(-1px, -1px);
+	--component-tag-default-radius: var(--radius-sm);
+	--component-tag-default-padding: var(--spacing-xs) var(--spacing-sm);
+	--component-tag-default-transition: all 0.1s linear;
+
+	/* Badge 组件样式 - 90年代徽章 */
+	--component-badge-default-bg: linear-gradient(180deg, #ffd700 0%, #ffaa00 100%);
+	--component-badge-default-color: var(--text-primary);
+	--component-badge-default-border: 2px solid #000000;
+	--component-badge-default-shadow: 2px 2px 0px #000000;
+	--component-badge-default-radius: var(--radius-sm);
+	--component-badge-default-padding: var(--spacing-xs) var(--spacing-sm);
+
+	/* Input 组件样式 - 90年代输入框，凹陷效果 */
+	--component-input-default-bg: var(--input-bg);
+	--component-input-default-color: var(--text-primary);
+	--component-input-default-border: 2px inset #cccccc;
+	--component-input-default-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.5);
+	--component-input-default-shadow-focus: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.5), 0 0 0 2px var(--primary-light);
+	--component-input-default-border-focus: 2px inset var(--primary-color);
+	--component-input-default-radius: var(--radius-sm);
+	--component-input-default-padding: var(--spacing-sm) var(--spacing-md);
+	--component-input-default-transition: all 0.1s linear;
+
+	/* Link 组件样式 - 90年代链接 */
+	--component-link-primary-color: var(--primary-color);
+	--component-link-primary-text-decoration: underline;
+	--component-link-primary-color-hover: var(--primary-hover);
+	--component-link-primary-transform-hover: none;
+	--component-link-primary-transition: color 0.1s linear;
+
+	--component-link-secondary-color: var(--text-secondary);
+	--component-link-secondary-text-decoration: underline;
+	--component-link-secondary-color-hover: var(--primary-color);
+	--component-link-secondary-transform-hover: none;
+	--component-link-secondary-transition: color 0.1s linear;
+
+	--component-link-default-color: #0000ff;
+	--component-link-default-text-decoration: underline;
+	--component-link-default-color-hover: #ff00ff;
+	--component-link-default-transform-hover: none;
+	--component-link-default-transition: color 0.1s linear;
+}
+
+/* 移动端表格优化 - 提升可读性 */
+@media (max-width: 768px) {
+	:root[data-theme="retro"] {
+		/* 移动端卡片边框变细，避免占用太多空间 */
+		--component-card-default-border: 2px solid var(--border-color);
+		--component-card-glass-border: 1px solid var(--border-color);
+		
+		/* 移动端表格背景优化 - 增加对比度 */
+		--component-card-default-bg-hover: #f0f0f0;
+		--component-card-default-bg-alt: #fafafa;
+	}
+	
+	/* 移动端表格特定样式优化 */
+	:root[data-theme="retro"] .markdown-content table {
+		border: 2px solid var(--border-color) !important;
+		font-size: 0.875rem !important;
+		background: var(--card-bg) !important;
+		margin: 1rem 0 !important;
+		border-spacing: 0 !important;
+		display: block !important;
+		overflow-x: auto !important;
+	}
+	
+	:root[data-theme="retro"] .markdown-content th {
+		background: #e6e6e6 !important;
+		color: var(--text-primary) !important;
+		font-weight: 700 !important;
+		font-size: 0.875rem !important;
+		padding: 0.75rem 0.875rem !important;
+		border-bottom: 2px solid var(--border-color) !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="retro"] .markdown-content td {
+		padding: 0.625rem 0.875rem !important;
+		border-bottom: 1px solid var(--border-soft) !important;
+		color: var(--text-primary) !important;
+		font-size: 0.8125rem !important;
+		line-height: 1.5 !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="retro"] .markdown-content tbody tr:nth-child(2n) {
+		background: #f8f8f8 !important;
+	}
+	
+	:root[data-theme="retro"] .markdown-content tbody tr:nth-child(2n+1) {
+		background: var(--card-bg) !important;
+	}
+	
+	:root[data-theme="retro"] .markdown-content tbody tr:hover {
+		background: #f0f0f0 !important;
+	}
+	
+	/* 移动端描述文本颜色优化，提高对比度 */
+	:root[data-theme="retro"] .markdown-content {
+		color: var(--text-primary);
+	}
+	
+	:root[data-theme="retro"] .markdown-content p {
+		color: var(--text-primary);
+	}
+}
+
