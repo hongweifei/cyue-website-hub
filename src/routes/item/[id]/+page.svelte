@@ -670,6 +670,8 @@
   @media (max-width: 768px) {
     .item-detail-page {
       padding: 0 0 var(--spacing-lg) 0;
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     .item-header {
@@ -727,11 +729,16 @@
     .item-name {
       font-size: 1.375rem;
       margin-bottom: var(--spacing-sm);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
 
     .item-brief {
       font-size: 1rem;
       margin-bottom: var(--spacing-md);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .item-meta {

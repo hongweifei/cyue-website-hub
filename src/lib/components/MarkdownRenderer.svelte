@@ -90,10 +90,28 @@ const htmlContent = $derived.by(() => {
     color: var(--text-secondary);
     display: grid;
     gap: 0.75rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .markdown-content :global(*) {
     max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .markdown-content :global(img),
+  .markdown-content :global(video),
+  .markdown-content :global(iframe) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .markdown-content :global(pre),
+  .markdown-content :global(code) {
+    overflow-x: auto;
+    word-wrap: normal;
+    overflow-wrap: normal;
   }
 
   .markdown-content :global(h1),
