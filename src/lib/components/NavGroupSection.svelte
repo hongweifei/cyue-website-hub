@@ -166,16 +166,18 @@
 		flex-shrink: 0;
 		width: 56px;
 		height: 56px;
-		border-radius: var(--radius-xl);
+		border-radius: var(--component-card-glass-radius, var(--radius-xl));
 		overflow: hidden;
-		background: var(--bg-secondary);
+		background: var(--component-card-glass-bg, var(--bg-secondary));
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: var(--shadow-xs);
-		border: 1px solid var(--border-light);
+		box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
+		border: 1px solid var(--component-card-glass-border, var(--border-light));
+		backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+		-webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
 		/* 优化 transition - 只过渡会变化的属性 */
-		transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+		transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 		/* GPU 加速 */
 		transform: translateZ(0);
 	}
@@ -188,8 +190,9 @@
 
 	.group-header:hover .group-icon {
 		transform: scale(1.03) translateZ(0);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
 		border-color: var(--border-accent);
+		background: var(--component-card-glass-bg-hover, var(--surface-glass));
 	}
 
 	.group-icon img {
@@ -228,17 +231,18 @@
 	}
 
 	.group-link {
-		color: var(--text-primary);
+		color: var(--component-link-default-color, var(--text-primary));
 		text-decoration: none;
-		transition: all var(--transition-base);
+		transition: var(
+			--component-link-default-transition,
+			color var(--transition-base),
+			transform var(--transition-base)
+		);
 		display: inline-block;
-		background: var(--gradient-brand);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
 	}
 
 	.group-link:hover {
+		color: var(--component-link-default-color-hover, var(--primary-color));
 		transform: translateX(4px);
 	}
 
@@ -268,17 +272,17 @@
 		gap: var(--spacing-2xs);
 		font-size: 0.8125rem;
 		font-weight: 500;
-		color: var(--primary-color);
-		background: var(--primary-lighter);
-		padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-		border-radius: var(--radius-full);
-		border: 1px solid var(--border-accent);
+		color: var(--component-badge-default-color, var(--primary-color));
+		background: var(--component-badge-default-bg, var(--primary-lighter));
+		padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+		border-radius: var(--component-badge-default-radius, var(--radius-full));
+		border: 1px solid var(--component-badge-default-border, var(--border-accent));
 		white-space: nowrap;
 	}
 
 	.nav-group.nested .group-count {
 		font-size: 0.75rem;
-		padding: calc(var(--spacing-xs) * 0.5) calc(var(--spacing-sm) * 0.875);
+		padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.5) calc(var(--spacing-sm) * 0.875));
 	}
 
 	@media (prefers-reduced-motion: reduce) {

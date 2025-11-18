@@ -38,7 +38,7 @@ let { groups, selectedGroupId, onSelect, level = 0 }: Props = $props();
 	.group-tree.nested {
 		margin-left: var(--spacing-sm);
 		padding-left: var(--spacing-md);
-		border-left: 1px solid var(--border-light);
+		border-left: 1px solid var(--component-card-default-border, var(--border-light));
 		gap: var(--spacing-sm);
 	}
 </style>

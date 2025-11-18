@@ -135,7 +135,7 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(h2) {
     font-size: 1.5rem;
     letter-spacing: -0.01em;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--component-card-default-border, var(--border-light));
     padding-bottom: 0.4rem;
   }
 
@@ -198,14 +198,15 @@ const htmlContent = $derived.by(() => {
 
   .markdown-content :global(blockquote) {
     margin: 0.75rem 0;
-    padding: var(--spacing-md) var(--spacing-lg);
-    background: var(--primary-lighter);
-    border-left: 3px solid var(--primary-color);
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    color: var(--text-primary);
+    padding: var(--component-card-default-padding, var(--spacing-md) var(--spacing-lg));
+    background: var(--component-card-default-bg, var(--primary-lighter));
+    border-left: 3px solid var(--component-button-primary-border, var(--primary-color));
+    border-radius: 0 var(--component-card-default-radius, var(--radius-lg)) var(--component-card-default-radius, var(--radius-lg)) 0;
+    color: var(--component-link-secondary-color, var(--text-primary));
     font-style: italic;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--component-card-default-border, var(--border-light));
     border-left-width: 3px;
+    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
   }
 
   .markdown-content :global(code) {
@@ -217,22 +218,22 @@ const htmlContent = $derived.by(() => {
       Monaco,
       "Courier New",
       monospace;
-    background: var(--code-bg);
+    background: var(--component-tag-default-bg, var(--code-bg));
     padding: calc(var(--spacing-2xs) * 0.75) var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
-    color: var(--text-primary);
+    border-radius: var(--component-tag-default-radius, var(--radius-sm));
+    border: 1px solid var(--component-tag-default-border, var(--border-light));
+    color: var(--component-tag-default-color, var(--text-primary));
   }
 
   .markdown-content :global(pre) {
-    background: var(--code-bg);
+    background: var(--component-card-default-bg, var(--code-bg));
     color: var(--text-primary);
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-xl);
+    padding: var(--component-card-default-padding, var(--spacing-lg));
+    border-radius: var(--component-card-default-radius, var(--radius-xl));
     overflow-x: auto;
     margin: 0.75rem 0;
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-xs);
+    border: 1px solid var(--component-card-default-border, var(--border-light));
+    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
   }
 
   .markdown-content :global(pre code) {
@@ -247,35 +248,35 @@ const htmlContent = $derived.by(() => {
   .markdown-content :global(table) {
     width: 100%;
     border-collapse: collapse;
-    border-radius: var(--radius-xl);
+    border-radius: var(--component-card-default-radius, var(--radius-xl));
     overflow: hidden;
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-xs);
+    border: 1px solid var(--component-card-default-border, var(--border-light));
+    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
   }
 
   .markdown-content :global(th),
   .markdown-content :global(td) {
     padding: 0.65rem 0.9rem;
     text-align: left;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--component-card-default-border, var(--border-light));
   }
 
   .markdown-content :global(thead th) {
-    background: var(--primary-lighter);
-    color: var(--text-primary);
+    background: var(--component-card-default-bg-hover, var(--primary-lighter));
+    color: var(--component-link-secondary-color, var(--text-primary));
     font-weight: 600;
   }
 
   .markdown-content :global(tbody tr:nth-child(2n)) {
-    background: var(--bg-tertiary);
+    background: var(--component-card-default-bg-alt, var(--bg-tertiary));
   }
 
   .markdown-content :global(img) {
     display: block;
     margin: 1rem auto;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-light);
+    border-radius: var(--component-card-default-radius, var(--radius-xl));
+    box-shadow: var(--component-card-default-shadow, var(--shadow-sm));
+    border: 1px solid var(--component-card-default-border, var(--border-light));
   }
 
   .markdown-content :global(figure) {
@@ -290,16 +291,16 @@ const htmlContent = $derived.by(() => {
   }
 
   .markdown-content :global(a) {
-    color: var(--primary-color);
+    color: var(--component-link-default-color, var(--primary-color));
     text-decoration: none;
-    border-bottom: 1px dashed var(--border-accent);
+    border-bottom: 1px dashed var(--component-link-default-color, var(--border-accent));
     transition:
       color var(--transition-fast),
       border-bottom-color var(--transition-fast);
   }
 
   .markdown-content :global(a:hover) {
-    color: var(--primary-color-strong);
+    color: var(--component-link-default-color-hover, var(--primary-color-strong));
     border-bottom-color: currentColor;
   }
 

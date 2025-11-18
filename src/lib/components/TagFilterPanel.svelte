@@ -302,19 +302,19 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: calc(var(--spacing-xs) * 0.5) var(--spacing-sm);
-    border-radius: var(--radius-full);
+    padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.5) var(--spacing-sm));
+    border-radius: var(--component-badge-default-radius, var(--radius-full));
     font-size: 0.75rem;
-    background: var(--primary-lighter);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-light);
-    transition: all var(--transition-fast);
+    background: var(--component-badge-default-bg, var(--primary-lighter));
+    color: var(--component-badge-default-color, var(--text-secondary));
+    border: 1px solid var(--component-badge-default-border, var(--border-light));
+    transition: var(--component-badge-default-transition, all var(--transition-fast));
   }
 
   .meta-chip.selected-chip {
-    background: var(--primary-light);
-    color: var(--primary-color);
-    border-color: var(--border-accent);
+    background: var(--component-badge-primary-bg, var(--primary-light));
+    color: var(--component-badge-primary-color, var(--primary-color));
+    border-color: var(--component-badge-primary-border, var(--border-accent));
     font-weight: 500;
   }
 
@@ -325,21 +325,25 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .secondary-action {
-    border: none;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    border: 1px solid var(--component-button-ghost-border, var(--border-light));
+    background: var(--component-button-ghost-bg, var(--bg-tertiary));
+    color: var(--component-button-ghost-color, var(--text-secondary));
     font-size: 0.75rem;
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-    border-radius: var(--radius-full);
+    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    border-radius: var(--component-button-ghost-radius, var(--radius-full));
     cursor: pointer;
-    transition: all var(--transition-fast);
-    border: 1px solid var(--border-light);
+    transition: var(
+      --component-button-ghost-transition,
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast)
+    );
   }
 
   .secondary-action:hover {
-    background: var(--primary-lighter);
-    color: var(--primary-color);
-    border-color: var(--border-accent);
+    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
+    color: var(--component-button-ghost-color-hover, var(--primary-color));
+    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
   }
 
   .header-title {
@@ -363,15 +367,19 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .clear-btn {
     border: none;
     background: none;
-    color: var(--primary-color);
+    color: var(--component-link-default-color, var(--primary-color));
     font-size: 0.8125rem;
     cursor: pointer;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
-    transition: all var(--transition-base);
+    transition: var(
+      --component-link-default-transition,
+      color var(--transition-base)
+    );
   }
 
   .clear-btn:hover {
+    color: var(--component-link-default-color-hover, var(--primary-hover));
     text-decoration: underline;
   }
 
@@ -380,32 +388,36 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     gap: 0.25rem;
     padding: 0.25rem;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--border-light);
-    background: var(--bg-secondary);
+    border: 1px solid var(--component-card-default-border, var(--border-light));
+    background: var(--component-card-default-bg, var(--bg-secondary));
     width: max-content;
   }
 
   .group-toggle-btn {
     border: none;
     background: transparent;
-    color: var(--text-tertiary);
+    color: var(--component-button-ghost-color, var(--text-tertiary));
     font-size: 0.8125rem;
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-    border-radius: var(--radius-full);
+    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    border-radius: var(--component-button-ghost-radius, var(--radius-full));
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: var(
+      --component-button-ghost-transition,
+      color var(--transition-fast),
+      background-color var(--transition-fast)
+    );
     font-weight: 500;
   }
 
   .group-toggle-btn:hover {
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    color: var(--component-button-ghost-color-hover, var(--primary-color));
+    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
   }
 
   .group-toggle-btn.active {
-    background: var(--primary-light);
-    color: var(--primary-color);
-    box-shadow: var(--shadow-xs);
+    background: var(--component-button-secondary-bg, var(--primary-light));
+    color: var(--component-button-secondary-color-hover, var(--primary-color));
+    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
     font-weight: 600;
   }
 
@@ -415,13 +427,15 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .search-input {
     width: 100%;
-    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
-    background: var(--input-bg);
-    box-shadow: var(--shadow-xs);
+    padding: var(--component-input-default-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-md));
+    border-radius: var(--component-input-default-radius, var(--radius-xl));
+    border: 1px solid var(--component-input-default-border, var(--border-light));
+    background: var(--component-input-default-bg, var(--input-bg));
+    box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
     font-size: 0.875rem;
-    transition: all var(--transition-fast);
+    transition: var(--component-input-default-transition, all var(--transition-fast));
+    backdrop-filter: var(--component-input-default-backdrop, blur(12px));
+    -webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
   }
 
   .search-input::placeholder {
@@ -430,13 +444,13 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .search-input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: var(--shadow-xs), 0 0 0 2px var(--primary-lighter);
-    background: var(--card-bg);
+    border-color: var(--component-input-default-border-focus, var(--primary-color));
+    box-shadow: var(--component-input-default-shadow-focus, var(--shadow-xs));
+    background: var(--component-card-default-bg, var(--card-bg));
   }
 
   .search-input:hover:not(:focus) {
-    border-color: var(--border-color);
+    border-color: var(--component-input-default-border-hover, var(--border-color));
   }
 
   .quick-tags {
@@ -459,30 +473,31 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .quick-tag {
-    border: 1px solid var(--border-light);
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    border-radius: var(--radius-full);
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
+    border: 1px solid var(--component-tag-default-border, var(--border-light));
+    background: var(--component-tag-default-bg, var(--bg-tertiary));
+    color: var(--component-tag-default-color, var(--text-secondary));
+    border-radius: var(--component-tag-default-radius, var(--radius-full));
+    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
     font-size: 0.75rem;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: var(--component-tag-default-transition, all var(--transition-fast));
     font-weight: 500;
+    box-shadow: var(--component-tag-default-shadow, none);
   }
 
   .quick-tag:hover {
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    border-color: var(--component-tag-default-border-hover, var(--border-accent));
+    color: var(--component-tag-default-color-hover, var(--primary-color));
+    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
   }
 
   .quick-tag.selected {
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    border-color: transparent;
-    box-shadow: var(--shadow-xs);
+    background: var(--component-tag-primary-bg, var(--gradient-brand));
+    color: var(--component-tag-primary-color, var(--text-inverse));
+    border-color: var(--component-tag-primary-border, transparent);
+    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
     font-weight: 600;
   }
 
@@ -504,13 +519,13 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     align-items: center;
     justify-content: flex-start;
     gap: var(--spacing-xs);
-    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    padding: var(--component-tag-default-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-md));
+    border-radius: var(--component-tag-default-radius, var(--radius-xl));
+    border: 1px solid var(--component-tag-default-border, var(--border-light));
+    background: var(--component-tag-default-bg, var(--bg-tertiary));
+    color: var(--component-tag-default-color, var(--text-secondary));
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: var(--component-tag-default-transition, all var(--transition-fast));
     font-size: 0.8125rem;
     text-align: left;
     flex: 0 1 auto;
@@ -529,18 +544,18 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .tag-pill:hover {
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    border-color: var(--component-tag-default-border-hover, var(--border-accent));
+    color: var(--component-tag-default-color-hover, var(--primary-color));
+    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
   }
 
   .tag-pill.selected {
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    border-color: transparent;
-    box-shadow: var(--shadow-xs);
+    background: var(--component-tag-primary-bg, var(--gradient-brand));
+    color: var(--component-tag-primary-color, var(--text-inverse));
+    border-color: var(--component-tag-primary-border, transparent);
+    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
     font-weight: 600;
   }
 
@@ -581,32 +596,36 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     align-items: center;
     justify-content: center;
     min-width: 1.75rem;
-    padding: calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75);
-    border-radius: var(--radius-full);
-    background: var(--primary-lighter);
-    color: var(--primary-color);
-    border: 1px solid var(--border-accent);
+    padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
+    border-radius: var(--component-badge-default-radius, var(--radius-full));
+    background: var(--component-badge-default-bg, var(--primary-lighter));
+    color: var(--component-badge-default-color, var(--primary-color));
+    border: 1px solid var(--component-badge-default-border, var(--border-accent));
     font-weight: 500;
   }
 
   .tag-pill.selected .tag-count-badge {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: var(--text-inverse);
+    background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.25));
+    border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.4));
+    color: var(--component-badge-primary-color, var(--text-inverse));
   }
 
   .toggle-btn {
     align-self: flex-start;
     border: none;
     background: none;
-    color: var(--primary-color);
+    color: var(--component-link-default-color, var(--primary-color));
     font-size: 0.8125rem;
     cursor: pointer;
     padding: var(--spacing-xs) 0;
-    transition: color var(--transition-base);
+    transition: var(
+      --component-link-default-transition,
+      color var(--transition-base)
+    );
   }
 
   .toggle-btn:hover {
+    color: var(--component-link-default-color-hover, var(--primary-hover));
     text-decoration: underline;
   }
 

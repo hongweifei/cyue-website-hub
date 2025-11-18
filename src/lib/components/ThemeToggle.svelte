@@ -185,17 +185,20 @@
         display: inline-flex;
         align-items: center;
         gap: var(--spacing-xs);
-        padding: 0 var(--spacing-md);
+        padding: var(--component-button-secondary-padding, 0 var(--spacing-md));
         height: 38px;
-        background: var(--bg-tertiary);
-        border: 1px solid var(--border-light);
-        border-radius: var(--radius-full);
-        color: var(--text-primary);
+        background: var(--component-button-secondary-bg, var(--bg-tertiary));
+        border: 1px solid var(--component-button-secondary-border, var(--border-light));
+        border-radius: var(--component-button-secondary-radius, var(--radius-full));
+        color: var(--component-button-secondary-color, var(--text-primary));
         cursor: pointer;
-        transition: all var(--transition-fast);
-        box-shadow: var(--shadow-xs);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        transition: var(
+            --component-button-secondary-transition,
+            all var(--transition-fast)
+        );
+        box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
+        backdrop-filter: var(--component-button-secondary-backdrop, blur(12px));
+        -webkit-backdrop-filter: var(--component-button-secondary-backdrop, blur(12px));
         min-width: auto;
     }
 
@@ -218,10 +221,11 @@
     }
 
     .theme-toggle-btn:hover {
-        border-color: var(--border-accent);
-        background: var(--bg-secondary);
+        border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+        background: var(--component-button-secondary-bg-hover, var(--bg-secondary));
+        color: var(--component-button-secondary-color-hover, var(--primary-color));
         transform: translateY(-1px);
-        box-shadow: var(--shadow-sm);
+        box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
     }
 
     .theme-toggle-btn:active {
@@ -234,10 +238,10 @@
         place-items: center;
         width: 28px;
         height: 28px;
-        border-radius: var(--radius-full);
-        background: var(--primary-lighter);
-        color: var(--primary-color);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        border-radius: var(--component-tag-default-radius, var(--radius-full));
+        background: var(--component-tag-primary-bg, var(--primary-lighter));
+        color: var(--component-tag-primary-color, var(--primary-color));
+        box-shadow: var(--component-tag-primary-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.45));
     }
 
     .theme-toggle-btn[data-mode="dark"] .icon-wrapper {
@@ -274,11 +278,12 @@
 
     .theme-chip {
         font-size: 0.72rem;
-        color: var(--text-tertiary);
-        border: 1px solid color-mix(in srgb, var(--text-tertiary) 35%, transparent);
-        border-radius: var(--radius-full);
-        padding: 0 0.35rem;
+        color: var(--component-badge-default-color, var(--text-tertiary));
+        border: 1px solid var(--component-badge-default-border, color-mix(in srgb, var(--text-tertiary) 35%, transparent));
+        border-radius: var(--component-badge-default-radius, var(--radius-full));
+        padding: var(--component-badge-default-padding, 0 0.35rem);
         line-height: 1.4;
+        background: var(--component-badge-default-bg, transparent);
     }
 
     .theme-panel {
@@ -287,16 +292,17 @@
         right: 0;
         min-width: 360px;
         max-width: 420px;
-        padding: var(--spacing-md);
-        background: var(--bg-elevated, var(--bg-primary));
-        border: 1px solid var(--border-light);
-        border-radius: var(--radius-3xl, 28px);
-        box-shadow: var(--shadow-lg, 0 35px 65px rgba(15, 23, 42, 0.25));
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        padding: var(--component-card-glass-padding, var(--spacing-md));
+        background: var(--component-card-glass-bg, var(--bg-elevated, var(--bg-primary)));
+        border: 1px solid var(--component-card-glass-border, var(--border-light));
+        border-radius: var(--component-card-glass-radius, var(--radius-3xl, 28px));
+        box-shadow: var(--component-card-glass-shadow, var(--shadow-lg, 0 35px 65px rgba(15, 23, 42, 0.25)));
+        backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
+        -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
+        transition: var(--component-card-glass-transition, border-color var(--transition-base));
         /* 确保弹出面板在 header 之上，header 的 z-index 是 100 */
         z-index: 101;
     }
@@ -307,30 +313,32 @@
         gap: var(--spacing-md);
         align-items: center;
         width: 100%;
-        padding: var(--spacing-sm) var(--spacing-sm);
-        border-radius: var(--radius-2xl);
-        border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.01);
+        padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-sm));
+        border-radius: var(--component-button-ghost-radius, var(--radius-2xl));
+        border: 1px solid var(--component-button-ghost-border, transparent);
+        background: var(--component-button-ghost-bg, rgba(255, 255, 255, 0.01));
         cursor: pointer;
-        color: var(--text-secondary);
-        transition:
+        color: var(--component-button-ghost-color, var(--text-secondary));
+        transition: var(
+            --component-button-ghost-transition,
             border var(--transition-fast),
             background var(--transition-fast),
             color var(--transition-fast),
-            transform var(--transition-fast);
+            transform var(--transition-fast)
+        );
     }
 
     .theme-option:hover {
-        border-color: var(--border-accent);
-        background: var(--bg-secondary);
-        color: var(--text-primary);
+        border-color: var(--component-button-ghost-border-hover, var(--border-accent));
+        background: var(--component-button-ghost-bg-hover, var(--bg-secondary));
+        color: var(--component-button-ghost-color-hover, var(--text-primary));
     }
 
     .theme-option[data-selected="true"] {
-        border-color: var(--border-accent);
-        background: color-mix(in srgb, var(--primary-lighter) 60%, transparent);
-        color: var(--text-primary);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+        border-color: var(--component-button-secondary-border, var(--border-accent));
+        background: var(--component-button-secondary-bg, color-mix(in srgb, var(--primary-lighter) 60%, transparent));
+        color: var(--component-button-secondary-color, var(--text-primary));
+        box-shadow: var(--component-button-secondary-shadow, inset 0 0 0 1px rgba(255, 255, 255, 0.35));
     }
 
     .preview {
@@ -370,11 +378,11 @@
     .option-badge {
         font-style: normal;
         font-size: 0.7rem;
-        padding: 0 0.35rem;
-        border-radius: var(--radius-full);
-        border: 1px solid color-mix(in srgb, var(--primary-color) 45%, transparent);
-        color: var(--primary-color);
-        background: color-mix(in srgb, var(--primary-lighter) 25%, transparent);
+        padding: var(--component-badge-primary-padding, 0 0.35rem);
+        border-radius: var(--component-badge-primary-radius, var(--radius-full));
+        border: 1px solid var(--component-badge-primary-border, color-mix(in srgb, var(--primary-color) 45%, transparent));
+        color: var(--component-badge-primary-color, var(--primary-color));
+        background: var(--component-badge-primary-bg, color-mix(in srgb, var(--primary-lighter) 25%, transparent));
     }
     
     .option-desc {

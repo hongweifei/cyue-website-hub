@@ -157,16 +157,25 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
-    transition: all var(--transition-fast);
+    padding: var(--component-card-default-padding, var(--spacing-md));
+    background: var(--component-card-default-bg, var(--bg-secondary));
+    border-radius: var(--component-card-default-radius, var(--radius-xl));
+    border: 1px solid var(--component-card-default-border, var(--border-light));
+    transition: var(
+      --component-card-default-transition,
+      border-color var(--transition-fast),
+      background-color var(--transition-fast),
+      box-shadow var(--transition-fast)
+    );
+    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
+    backdrop-filter: var(--component-card-default-backdrop, blur(8px));
+    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
   }
 
   .group-filter-panel:hover {
     border-color: var(--border-accent);
-    background: var(--surface-glass);
+    background: var(--component-card-default-bg-hover, var(--surface-glass));
+    box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
   }
 
   .filter-bar {
@@ -184,23 +193,30 @@
   }
 
   .filter-clear {
-    border: none;
-    background: var(--bg-tertiary);
-    color: var(--primary-color);
+    border: 1px solid var(--component-button-ghost-border, var(--border-light));
+    background: var(--component-button-ghost-bg, var(--bg-tertiary));
+    color: var(--component-button-ghost-color, var(--primary-color));
     font-size: 0.8125rem;
     cursor: pointer;
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-    border-radius: var(--radius-full);
-    transition: all var(--transition-fast);
-    border: 1px solid var(--border-light);
+    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    border-radius: var(--component-button-ghost-radius, var(--radius-full));
+    transition: var(
+      --component-button-ghost-transition,
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast)
+    );
     font-weight: 500;
   }
 
   .filter-clear:hover {
-    background: var(--primary-lighter);
-    border-color: var(--border-accent);
+    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
+    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
+    color: var(--component-button-ghost-color-hover, var(--primary-color));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
   }
 
   .group-chip-list {
@@ -210,33 +226,34 @@
   }
 
   .group-chip {
-    border: 1px solid var(--border-light);
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    border-radius: var(--radius-full);
-    padding: calc(var(--spacing-xs) * 0.875) var(--spacing-md);
+    border: 1px solid var(--component-tag-default-border, var(--border-light));
+    background: var(--component-tag-default-bg, var(--bg-tertiary));
+    color: var(--component-tag-default-color, var(--text-secondary));
+    border-radius: var(--component-tag-default-radius, var(--radius-full));
+    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.875) var(--spacing-md));
     font-size: 0.8125rem;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    transition: all var(--transition-fast);
+    transition: var(--component-tag-default-transition, all var(--transition-fast));
     font-weight: 500;
+    box-shadow: var(--component-tag-default-shadow, none);
   }
 
   .group-chip:hover {
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    border-color: var(--component-tag-default-border-hover, var(--border-accent));
+    color: var(--component-tag-default-color-hover, var(--primary-color));
+    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
   }
 
   .group-chip.active {
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    border-color: transparent;
-    box-shadow: var(--shadow-xs);
+    background: var(--component-tag-primary-bg, var(--gradient-brand));
+    color: var(--component-tag-primary-color, var(--text-inverse));
+    border-color: var(--component-tag-primary-border, transparent);
+    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
     font-weight: 600;
   }
 
@@ -245,19 +262,19 @@
     align-items: center;
     justify-content: center;
     min-width: 1.5rem;
-    padding: calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75);
-    border-radius: var(--radius-full);
-    background: var(--primary-lighter);
-    border: 1px solid var(--border-accent);
+    padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
+    border-radius: var(--component-badge-default-radius, var(--radius-full));
+    background: var(--component-badge-default-bg, var(--primary-lighter));
+    border: 1px solid var(--component-badge-default-border, var(--border-accent));
     font-size: 0.7rem;
     font-weight: 500;
-    color: var(--primary-color);
+    color: var(--component-badge-default-color, var(--primary-color));
   }
 
   .group-chip.active .group-chip-count {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: var(--text-inverse);
+    background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
+    border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
+    color: var(--component-badge-primary-color, var(--text-inverse));
   }
 
   .group-chip-name {
@@ -297,35 +314,41 @@
   .group-toggle {
     margin-top: var(--spacing-sm);
     align-self: flex-start;
-    border: none;
-    background: var(--bg-tertiary);
-    color: var(--primary-color);
+    border: 1px solid var(--component-button-ghost-border, var(--border-light));
+    background: var(--component-button-ghost-bg, var(--bg-tertiary));
+    color: var(--component-link-default-color, var(--primary-color));
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-    border-radius: var(--radius-full);
-    transition: all var(--transition-fast);
-    border: 1px solid var(--border-light);
+    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    border-radius: var(--component-button-ghost-radius, var(--radius-full));
+    transition: var(
+      --component-button-ghost-transition,
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast)
+    );
   }
 
   .group-toggle:hover {
-    color: var(--primary-color);
-    background: var(--primary-lighter);
-    border-color: var(--border-accent);
+    color: var(--component-link-default-color-hover, var(--primary-color));
+    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
+    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
     transform: translateY(-1px);
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
   }
 
   @media (max-width: 768px) {
     .group-filter-panel {
-      padding: var(--spacing-sm);
+      padding: var(--component-card-default-padding, var(--spacing-sm));
       gap: var(--spacing-xs);
     }
 
     .group-chip {
       font-size: 0.75rem;
-      padding: 0.4rem 0.65rem;
+      padding: var(--component-tag-default-padding, 0.4rem 0.65rem);
     }
   }
 </style>

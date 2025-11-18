@@ -87,12 +87,13 @@
     font-size: 1.75rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    color: var(--text-primary);
+    color: var(--component-link-secondary-color, var(--text-primary));
+    text-decoration: none;
   }
 
   .section-subtitle {
     margin: 0 0 1.5rem 0;
-    color: var(--text-secondary);
+    color: var(--component-link-secondary-color, var(--text-secondary));
     font-size: 0.95rem;
   }
 

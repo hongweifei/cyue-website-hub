@@ -67,17 +67,26 @@
 
 	.search-input {
 		width: 100%;
-		padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg) calc(var(--spacing-md) * 0.875) 3.5rem;
+		padding: var(
+			--component-input-default-padding,
+			calc(var(--spacing-md) * 0.875) var(--spacing-lg)
+		);
+		padding-left: 3.5rem;
 		font-size: 0.9375rem;
-		border: 1px solid var(--border-light);
-		border-radius: var(--radius-2xl);
-		background: var(--input-bg);
-		color: var(--text-primary);
+		border: 1px solid var(--component-input-default-border, var(--border-light));
+		border-radius: var(--component-input-default-radius, var(--radius-2xl));
+		background: var(--component-input-default-bg, var(--input-bg));
+		color: var(--component-input-default-color, var(--text-primary));
 		/* 优化 transition - 只过渡会变化的属性 */
-		transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
-		box-shadow: var(--shadow-xs);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
+		transition: var(
+			--component-input-default-transition,
+			border-color var(--transition-fast),
+			background-color var(--transition-fast),
+			box-shadow var(--transition-fast)
+		);
+		box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
+		backdrop-filter: var(--component-input-default-backdrop, blur(12px));
+		-webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
 		/* GPU 加速 */
 		transform: translateZ(0);
 		will-change: box-shadow;
@@ -91,13 +100,14 @@
 
 	.search-input:focus {
 		outline: none;
-		border-color: var(--primary-color);
-		box-shadow: var(--shadow-sm), 0 0 0 2px var(--primary-lighter);
-		background: var(--card-bg);
+		border-color: var(--component-input-default-border-focus, var(--primary-color));
+		box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px
+				var(--primary-lighter);
+		background: var(--component-card-default-bg, var(--card-bg));
 	}
 
 	.search-input:hover:not(:focus) {
-		border-color: var(--border-color);
+		border-color: var(--component-input-default-border-hover, var(--border-color));
 		/* 保持 box-shadow 不变，减少重绘 */
 	}
 
@@ -108,17 +118,22 @@
 	.clear-btn {
 		position: absolute;
 		right: var(--spacing-md);
-		background: transparent;
-		border: none;
+		background: var(--component-button-ghost-bg, transparent);
+		border: 1px solid var(--component-button-ghost-border, transparent);
 		cursor: pointer;
 		padding: var(--spacing-xs);
-		color: var(--text-tertiary);
+		color: var(--component-button-ghost-color, var(--text-tertiary));
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		/* 只过渡颜色、背景和 transform */
-		transition: color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
-		border-radius: var(--radius-full);
+		transition: var(
+			--component-button-ghost-transition,
+			color var(--transition-fast),
+			background-color var(--transition-fast),
+			transform var(--transition-fast)
+		);
+		border-radius: var(--component-button-ghost-radius, var(--radius-full));
 		width: 28px;
 		height: 28px;
 		z-index: 1;
@@ -128,14 +143,14 @@
 	}
 
 	.clear-btn:hover {
-		color: var(--text-primary);
-		background: var(--primary-lighter);
+		color: var(--component-button-ghost-color-hover, var(--text-primary));
+		background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
 		transform: scale(1.05);
 	}
 
 	.clear-btn:active {
 		transform: scale(0.98);
-		background: var(--primary-light);
+		background: var(--component-button-secondary-bg, var(--primary-light));
 	}
 
 	@media (max-width: 768px) {
@@ -144,9 +159,13 @@
 		}
 
 		.search-input {
-			padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md) calc(var(--spacing-sm) * 0.875) 3rem;
+			padding: var(
+				--component-input-default-padding,
+				calc(var(--spacing-sm) * 0.875) var(--spacing-md)
+			);
+			padding-left: 3rem;
 			font-size: 0.9375rem;
-			border-radius: var(--radius-xl);
+			border-radius: var(--component-input-default-radius, var(--radius-xl));
 		}
 
 		.search-icon {
@@ -165,7 +184,8 @@
 	@media (max-width: 480px) {
 		.search-input {
 			font-size: 0.875rem;
-			padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-xs) 2.75rem;
+			padding: var(--spacing-xs) var(--spacing-sm);
+			padding-left: 2.75rem;
 		}
 
 		.search-icon {

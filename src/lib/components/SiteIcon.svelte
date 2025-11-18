@@ -222,24 +222,29 @@
     overflow: hidden;
     flex-shrink: 0;
     border-radius: var(--site-icon-radius, var(--radius-xl));
-    background: var(--gradient-brand-soft);
-    border: 1px solid var(--border-accent);
-    box-shadow: var(--shadow-xs);
+    background: var(--component-card-glass-bg, var(--gradient-brand-soft));
+    border: 1px solid var(--component-card-glass-border, var(--border-accent));
+    box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
     color: var(--primary-color);
-    transition: all var(--transition-fast);
+    backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+    transition: var(
+      --component-card-glass-transition,
+      all var(--transition-fast)
+    );
   }
 
   .site-icon--muted {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-light);
-    color: var(--text-secondary);
-    box-shadow: var(--shadow-xs);
+    background: var(--component-card-default-bg, var(--bg-secondary));
+    border: 1px solid var(--component-card-default-border, var(--border-light));
+    color: var(--component-link-secondary-color, var(--text-secondary));
+    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
   }
 
   .site-icon--interactive:hover {
     transform: scale(1.03);
-    box-shadow: var(--shadow-sm);
-    border-color: var(--primary-color);
+    box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
+    border-color: var(--component-button-primary-border, var(--primary-color));
   }
 
   .site-icon-image {
@@ -259,11 +264,11 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     font-size: calc(var(--site-icon-size, 56px) * 0.46);
-    color: currentColor;
+    color: var(--component-link-secondary-color, currentColor);
   }
 
   .site-icon--muted .site-icon-placeholder {
-    color: var(--text-secondary);
+    color: var(--component-link-secondary-color, var(--text-secondary));
   }
 </style>
 

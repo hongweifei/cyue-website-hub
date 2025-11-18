@@ -83,17 +83,21 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-lg);
-		padding: var(--spacing-lg);
-		background: var(--card-bg);
-		border: 1px solid var(--border-light);
-		border-radius: var(--radius-2xl);
-		box-shadow: var(--shadow-xs);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
+		padding: var(--component-card-glass-padding, var(--spacing-lg));
+		background: var(--component-card-glass-bg, var(--card-bg));
+		border: 1px solid var(--component-card-glass-border, var(--border-light));
+		border-radius: var(--component-card-glass-radius, var(--radius-2xl));
+		box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
+		backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+		-webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
 		overflow-x: hidden;
 		overflow-y: auto;
 		/* 优化 transition - 只过渡会变化的属性 */
-		transition: border-color var(--transition-base), box-shadow var(--transition-base);
+		transition: var(
+			--component-card-glass-transition,
+			border-color var(--transition-base),
+			box-shadow var(--transition-base)
+		);
 		/* GPU 加速 */
 		transform: translateZ(0);
 		/* 限制重排范围 */
@@ -105,7 +109,7 @@
 
 	.sidebar:hover {
 		border-color: var(--border-accent);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
 	}
 
 	.sidebar-header {
@@ -127,10 +131,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-sm);
-		padding: var(--spacing-md);
-		background: var(--bg-secondary);
-		border-radius: var(--radius-xl);
-		border: 1px solid var(--border-light);
+		padding: var(--component-card-default-padding, var(--spacing-md));
+		background: var(--component-card-default-bg, var(--bg-secondary));
+		border-radius: var(--component-card-default-radius, var(--radius-xl));
+		border: 1px solid var(--component-card-default-border, var(--border-light));
 		/* 只过渡边框和背景颜色，避免重排 */
 		transition: border-color var(--transition-fast), background-color var(--transition-fast);
 		/* 优化渲染 */
@@ -139,7 +143,7 @@
 
 	.sidebar-section:hover {
 		border-color: var(--border-accent);
-		background: var(--surface-glass);
+		background: var(--component-card-default-bg-hover, var(--surface-glass));
 	}
 
 	.sidebar-section-header {
@@ -205,34 +209,34 @@
 	}
 
 	.sidebar-group-btn.root {
-		background: var(--primary-lighter);
-		border: 1px solid var(--border-accent);
-		box-shadow: var(--shadow-xs);
+		background: var(--component-button-secondary-bg, var(--primary-lighter));
+		border: 1px solid var(--component-button-secondary-border, var(--border-accent));
+		box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
 	}
 
 	.sidebar-group-btn.root:hover {
-		background: var(--primary-light);
+		background: var(--component-button-secondary-bg-hover, var(--primary-light));
 		transform: translateX(2px) translateZ(0);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
 	}
 
 	.sidebar-group-btn.root .sidebar-group-icon {
-		background: var(--primary-light);
-		color: var(--primary-color);
-		border-color: var(--border-accent);
+		background: var(--component-tag-primary-bg, var(--primary-light));
+		color: var(--component-tag-primary-color, var(--primary-color));
+		border-color: var(--component-tag-primary-border, var(--border-accent));
 	}
 
 	.sidebar-group-btn.root .sidebar-group-count {
-		background: var(--primary-light);
-		border-color: var(--border-accent);
-		color: var(--primary-color);
+		background: var(--component-badge-default-bg, var(--primary-light));
+		border-color: var(--component-badge-default-border, var(--border-accent));
+		color: var(--component-badge-default-color, var(--primary-color));
 	}
 
 	.sidebar-group-btn.root.active {
-		background: var(--gradient-brand);
+		background: var(--component-button-primary-bg, var(--gradient-brand));
 		border-color: transparent;
-		color: var(--text-inverse);
-		box-shadow: var(--shadow-xs);
+		color: var(--component-button-primary-color, var(--text-inverse));
+		box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
 	}
 
 	.sidebar-group-btn.root.active .sidebar-group-count {

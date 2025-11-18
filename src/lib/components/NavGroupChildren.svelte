@@ -25,6 +25,7 @@
 <style>
 	.subgroups {
 		margin-top: var(--spacing-2xl);
+		border-left: 1px solid var(--component-card-default-border, transparent);
 	}
 
 	.subgroups-list {
@@ -41,14 +42,14 @@
 		top: calc(-1 * var(--spacing-lg));
 		width: 100%;
 		height: 1px;
-		background: var(--border-light);
+		background: var(--component-card-default-border, var(--border-light));
 	}
 
 	@media (max-width: 768px) {
 		.subgroups {
 			margin-top: var(--spacing-xl);
 			padding-left: var(--spacing-md);
-			border-left: 2px solid var(--border-light);
+			border-left: 2px solid var(--component-card-default-border, var(--border-light));
 			position: relative;
 		}
 
@@ -59,7 +60,7 @@
 			top: calc(-1 * var(--spacing-md));
 			width: 2px;
 			height: var(--spacing-md);
-			background: var(--gradient-brand);
+			background: var(--component-card-default-border-hover, var(--gradient-brand));
 			opacity: 0.6;
 		}
 

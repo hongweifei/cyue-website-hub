@@ -27,29 +27,32 @@
 		display: inline-flex;
 		align-items: center;
 		gap: var(--spacing-sm);
-		padding: calc(var(--spacing-xs) * 1.25) var(--spacing-md);
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-light);
-		border-radius: var(--radius-full);
-		color: var(--text-secondary);
+		padding: var(--component-button-secondary-padding, calc(var(--spacing-xs) * 1.25) var(--spacing-md));
+		background: var(--component-button-secondary-bg, var(--bg-tertiary));
+		border: 1px solid var(--component-button-secondary-border, var(--border-light));
+		border-radius: var(--component-button-secondary-radius, var(--radius-full));
+		color: var(--component-button-secondary-color, var(--text-secondary));
 		font-size: 0.875rem;
 		font-weight: 500;
 		cursor: pointer;
-		transition: all var(--transition-fast);
-		box-shadow: var(--shadow-xs);
+		transition: var(
+			--component-button-secondary-transition,
+			all var(--transition-fast)
+		);
+		box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
 	}
 
 	.layout-toggle-btn:hover {
-		border-color: var(--border-accent);
-		color: var(--primary-color);
-		background: var(--primary-lighter);
+		border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+		color: var(--component-button-secondary-color-hover, var(--primary-color));
+		background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
 		transform: translateY(-1px);
-		box-shadow: var(--shadow-sm);
+		box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
 	}
 
 	.layout-toggle-btn:active {
 		transform: translateY(0);
-		box-shadow: var(--shadow-xs);
+		box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
 	}
 
 	.layout-toggle-btn svg {
@@ -59,11 +62,11 @@
 	@media (max-width: 768px) {
 		.layout-toggle-btn {
 			font-size: 0.8125rem;
-			padding: var(--spacing-xs) var(--spacing-sm);
-			background: transparent;
-			border: none;
+			padding: var(--component-button-ghost-padding, var(--spacing-xs) var(--spacing-sm));
+			background: var(--component-button-ghost-bg, transparent);
+			border: 1px solid var(--component-button-ghost-border, transparent);
 			box-shadow: none;
-			color: var(--text-secondary);
+			color: var(--component-button-ghost-color, var(--text-secondary));
 		}
 
 		.layout-toggle-btn span {

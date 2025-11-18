@@ -69,19 +69,24 @@ const childGroupCount = $derived((group.children ?? []).length);
 		padding: calc(var(--spacing-sm) * 0.875) var(--spacing-md);
 		width: 100%;
 		text-align: left;
-		background: var(--bg-tertiary);
-		border-radius: var(--radius-xl);
-		border: 1px solid var(--border-light);
-		color: var(--text-primary);
+		background: var(--component-button-secondary-bg, var(--bg-tertiary));
+		border-radius: var(--component-button-secondary-radius, var(--radius-xl));
+		border: 1px solid var(--component-button-secondary-border, var(--border-light));
+		color: var(--component-button-secondary-color, var(--text-primary));
 		cursor: pointer;
-		transition: all var(--transition-fast);
+		transition: var(
+			--component-button-secondary-transition,
+			all var(--transition-fast)
+		);
+		box-shadow: var(--component-button-secondary-shadow, none);
 	}
 
 	:global(.sidebar-group-btn:hover) {
-		background: var(--primary-lighter);
-		border-color: var(--border-accent);
-		color: var(--primary-color);
+		background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
+		border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+		color: var(--component-button-secondary-color-hover, var(--primary-color));
 		transform: translateX(2px);
+		box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
 	}
 
 	:global(.sidebar-group-btn:focus-visible) {
@@ -91,25 +96,25 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active) {
-		background: var(--gradient-brand);
+		background: var(--component-button-primary-bg, var(--gradient-brand));
 		border-color: transparent;
-		color: var(--text-inverse);
-		box-shadow: var(--shadow-xs);
+		color: var(--component-button-primary-color, var(--text-inverse));
+		box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
 	}
 
 	:global(.sidebar-group-icon) {
 		width: 36px;
 		height: 36px;
-		border-radius: var(--radius-lg);
+		border-radius: var(--component-tag-default-radius, var(--radius-lg));
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 0.95rem;
 		font-weight: 600;
-		background: var(--icon-bg);
-		color: var(--primary-color);
-		border: 1px solid var(--border-light);
-		transition: all var(--transition-fast);
+		background: var(--component-tag-default-bg, var(--icon-bg));
+		color: var(--component-tag-default-color, var(--primary-color));
+		border: 1px solid var(--component-tag-default-border, var(--border-light));
+		transition: var(--component-tag-default-transition, all var(--transition-fast));
 	}
 
 	:global(.sidebar-group-icon.placeholder) {
@@ -117,8 +122,8 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active .sidebar-group-icon) {
-		background: var(--chip-contrast-surface);
-		color: var(--text-inverse);
+		background: var(--component-tag-primary-bg, var(--chip-contrast-surface));
+		color: var(--component-tag-primary-color, var(--text-inverse));
 	}
 
 	:global(.sidebar-group-content) {
@@ -155,12 +160,12 @@ const childGroupCount = $derived((group.children ?? []).length);
 		min-width: 44px;
 		height: 26px;
 		padding: 0 var(--spacing-sm);
-		border-radius: var(--radius-full);
+		border-radius: var(--component-badge-default-radius, var(--radius-full));
 		font-size: 0.75rem;
 		font-weight: 500;
-		background: var(--primary-lighter);
-		color: var(--primary-color);
-		border: 1px solid var(--border-accent);
+		background: var(--component-badge-default-bg, var(--primary-lighter));
+		color: var(--component-badge-default-color, var(--primary-color));
+		border: 1px solid var(--component-badge-default-border, var(--border-accent));
 	}
 
 	:global(.sidebar-group-count::after) {
@@ -171,9 +176,9 @@ const childGroupCount = $derived((group.children ?? []).length);
 	}
 
 	:global(.sidebar-group-btn.active .sidebar-group-count) {
-		background: var(--chip-contrast-surface-strong);
-		color: var(--text-inverse);
-		border-color: transparent;
+		background: var(--component-badge-primary-bg, var(--chip-contrast-surface-strong));
+		color: var(--component-badge-primary-color, var(--text-inverse));
+		border-color: var(--component-badge-primary-border, transparent);
 	}
 
 	@media (max-width: 768px) {
