@@ -180,33 +180,34 @@
   }
 
   .back-link {
-    color: var(--text-secondary);
+    color: var(--component-button-secondary-color, var(--text-secondary));
     text-decoration: none;
     font-size: 0.875rem;
-    transition: all var(--transition-fast);
+    transition: var(--component-button-secondary-transition, all var(--transition-fast));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-lg);
-    border-radius: var(--radius-full);
+    padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
+    border-radius: var(--component-button-secondary-radius, var(--radius-full));
     font-weight: 500;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-light);
+    background: var(--component-button-secondary-bg, var(--bg-tertiary));
+    border: var(--component-button-secondary-border, 1px solid var(--border-light));
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
   }
 
   .back-link:hover {
-    color: var(--primary-color);
-    background: var(--primary-lighter);
-    border-color: var(--border-accent);
-    transform: translateX(-2px);
-    box-shadow: var(--shadow-xs);
+    color: var(--component-button-secondary-color-hover, var(--primary-color));
+    background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
+    border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
+    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
   }
 
   .back-link:active {
-    transform: translateX(0);
+    transform: var(--component-button-secondary-transform-active, translateY(0));
   }
 
   .back-link svg {
@@ -477,24 +478,26 @@
 
   .item-group {
     font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: var(--component-tag-default-color, var(--text-secondary));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-md);
-    background: var(--primary-lighter);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-full);
+    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    background: var(--component-tag-default-bg, var(--tag-bg));
+    border: var(--component-tag-default-border, var(--border-light));
+    border-radius: var(--component-tag-default-radius, var(--radius-full));
     font-weight: 500;
     text-decoration: none;
-    transition: all var(--transition-fast);
+    transition: var(--component-tag-default-transition, all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1));
+    box-shadow: var(--component-tag-default-shadow, none);
   }
 
   .item-group:hover {
-    background: var(--layer-primary-soft);
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    transform: translateY(-1px);
+    background: var(--component-tag-default-bg-hover, var(--primary-light));
+    border-color: var(--component-tag-default-border-hover, var(--primary-color));
+    color: var(--component-tag-default-color-hover, var(--primary-color));
+    transform: var(--component-tag-default-transform-hover, translateY(-1px) scale(1.03));
+    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
   }
 
   .item-group svg {
@@ -510,20 +513,21 @@
 
   .tag {
     font-size: 0.875rem;
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-md);
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    border-radius: var(--radius-full);
+    padding: var(--component-tag-primary-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    background: var(--component-tag-primary-bg, var(--primary-light));
+    color: var(--component-tag-primary-color, var(--primary-color));
+    border: var(--component-tag-primary-border, var(--primary-color));
+    border-radius: var(--component-tag-primary-radius, var(--radius-full));
     font-weight: 600;
-    box-shadow: var(--shadow-xs);
-    transition: all var(--transition-fast);
-    border: none;
+    box-shadow: var(--component-tag-primary-shadow, none);
+    transition: var(--component-tag-primary-transition, all var(--transition-fast));
   }
 
   .tag:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-    opacity: 0.95;
+    transform: var(--component-tag-primary-transform-hover, translateY(-1px) scale(1.05));
+    box-shadow: var(--component-tag-primary-shadow-hover, var(--shadow-xs));
+    background: var(--component-tag-primary-bg-hover, var(--primary-color));
+    color: var(--component-tag-primary-color-hover, var(--text-inverse));
   }
 
   .item-actions {
@@ -542,26 +546,30 @@
   }
 
   .visit-btn {
-    padding: calc(var(--spacing-md) * 0.875) var(--spacing-2xl);
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
+    padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-lg));
+    background: var(--component-button-primary-bg, var(--gradient-brand));
+    color: var(--component-button-primary-color, var(--text-inverse));
     text-decoration: none;
-    border-radius: var(--radius-full);
+    border-radius: var(--component-button-primary-radius, var(--radius-md));
+    border: var(--component-button-primary-border, transparent);
     font-weight: 600;
     font-size: 0.9375rem;
-    transition: all var(--transition-fast);
+    transition: var(--component-button-primary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     white-space: nowrap;
-    box-shadow: var(--shadow-xs);
+    box-shadow: var(--component-button-primary-shadow, var(--shadow-soft));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    border: none;
   }
 
   .visit-btn:hover {
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-1px);
-    opacity: 0.95;
+    background: var(--component-button-primary-bg-hover, linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%));
+    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-glow));
+    transform: var(--component-button-primary-transform-hover, translateY(-1px) scale(1.02));
+  }
+
+  .visit-btn:active {
+    transform: var(--component-button-primary-transform-active, translateY(0) scale(0.98));
   }
 
   .visit-btn svg {
@@ -579,34 +587,43 @@
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    padding: 0;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-full);
+    padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
+    background: var(--component-button-ghost-bg, transparent);
+    border: var(--component-button-ghost-border, transparent);
+    border-radius: var(--component-button-ghost-radius, var(--radius-md));
     cursor: pointer;
-    color: var(--text-tertiary);
-    transition: all var(--transition-fast);
+    color: var(--component-button-ghost-color, var(--text-tertiary));
+    transition: var(--component-button-ghost-transition, all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1));
     flex-shrink: 0;
+    box-shadow: var(--component-button-ghost-shadow, none);
   }
 
   .favorite-btn:hover {
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    background: var(--primary-lighter);
-    transform: scale(1.05);
+    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
+    color: var(--component-button-ghost-color-hover, var(--primary-color));
+    background: var(--component-button-ghost-bg-hover, var(--bg-tertiary));
+    transform: var(--component-button-ghost-transform-hover, scale(1.05));
   }
 
   .favorite-btn.favorited {
-    background: var(--gradient-brand);
-    border-color: transparent;
-    color: var(--text-inverse);
-    box-shadow: var(--shadow-xs);
+    background: var(--component-button-primary-bg, var(--gradient-brand));
+    border: var(--component-button-primary-border, transparent);
+    color: var(--component-button-primary-color, var(--text-inverse));
+    box-shadow: var(--component-button-primary-shadow, var(--shadow-soft));
   }
 
   .favorite-btn.favorited:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-sm);
-    opacity: 0.95;
+    background: var(--component-button-primary-bg-hover, linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%));
+    transform: var(--component-button-primary-transform-hover, translateY(-1px) scale(1.02));
+    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-glow));
+  }
+
+  .favorite-btn:active {
+    transform: var(--component-button-ghost-transform-active, scale(0.98));
+  }
+
+  .favorite-btn.favorited:active {
+    transform: var(--component-button-primary-transform-active, translateY(0) scale(0.98));
   }
 
   .item-description {
@@ -629,29 +646,30 @@
   .item-footer {
     margin-top: 2.5rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-light);
+    border-top: var(--component-card-default-border, 1px solid var(--border-light));
   }
 
   .group-link {
-    color: var(--primary-color);
+    color: var(--component-button-secondary-color, var(--primary-color));
     text-decoration: none;
     font-weight: 500;
-    transition: all var(--transition-fast);
+    transition: var(--component-button-secondary-transition, all var(--transition-fast));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: calc(var(--spacing-sm) * 0.875) var(--spacing-lg);
-    border-radius: var(--radius-full);
-    background: var(--primary-lighter);
-    border: 1px solid var(--border-accent);
+    padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
+    border-radius: var(--component-button-secondary-radius, var(--radius-full));
+    background: var(--component-button-secondary-bg, var(--primary-lighter));
+    border: var(--component-button-secondary-border, 1px solid var(--border-accent));
+    box-shadow: var(--component-button-secondary-shadow, none);
   }
 
   .group-link:hover {
-    color: var(--text-inverse);
-    background: var(--gradient-brand);
-    border-color: transparent;
-    transform: translateX(2px);
-    box-shadow: var(--shadow-xs);
+    color: var(--component-button-secondary-color-hover, var(--primary-hover));
+    background: var(--component-button-secondary-bg-hover, var(--primary-light));
+    border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
+    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -816,7 +834,7 @@
     .item-footer {
       margin-top: var(--spacing-lg);
       padding-top: var(--spacing-md);
-      border-top: 1px solid var(--border-color);
+      border-top: var(--component-card-default-border, 1px solid var(--border-color));
     }
 
     .group-link {

@@ -46,33 +46,34 @@
 	}
 
 	.back-link {
-		color: var(--text-secondary);
+		color: var(--component-button-secondary-color, var(--text-secondary));
 		text-decoration: none;
 		font-size: 0.875rem;
-		transition: all var(--transition-fast);
+		transition: var(--component-button-secondary-transition, all var(--transition-fast));
 		display: inline-flex;
 		align-items: center;
 		gap: var(--spacing-sm);
-		padding: calc(var(--spacing-sm) * 0.875) var(--spacing-lg);
-		border-radius: var(--radius-full);
+		padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
+		border-radius: var(--component-button-secondary-radius, var(--radius-full));
 		font-weight: 500;
-		background: var(--bg-tertiary);
-		border: 1px solid var(--border-light);
+		background: var(--component-button-secondary-bg, var(--bg-tertiary));
+		border: var(--component-button-secondary-border, 1px solid var(--border-light));
 		cursor: pointer;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
+		box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
 	}
 
 	.back-link:hover {
-		color: var(--primary-color);
-		background: var(--primary-lighter);
-		border-color: var(--border-accent);
-		transform: translateX(-2px);
-		box-shadow: var(--shadow-xs);
+		color: var(--component-button-secondary-color-hover, var(--primary-color));
+		background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
+		border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+		transform: var(--component-button-secondary-transform-hover, translateY(-1px));
+		box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
 	}
 
 	.back-link:active {
-		transform: translateX(0);
+		transform: var(--component-button-secondary-transform-active, translateY(0));
 	}
 
 	@media (prefers-reduced-motion: reduce) {

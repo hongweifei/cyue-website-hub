@@ -63,16 +63,16 @@
 
   .error-content,
   .card {
-    backdrop-filter: blur(22px);
-    background: linear-gradient(
+    backdrop-filter: var(--component-card-glass-backdrop, blur(22px));
+    background: var(--component-card-glass-bg, linear-gradient(
         140deg,
         color-mix(in srgb, var(--surface-glass) 88%, transparent),
         color-mix(in srgb, var(--card-bg) 90%, transparent)
-      );
-    border: 1px solid color-mix(in srgb, var(--border-soft) 80%, transparent);
-    border-radius: var(--radius-xl);
-    padding: clamp(var(--spacing-lg), 5vw, var(--spacing-2xl));
-    box-shadow: var(--shadow-sm);
+      ));
+    border: var(--component-card-glass-border, 1px solid color-mix(in srgb, var(--border-soft) 80%, transparent));
+    border-radius: var(--component-card-glass-radius, var(--radius-xl));
+    padding: var(--component-card-glass-padding, clamp(var(--spacing-lg), 5vw, var(--spacing-2xl)));
+    box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
@@ -110,18 +110,18 @@
   }
 
   .actions button {
-    padding: 0.65rem 1.4rem;
-    border-radius: var(--radius-lg);
     font-weight: 600;
     cursor: pointer;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .actions button.primary {
-    border: none;
-    background: var(--gradient-brand);
-    color: var(--text-inverse);
-    box-shadow: var(--shadow-sm);
+    padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-lg));
+    border-radius: var(--component-button-primary-radius, var(--radius-md));
+    border: var(--component-button-primary-border, transparent);
+    background: var(--component-button-primary-bg, var(--gradient-brand));
+    color: var(--component-button-primary-color, var(--text-inverse));
+    box-shadow: var(--component-button-primary-shadow, var(--shadow-soft));
+    transition: var(--component-button-primary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
   }
 
   .actions button.primary:focus-visible {
@@ -131,22 +131,36 @@
 
   .actions button.primary:hover,
   .actions button.primary:focus-visible {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
+    background: var(--component-button-primary-bg-hover, linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%));
+    transform: var(--component-button-primary-transform-hover, translateY(-2px) scale(1.02));
+    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-glow));
+  }
+
+  .actions button.primary:active {
+    transform: var(--component-button-primary-transform-active, translateY(0) scale(0.98));
   }
 
   .actions button.secondary {
-    border: 1px solid var(--border-light);
-    background: var(--surface-glass);
-    color: var(--text-secondary);
+    padding: var(--component-button-secondary-padding, var(--spacing-sm) var(--spacing-lg));
+    border-radius: var(--component-button-secondary-radius, var(--radius-md));
+    border: var(--component-button-secondary-border, 1px solid var(--border-light));
+    background: var(--component-button-secondary-bg, var(--bg-tertiary));
+    color: var(--component-button-secondary-color, var(--text-primary));
+    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
+    transition: var(--component-button-secondary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
   }
 
   .actions button.secondary:hover,
   .actions button.secondary:focus-visible {
-    border-color: var(--border-accent);
-    color: var(--primary-color);
-    background: var(--layer-primary-soft);
-    transform: translateY(-1px);
+    background: var(--component-button-secondary-bg-hover, var(--primary-light));
+    border-color: var(--component-button-secondary-border-hover, var(--primary-color));
+    color: var(--component-button-secondary-color-hover, var(--primary-color));
+    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
+    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
+  }
+
+  .actions button.secondary:active {
+    transform: var(--component-button-secondary-transform-active, translateY(0));
   }
 
   .actions button.secondary:focus-visible {
@@ -205,13 +219,15 @@
 
   .error-links a {
     flex: 1;
-    color: var(--primary-color);
+    color: var(--component-link-default-color, var(--primary-color));
+    text-decoration: var(--component-link-default-text-decoration, underline);
+    transition: var(--component-link-default-transition, color var(--transition-fast), transform var(--transition-fast), background-size var(--transition-base));
   }
 
   .error-links a:hover,
   .error-links a:focus-visible {
-    color: var(--primary-hover);
-    text-decoration: none;
+    color: var(--component-link-default-color-hover, var(--primary-hover));
+    transform: var(--component-link-default-transform-hover, translateY(-1px));
   }
 
   @media (max-width: 768px) {

@@ -272,14 +272,14 @@
     align-items: center;
     gap: var(--spacing-lg);
     padding: calc(var(--spacing-sm) * 1.5) var(--spacing-lg);
-    background: var(--surface-glass);
-    border-radius: var(--radius-2xl);
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: var(--component-card-glass-bg, var(--surface-glass));
+    border-radius: var(--component-card-glass-radius, var(--radius-2xl));
+    border: var(--component-card-glass-border, 1px solid var(--border-light));
+    box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
+    backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
+    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
     /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
-    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    transition: var(--component-card-glass-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     /* GPU 加速 backdrop-filter */
     transform: translateZ(0);
     will-change: transform, box-shadow;
@@ -288,9 +288,9 @@
   }
 
   .header-shell:hover {
-    transform: translateY(-1px) translateZ(0);
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-accent);
+    transform: var(--component-card-glass-transform-hover, translateY(-2px)) translateZ(0);
+    box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
+    border-color: var(--component-card-glass-border-hover, var(--border-accent));
   }
 
   .logo {
@@ -338,14 +338,15 @@
 
   .nav-link {
     position: relative;
-    color: var(--text-secondary);
+    color: var(--component-link-secondary-color, var(--text-secondary));
     font-weight: 500;
     font-size: 0.9375rem;
     padding: calc(var(--spacing-xs) * 1.25) var(--spacing-md);
     border-radius: var(--radius-full);
     letter-spacing: 0.01em;
-    /* 优化 transition - 只过渡会变化的属性 */
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    text-decoration: var(--component-link-secondary-text-decoration, none);
+    /* 优化 transition - 使用组件样式变量 */
+    transition: var(--component-link-secondary-transition, color var(--transition-fast), transform var(--transition-fast), background-size var(--transition-base));
     /* 优化渲染 */
     contain: layout style;
   }
@@ -357,30 +358,34 @@
     bottom: calc(var(--spacing-2xs) * -1);
     transform: translateX(-50%) scaleX(0) translateZ(0);
     width: 60%;
-    height: 2px;
+    height: var(--component-link-secondary-text-decoration-thickness, 1px);
     border-radius: var(--radius-full);
-    background: var(--primary-color);
+    background: linear-gradient(transparent, transparent), var(--component-link-secondary-underline, linear-gradient(var(--text-secondary), var(--text-secondary)));
+    background-size: 0% 100%, 0% 100%;
+    background-position: left, left;
+    background-repeat: no-repeat;
     opacity: 0;
     /* 优化 transition - 只过渡 transform 和 opacity（GPU 加速） */
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
-    will-change: transform, opacity;
+    transition: transform var(--transition-fast), opacity var(--transition-fast), background-size var(--transition-base);
+    will-change: transform, opacity, background-size;
   }
 
   .nav-link:hover {
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    color: var(--component-link-secondary-color-hover, var(--text-primary));
+    transform: var(--component-link-secondary-transform-hover, translateY(-1px));
   }
 
   .nav-link:hover::after,
   .nav-link:focus-visible::after {
     opacity: 1;
     transform: translateX(-50%) scaleX(1);
+    background: var(--component-link-secondary-underline-hover, linear-gradient(var(--text-primary), var(--text-primary)));
+    background-size: 100% 100%, 100% 100%;
   }
 
   .nav-link:focus-visible {
     outline: none;
-    color: var(--primary-color);
-    background: var(--primary-lighter);
+    color: var(--component-link-secondary-color-hover, var(--text-primary));
   }
 
   .main {
@@ -390,25 +395,26 @@
   }
 
   .main .container {
-    background: var(--card-bg);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg);
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    /* 优化 transition - 只过渡会变化的属性 */
-    transition: box-shadow var(--transition-base), border-color var(--transition-base);
+    background: var(--component-card-default-bg, var(--card-bg));
+    border-radius: var(--component-card-default-radius, var(--radius-2xl));
+    padding: var(--component-card-default-padding, var(--spacing-xl) var(--spacing-xl) var(--spacing-lg));
+    border: var(--component-card-default-border, 1px solid var(--border-light));
+    box-shadow: var(--component-card-default-shadow, var(--shadow-sm));
+    backdrop-filter: var(--component-card-default-backdrop, blur(16px));
+    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px));
+    /* 优化 transition - 使用组件样式变量 */
+    transition: var(--component-card-default-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     /* GPU 加速 backdrop-filter */
     transform: translateZ(0);
-    will-change: box-shadow;
+    will-change: transform, box-shadow;
     /* 限制重排范围 */
     contain: layout style paint;
   }
 
   .main .container:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-accent);
+    transform: var(--component-card-default-transform-hover, translateY(-3px)) translateZ(0);
+    box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
+    border-color: var(--component-card-default-border-hover, var(--border-accent));
   }
 
   .footer {
@@ -436,22 +442,28 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
-    padding: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
-    border-radius: var(--radius-2xl);
-    background: linear-gradient(
+    padding: var(--component-card-glass-padding, clamp(var(--spacing-xl), 5vw, var(--spacing-2xl)));
+    border-radius: var(--component-card-glass-radius, var(--radius-2xl));
+    background: var(--component-card-glass-bg, linear-gradient(
         140deg,
         color-mix(in srgb, var(--surface-glass) 90%, transparent),
         color-mix(in srgb, var(--card-bg) 95%, transparent)
-      );
-    border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+      ));
+    border: var(--component-card-glass-border, 1px solid var(--border-light));
+    box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
+    backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
+    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
     color: var(--text-secondary);
     /* GPU 加速 backdrop-filter */
     transform: translateZ(0);
     /* 限制重排范围 */
     contain: layout style paint;
+  }
+
+  .footer-shell:hover {
+    transform: var(--component-card-glass-transform-hover, translateY(-2px)) translateZ(0);
+    box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
+    border-color: var(--component-card-glass-border-hover, var(--border-accent));
   }
 
   .footer-brand {
@@ -505,12 +517,13 @@
   }
 
   .badge {
-    padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-    border-radius: var(--radius-full);
+    padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+    border-radius: var(--component-badge-default-radius, var(--radius-full));
     font-size: 0.75rem;
-    background: var(--primary-lighter);
-    color: var(--primary-color);
-    border: 1px solid var(--border-accent);
+    background: var(--component-badge-default-bg, var(--bg-tertiary));
+    color: var(--component-badge-default-color, var(--text-secondary));
+    border: var(--component-badge-default-border, var(--border-light));
+    box-shadow: var(--component-badge-default-shadow, inset 0 1px 2px rgba(0, 0, 0, 0.05));
     backdrop-filter: blur(8px);
     font-weight: 500;
   }
@@ -543,12 +556,12 @@
   .footer-links a,
   .footer-contact a {
     position: relative;
-    color: var(--text-secondary);
+    color: var(--component-link-secondary-color, var(--text-secondary));
     font-weight: 500;
-    text-decoration: none;
+    text-decoration: var(--component-link-secondary-text-decoration, none);
     padding: 0.25rem 0;
-    /* 优化 transition - 只过渡会变化的属性 */
-    transition: color var(--transition-fast), transform var(--transition-fast);
+    /* 优化 transition - 使用组件样式变量 */
+    transition: var(--component-link-secondary-transition, color var(--transition-fast), transform var(--transition-fast), background-size var(--transition-base));
     /* 优化渲染 */
     contain: layout style;
     will-change: transform;
@@ -559,24 +572,27 @@
     content: "";
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: calc(var(--component-link-secondary-text-underline-offset, 2px) * -1);
     width: 100%;
-    height: 2px;
+    height: var(--component-link-secondary-text-decoration-thickness, 1px);
     border-radius: 999px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    background: var(--component-link-secondary-underline, linear-gradient(transparent, transparent), linear-gradient(var(--text-secondary), var(--text-secondary)));
+    background-size: 0% 100%, 0% 100%;
+    background-position: left, left;
+    background-repeat: no-repeat;
     opacity: 0;
     transform: scaleX(0.5) translateZ(0);
     /* 优化 transition - 只过渡 transform 和 opacity（GPU 加速） */
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
-    will-change: transform, opacity;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), background-size var(--transition-base);
+    will-change: transform, opacity, background-size;
   }
 
   .footer-links a:hover,
   .footer-links a:focus-visible,
   .footer-contact a:hover,
   .footer-contact a:focus-visible {
-    color: var(--primary-color);
-    transform: translateY(-1px) translateZ(0);
+    color: var(--component-link-secondary-color-hover, var(--text-primary));
+    transform: var(--component-link-secondary-transform-hover, translateY(-1px)) translateZ(0);
   }
 
   .footer-links a:hover::after,
@@ -585,6 +601,8 @@
   .footer-contact a:focus-visible::after {
     opacity: 1;
     transform: scaleX(1);
+    background: var(--component-link-secondary-underline-hover, linear-gradient(transparent, transparent), linear-gradient(var(--text-primary), var(--text-primary)));
+    background-size: 100% 100%, 100% 100%;
   }
 
   .footer-meta {
