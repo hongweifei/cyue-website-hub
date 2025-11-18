@@ -10,6 +10,7 @@ import {
 	THEME_SEQUENCE,
 	type ThemeId
 } from "../theme/config";
+import { loadThemeCSS, unloadThemeCSS } from "../theme/loader";
 
 export type { ThemeId } from "../theme/config";
 
@@ -20,32 +21,35 @@ function createThemeStore() {
 
 	return {
 		subscribe,
-		set: (value: ThemeId) => {
+		set: async (value: ThemeId) => {
 			const normalized = normalizeTheme(value);
 			if (browser) {
 				localStorage.setItem(STORAGE_KEY, normalized);
-				applyTheme(normalized);
+				await applyTheme(normalized);
 			}
 			set(normalized);
 		},
-		cycle: () => {
+		cycle: async () => {
 			update((current) => {
 				const normalized = normalizeTheme(current);
 				const index = THEME_SEQUENCE.indexOf(normalized);
 				const next = THEME_SEQUENCE[(index + 1) % THEME_SEQUENCE.length];
 				if (browser) {
 					localStorage.setItem(STORAGE_KEY, next);
-					applyTheme(next);
+					// 异步应用主题，不阻塞状态更新
+					applyTheme(next).catch((error) => {
+						console.error("应用主题失败:", error);
+					});
 				}
 				return next;
 			});
 		},
-		init: () => {
+		init: async () => {
 			if (!browser) return;
 			const stored = localStorage.getItem(STORAGE_KEY);
 			const initial: ThemeId = stored && isStoredTheme(stored) ? normalizeTheme(stored) : DEFAULTS.THEME;
 			set(initial);
-			applyTheme(initial);
+			await applyTheme(initial);
 		}
 	};
 }
@@ -65,39 +69,47 @@ class ThemeManager {
 	private mediaQuery: MediaQueryList | null = null;
 	private listener: ((event: MediaQueryListEvent) => void) | null = null;
 
-	apply(theme: ThemeId): void {
+	async apply(theme: ThemeId): Promise<void> {
 		if (!browser || typeof document === "undefined") return;
 		const root = document.documentElement;
 
 		if (theme === "auto") {
-			this.setupAutoTheme(root);
+			await this.setupAutoTheme(root);
 			return;
 		}
 
 		this.cleanupAutoTheme();
-		this.applyThemeClass(root, theme);
+		await this.applyThemeClass(root, theme);
 	}
 
-	private setupAutoTheme(root: HTMLElement): void {
+	private async setupAutoTheme(root: HTMLElement): Promise<void> {
 		if (!browser || typeof window === "undefined") return;
 
 		const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-		const applyPreference = (isDark: boolean) => {
-			this.applyThemeClass(root, isDark ? DEFAULT_DARK_THEME : DEFAULT_LIGHT_THEME);
+		const applyPreference = async (isDark: boolean) => {
+			await this.applyThemeClass(root, isDark ? DEFAULT_DARK_THEME : DEFAULT_LIGHT_THEME);
 		};
 
-		applyPreference(prefersDark.matches);
+		await applyPreference(prefersDark.matches);
 		this.cleanupAutoTheme();
 
 		this.mediaQuery = prefersDark;
-		this.listener = (event: MediaQueryListEvent) => applyPreference(event.matches);
+		this.listener = async (event: MediaQueryListEvent) => {
+			await applyPreference(event.matches);
+		};
 		this.mediaQuery.addEventListener("change", this.listener);
 	}
 
-	private applyThemeClass(root: HTMLElement, theme: ThemeId): void {
+	private async applyThemeClass(root: HTMLElement, theme: ThemeId): Promise<void> {
 		if (!isConcreteTheme(theme)) return;
 		const meta = getThemeOption(theme);
+
+		// 卸载之前的主题CSS
+		unloadThemeCSS();
+
+		// 加载新的主题CSS
+		await loadThemeCSS(theme);
 
 		root.dataset.theme = theme;
 		root.dataset.themeMode = meta.mode;
@@ -114,8 +126,8 @@ class ThemeManager {
 
 const manager = new ThemeManager();
 
-function applyTheme(theme: ThemeId): void {
-	manager.apply(theme);
+async function applyTheme(theme: ThemeId): Promise<void> {
+	await manager.apply(theme);
 }
 
 export const theme = createThemeStore();

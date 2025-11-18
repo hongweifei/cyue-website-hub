@@ -1,0 +1,60 @@
+:root[data-theme="harmony-dark"] {
+	color-scheme: dark;
+
+	/* 鸿蒙设计规范暗色主题主色调 */
+	--primary-color: #40A9FF;
+	--primary-color-strong: #69C0FF;
+	--primary-hover: #5AB8FF;
+	--primary-light: rgba(64, 169, 255, 0.2);
+	--primary-lighter: rgba(64, 169, 255, 0.12);
+	--accent-color: #36CFC9;
+	--accent-hover: #5CDBD3;
+
+	/* 鸿蒙设计规范暗色主题文字颜色 */
+	--text-primary: #E5E6EB;
+	--text-secondary: #C9CDD4;
+	--text-tertiary: #86909C;
+	--text-muted: #6B7785;
+	--text-inverse: #1D2129;
+
+	/* 鸿蒙设计规范暗色主题边框颜色 */
+	--border-color: rgba(255, 255, 255, 0.12);
+	--border-soft: rgba(255, 255, 255, 0.08);
+	--border-light: rgba(255, 255, 255, 0.06);
+	--border-accent: rgba(64, 169, 255, 0.3);
+
+	/* 鸿蒙设计规范暗色主题背景颜色 */
+	--bg-primary: rgba(29, 33, 41, 0.95);
+	--bg-secondary: rgba(22, 24, 35, 0.9);
+	--bg-tertiary: rgba(17, 20, 30, 0.8);
+	--surface-glass: rgba(29, 33, 41, 0.85);
+	--surface-solid: #1D2129;
+	--card-bg: rgba(29, 33, 41, 0.95);
+	--card-overlay: linear-gradient(140deg, rgba(34, 38, 48, 0.96), rgba(29, 33, 41, 0.95));
+	--tag-bg: rgba(64, 169, 255, 0.2);
+	--icon-bg: rgba(64, 169, 255, 0.25);
+	--input-bg: rgba(22, 24, 35, 0.95);
+	--code-bg: rgba(17, 20, 30, 0.9);
+	--header-bg: rgba(29, 33, 41, 0.9);
+	--footer-bg: rgba(22, 24, 35, 0.9);
+	--app-background: radial-gradient(circle at 12% 18%, rgba(64, 169, 255, 0.15), transparent 50%), radial-gradient(circle at 86% 12%, rgba(54, 207, 201, 0.12), transparent 50%), linear-gradient(160deg, #1D2129 0%, #161823 40%, #11141E 100%);
+
+	/* 鸿蒙设计规范暗色主题阴影 */
+	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.3);
+	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
+	--shadow-soft: 0 6px 20px rgba(64, 169, 255, 0.15);
+	--shadow-glow: 0 8px 32px rgba(64, 169, 255, 0.25);
+
+	/* 鸿蒙设计规范暗色主题层级颜色 */
+	--layer-primary-soft: rgba(64, 169, 255, 0.18);
+	--layer-primary-strong: rgba(64, 169, 255, 0.28);
+	--layer-accent-soft: rgba(54, 207, 201, 0.18);
+	--chip-contrast-surface: rgba(29, 33, 41, 0.6);
+	--chip-contrast-surface-strong: rgba(29, 33, 41, 0.8);
+	--gradient-brand: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+	--gradient-brand-soft: linear-gradient(135deg, rgba(64, 169, 255, 0.18) 0%, rgba(54, 207, 201, 0.22) 100%);
+}
+

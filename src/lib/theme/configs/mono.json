@@ -1,0 +1,15 @@
+{
+	"id": "mono",
+	"label": "留白手稿",
+	"description": "极简纸感，衬线排版",
+	"mode": "light",
+	"family": "mono",
+	"order": 11,
+	"preview": {
+		"background": "linear-gradient(145deg, #fdf4e3, #f5ebe0)",
+		"accent": "linear-gradient(120deg, #b45309, #92400e)",
+		"border": "rgba(146,64,14,.25)"
+	},
+	"features": ["纸张纹理", "衬线标题"]
+}
+

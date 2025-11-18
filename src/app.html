@@ -6,36 +6,40 @@
 		<title>鸽子导航网</title>
 		<script>
 			// 在页面加载前应用主题，避免闪烁
+			// 这是一个简化的初始化脚本，完整的主题加载和CSS动态导入由主题系统处理
 			(function() {
 				const STORAGE_KEY = 'nav-theme';
-				const DEFAULT_LIGHT = 'harmony';
-				const DEFAULT_DARK = 'harmony-dark';
-				const KNOWN_THEMES = new Set(['auto', 'harmony', 'harmony-dark', 'aqua', 'noir', 'mono']);
 				const root = document.documentElement;
 
-				const isDarkTheme = (value) => value.endsWith('dark') || value === 'noir';
+				// 从 localStorage 读取存储的主题
+				const stored = localStorage.getItem(STORAGE_KEY) || 'auto';
 
-				const applyTheme = (value) => {
-					root.dataset.theme = value;
-					root.dataset.themeMode = isDarkTheme(value) ? 'dark' : 'light';
+				// 判断是否为暗色主题（基于主题ID的简单启发式规则）
+				// 注意：这是一个简化的判断，完整判断由主题系统根据配置进行
+				const isDarkTheme = (themeId) => {
+					if (!themeId || themeId === 'auto') return false;
+					// 检查主题ID是否包含 'dark' 或已知的暗色主题标识
+					return themeId.includes('dark') || themeId === 'noir';
 				};
 
-				const normalize = (value) => {
-					if (!value) return 'auto';
-					if (value === 'light') return DEFAULT_LIGHT;
-					if (value === 'dark') return DEFAULT_DARK;
-					if (value === 'harmony') return DEFAULT_LIGHT;
-					return KNOWN_THEMES.has(value) ? value : 'auto';
+				// 应用主题属性（仅设置 data-theme 和 data-theme-mode）
+				// CSS文件的实际加载由主题系统在初始化时处理
+				const applyTheme = (themeId) => {
+					if (themeId && themeId !== 'auto') {
+						// 具体主题：设置主题ID和模式
+						root.dataset.theme = themeId;
+						root.dataset.themeMode = isDarkTheme(themeId) ? 'dark' : 'light';
+					} else {
+						// auto 模式：根据系统偏好设置模式
+						// 具体主题ID会在主题系统初始化时根据配置设置
+						const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+						root.dataset.themeMode = prefersDark ? 'dark' : 'light';
+						// data-theme 会在主题系统初始化时根据 DEFAULT_DARK_THEME 或 DEFAULT_LIGHT_THEME 设置
+					}
 				};
 
-				const stored = normalize(localStorage.getItem(STORAGE_KEY));
-
-				if (stored === 'auto') {
-					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					applyTheme(prefersDark ? DEFAULT_DARK : DEFAULT_LIGHT);
-				} else {
-					applyTheme(stored);
-				}
+				// 应用存储的主题
+				applyTheme(stored);
 			})();
 		</script>
 		%sveltekit.head%

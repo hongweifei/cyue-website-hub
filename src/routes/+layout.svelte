@@ -67,12 +67,12 @@
     goto(href, { invalidateAll: true });
   }
 
-  onMount(() => {
+  onMount(async () => {
     favorites.init();
     // 初始化布局
     layout.init();
-    // 初始化主题
-    theme.init();
+    // 初始化主题（异步加载CSS）
+    await theme.init();
   });
 </script>
 

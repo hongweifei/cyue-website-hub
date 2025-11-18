@@ -1,0 +1,15 @@
+{
+	"id": "harmony-dark",
+	"label": "鸿蒙·星辉",
+	"description": "官方暗色，夜空霓虹渐变",
+	"mode": "dark",
+	"family": "harmony",
+	"order": 2,
+	"preview": {
+		"background": "linear-gradient(135deg, #0f172a, #111827)",
+		"accent": "linear-gradient(120deg, #38bdf8, #6366f1)",
+		"border": "rgba(56,189,248,.35)"
+	},
+	"features": ["夜间护眼", "高对比文本"]
+}
+

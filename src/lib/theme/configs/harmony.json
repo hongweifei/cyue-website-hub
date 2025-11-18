@@ -1,0 +1,15 @@
+{
+	"id": "harmony",
+	"label": "鸿蒙·晨曦",
+	"description": "官方浅色，柔和玻璃质感",
+	"mode": "light",
+	"family": "harmony",
+	"order": 1,
+	"preview": {
+		"background": "linear-gradient(135deg, #f5fbff, #dbeafe)",
+		"accent": "linear-gradient(120deg, #0ea5e9, #6366f1)",
+		"border": "rgba(14,165,233,.25)"
+	},
+	"features": ["玻璃拟态", "圆角系统"]
+}
+
