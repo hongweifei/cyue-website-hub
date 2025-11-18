@@ -266,3 +266,99 @@
 	--component-badge-error-radius: var(--radius-full);
 }
 
+/* 移动端定制样式 */
+@media (max-width: 768px) {
+	:root[data-theme="harmony"] {
+		/* 移动端字体大小优化 */
+		--mobile-font-size-sm: 0.8125rem;
+		--mobile-font-size-base: 0.9375rem;
+		--mobile-font-size-lg: 1.125rem;
+		--mobile-font-size-xl: 1.375rem;
+		
+		/* 移动端间距优化 */
+		--mobile-spacing-xs: var(--spacing-xs);
+		--mobile-spacing-sm: var(--spacing-sm);
+		--mobile-spacing-md: var(--spacing-md);
+		--mobile-spacing-lg: var(--spacing-lg);
+		
+		/* 移动端触摸友好性 - 增大触摸区域 */
+		--mobile-touch-target: 44px;
+		--mobile-button-padding: var(--spacing-sm) var(--spacing-md);
+		
+		/* 移动端卡片优化 */
+		--mobile-card-padding: var(--spacing-md);
+		--mobile-card-radius: var(--radius-xl);
+	}
+	
+	/* 表格样式 */
+	:root[data-theme="harmony"] .markdown-content table {
+		display: block !important;
+		overflow-x: auto !important;
+		border: 1px solid var(--border-light) !important;
+		font-size: var(--mobile-font-size-base) !important;
+		margin: 1rem 0 !important;
+	}
+	
+	:root[data-theme="harmony"] .markdown-content th {
+		background: var(--primary-lighter) !important;
+		color: var(--text-primary) !important;
+		font-weight: 600 !important;
+		font-size: var(--mobile-font-size-base) !important;
+		padding: 0.75rem 0.875rem !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="harmony"] .markdown-content td {
+		padding: 0.625rem 0.875rem !important;
+		color: var(--text-primary) !important;
+		font-size: var(--mobile-font-size-sm) !important;
+		line-height: 1.5 !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="harmony"] .markdown-content tbody tr:nth-child(2n) {
+		background: var(--bg-tertiary) !important;
+	}
+	
+	/* 文本样式优化 */
+	:root[data-theme="harmony"] .markdown-content {
+		color: var(--text-primary);
+		font-size: var(--mobile-font-size-base);
+	}
+	
+	/* 按钮触摸优化 */
+	:root[data-theme="harmony"] button,
+	:root[data-theme="harmony"] .nav-link,
+	:root[data-theme="harmony"] a[role="button"] {
+		min-height: var(--mobile-touch-target);
+		min-width: var(--mobile-touch-target);
+	}
+	
+	/* 输入框触摸优化 */
+	:root[data-theme="harmony"] input,
+	:root[data-theme="harmony"] textarea {
+		min-height: var(--mobile-touch-target);
+		font-size: var(--mobile-font-size-base) !important;
+	}
+	
+	/* 卡片内边距优化 */
+	:root[data-theme="harmony"] .nav-item,
+	:root[data-theme="harmony"] .card,
+	:root[data-theme="harmony"] [class*="card"] {
+		padding: var(--mobile-card-padding) !important;
+	}
+	
+	/* 标题字体优化 */
+	:root[data-theme="harmony"] h1 {
+		font-size: var(--mobile-font-size-xl) !important;
+	}
+	
+	:root[data-theme="harmony"] h2 {
+		font-size: var(--mobile-font-size-lg) !important;
+	}
+	
+	:root[data-theme="harmony"] h3 {
+		font-size: var(--mobile-font-size-base) !important;
+	}
+}
+

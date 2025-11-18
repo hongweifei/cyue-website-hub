@@ -264,3 +264,70 @@
 	--component-badge-error-radius: var(--radius-full);
 }
 
+/* 移动端定制样式 */
+@media (max-width: 768px) {
+	:root[data-theme="aqua"] {
+		--mobile-font-size-sm: 0.8125rem;
+		--mobile-font-size-base: 0.9375rem;
+		--mobile-font-size-lg: 1.125rem;
+		--mobile-font-size-xl: 1.375rem;
+		--mobile-touch-target: 44px;
+		--mobile-card-padding: var(--spacing-md);
+	}
+	
+	:root[data-theme="aqua"] .markdown-content table {
+		display: block !important;
+		overflow-x: auto !important;
+		border: 1px solid var(--border-light) !important;
+		font-size: var(--mobile-font-size-base) !important;
+		margin: 1rem 0 !important;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 0 24px rgba(124, 58, 237, 0.1) !important;
+	}
+	
+	:root[data-theme="aqua"] .markdown-content th {
+		background: rgba(124, 58, 237, 0.15) !important;
+		color: var(--text-primary) !important;
+		font-weight: 600 !important;
+		font-size: var(--mobile-font-size-base) !important;
+		padding: 0.75rem 0.875rem !important;
+		border-bottom: 1px solid var(--border-light) !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="aqua"] .markdown-content td {
+		padding: 0.625rem 0.875rem !important;
+		color: var(--text-primary) !important;
+		font-size: var(--mobile-font-size-sm) !important;
+		line-height: 1.5 !important;
+		white-space: nowrap !important;
+	}
+	
+	:root[data-theme="aqua"] .markdown-content tbody tr:nth-child(2n) {
+		background: rgba(34, 211, 238, 0.08) !important;
+	}
+	
+	:root[data-theme="aqua"] .markdown-content {
+		color: var(--text-primary);
+		font-size: var(--mobile-font-size-base);
+	}
+	
+	:root[data-theme="aqua"] button:not(.favorite-btn):not(.clear-btn),
+	:root[data-theme="aqua"] .nav-link {
+		min-height: var(--mobile-touch-target);
+	}
+	
+	:root[data-theme="aqua"] input.search-input,
+	:root[data-theme="aqua"] textarea {
+		min-height: var(--mobile-touch-target);
+		font-size: var(--mobile-font-size-base) !important;
+	}
+	
+	:root[data-theme="aqua"] h1 {
+		font-size: var(--mobile-font-size-xl) !important;
+	}
+	
+	:root[data-theme="aqua"] h2 {
+		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+

@@ -253,6 +253,14 @@
 		/* 移动端表格背景优化 - 增加对比度 */
 		--component-card-default-bg-hover: #f0f0f0;
 		--component-card-default-bg-alt: #fafafa;
+		
+		/* 移动端字体和触摸优化 */
+		--mobile-font-size-sm: 0.75rem;
+		--mobile-font-size-base: 0.875rem;
+		--mobile-font-size-lg: 1rem;
+		--mobile-font-size-xl: 1.25rem;
+		--mobile-touch-target: 48px;
+		--mobile-card-padding: var(--spacing-sm);
 	}
 	
 	/* 移动端表格特定样式优化 */
@@ -304,6 +312,27 @@
 	
 	:root[data-theme="retro"] .markdown-content p {
 		color: var(--text-primary);
+		font-size: var(--mobile-font-size-base);
+	}
+	
+	:root[data-theme="retro"] button:not(.favorite-btn):not(.clear-btn),
+	:root[data-theme="retro"] .nav-link {
+		min-height: var(--mobile-touch-target);
+		min-width: var(--mobile-touch-target);
+	}
+	
+	:root[data-theme="retro"] input.search-input,
+	:root[data-theme="retro"] textarea {
+		min-height: var(--mobile-touch-target);
+		font-size: var(--mobile-font-size-base) !important;
+	}
+	
+	:root[data-theme="retro"] h1 {
+		font-size: var(--mobile-font-size-xl) !important;
+	}
+	
+	:root[data-theme="retro"] h2 {
+		font-size: var(--mobile-font-size-lg) !important;
 	}
 }
 
