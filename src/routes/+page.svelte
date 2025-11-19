@@ -261,10 +261,29 @@ const currentGroup = $derived.by(() => {
 
 		.filters-section {
 			gap: var(--spacing-lg);
+			/* 确保移动端筛选面板有足够高度 */
+			min-height: auto;
 		}
 
 		.vertical-layout-container {
 			gap: var(--spacing-lg);
+		}
+
+		/* 移动端垂直布局筛选面板优化 */
+		.vertical-layout-container .filters-section {
+			display: flex;
+			flex-direction: column;
+			gap: var(--spacing-md);
+		}
+
+		.vertical-layout-container .filters-section :global(.group-filter-panel.vertical) {
+			/* 确保分组筛选面板在移动端有最小高度 */
+			min-height: 180px;
+		}
+
+		.vertical-layout-container .filters-section :global(.tag-filter-panel:not(.stacked)) {
+			/* 标签筛选面板也优化高度 */
+			min-height: 160px;
 		}
 	}
 </style>

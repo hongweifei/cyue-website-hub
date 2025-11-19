@@ -358,6 +358,37 @@
       font-size: 0.75rem;
       padding: var(--component-tag-default-padding, 0.4rem 0.65rem);
     }
+
+    /* 修复垂直布局下移动端分组筛选显示问题 */
+    .group-filter-panel.vertical {
+      min-height: 200px;
+      max-height: 300px;
+    }
+
+    .group-filter-panel.vertical .group-chip-list {
+      flex: 1 1 auto;
+      min-height: 120px;
+      max-height: 240px;
+      overflow-y: auto;
+      /* 增加滚动条可见性 */
+      padding-right: var(--spacing-sm);
+      margin-right: calc(var(--spacing-sm) * -1);
+    }
+
+    /* 移动端滚动条优化 */
+    .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar-track {
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+    }
   }
 </style>
 
