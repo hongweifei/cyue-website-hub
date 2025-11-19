@@ -21,7 +21,7 @@
 	--theme-layout-density: cozy;
 	--theme-layout-page-home: content-first;
 	--theme-layout-page-favorites: masonry;
-	--theme-layout-page-group: hero;
+	--theme-layout-page-group: default;
 	--theme-layout-page-item: split;
 
 	--font-sans-primary: "JetBrains Mono", "HarmonyOS Sans", "SFMono-Regular", "Menlo", "PingFang SC", "Microsoft YaHei", monospace;

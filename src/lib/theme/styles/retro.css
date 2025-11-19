@@ -21,7 +21,7 @@
 	--theme-layout-density: cozy;
 	--theme-layout-page-home: stack;
 	--theme-layout-page-favorites: masonry;
-	--theme-layout-page-group: hero;
+	--theme-layout-page-group: default;
 	--theme-layout-page-item: full;
 
 	/* 90年代经典字体 - Times New Roman 和 Arial */

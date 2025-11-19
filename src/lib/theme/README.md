@@ -161,7 +161,7 @@ src/lib/theme/
 - `--theme-layout-density`: 密度（`comfortable` | `cozy` | `compact`）
 - `--theme-layout-page-home`: 首页布局（`default` | `stack` | `content-first`）⚠️ **注意**：此属性目前仅保留配置功能，不会产生视觉效果
 - `--theme-layout-page-favorites`: 收藏页布局（`default` | `compact` | `masonry`）⚠️ **注意**：`list` 布局已移除，仅保留配置功能
-- `--theme-layout-page-group`: 分组页布局（`default` | `hero` | `compact`）
+- `--theme-layout-page-group`: 分组页布局（`default` | `compact`）
 - `--theme-layout-page-item`: 详情页布局（`default` | `split` | `full`）
 
 > 布局变量支持 CSS 与 JSON 双轨配置，两者同时存在时仍由 JSON 优先。
@@ -310,7 +310,7 @@ JSON配置文件必须包含以下字段：
 **页面级布局属性**：
 - `data-layout-page-home` - 首页布局（`default` | `stack` | `content-first`）⚠️ **注意**：此属性目前仅保留配置功能，不会产生视觉效果
 - `data-layout-page-favorites` - 收藏页布局（`default` | `compact` | `masonry`）⚠️ **注意**：`list` 布局已移除，仅保留配置功能
-- `data-layout-page-group` - 分组页布局（`default` | `hero` | `compact`）
+- `data-layout-page-group` - 分组页布局（`default` | `compact`）
 - `data-layout-page-item` - 详情页布局（`default` | `split` | `full`）
 
 顶层布局组件（如 `src/routes/+layout.svelte`、`Sidebar.svelte` 等）通过这些属性切换栅格、分栏、密度等结构，因此主题可以**在不修改组件代码**的情况下获得独特的排版。
