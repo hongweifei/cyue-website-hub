@@ -151,6 +151,20 @@ src/lib/theme/
 - `--theme-preview-accent`: 预览强调色
 - `--theme-preview-border`: 预览边框色
 - `--theme-features`: 特性列表（逗号分隔的字符串）
+- `--theme-layout-profile`: 布局标识（任意字符串，纯标记，不参与逻辑）
+- `--theme-layout-shell`: 页面外框架（`constrained` | `fluid` | `immersive` | `edge-to-edge`）
+- `--theme-layout-header`: 顶部结构（`floating` | `stacked` | `inline` | `condensed`）
+- `--theme-layout-navigation`: 导航排布（`pill` | `segmented` | `tabs` | `minimal`）
+- `--theme-layout-content`: 内容布局（`sidebar` | `split` | `masonry` | `single`）
+- `--theme-layout-sidebar`: 侧边栏风格（`panel` | `floating` | `condensed`）
+- `--theme-layout-cards`: 卡片处理（`layered` | `floating` | `flat`）
+- `--theme-layout-density`: 密度（`comfortable` | `cozy` | `compact`）
+- `--theme-layout-page-home`: 首页布局（`default` | `stack` | `content-first`）⚠️ **注意**：此属性目前仅保留配置功能，不会产生视觉效果
+- `--theme-layout-page-favorites`: 收藏页布局（`default` | `compact` | `masonry`）⚠️ **注意**：`list` 布局已移除，仅保留配置功能
+- `--theme-layout-page-group`: 分组页布局（`default` | `hero` | `compact`）
+- `--theme-layout-page-item`: 详情页布局（`default` | `split` | `full`）
+
+> 布局变量支持 CSS 与 JSON 双轨配置，两者同时存在时仍由 JSON 优先。
 
 ### 方式2：JSON 配置文件
 
@@ -278,4 +292,47 @@ JSON配置文件必须包含以下字段：
 - ✅ **灵活扩展**：轻松添加新组件和变体
 - ✅ **类型安全**：完整的 TypeScript 类型支持
 - ✅ **向后兼容**：与现有 CSS 变量系统完全兼容
+
+## 布局驱动系统
+
+主题切换时，运行时会根据 `layout` 配置为 `document.documentElement` 自动挂载以下 `data-*` 属性：
+
+**全局布局属性**：
+- `data-layout-profile` - 布局标识（仅用于标记）
+- `data-layout-shell` - 页面外框架
+- `data-layout-header` - 顶部结构
+- `data-layout-navigation` - 导航排布
+- `data-layout-content` - 内容布局
+- `data-layout-sidebar` - 侧边栏风格
+- `data-layout-cards` - 卡片处理
+- `data-layout-density` - 密度
+
+**页面级布局属性**：
+- `data-layout-page-home` - 首页布局（`default` | `stack` | `content-first`）⚠️ **注意**：此属性目前仅保留配置功能，不会产生视觉效果
+- `data-layout-page-favorites` - 收藏页布局（`default` | `compact` | `masonry`）⚠️ **注意**：`list` 布局已移除，仅保留配置功能
+- `data-layout-page-group` - 分组页布局（`default` | `hero` | `compact`）
+- `data-layout-page-item` - 详情页布局（`default` | `split` | `full`）
+
+顶层布局组件（如 `src/routes/+layout.svelte`、`Sidebar.svelte` 等）通过这些属性切换栅格、分栏、密度等结构，因此主题可以**在不修改组件代码**的情况下获得独特的排版。
+
+> `layout.profile`/`--theme-layout-profile` 仅用于标识或调试，系统不会对其做硬编码映射，真正决定布局的是各 `tokens` 属性。
+
+### 配置方式
+
+1. **CSS 元数据**：在主题 CSS 中使用 `--theme-layout-*` 变量
+2. **JSON 配置**：在 `layout` 字段中声明
+
+```json
+{
+  "layout": {
+    "profile": "glass-neon",
+    "tokens": {
+      "content": "split",
+      "cards": "floating"
+    }
+  }
+}
+```
+
+> JSON 与 CSS 可结合使用：JSON 负责默认预设，CSS 只覆盖差异字段。
 

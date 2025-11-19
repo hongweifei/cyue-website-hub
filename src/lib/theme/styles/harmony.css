@@ -10,6 +10,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #0ea5e9, #6366f1);
 	--theme-preview-border: rgba(14,165,233,.25);
 	--theme-features: "玻璃拟态,圆角系统";
+	--theme-layout-profile: "harmony-glass";
+	--theme-layout-shell: constrained;
+	--theme-layout-header: floating;
+	--theme-layout-navigation: pill;
+	--theme-layout-content: sidebar;
+	--theme-layout-sidebar: panel;
+	--theme-layout-cards: layered;
+	--theme-layout-density: comfortable;
+	--theme-layout-page-home: default;
+	--theme-layout-page-favorites: default;
+	--theme-layout-page-group: default;
+	--theme-layout-page-item: default;
 
 	/* 鸿蒙设计规范圆角系统 */
 	--radius-xs: 8px;

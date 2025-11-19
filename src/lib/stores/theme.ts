@@ -8,8 +8,10 @@ import {
 	isConcreteTheme,
 	isThemeId,
 	THEME_SEQUENCE,
-	type ThemeId
+	type ThemeId,
+	type ThemeOption
 } from "../theme/config";
+import { layoutAttributeToDatasetKey, resolveLayoutConfig, type LayoutAttribute } from "../theme/layout";
 import { loadThemeCSS, unloadThemeCSS } from "../theme/loader";
 
 export type { ThemeId } from "../theme/config";
@@ -68,6 +70,7 @@ function isStoredTheme(theme: string): theme is ThemeId | "light" | "dark" {
 class ThemeManager {
 	private mediaQuery: MediaQueryList | null = null;
 	private listener: ((event: MediaQueryListEvent) => void) | null = null;
+	private layoutDatasetKeys: string[] = [];
 
 	async apply(theme: ThemeId): Promise<void> {
 		if (!browser || typeof document === "undefined") return;
@@ -113,6 +116,23 @@ class ThemeManager {
 
 		root.dataset.theme = theme;
 		root.dataset.themeMode = meta.mode;
+		this.applyLayoutProfile(root, meta.layout);
+	}
+
+	private applyLayoutProfile(root: HTMLElement, layoutConfig: ThemeOption["layout"]): void {
+		this.layoutDatasetKeys.forEach((key) => {
+			delete root.dataset[key as keyof DOMStringMap];
+		});
+		this.layoutDatasetKeys = [];
+
+		const resolved = resolveLayoutConfig(layoutConfig);
+		root.dataset.layoutProfile = resolved.profile;
+
+		for (const [attribute, value] of Object.entries(resolved.tokens)) {
+			const datasetKey = layoutAttributeToDatasetKey(attribute as LayoutAttribute);
+			root.dataset[datasetKey] = value;
+			this.layoutDatasetKeys.push(datasetKey);
+		}
 	}
 
 	private cleanupAutoTheme(): void {

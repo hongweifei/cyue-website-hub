@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #b45309, #92400e);
 	--theme-preview-border: rgba(146,64,14,.25);
 	--theme-features: "纸张纹理,衬线标题";
+	--theme-layout-profile: "mono-grid";
+	--theme-layout-shell: constrained;
+	--theme-layout-header: inline;
+	--theme-layout-navigation: tabs;
+	--theme-layout-content: single;
+	--theme-layout-sidebar: panel;
+	--theme-layout-cards: flat;
+	--theme-layout-density: comfortable;
+	--theme-layout-page-home: default;
+	--theme-layout-page-favorites: default;
+	--theme-layout-page-group: hero;
+	--theme-layout-page-item: full;
 
 	--font-sans-primary: "Source Serif 4", "Noto Serif SC", "Songti SC", "STSong", "HarmonyOS Sans", "Microsoft YaHei", serif;
 	--font-sans-secondary: "Source Sans 3", "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", "Segoe UI", Arial, sans-serif;

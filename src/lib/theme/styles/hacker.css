@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #00ff00, #39ff14);
 	--theme-preview-border: rgba(0,255,0,.5);
 	--theme-features: "等宽字体,霓虹绿色,终端风格";
+	--theme-layout-profile: "neo-terminal";
+	--theme-layout-shell: edge-to-edge;
+	--theme-layout-header: stacked;
+	--theme-layout-navigation: minimal;
+	--theme-layout-content: single;
+	--theme-layout-sidebar: condensed;
+	--theme-layout-cards: flat;
+	--theme-layout-density: compact;
+	--theme-layout-page-home: stack;
+	--theme-layout-page-favorites: compact;
+	--theme-layout-page-group: compact;
+	--theme-layout-page-item: full;
 
 	/* 等宽字体 - 黑客风格 */
 	--font-sans-primary: "JetBrains Mono", "Fira Code", "Consolas", "Monaco", "Courier New", "HarmonyOS Sans", monospace;

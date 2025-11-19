@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #f472b6, #60a5fa);
 	--theme-preview-border: rgba(244,114,182,.3);
 	--theme-features: "渐变轮廓,霓虹描边";
+	--theme-layout-profile: "glass-neon";
+	--theme-layout-shell: fluid;
+	--theme-layout-header: floating;
+	--theme-layout-navigation: segmented;
+	--theme-layout-content: split;
+	--theme-layout-sidebar: floating;
+	--theme-layout-cards: floating;
+	--theme-layout-density: cozy;
+	--theme-layout-page-home: content-first;
+	--theme-layout-page-favorites: masonry;
+	--theme-layout-page-group: hero;
+	--theme-layout-page-item: split;
 
 	--font-sans-primary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 	--font-sans-secondary: "Inter", "HarmonyOS Sans", "PingFang SC", "Segoe UI", "Helvetica Neue", Arial, sans-serif;

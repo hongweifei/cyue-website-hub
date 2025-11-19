@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #38bdf8, #6366f1);
 	--theme-preview-border: rgba(56,189,248,.35);
 	--theme-features: "夜间护眼,高对比文本";
+	--theme-layout-profile: "harmony-night";
+	--theme-layout-shell: constrained;
+	--theme-layout-header: floating;
+	--theme-layout-navigation: segmented;
+	--theme-layout-content: split;
+	--theme-layout-sidebar: floating;
+	--theme-layout-cards: floating;
+	--theme-layout-density: cozy;
+	--theme-layout-page-home: content-first;
+	--theme-layout-page-favorites: masonry;
+	--theme-layout-page-group: hero;
+	--theme-layout-page-item: split;
 
 	/* 鸿蒙设计规范圆角系统 */
 	--radius-xs: 8px;

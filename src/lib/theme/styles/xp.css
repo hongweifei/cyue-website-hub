@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #0078d7, #005a9e);
 	--theme-preview-border: rgba(0,120,215,.3);
 	--theme-features: "经典渐变,圆润按钮,怀旧风格";
+	--theme-layout-profile: "xp-classic";
+	--theme-layout-shell: constrained;
+	--theme-layout-header: inline;
+	--theme-layout-navigation: tabs;
+	--theme-layout-content: sidebar;
+	--theme-layout-sidebar: panel;
+	--theme-layout-cards: layered;
+	--theme-layout-density: comfortable;
+	--theme-layout-page-home: default;
+	--theme-layout-page-favorites: default;
+	--theme-layout-page-group: hero;
+	--theme-layout-page-item: full;
 
 	/* XP 经典字体 */
 	--font-sans-primary: "Segoe UI", "Tahoma", "Microsoft YaHei", "PingFang SC", "SimSun", "Arial", sans-serif;

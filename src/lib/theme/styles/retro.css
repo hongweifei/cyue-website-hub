@@ -11,6 +11,18 @@
 	--theme-preview-accent: linear-gradient(120deg, #8b00ff, #ff00ff);
 	--theme-preview-border: rgba(139,0,255,.4);
 	--theme-features: "高饱和度,3D按钮,经典字体";
+	--theme-layout-profile: "retro-magazine";
+	--theme-layout-shell: fluid;
+	--theme-layout-header: stacked;
+	--theme-layout-navigation: tabs;
+	--theme-layout-content: masonry;
+	--theme-layout-sidebar: floating;
+	--theme-layout-cards: layered;
+	--theme-layout-density: cozy;
+	--theme-layout-page-home: stack;
+	--theme-layout-page-favorites: masonry;
+	--theme-layout-page-group: hero;
+	--theme-layout-page-item: full;
 
 	/* 90年代经典字体 - Times New Roman 和 Arial */
 	--font-sans-primary: "Times New Roman", "Georgia", "SimSun", "Microsoft YaHei", serif;

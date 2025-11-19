@@ -1,3 +1,5 @@
+import { mergeLayoutConfig, type ThemeLayoutConfig, isLayoutAttribute } from "./layout";
+
 export type ThemeMode = "light" | "dark";
 
 /**
@@ -79,6 +81,8 @@ export interface ThemeOption {
 	features: string[];
 	/** 组件样式配置（可选，用于类型检查和文档） */
 	componentStyles?: ComponentStylesConfig;
+	/** 布局排布配置（可选） */
+	layout?: ThemeLayoutConfig;
 }
 
 /**
@@ -97,6 +101,7 @@ interface CSSThemeMetadata {
 		border?: string;
 	};
 	features?: string[];
+	layout?: ThemeLayoutConfig;
 }
 
 export interface ThemeGroup {
@@ -207,6 +212,23 @@ function parseCSSThemeMetadata(cssText: string, themeId: string): CSSThemeMetada
 			case 'features':
 				metadata.features = trimmedValue.split(',').map(f => f.trim()).filter(Boolean);
 				break;
+			case 'layout-profile':
+				metadata.layout = metadata.layout ?? {};
+				metadata.layout.profile = trimmedValue;
+				break;
+			default: {
+				if (varName.startsWith('layout-')) {
+					const kebabCase = varName.replace(/^layout-/, '');
+					// 将 kebab-case 转换为驼峰命名，例如 page-home -> pageHome
+					const camelCase = kebabCase.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+					if (isLayoutAttribute(camelCase)) {
+						metadata.layout = metadata.layout ?? {};
+						metadata.layout.tokens = metadata.layout.tokens ?? {};
+						metadata.layout.tokens[camelCase] = trimmedValue;
+					}
+				}
+				break;
+			}
 		}
 	}
 	
@@ -279,7 +301,8 @@ function mergeThemeConfig(
 				accent: cssMetadata.preview?.accent ?? 'transparent',
 				border: cssMetadata.preview?.border ?? 'transparent'
 			},
-			features: cssMetadata.features || []
+			features: cssMetadata.features || [],
+			layout: cssMetadata.layout
 		};
 	}
 	
@@ -306,7 +329,8 @@ function mergeThemeConfig(
 				accent: jsonConfig.preview.accent || (cssMetadata.preview?.accent ?? 'transparent'),
 				border: jsonConfig.preview.border || (cssMetadata.preview?.border ?? 'transparent')
 			},
-			features: jsonConfig.features.length > 0 ? jsonConfig.features : (cssMetadata.features || [])
+			features: jsonConfig.features.length > 0 ? jsonConfig.features : (cssMetadata.features || []),
+			layout: mergeLayoutConfig(jsonConfig.layout, cssMetadata.layout)
 		};
 	}
 	
@@ -363,7 +387,10 @@ const AUTO_THEME: ThemeOption = {
 		accent: "linear-gradient(120deg, #2dd4bf, #4f46e5)",
 		border: "rgba(79,70,229,.25)"
 	},
-	features: ["跟随系统", "开机即用"]
+	features: ["跟随系统", "开机即用"],
+	layout: {
+		profile: "harmony-glass"
+	}
 };
 
 /**
