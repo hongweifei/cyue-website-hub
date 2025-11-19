@@ -508,6 +508,40 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     row-gap: var(--spacing-sm);
   }
 
+  /* 垂直布局下，展开后高度不变，保持固定高度 */
+  .tag-filter-panel:not(.stacked) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tag-filter-panel:not(.stacked) .tag-grid {
+    flex: 0 1 auto;
+    max-height: clamp(180px, 32vh, 320px);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-right: var(--spacing-xs);
+    margin-right: calc(var(--spacing-xs) * -1);
+  }
+
+  .tag-filter-panel:not(.stacked) .tag-grid::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .tag-filter-panel:not(.stacked) .tag-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .tag-filter-panel:not(.stacked) .tag-grid::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 999px;
+    transition: background var(--transition-fast);
+  }
+
+  .tag-filter-panel:not(.stacked) .tag-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+  }
+
   .tag-filter-panel.stacked .tag-grid {
     flex-direction: column;
     column-gap: 0;

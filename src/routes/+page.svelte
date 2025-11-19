@@ -204,7 +204,15 @@ const currentGroup = $derived.by(() => {
 			display: grid;
 			grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
 			gap: var(--spacing-xl);
-			align-items: start;
+			align-items: stretch;
+		}
+
+		/* 垂直布局下，让两个筛选面板高度一致 */
+		.filters-section :global(.group-filter-panel.vertical),
+		.filters-section :global(.tag-filter-panel:not(.stacked)) {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
 		}
 	}
 

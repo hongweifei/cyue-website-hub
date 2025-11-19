@@ -223,6 +223,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
+    flex: 1;
   }
 
   .group-chip {
@@ -291,24 +292,31 @@
 
   .group-filter-panel.vertical .group-chip-list {
     width: 100%;
-  }
-
-  .group-filter-panel.vertical.collapsed .group-chip-list {
-    max-height: clamp(180px, 32vh, 320px);
+    flex: 1 1 0;
+    min-height: 0;
     overflow-y: auto;
     padding-right: var(--spacing-xs);
     margin-right: calc(var(--spacing-xs) * -1);
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .group-filter-panel.vertical.collapsed
-    .group-chip-list::-webkit-scrollbar {
-    width: 4px;
+  .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar {
+    width: 6px;
   }
 
-  .group-filter-panel.vertical.collapsed
-    .group-chip-list::-webkit-scrollbar-thumb {
+  .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar-thumb {
     background: var(--border-light);
     border-radius: 999px;
+    transition: background var(--transition-fast);
+  }
+
+  .group-filter-panel.vertical .group-chip-list::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
   }
 
   .group-toggle {
