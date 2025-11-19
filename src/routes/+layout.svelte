@@ -244,18 +244,48 @@
 </div>
 
 <style>
+  :global(:root) {
+    --layout-density-scale: 1;
+    --layout-app-padding-y: var(--spacing-xl);
+    --layout-app-padding-x: var(--spacing-lg);
+    --layout-shell-gap: var(--spacing-xl);
+    --layout-container-max-width: 1200px;
+    --layout-header-padding-y: calc(var(--spacing-sm) * 1.5);
+    --layout-header-padding-x: var(--spacing-lg);
+    --layout-header-direction: row;
+    --layout-header-align: center;
+    --layout-header-justify: space-between;
+    --layout-header-gap: var(--spacing-lg);
+    --layout-header-background: var(--component-card-glass-bg, var(--surface-glass));
+    --layout-header-border: var(--component-card-glass-border, 1px solid var(--border-light));
+    --layout-header-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
+    --layout-header-backdrop: var(--component-card-glass-backdrop, blur(20px));
+    --layout-main-padding-y: var(--spacing-xl);
+    --layout-main-padding-x: var(--spacing-xl);
+    --layout-main-gap: var(--spacing-xl);
+    --layout-main-border: var(--component-card-default-border, 1px solid var(--border-light));
+    --layout-main-shadow: var(--component-card-default-shadow, var(--shadow-sm));
+    --layout-main-background: var(--component-card-default-bg, var(--card-bg));
+    --layout-footer-padding: var(--component-card-glass-padding, clamp(var(--spacing-xl), 5vw, var(--spacing-2xl)));
+    --layout-nav-gap: var(--spacing-lg);
+    --layout-nav-justify: flex-start;
+    --layout-nav-align: center;
+  }
+
   .app {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xl);
-    padding: var(--spacing-xl) var(--spacing-lg);
+    gap: calc(var(--layout-shell-gap) * var(--layout-density-scale));
+    padding:
+      calc(var(--layout-app-padding-y) * var(--layout-density-scale))
+      calc(var(--layout-app-padding-x) * var(--layout-density-scale));
     background: var(--app-background);
   }
 
   .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--layout-container-max-width);
     margin: 0 auto;
   }
 
@@ -268,16 +298,19 @@
 
   .header-shell {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-lg);
-    padding: calc(var(--spacing-sm) * 1.5) var(--spacing-lg);
-    background: var(--component-card-glass-bg, var(--surface-glass));
+    justify-content: var(--layout-header-justify);
+    align-items: var(--layout-header-align);
+    flex-direction: var(--layout-header-direction);
+    gap: var(--layout-header-gap);
+    padding:
+      calc(var(--layout-header-padding-y) * var(--layout-density-scale))
+      calc(var(--layout-header-padding-x) * var(--layout-density-scale));
+    background: var(--layout-header-background);
     border-radius: var(--component-card-glass-radius, var(--radius-2xl));
-    border: var(--component-card-glass-border, 1px solid var(--border-light));
-    box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
-    backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
-    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
+    border: var(--layout-header-border);
+    box-shadow: var(--layout-header-shadow);
+    backdrop-filter: var(--layout-header-backdrop);
+    -webkit-backdrop-filter: var(--layout-header-backdrop);
     /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
     transition: var(--component-card-glass-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     /* GPU 加速 backdrop-filter */
@@ -319,9 +352,10 @@
 
   .nav {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-    flex-wrap: wrap;
+    align-items: var(--layout-nav-align);
+    justify-content: var(--layout-nav-justify);
+    gap: var(--layout-nav-gap);
+    flex-wrap: var(--layout-nav-wrap, wrap);
   }
 
   .nav-links {
@@ -395,11 +429,13 @@
   }
 
   .main .container {
-    background: var(--component-card-default-bg, var(--card-bg));
+    background: var(--layout-main-background);
     border-radius: var(--component-card-default-radius, var(--radius-2xl));
-    padding: var(--component-card-default-padding, var(--spacing-xl) var(--spacing-xl) var(--spacing-lg));
-    border: var(--component-card-default-border, 1px solid var(--border-light));
-    box-shadow: var(--component-card-default-shadow, var(--shadow-sm));
+    padding:
+      calc(var(--layout-main-padding-y) * var(--layout-density-scale))
+      calc(var(--layout-main-padding-x) * var(--layout-density-scale));
+    border: var(--layout-main-border);
+    box-shadow: var(--layout-main-shadow);
     backdrop-filter: var(--component-card-default-backdrop, blur(16px));
     -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px));
     /* 优化 transition - 使用组件样式变量 */
@@ -442,7 +478,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
-    padding: var(--component-card-glass-padding, clamp(var(--spacing-xl), 5vw, var(--spacing-2xl)));
+    padding: var(--layout-footer-padding);
     border-radius: var(--component-card-glass-radius, var(--radius-2xl));
     background: var(--component-card-glass-bg, linear-gradient(
         140deg,
@@ -631,6 +667,185 @@
     background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
   }
 
+  :global(:root[data-layout-shell="fluid"]) {
+    --layout-container-max-width: 1360px;
+    --layout-app-padding-y: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+    --layout-app-padding-x: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+    --layout-shell-gap: clamp(var(--spacing-lg), 4vw, var(--spacing-2xl));
+  }
+
+  :global(:root[data-layout-shell="immersive"]) {
+    --layout-container-max-width: 1480px;
+    --layout-app-padding-y: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+    --layout-app-padding-x: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+    --layout-shell-gap: calc(var(--spacing-2xl) * 1.2);
+  }
+
+  :global(:root[data-layout-shell="immersive"]) .main .container {
+    max-width: 100%;
+  }
+
+  :global(:root[data-layout-shell="edge-to-edge"]) {
+    --layout-container-max-width: 100%;
+    --layout-app-padding-y: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    --layout-app-padding-x: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    --layout-shell-gap: var(--spacing-lg);
+  }
+
+  :global(:root[data-layout-shell="edge-to-edge"]) .container {
+    max-width: 100%;
+    padding-left: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+    padding-right: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+  }
+
+  :global(:root[data-layout-density="cozy"]) {
+    --layout-density-scale: 0.9;
+  }
+
+  :global(:root[data-layout-density="compact"]) {
+    --layout-density-scale: 0.82;
+  }
+
+  :global(:root[data-layout-header="stacked"]) {
+    --layout-header-direction: column;
+    --layout-header-align: flex-start;
+    --layout-header-justify: flex-start;
+    --layout-header-gap: var(--spacing-md);
+  }
+
+  :global(:root[data-layout-header="inline"]) {
+    --layout-header-padding-y: calc(var(--spacing-sm) * 1.1);
+    --layout-header-padding-x: var(--spacing-md);
+    --layout-header-background: var(--bg-primary);
+    --layout-header-border: 1px solid var(--border-light);
+    --layout-header-shadow: var(--shadow-xs);
+    --layout-header-backdrop: none;
+    --layout-header-gap: var(--spacing-md);
+  }
+
+  :global(:root[data-layout-header="condensed"]) {
+    --layout-header-padding-y: var(--spacing-sm);
+    --layout-header-padding-x: calc(var(--spacing-sm) * 1.25);
+    --layout-header-gap: var(--spacing-md);
+  }
+
+  :global(:root[data-layout-navigation="segmented"]) {
+    --layout-nav-wrap: wrap;
+    --layout-nav-gap: var(--spacing-sm);
+  }
+
+  :global(:root[data-layout-navigation="segmented"]) .header .nav-links {
+    padding: var(--spacing-2xs);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+    gap: var(--spacing-2xs);
+  }
+
+  :global(:root[data-layout-navigation="segmented"]) .header .nav-link {
+    border-radius: var(--radius-full);
+    padding: calc(var(--spacing-xs) * 1.15) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  :global(:root[data-layout-navigation="segmented"]) .header .nav-link:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  :global(:root[data-layout-navigation="segmented"]) .header .nav-link::after {
+    display: none;
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) {
+    --layout-nav-wrap: wrap;
+    --layout-nav-gap: var(--spacing-sm);
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) .header .nav-links {
+    width: 100%;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: var(--spacing-2xs);
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) .header .nav-link {
+    border-radius: 0;
+    padding: calc(var(--spacing-xs) * 1.1) var(--spacing-md);
+    margin-bottom: -2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) .header .nav-link:hover {
+    border-bottom-color: var(--border-accent);
+    color: var(--text-primary);
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) .header .nav-link::after {
+    width: 100%;
+    left: 0;
+    transform: scaleX(0);
+    bottom: -2px;
+    height: 2px;
+    background: var(--primary-color);
+  }
+
+  :global(:root[data-layout-navigation="tabs"]) .header .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  :global(:root[data-layout-navigation="minimal"]) {
+    --layout-nav-gap: var(--spacing-sm);
+    --layout-nav-wrap: nowrap;
+  }
+
+  :global(:root[data-layout-navigation="minimal"]) .header .nav-link {
+    padding: 0;
+    border: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  :global(:root[data-layout-navigation="minimal"]) .header .nav-link::after {
+    display: none;
+  }
+
+  :global(:root[data-layout-sidebar="floating"] .sidebar) {
+    position: static;
+    max-height: none;
+    top: auto;
+    box-shadow: var(--shadow-md);
+  }
+
+  :global(:root[data-layout-sidebar="condensed"] .sidebar) {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  :global(:root[data-layout-cards="floating"]) {
+    --layout-main-background: var(--component-card-glass-bg, var(--surface-glass));
+    --layout-main-shadow: var(--shadow-lg);
+    --layout-main-border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  :global(:root[data-layout-cards="floating"]) .main .container {
+    backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
+    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
+  }
+
+  :global(:root[data-layout-cards="flat"]) {
+    --layout-main-background: var(--bg-primary);
+    --layout-main-shadow: none;
+    --layout-main-border: 1px solid var(--border-light);
+  }
+
+  :global(:root[data-layout-cards="flat"]) .main .container {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   @media (max-width: 1024px) {
     .app {
       padding: var(--spacing-lg) var(--spacing-md);
@@ -644,7 +859,8 @@
 
   @media (max-width: 768px) {
     .app {
-      padding: var(--spacing-lg) var(--spacing-sm);
+      padding: var(--spacing-md) var(--spacing-sm);
+      gap: var(--spacing-md);
     }
     .main .container:hover {
       box-shadow: none;
@@ -657,8 +873,8 @@
     .header-shell {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-sm) var(--spacing-md);
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
       background: transparent;
       border: none;
       box-shadow: none;
@@ -675,30 +891,37 @@
       width: 100%;
       flex-direction: column;
       align-items: stretch;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-md);
     }
 
     .nav-links {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--spacing-xs);
+      gap: var(--spacing-sm);
       width: 100%;
     }
 
     .nav-controls {
       display: flex;
       align-items: center;
-      gap: var(--spacing-xs);
+      gap: var(--spacing-sm);
+      width: 100%;
+      justify-content: space-between;
     }
 
     .nav-link {
       flex: none;
-      font-size: 0.85rem;
-      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: 0.875rem;
+      padding: var(--spacing-sm) var(--spacing-md);
       margin: 0;
       text-align: center;
       border: 1px solid var(--border-light);
       background: var(--bg-secondary);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .nav-link::after {
@@ -706,14 +929,15 @@
     }
 
     .nav-link:hover,
-    .nav-link:focus-visible {
+    .nav-link:focus-visible,
+    .nav-link:active {
       transform: none;
       box-shadow: none;
-      background: var(--bg-secondary);
+      background: var(--bg-tertiary);
     }
 
     .main .container {
-      padding: 0;
+      padding: var(--spacing-md);
       background: transparent;
       border: none;
       box-shadow: none;
@@ -754,12 +978,27 @@
   }
 
   @media (max-width: 480px) {
+    .app {
+      padding: var(--spacing-sm);
+      gap: var(--spacing-sm);
+    }
+
     .logo {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
     }
 
     .nav-links {
       grid-template-columns: 1fr;
+      gap: var(--spacing-xs);
+    }
+
+    .nav-link {
+      font-size: 0.8125rem;
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .main .container {
+      padding: var(--spacing-sm);
     }
 
     .footer-shell {

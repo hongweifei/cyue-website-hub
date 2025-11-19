@@ -157,19 +157,27 @@ const currentGroup = $derived.by(() => {
 
 <style>
 	.home-page {
-		padding: var(--spacing-lg) 0;
+		padding: var(--spacing-xl) 0;
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-2xl);
 	}
 
-	/* 侧边栏布局 */
+	/* 侧边栏布局 - 默认布局 */
 	.sidebar-layout-container {
 		display: grid;
-		grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-		gap: var(--spacing-2xl);
-		align-items: flex-start;
+		grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+		gap: clamp(var(--spacing-xl), 5vw, var(--spacing-2xl));
+		align-items: start;
 		min-height: 600px;
+	}
+
+	/* 默认布局：优化侧边栏sticky定位 */
+	.sidebar-layout-container :global(.sidebar) {
+		position: sticky !important;
+		top: var(--spacing-lg) !important;
+		max-height: calc(100vh - var(--spacing-lg) * 2) !important;
+		align-self: start;
 	}
 
 	/* 垂直布局 */
@@ -202,15 +210,25 @@ const currentGroup = $derived.by(() => {
 
 	@media (max-width: 1280px) {
 		.sidebar-layout-container {
-			grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+			grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
 			gap: var(--spacing-xl);
 		}
 	}
 
 	@media (max-width: 1024px) {
+		.home-page {
+			padding: var(--spacing-lg) 0;
+		}
+
 		.sidebar-layout-container {
 			grid-template-columns: 1fr;
 			gap: var(--spacing-xl);
+			min-height: auto;
+		}
+
+		.sidebar-layout-container :global(.sidebar) {
+			position: static;
+			max-height: none;
 		}
 
 		.vertical-layout-container {
@@ -225,7 +243,7 @@ const currentGroup = $derived.by(() => {
 		}
 
 		.sidebar-layout-container {
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr !important;
 			gap: var(--spacing-lg);
 		}
 

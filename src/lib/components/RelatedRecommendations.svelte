@@ -47,6 +47,21 @@
 <style>
   .recommendations {
     margin-top: 0;
+    /* 默认不显示为卡片，由父组件控制 */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: none;
+    position: relative;
+  }
+
+  .recommendations:hover {
+    box-shadow: none;
+    border-color: transparent;
   }
 
   @media (min-width: 1280px) {
@@ -100,7 +115,8 @@
   .recommendation-grid {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-xl);
+    width: 100%;
   }
 
   @media (min-width: 640px) {
@@ -118,6 +134,7 @@
   @media (max-width: 768px) {
     .recommendations {
       margin-top: var(--spacing-xl);
+      padding: 0;
     }
 
     .section-title {
@@ -132,7 +149,7 @@
 
     .recommendation-grid {
       grid-template-columns: 1fr;
-      gap: var(--spacing-md);
+      gap: var(--spacing-lg);
     }
   }
 

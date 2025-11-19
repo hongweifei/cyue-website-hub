@@ -104,8 +104,8 @@
     /* GPU 加速 */
     transform: translateZ(0);
     will-change: transform, box-shadow;
-    /* 限制重排范围 */
-    contain: layout style paint;
+    /* 限制重排范围，但不限制阴影 */
+    contain: layout style;
   }
 
   .nav-item:hover {

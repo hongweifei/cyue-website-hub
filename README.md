@@ -14,6 +14,7 @@
 - ✅ 内容与结构分离，支持大量数据
 - ✅ 纯静态输出，支持 SSG（静态站点生成）
 - ✅ SEO 优化
+- ✅ 动态主题与布局系统，支持按主题切换整体排布
 
 ## 技术栈
 
@@ -300,6 +301,15 @@ src/
 将 `build/` 目录内容上传到服务器即可。
 
 ## 自定义
+
+### 主题系统速览
+
+- 主题由 `src/lib/theme/styles/*.css` 与可选的 `src/lib/theme/configs/*.json` 组成，系统会自动扫描并注册，无需改动业务代码。
+- CSS 中可使用 `--theme-*` 变量声明主题元数据与样式，JSON 可补充更复杂的配置；两者自动合并，JSON 优先。
+- 组件样式通过命名规范化的 CSS 变量驱动，解耦视觉与逻辑，详见 `src/lib/theme/COMPONENT_STYLES.md`。
+- 布局联动：主题可设置 `layout.tokens`（或 `--theme-layout-*` 变量），运行时会为 `<html>` 写入 `data-layout-*`，从而让 `src/routes/+layout.svelte` 等顶层结构在切换主题时同步调整。
+- 页级扩展：新增 `pageHome` / `pageFavorites` / `pageGroup` / `pageItem` 等 tokens，可在各页面文件内基于 `data-layout-page-*` 选择器定制不同主题下的排布。
+- 更多细节、示例与最佳实践请参阅 `src/lib/theme/README.md`。
 
 ### 修改主题颜色
 
