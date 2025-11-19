@@ -131,19 +131,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-sm);
-		padding: var(--component-card-default-padding, var(--spacing-md));
-		background: var(--component-card-default-bg, var(--bg-secondary));
-		border-radius: var(--component-card-default-radius, var(--radius-xl));
-		border: 1px solid var(--component-card-default-border, var(--border-light));
-		/* 只过渡边框和背景颜色，避免重排 */
-		transition: border-color var(--transition-fast), background-color var(--transition-fast);
-		/* 优化渲染 */
-		contain: layout style;
-	}
-
-	.sidebar-section:hover {
-		border-color: var(--border-accent);
-		background: var(--component-card-default-bg-hover, var(--surface-glass));
+		/* 移除卡片样式，避免嵌套 */
+		padding: 0;
+		background: transparent;
+		border: none;
+		border-radius: 0;
 	}
 
 	.sidebar-section-header {
@@ -151,13 +143,16 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--spacing-sm);
+		margin-bottom: var(--spacing-xs);
 	}
 
 	.sidebar-section-title {
 		margin: 0;
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		font-weight: 600;
-		color: var(--text-primary);
+		color: var(--text-secondary);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
 	}
 
 	.sidebar-section.filters {
@@ -170,10 +165,15 @@
 	}
 
 	.sidebar-section :global(.search-input) {
-		box-shadow: none;
+		box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
 		border-width: 1px;
 		border-radius: var(--radius-xl);
 		background: var(--input-bg);
+	}
+
+	.sidebar-section :global(.search-input:focus) {
+		box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px
+			var(--primary-lighter);
 	}
 
 	.sidebar-section :global(.clear-btn) {
