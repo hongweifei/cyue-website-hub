@@ -4,9 +4,31 @@
     import { getThemeOption, THEME_OPTIONS } from "../theme/config";
     import { DEFAULTS } from "../constants";
 
-    const LIGHT_ICON =
-        "M5 12a7 7 0 0 1 7-7 7 7 0 0 1 6.93 6.05 5 5 0 1 1-6.36 6.36A7 7 0 0 1 5 12Z";
-    const DARK_ICON = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
+    // 现代化的浅色模式图标 - 太阳与光线
+    const LIGHT_ICON = [
+        // 太阳中心
+        "M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42",
+        // 太阳圆形
+        "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10"
+    ].join('|');
+
+    // 精致的深色模式图标 - 新月与星星
+    const DARK_ICON = [
+        // 新月主体
+        "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z",
+        // 装饰星星
+        "M7 21l1.5-4.5L13 15l-4.5 1.5L7 21l-1.5-4.5L1 15l4.5-1.5L7 3l1.5 4.5L13 9l-4.5 1.5L7 21z"
+    ].join('|');
+
+    // 智能自适应图标 - 切换符号与齿轮
+    const ADAPTIVE_ICON = [
+        // 外圆环
+        "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2",
+        // 内部切换箭头
+        "M12 7v5l4 2M12 17v-5l-4-2",
+        // 齿轮装饰
+        "M19.5 7.5l-1.5-1.5M16.5 4.5l-1.5 1.5M7.5 4.5l1.5 1.5M4.5 7.5l1.5 1.5M4.5 16.5l1.5-1.5M7.5 19.5l1.5-1.5M16.5 19.5l-1.5-1.5M19.5 16.5l-1.5-1.5"
+    ].join('|');
 
     let currentTheme: ThemeId = $state(DEFAULTS.THEME);
     let currentOption: ThemeOption = $derived.by(() =>
@@ -106,16 +128,26 @@
                 stroke-linejoin="round"
             >
                 {#if currentOption.mode === "light"}
-                    <path d={LIGHT_ICON} />
-                    <circle cx="12" cy="12" r="4" />
+                    <!-- 太阳光线 -->
+                    <g class="light-rays">
+                        {#each LIGHT_ICON.split('|') as path, i}
+                            <path d={path} class="light-ray-{i}" />
+                        {/each}
+                    </g>
                 {:else if currentOption.mode === "dark"}
-                    <path d={DARK_ICON} />
+                    <!-- 月亮与星星 -->
+                    <g class="dark-elements">
+                        {#each DARK_ICON.split('|') as path, i}
+                            <path d={path} class="dark-element-{i}" />
+                        {/each}
+                    </g>
                 {:else}
-                    <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" />
-                    <circle cx="9" cy="9" r="2" />
-                    <circle cx="15" cy="15" r="2" />
-                    <line x1="9" y1="11" x2="9" y2="15" />
-                    <line x1="15" y1="9" x2="15" y2="13" />
+                    <!-- 自适应图标 -->
+                    <g class="adaptive-elements">
+                        {#each ADAPTIVE_ICON.split('|') as path, i}
+                            <path d={path} class="adaptive-element-{i}" />
+                        {/each}
+                    </g>
                 {/if}
             </svg>
         </div>
@@ -142,13 +174,33 @@
                     aria-checked={option.id === currentTheme}
                 >
                     <div
-                        class="preview"
-                        style={`background:${option.preview.background};border-color:${option.preview.border};`}
+                        class="preview-container"
+                        style={`--preview-bg:${option.preview.background};--preview-border:${option.preview.border};--preview-accent:${option.preview.accent};`}
                     >
-                        <span
-                            class="preview-accent"
-                            style={`background:${option.preview.accent};`}
-                        ></span>
+                        <div class="preview">
+                            <!-- 背景层 -->
+                            <div class="preview-background" style="background: var(--preview-bg);"></div>
+                            <!-- 装饰元素层 -->
+                            <div class="preview-decorations">
+                                <!-- 顶部装饰条 -->
+                                <div class="preview-top-bar" style="background: var(--preview-accent);"></div>
+                                <!-- 卡片元素 -->
+                                <div class="preview-card">
+                                    <div class="preview-card-header"></div>
+                                    <div class="preview-card-body">
+                                        <div class="preview-text-line primary"></div>
+                                        <div class="preview-text-line secondary"></div>
+                                        <div class="preview-text-line tertiary"></div>
+                                    </div>
+                                </div>
+                                <!-- 悬浮按钮 -->
+                                <div class="preview-fab" style="background: var(--preview-accent);">
+                                    <div class="preview-fab-icon"></div>
+                                </div>
+                            </div>
+                            <!-- 边框层 -->
+                            <div class="preview-border" style="border-color: var(--preview-border);"></div>
+                        </div>
                     </div>
 					<div class="option-text">
 						<span class="option-label">
@@ -260,6 +312,75 @@
 
     .icon-wrapper svg {
         flex-shrink: 0;
+        overflow: visible;
+    }
+
+    /* 浅色模式图标动画 */
+    .light-rays .light-ray-0 {
+        animation: rotate 20s linear infinite;
+        transform-origin: center;
+    }
+
+    .light-rays .light-ray-1 {
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* 深色模式图标动画 */
+    .dark-elements .dark-element-1 {
+        animation: twinkle 3s ease-in-out infinite;
+        transform-origin: center;
+    }
+
+    /* 自适应模式图标动画 */
+    .adaptive-elements {
+        animation: rotate 30s linear infinite;
+        transform-origin: center;
+    }
+
+    .adaptive-elements .adaptive-element-1 {
+        animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .adaptive-elements .adaptive-element-2 {
+        animation: spin 4s linear infinite;
+        transform-origin: center;
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { 
+            opacity: 1;
+            stroke-width: 1.8;
+        }
+        50% { 
+            opacity: 0.6;
+            stroke-width: 2.5;
+        }
+    }
+
+    @keyframes twinkle {
+        0%, 100% { 
+            opacity: 0.3;
+            transform: scale(1);
+        }
+        50% { 
+            opacity: 1;
+            transform: scale(1.2);
+        }
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
 
     .text-wrapper {
@@ -362,6 +483,20 @@
         border-color: var(--component-button-ghost-border-hover, var(--border-accent));
         background: var(--component-button-ghost-bg-hover, var(--bg-secondary));
         color: var(--component-button-ghost-color-hover, var(--text-primary));
+        transform: translateY(-1px);
+    }
+
+    .theme-option:hover .preview {
+        transform: perspective(200px) rotateY(5deg) rotateX(-5deg) scale(1.05);
+    }
+
+    .theme-option:hover .preview-fab {
+        transform: scale(1.1);
+    }
+
+    .theme-option:hover .preview-card {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .theme-option[data-selected="true"] {
@@ -371,21 +506,147 @@
         box-shadow: var(--component-button-secondary-shadow, inset 0 0 0 1px rgba(255, 255, 255, 0.35));
     }
 
-    .preview {
-        width: 48px;
-        height: 48px;
-        border-radius: var(--radius-2xl);
-        border: 1px solid;
-        display: grid;
-        place-items: center;
-        position: relative;
-        overflow: hidden;
+    .theme-option[data-selected="true"] .preview {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
 
-    .preview-accent {
-        width: 80%;
-        height: 4px;
+    .theme-option[data-selected="true"] .preview-fab {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.15);
+            opacity: 0.9;
+        }
+    }
+
+    .preview-container {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .preview {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--radius-2xl);
+        position: relative;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: transform var(--transition-base);
+        box-sizing: border-box;
+    }
+
+    .preview-background {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+    }
+
+    .preview-decorations {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        box-sizing: border-box;
+    }
+
+    .preview-top-bar {
+        height: 2.5px;
+        border-radius: 2px;
+        width: 35%;
+        margin-left: auto;
+        margin-right: 3px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .preview-card {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        border: 0.5px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .preview-card-header {
+        height: 7px;
+        background: rgba(255, 255, 255, 0.15);
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-card-body {
+        flex: 1;
+        padding: 3px;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .preview-text-line {
+        height: 1.5px;
+        border-radius: 1px;
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .preview-text-line.primary {
+        width: 70%;
+        background: rgba(255, 255, 255, 0.35);
+    }
+
+    .preview-text-line.secondary {
+        width: 85%;
+    }
+
+    .preview-text-line.tertiary {
+        width: 60%;
+    }
+
+    .preview-fab {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
         border-radius: var(--radius-full);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .preview-fab-icon {
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.9);
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v20M17 7l-5-5-5 5M17 17l-5 5-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v20M17 7l-5-5-5 5M17 17l-5 5-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+
+    .preview-border {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        border: 1px solid;
+        pointer-events: none;
+        box-sizing: border-box;
     }
 
     .option-text {
@@ -451,8 +712,13 @@
 		}
 
         .icon-wrapper {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-wrapper svg {
+            width: 20px;
+            height: 20px;
         }
 
         .theme-panel {
@@ -469,16 +735,20 @@
         }
 
 		.theme-option {
-			grid-template-columns: auto 1fr auto;
-			gap: var(--spacing-sm);
+			grid-template-columns: auto 1fr;
+			gap: var(--spacing-xs);
 			padding: var(--spacing-xs) var(--spacing-sm);
+			align-items: center;
 		}
 
-		.preview {
-			display: grid;
-			width: 40px;
-			height: 40px;
-			border-radius: var(--radius-xl);
+		/* 移动端简化预览 - 移除边框层 */
+		.preview-container {
+			width: 48px;
+			height: 48px;
+		}
+
+		.preview-border {
+			display: none;
 		}
 
 		.option-desc {
@@ -489,6 +759,10 @@
 		}
 
 		.option-features {
+			display: none;
+		}
+
+		.option-mode {
 			display: none;
 		}
     }
