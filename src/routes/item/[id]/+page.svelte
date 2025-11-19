@@ -752,7 +752,7 @@
       padding: 0;
       max-width: 100%;
       width: 100%;
-      gap: var(--spacing-lg);
+      gap: 0;
     }
 
     .item-header {
@@ -787,7 +787,7 @@
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
       border-radius: 0 !important;
-      padding: var(--spacing-md) var(--spacing-md) var(--spacing-xl);
+      padding: 0 !important;
     }
 
     .item-detail:hover {
@@ -966,13 +966,20 @@
   }
 
   @media (max-width: 480px) {
+
+    .item-detail-page {
+      padding: 0;
+      max-width: 100%;
+      width: 100%;
+      gap: 0;
+    }
+
     .item-detail {
-      padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-lg);
+      padding: 0 !important;
     }
 
     :global(.recommendations) {
       padding: 0 0 var(--spacing-lg) 0 !important;
-      padding-top: var(--spacing-lg) !important;
     }
 
     .item-header {
@@ -995,6 +1002,8 @@
     :global(:root[data-layout-page-item="split"]) .item-detail-page {
       grid-template-columns: 1fr !important;
       max-width: 100%;
+      width: 100%;
+      gap: 0;
     }
 
     :global(:root[data-layout-page-item="split"]) .item-detail-page .item-detail,
@@ -1037,15 +1046,15 @@
   overflow-y: auto;
   overflow-x: visible;
   max-width: 400px;
-  /* split 布局：恢复卡片样式 */
-  background: var(--component-card-default-bg, var(--card-bg)) !important;
-  border: var(--component-card-default-border, 1px solid var(--border-light)) !important;
-  border-radius: var(--component-card-default-radius, var(--radius-2xl)) !important;
-  padding: var(--spacing-2xl) !important;
-  box-shadow: var(--component-card-default-shadow, var(--shadow-sm)) !important;
-  backdrop-filter: var(--component-card-default-backdrop, blur(16px)) !important;
-  -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px)) !important;
-  border-top: none !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-left: 1px solid var(--border-light);
+  margin-left: 0;
   /* 优化滚动条样式 */
   scrollbar-width: thin;
   scrollbar-color: var(--border-light) transparent;
@@ -1066,11 +1075,6 @@
 
 :global(:root[data-layout-page-item="split"]) .item-detail-page :global(.recommendations)::-webkit-scrollbar-thumb:hover {
   background: var(--border-accent);
-}
-
-:global(:root[data-layout-page-item="split"]) .item-detail-page :global(.recommendations:hover) {
-  box-shadow: var(--component-card-default-shadow-hover, var(--shadow-md)) !important;
-  border-color: var(--component-card-default-border-hover, var(--border-accent)) !important;
 }
 
 :global(:root[data-layout-page-item="split"]) .item-detail-page :global(.recommendations) :global(.section-title) {
