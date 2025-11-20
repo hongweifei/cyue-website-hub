@@ -1,15 +1,27 @@
+/* ============================================
+ * Harmony 主题 - 鸿蒙·晨曦
+ * 官方浅色主题，柔和玻璃质感
+ * ============================================ */
+
 :root,
 :root[data-theme="harmony"] {
-	/* 主题元数据 */
+	/* ============================================
+	 * 1. 主题元数据
+	 * ============================================ */
 	--theme-label: "鸿蒙·晨曦";
 	--theme-description: "官方浅色，柔和玻璃质感";
 	--theme-mode: light;
 	--theme-family: harmony;
 	--theme-order: 1;
+	--theme-badge: "";
 	--theme-preview-background: linear-gradient(135deg, #f5fbff, #dbeafe);
 	--theme-preview-accent: linear-gradient(120deg, #0ea5e9, #6366f1);
 	--theme-preview-border: rgba(14,165,233,.25);
 	--theme-features: "玻璃拟态,圆角系统";
+
+	/* ============================================
+	 * 2. 布局配置
+	 * ============================================ */
 	--theme-layout-profile: "harmony-glass";
 	--theme-layout-shell: constrained;
 	--theme-layout-header: floating;
@@ -23,7 +35,11 @@
 	--theme-layout-page-group: default;
 	--theme-layout-page-item: default;
 
-	/* 鸿蒙设计规范圆角系统 */
+	/* ============================================
+	 * 3. 基础样式变量 - 设计规范
+	 * ============================================ */
+
+	/* 3.1 圆角系统 */
 	--radius-xs: 8px;
 	--radius-sm: 12px;
 	--radius-md: 16px;
@@ -32,7 +48,7 @@
 	--radius-2xl: 32px;
 	--radius-full: 9999px;
 
-	/* 鸿蒙设计规范主色调 - 更柔和的蓝色系 */
+	/* 3.2 主色调 - 柔和蓝色系 */
 	--primary-color: #007DFF;
 	--primary-color-strong: #0051D5;
 	--primary-hover: #1890FF;
@@ -41,20 +57,20 @@
 	--accent-color: #00D9FF;
 	--accent-hover: #00B8D9;
 
-	/* 鸿蒙设计规范文字颜色 - 更柔和的对比度 */
+	/* 3.3 文字颜色 - 柔和对比度 */
 	--text-primary: #182431;
 	--text-secondary: #4D5963;
 	--text-tertiary: #86909C;
 	--text-muted: #A8ADB4;
 	--text-inverse: #FFFFFF;
 
-	/* 鸿蒙设计规范边框颜色 */
+	/* 3.4 边框颜色 */
 	--border-color: rgba(0, 0, 0, 0.08);
 	--border-soft: rgba(0, 0, 0, 0.06);
 	--border-light: rgba(0, 0, 0, 0.04);
 	--border-accent: rgba(0, 125, 255, 0.2);
 
-	/* 鸿蒙设计规范背景颜色 - 更柔和的白色系 */
+	/* 3.5 背景颜色 - 柔和白色系 */
 	--bg-primary: rgba(255, 255, 255, 0.95);
 	--bg-secondary: rgba(247, 248, 250, 0.8);
 	--bg-tertiary: rgba(240, 242, 245, 0.6);
@@ -74,7 +90,7 @@
 		radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.06), transparent 50%),
 		linear-gradient(135deg, #F7F8FA 0%, #FFFFFF 35%, #F0F2F5 70%, #FAFBFC 100%);
 
-	/* 鸿蒙设计规范阴影 - 增强层次感和深度 */
+	/* 3.6 阴影系统 - 增强层次感 */
 	--shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
 	--shadow-sm: 0 3px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
 	--shadow-md: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
@@ -83,7 +99,7 @@
 	--shadow-soft: 0 4px 14px rgba(0, 125, 255, 0.12), 0 2px 6px rgba(0, 125, 255, 0.08);
 	--shadow-glow: 0 8px 32px rgba(0, 125, 255, 0.2), 0 4px 16px rgba(0, 217, 255, 0.15);
 
-	/* 鸿蒙设计规范层级颜色 */
+	/* 3.7 层级颜色 */
 	--layer-primary-soft: rgba(0, 125, 255, 0.1);
 	--layer-primary-strong: rgba(0, 125, 255, 0.2);
 	--layer-accent-soft: rgba(0, 217, 255, 0.1);
@@ -92,20 +108,19 @@
 	--gradient-brand: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
 	--gradient-brand-soft: linear-gradient(135deg, rgba(0, 125, 255, 0.12) 0%, rgba(0, 217, 255, 0.16) 100%);
 
-	/* 状态颜色 - 用于 Badge、Alert 等组件 */
+	/* 3.8 状态颜色 */
 	--success-color: #52c41a;
 	--warning-color: #faad14;
 	--error-color: #ff4d4f;
 	--info-color: #1890ff;
 
 	/* ============================================
-	 * 组件样式系统 - Component Styles System
-	 * ============================================
-	 * 通过 CSS 变量定义组件样式，支持不同变体
+	 * 4. 组件样式变量 - Component Styles
 	 * 命名规范：--component-{component}-{variant}-{property}
 	 * ============================================ */
 
-	/* Button 组件样式 - 优雅玻璃质感，柔和流畅 */
+	/* 4.1 Button 组件 */
+	/* Primary 变体 */
 	--component-button-primary-bg: var(--gradient-brand);
 	--component-button-primary-color: var(--text-inverse);
 	--component-button-primary-border: transparent;
@@ -118,6 +133,7 @@
 	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-primary-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Secondary 变体 */
 	--component-button-secondary-bg: var(--bg-tertiary);
 	--component-button-secondary-color: var(--text-primary);
 	--component-button-secondary-border: var(--border-color);
@@ -132,6 +148,7 @@
 	--component-button-secondary-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-secondary-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Outline 变体 */
 	--component-button-outline-bg: transparent;
 	--component-button-outline-color: var(--primary-color);
 	--component-button-outline-border: var(--primary-color);
@@ -144,6 +161,7 @@
 	--component-button-outline-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-outline-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Ghost 变体 */
 	--component-button-ghost-bg: transparent;
 	--component-button-ghost-color: var(--text-secondary);
 	--component-button-ghost-border: transparent;
@@ -156,7 +174,8 @@
 	--component-button-ghost-padding: var(--spacing-sm) var(--spacing-md);
 	--component-button-ghost-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-	/* Card 组件样式 - 优雅玻璃质感 */
+	/* 4.2 Card 组件 */
+	/* Default 变体 */
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
@@ -169,6 +188,7 @@
 	--component-card-default-backdrop: blur(16px) saturate(180%);
 	--component-card-default-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Elevated 变体 */
 	--component-card-elevated-bg: var(--card-bg);
 	--component-card-elevated-border: var(--border-light);
 	--component-card-elevated-shadow: var(--shadow-md);
@@ -181,6 +201,7 @@
 	--component-card-elevated-backdrop: blur(20px) saturate(180%);
 	--component-card-elevated-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Glass 变体 */
 	--component-card-glass-bg: var(--surface-glass);
 	--component-card-glass-border: var(--border-soft);
 	--component-card-glass-shadow: var(--shadow-xs);
@@ -193,7 +214,7 @@
 	--component-card-glass-backdrop: blur(24px) saturate(200%);
 	--component-card-glass-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-	/* Input 组件样式 - 柔和玻璃质感 */
+	/* 4.3 Input 组件 */
 	--component-input-default-bg: var(--input-bg);
 	--component-input-default-color: var(--text-primary);
 	--component-input-default-border: var(--border-light);
@@ -208,7 +229,8 @@
 	--component-input-default-backdrop: blur(20px) saturate(180%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-	/* Tag 组件样式 - 优雅圆润 */
+	/* 4.4 Tag 组件 */
+	/* Default 变体 */
 	--component-tag-default-bg: var(--tag-bg);
 	--component-tag-default-color: var(--text-secondary);
 	--component-tag-default-border: var(--border-light);
@@ -222,6 +244,7 @@
 	--component-tag-default-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
+	/* Primary 变体 */
 	--component-tag-primary-bg: var(--primary-light);
 	--component-tag-primary-color: var(--primary-color);
 	--component-tag-primary-border: var(--primary-color);
@@ -234,7 +257,8 @@
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-	/* Link 组件样式 - 优雅下划线动画 */
+	/* 4.5 Link 组件 */
+	/* Default 变体 */
 	--component-link-default-color: var(--primary-color);
 	--component-link-default-color-hover: var(--primary-hover);
 	--component-link-default-underline: linear-gradient(transparent, transparent), linear-gradient(var(--primary-color), var(--primary-color));
@@ -245,6 +269,7 @@
 	--component-link-default-text-decoration-thickness: 2px;
 	--component-link-default-text-underline-offset: 4px;
 
+	/* Secondary 变体 */
 	--component-link-secondary-color: var(--text-secondary);
 	--component-link-secondary-color-hover: var(--text-primary);
 	--component-link-secondary-underline: linear-gradient(transparent, transparent), linear-gradient(var(--text-secondary), var(--text-secondary));
@@ -254,31 +279,36 @@
 	--component-link-secondary-text-decoration-thickness: 1px;
 	--component-link-secondary-text-underline-offset: 2px;
 
-	/* Badge 组件样式 */
+	/* 4.6 Badge 组件 */
+	/* Default 变体 */
 	--component-badge-default-bg: var(--bg-tertiary);
 	--component-badge-default-color: var(--text-secondary);
 	--component-badge-default-border: var(--border-light);
 	--component-badge-default-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 	--component-badge-default-radius: var(--radius-full);
 
+	/* Primary 变体 */
 	--component-badge-primary-bg: var(--primary-color);
 	--component-badge-primary-color: var(--text-inverse);
 	--component-badge-primary-border: var(--primary-color);
 	--component-badge-primary-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	--component-badge-primary-radius: var(--radius-full);
 
+	/* Success 变体 */
 	--component-badge-success-bg: var(--success-color, #52c41a);
 	--component-badge-success-color: var(--text-inverse);
 	--component-badge-success-border: var(--success-color, #52c41a);
 	--component-badge-success-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	--component-badge-success-radius: var(--radius-full);
 
+	/* Warning 变体 */
 	--component-badge-warning-bg: var(--warning-color, #faad14);
 	--component-badge-warning-color: var(--text-inverse);
 	--component-badge-warning-border: var(--warning-color, #faad14);
 	--component-badge-warning-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	--component-badge-warning-radius: var(--radius-full);
 
+	/* Error 变体 */
 	--component-badge-error-bg: var(--error-color, #ff4d4f);
 	--component-badge-error-color: var(--text-inverse);
 	--component-badge-error-border: var(--error-color, #ff4d4f);
@@ -286,26 +316,215 @@
 	--component-badge-error-radius: var(--radius-full);
 }
 
-/* 移动端定制样式 */
+/* ============================================
+ * 5. 主题特色样式覆盖
+ * ============================================ */
+
+/* 5.1 Card 组件增强 */
+:root[data-theme="harmony"] .component-card-default {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
+}
+
+:root[data-theme="harmony"] .component-card-default::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .component-card-default:hover::before {
+	opacity: 1;
+}
+
+/* 5.2 Button 组件增强 */
+:root[data-theme="harmony"] .component-button-primary {
+	position: relative;
+	overflow: hidden;
+}
+
+:root[data-theme="harmony"] .component-button-primary::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+	transition: left var(--transition-slow);
+}
+
+:root[data-theme="harmony"] .component-button-primary:hover::before {
+	left: 100%;
+}
+
+/* 5.3 Tag 组件增强 */
+:root[data-theme="harmony"] .component-tag-primary {
+	background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 217, 255, 0.15) 100%);
+}
+
+/* 5.4 Input 组件增强 */
+:root[data-theme="harmony"] .component-input-default:focus {
+	box-shadow: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 20px rgba(0, 125, 255, 0.2), var(--shadow-soft);
+}
+
+/* 5.5 Header 定制 */
+:root[data-theme="harmony"] .header-shell {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony"] .header-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.08), rgba(0, 217, 255, 0.08));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .header-shell:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="harmony"] .logo a {
+	background: linear-gradient(135deg, #007DFF 0%, #00D9FF 50%, #007DFF 100%);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: logoGradient 3s ease-in-out infinite;
+}
+
+@keyframes logoGradient {
+	0%, 100% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+}
+
+:root[data-theme="harmony"] .nav-link::after {
+	background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+	box-shadow: 0 0 8px rgba(0, 125, 255, 0.3);
+}
+
+/* 5.6 Footer 定制 */
+:root[data-theme="harmony"] .footer-shell {
+	background: linear-gradient(140deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 250, 255, 0.92) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .footer-logo .logo-mark {
+	box-shadow: 0 4px 12px rgba(0, 125, 255, 0.25), 0 0 20px rgba(0, 217, 255, 0.15);
+}
+
+:root[data-theme="harmony"] .footer-theme-hint::before {
+	box-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 5.7 Hover 状态文字可读性优化 */
+:root[data-theme="harmony"] .component-button-secondary:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+}
+
+:root[data-theme="harmony"] .component-card-default:hover,
+:root[data-theme="harmony"] .component-card-glass:hover {
+	color: var(--text-primary) !important;
+}
+
+:root[data-theme="harmony"] .component-card-default:hover h1,
+:root[data-theme="harmony"] .component-card-default:hover h2,
+:root[data-theme="harmony"] .component-card-default:hover h3,
+:root[data-theme="harmony"] .component-card-default:hover h4,
+:root[data-theme="harmony"] .component-card-default:hover p,
+:root[data-theme="harmony"] .component-card-default:hover span,
+:root[data-theme="harmony"] .component-card-glass:hover h1,
+:root[data-theme="harmony"] .component-card-glass:hover h2,
+:root[data-theme="harmony"] .component-card-glass:hover h3,
+:root[data-theme="harmony"] .component-card-glass:hover h4,
+:root[data-theme="harmony"] .component-card-glass:hover p,
+:root[data-theme="harmony"] .component-card-glass:hover span {
+	color: inherit;
+}
+
+:root[data-theme="harmony"] .component-tag-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+}
+
+:root[data-theme="harmony"] .nav-link:hover {
+	color: var(--primary-color) !important;
+	font-weight: 600;
+	text-shadow: none;
+	background: transparent !important;
+}
+
+:root[data-theme="harmony"] .component-link-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: none;
+	background: transparent !important;
+}
+
+:root[data-theme="harmony"] .component-link-secondary:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: none;
+	background: transparent !important;
+}
+
+/* ============================================
+ * 6. 移动端适配
+ * ============================================ */
+
 @media (max-width: 768px) {
 	:root[data-theme="harmony"] {
-		/* 移动端字体大小优化 */
+		/* 移动端字体大小 */
 		--mobile-font-size-sm: 0.8125rem;
 		--mobile-font-size-base: 0.9375rem;
 		--mobile-font-size-lg: 1.125rem;
 		--mobile-font-size-xl: 1.375rem;
 		
-		/* 移动端间距优化 */
+		/* 移动端间距 */
 		--mobile-spacing-xs: var(--spacing-xs);
 		--mobile-spacing-sm: var(--spacing-sm);
 		--mobile-spacing-md: var(--spacing-md);
 		--mobile-spacing-lg: var(--spacing-lg);
 		
-		/* 移动端触摸友好性 - 增大触摸区域 */
+		/* 移动端触摸友好性 */
 		--mobile-touch-target: 44px;
 		--mobile-button-padding: var(--spacing-sm) var(--spacing-md);
-		
-		/* 移动端卡片优化 */
 		--mobile-card-padding: var(--spacing-md);
 		--mobile-card-radius: var(--radius-xl);
 	}
@@ -340,7 +559,7 @@
 		background: var(--bg-tertiary) !important;
 	}
 	
-	/* 文本样式优化 */
+	/* 文本样式 */
 	:root[data-theme="harmony"] .markdown-content {
 		color: var(--text-primary);
 		font-size: var(--mobile-font-size-base);
@@ -361,14 +580,14 @@
 		font-size: var(--mobile-font-size-base) !important;
 	}
 	
-	/* 卡片内边距优化 */
+	/* 卡片内边距 */
 	:root[data-theme="harmony"] .nav-item,
 	:root[data-theme="harmony"] .card,
 	:root[data-theme="harmony"] [class*="card"] {
 		padding: var(--mobile-card-padding) !important;
 	}
 	
-	/* 标题字体优化 */
+	/* 标题字体 */
 	:root[data-theme="harmony"] h1 {
 		font-size: var(--mobile-font-size-xl) !important;
 	}
@@ -380,214 +599,8 @@
 	:root[data-theme="harmony"] h3 {
 		font-size: var(--mobile-font-size-base) !important;
 	}
-}
-
-/* ============================================
- * 主题特色组件样式覆盖
- * ============================================ */
-
-/* Harmony 主题 - 优雅玻璃质感，柔和流畅 */
-:root[data-theme="harmony"] .component-card-default {
-	/* 增强玻璃质感 */
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
-}
-
-:root[data-theme="harmony"] .component-card-default::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	padding: 1px;
-	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask-composite: exclude;
-	opacity: 0;
-	transition: opacity var(--transition-base);
-	pointer-events: none;
-}
-
-:root[data-theme="harmony"] .component-card-default:hover::before {
-	opacity: 1;
-}
-
-:root[data-theme="harmony"] .component-button-primary {
-	/* 增强渐变按钮的质感 */
-	position: relative;
-	overflow: hidden;
-}
-
-:root[data-theme="harmony"] .component-button-primary::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-	transition: left var(--transition-slow);
-}
-
-:root[data-theme="harmony"] .component-button-primary:hover::before {
-	left: 100%;
-}
-
-:root[data-theme="harmony"] .component-tag-primary {
-	/* 增强标签的渐变效果 */
-	background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 217, 255, 0.15) 100%);
-}
-
-:root[data-theme="harmony"] .component-input-default:focus {
-	/* 增强输入框的聚焦光效 */
-	box-shadow: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 20px rgba(0, 125, 255, 0.2), var(--shadow-soft);
-}
-
-/* ============================================
- * Header & Footer 定制
- * ============================================ */
-
-/* Harmony 主题 - Header 定制 */
-:root[data-theme="harmony"] .header-shell {
-	/* 增强玻璃质感 */
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
-	position: relative;
-}
-
-:root[data-theme="harmony"] .header-shell::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	padding: 1px;
-	background: linear-gradient(135deg, rgba(0, 125, 255, 0.08), rgba(0, 217, 255, 0.08));
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-	opacity: 0;
-	transition: opacity var(--transition-base);
-	pointer-events: none;
-}
-
-:root[data-theme="harmony"] .header-shell:hover::before {
-	opacity: 1;
-}
-
-:root[data-theme="harmony"] .logo a {
-	/* 增强 logo 渐变效果 */
-	background: linear-gradient(135deg, #007DFF 0%, #00D9FF 50%, #007DFF 100%);
-	background-size: 200% 100%;
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: transparent;
-	animation: logoGradient 3s ease-in-out infinite;
-}
-
-@keyframes logoGradient {
-	0%, 100% { background-position: 0% 50%; }
-	50% { background-position: 100% 50%; }
-}
-
-:root[data-theme="harmony"] .nav-link::after {
-	/* 增强导航链接下划线 */
-	background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-	box-shadow: 0 0 8px rgba(0, 125, 255, 0.3);
-}
-
-/* Harmony 主题 - Footer 定制 */
-:root[data-theme="harmony"] .footer-shell {
-	/* 增强玻璃质感 */
-	background: linear-gradient(140deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 250, 255, 0.92) 100%);
-	position: relative;
-}
-
-:root[data-theme="harmony"] .footer-shell::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	padding: 1px;
-	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-	opacity: 0.5;
-	pointer-events: none;
-}
-
-:root[data-theme="harmony"] .footer-logo .logo-mark {
-	/* 增强 footer logo 标记的渐变效果 */
-	box-shadow: 0 4px 12px rgba(0, 125, 255, 0.25), 0 0 20px rgba(0, 217, 255, 0.15);
-}
-
-:root[data-theme="harmony"] .footer-theme-hint::before {
-	/* 增强主题提示点的光效 */
-	box-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
-	animation: pulse 2s ease-in-out infinite;
-}
-
-/* ============================================
- * Hover 状态文字可读性优化
- * ============================================ */
-
-/* Harmony 主题 - 确保 hover 状态文字清晰 */
-:root[data-theme="harmony"] .component-button-secondary:hover {
-	color: var(--primary-color) !important;
-	font-weight: 500;
-}
-
-:root[data-theme="harmony"] .component-card-default:hover,
-:root[data-theme="harmony"] .component-card-glass:hover {
-	color: var(--text-primary) !important;
-}
-
-:root[data-theme="harmony"] .component-card-default:hover h1,
-:root[data-theme="harmony"] .component-card-default:hover h2,
-:root[data-theme="harmony"] .component-card-default:hover h3,
-:root[data-theme="harmony"] .component-card-default:hover h4,
-:root[data-theme="harmony"] .component-card-default:hover p,
-:root[data-theme="harmony"] .component-card-default:hover span,
-:root[data-theme="harmony"] .component-card-glass:hover h1,
-:root[data-theme="harmony"] .component-card-glass:hover h2,
-:root[data-theme="harmony"] .component-card-glass:hover h3,
-:root[data-theme="harmony"] .component-card-glass:hover h4,
-:root[data-theme="harmony"] .component-card-glass:hover p,
-:root[data-theme="harmony"] .component-card-glass:hover span {
-	color: inherit;
-}
-
-:root[data-theme="harmony"] .component-tag-default:hover {
-	color: var(--primary-color) !important;
-	font-weight: 500;
-}
-
-/* Harmony 主题 - 简化 link hover 样式，确保文字清晰可见 */
-:root[data-theme="harmony"] .nav-link:hover {
-	color: var(--primary-color) !important;
-	font-weight: 600;
-	text-shadow: none; /* 移除文字阴影，避免模糊 */
-	background: transparent !important; /* 移除背景，避免盖住文字 */
-}
-
-:root[data-theme="harmony"] .component-link-default:hover {
-	color: var(--primary-color) !important;
-	font-weight: 500;
-	text-shadow: none; /* 移除文字阴影，避免模糊 */
-	background: transparent !important; /* 移除背景，避免盖住文字 */
-}
-
-:root[data-theme="harmony"] .component-link-secondary:hover {
-	color: var(--primary-color) !important;
-	font-weight: 500;
-	text-shadow: none; /* 移除文字阴影，避免模糊 */
-	background: transparent !important; /* 移除背景，避免盖住文字 */
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
+	
+	/* Header 移动端优化 */
 	:root[data-theme="harmony"] .header-shell::before {
 		display: none;
 	}
@@ -596,6 +609,7 @@
 		animation: none;
 	}
 	
+	/* Footer 移动端优化 */
 	:root[data-theme="harmony"] .footer-shell {
 		background: none !important;
 		border: none !important;
@@ -621,4 +635,3 @@
 		box-shadow: 0 0 4px rgba(0, 217, 255, 0.3);
 	}
 }
-

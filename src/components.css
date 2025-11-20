@@ -1,11 +1,22 @@
-/* 
- * 组件通用样式库
- * 统一网站所有组件的样式规范，确保视觉一致性
- */
+/* ============================================
+ * 组件通用样式库 - Component Styles Library
+ * ============================================
+ * 此文件定义了所有组件的通用样式类
+ * 组件样式通过 CSS 变量系统实现主题定制
+ * 
+ * 命名规范：
+ * - 组件类：.component-{component}-{variant}
+ * - 组件变量：--component-{component}-{variant}-{property}
+ * 
+ * 参考文档：
+ * - CSS_VARIABLES.md - 所有 CSS 变量完整列表
+ * - COMPONENT_STYLES.md - 组件样式系统详细文档
+ * ============================================ */
 
-/* ================================
-   基础重置和通用样式
-   ================================ */
+/* ============================================
+ * 1. 基础重置和通用样式
+ * ============================================ */
+
 .component-card-default,
 .component-card-glass,
 .component-card-elevated,
@@ -20,258 +31,276 @@
 .component-input-default,
 .component-link-default,
 .component-link-secondary {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-/* ================================
-   通用卡片样式
-   ================================ */
+/* ============================================
+ * 2. Card 组件样式
+ * ============================================
+ * 提供三种变体：default、glass、elevated
+ * ============================================ */
 
+/* 2.1 Default 变体 - 标准卡片 */
 .component-card-default {
-  position: relative;
-  padding: var(--component-card-default-padding, var(--spacing-md));
-  background: var(--component-card-default-bg, var(--bg-secondary));
-  border-radius: var(--component-card-default-radius, var(--radius-xl));
-  border: 1px solid var(--component-card-default-border, var(--border-light));
-  box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-  -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-  backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-  transform: var(--component-card-default-transform, translateZ(0));
-  transition: var(
-    --component-card-default-transition,
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    background-color var(--transition-fast),
-    transform var(--transition-fast)
-  );
+	position: relative;
+	padding: var(--component-card-default-padding, var(--spacing-md));
+	background: var(--component-card-default-bg, var(--bg-secondary));
+	border-radius: var(--component-card-default-radius, var(--radius-xl));
+	border: 1px solid var(--component-card-default-border, var(--border-light));
+	box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
+	-webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
+	backdrop-filter: var(--component-card-default-backdrop, blur(8px));
+	transform: var(--component-card-default-transform, translateZ(0));
+	transition: var(
+		--component-card-default-transition,
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast),
+		background-color var(--transition-fast),
+		transform var(--transition-fast)
+	);
 }
 
 .component-card-default:hover {
-  border-color: var(--component-card-default-border-hover, var(--border-accent));
-  box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
-  background: var(--component-card-default-bg-hover, var(--surface-glass));
-  transform: var(--component-card-default-transform-hover, translateY(-2px));
+	border-color: var(--component-card-default-border-hover, var(--border-accent));
+	box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
+	background: var(--component-card-default-bg-hover, var(--surface-glass));
+	transform: var(--component-card-default-transform-hover, translateY(-2px));
 }
 
 .component-card-default:focus-visible {
-  outline: 2px solid var(--component-card-default-border-focus, var(--primary-color));
-  outline-offset: 3px;
-  box-shadow: var(--component-card-default-shadow-focus, var(--component-card-default-shadow-hover, var(--shadow-sm)));
+	outline: 2px solid var(--component-card-default-border-focus, var(--primary-color));
+	outline-offset: 3px;
+	box-shadow: var(--component-card-default-shadow-focus, var(--component-card-default-shadow-hover, var(--shadow-sm)));
 }
 
 .component-card-default:active {
-  transform: var(--component-card-default-transform-active, translateY(0));
-  box-shadow: var(--component-card-default-shadow-active, var(--component-card-default-shadow));
+	transform: var(--component-card-default-transform-active, translateY(0));
+	box-shadow: var(--component-card-default-shadow-active, var(--component-card-default-shadow));
 }
 
+/* 2.2 Glass 变体 - 玻璃质感卡片 */
 .component-card-glass {
-  position: relative;
-  padding: var(--component-card-glass-padding, var(--spacing-lg));
-  background: var(--component-card-glass-bg, var(--card-bg));
-  border: 1px solid var(--component-card-glass-border, var(--border-light));
-  border-radius: var(--component-card-glass-radius, var(--radius-2xl));
-  box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
-  -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-  backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-  transform: var(--component-card-glass-transform, translateZ(0));
-  transition: var(
-    --component-card-glass-transition,
-    border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    transform var(--transition-base)
-  );
+	position: relative;
+	padding: var(--component-card-glass-padding, var(--spacing-lg));
+	background: var(--component-card-glass-bg, var(--card-bg));
+	border: 1px solid var(--component-card-glass-border, var(--border-light));
+	border-radius: var(--component-card-glass-radius, var(--radius-2xl));
+	box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
+	-webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+	backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+	transform: var(--component-card-glass-transform, translateZ(0));
+	transition: var(
+		--component-card-glass-transition,
+		border-color var(--transition-base),
+		box-shadow var(--transition-base),
+		transform var(--transition-base)
+	);
 }
 
 .component-card-glass:hover {
-  border-color: var(--component-card-glass-border-hover, var(--border-accent));
-  box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
-  background: var(--component-card-glass-bg-hover, var(--component-card-glass-bg, var(--card-bg)));
-  transform: var(--component-card-glass-transform-hover, translateY(-2px));
+	border-color: var(--component-card-glass-border-hover, var(--border-accent));
+	box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
+	background: var(--component-card-glass-bg-hover, var(--component-card-glass-bg, var(--card-bg)));
+	transform: var(--component-card-glass-transform-hover, translateY(-2px));
 }
 
 .component-card-glass:focus-visible {
-  outline: 2px solid var(--component-card-glass-border-focus, var(--primary-color));
-  outline-offset: 3px;
-  box-shadow: var(--component-card-glass-shadow-focus, var(--component-card-glass-shadow-hover, var(--shadow-sm)));
+	outline: 2px solid var(--component-card-glass-border-focus, var(--primary-color));
+	outline-offset: 3px;
+	box-shadow: var(--component-card-glass-shadow-focus, var(--component-card-glass-shadow-hover, var(--shadow-sm)));
 }
 
 .component-card-glass:active {
-  transform: var(--component-card-glass-transform-active, translateY(0));
-  box-shadow: var(--component-card-glass-shadow-active, var(--component-card-glass-shadow));
+	transform: var(--component-card-glass-transform-active, translateY(0));
+	box-shadow: var(--component-card-glass-shadow-active, var(--component-card-glass-shadow));
 }
 
+/* 2.3 Elevated 变体 - 提升卡片 */
 .component-card-elevated {
-  position: relative;
-  padding: var(--component-card-elevated-padding, var(--spacing-lg));
-  background: var(--component-card-elevated-bg, var(--bg-primary));
-  border: 1px solid var(--component-card-elevated-border, var(--border-color));
-  border-radius: var(--component-card-elevated-radius, var(--radius-2xl));
-  box-shadow: var(--component-card-elevated-shadow, var(--shadow-md));
-  -webkit-backdrop-filter: var(--component-card-elevated-backdrop, blur(16px));
-  backdrop-filter: var(--component-card-elevated-backdrop, blur(16px));
-  transform: var(--component-card-elevated-transform, translateZ(0));
-  transition: var(
-    --component-card-elevated-transition,
-    border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    background-color var(--transition-base),
-    transform var(--transition-base)
-  );
+	position: relative;
+	padding: var(--component-card-elevated-padding, var(--spacing-lg));
+	background: var(--component-card-elevated-bg, var(--bg-primary));
+	border: 1px solid var(--component-card-elevated-border, var(--border-color));
+	border-radius: var(--component-card-elevated-radius, var(--radius-2xl));
+	box-shadow: var(--component-card-elevated-shadow, var(--shadow-md));
+	-webkit-backdrop-filter: var(--component-card-elevated-backdrop, blur(16px));
+	backdrop-filter: var(--component-card-elevated-backdrop, blur(16px));
+	transform: var(--component-card-elevated-transform, translateZ(0));
+	transition: var(
+		--component-card-elevated-transition,
+		border-color var(--transition-base),
+		box-shadow var(--transition-base),
+		background-color var(--transition-base),
+		transform var(--transition-base)
+	);
 }
 
 .component-card-elevated:hover {
-  border-color: var(--component-card-elevated-border-hover, var(--border-accent));
-  box-shadow: var(--component-card-elevated-shadow-hover, var(--shadow-lg));
-  background: var(--component-card-elevated-bg-hover, var(--component-card-elevated-bg, var(--bg-primary)));
-  transform: var(--component-card-elevated-transform-hover, translateY(-4px));
+	border-color: var(--component-card-elevated-border-hover, var(--border-accent));
+	box-shadow: var(--component-card-elevated-shadow-hover, var(--shadow-lg));
+	background: var(--component-card-elevated-bg-hover, var(--component-card-elevated-bg, var(--bg-primary)));
+	transform: var(--component-card-elevated-transform-hover, translateY(-4px));
 }
 
 .component-card-elevated:focus-visible {
-  outline: 2px solid var(--component-card-elevated-border-focus, var(--primary-color));
-  outline-offset: 4px;
-  box-shadow: var(--component-card-elevated-shadow-focus, var(--component-card-elevated-shadow-hover, var(--shadow-lg)));
+	outline: 2px solid var(--component-card-elevated-border-focus, var(--primary-color));
+	outline-offset: 4px;
+	box-shadow: var(--component-card-elevated-shadow-focus, var(--component-card-elevated-shadow-hover, var(--shadow-lg)));
 }
 
 .component-card-elevated:active {
-  transform: var(--component-card-elevated-transform-active, translateY(-1px));
-  box-shadow: var(--component-card-elevated-shadow-active, var(--component-card-elevated-shadow));
+	transform: var(--component-card-elevated-transform-active, translateY(-1px));
+	box-shadow: var(--component-card-elevated-shadow-active, var(--component-card-elevated-shadow));
 }
 
-/* ================================
-   通用按钮样式
-   ================================ */
+/* ============================================
+ * 3. Button 组件样式
+ * ============================================
+ * 提供四种变体：primary、secondary、outline、ghost
+ * ============================================ */
+
+/* 3.1 按钮基础样式 */
 .component-button-primary,
 .component-button-secondary,
 .component-button-outline,
 .component-button-ghost {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
-  text-decoration: none;
-  line-height: 1.2;
-  transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
-  will-change: transform, box-shadow;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-xs);
+	font-size: 0.875rem;
+	font-weight: 500;
+	cursor: pointer;
+	-webkit-user-select: none;
+	user-select: none;
+	text-decoration: none;
+	line-height: 1.2;
+	transition: color var(--transition-base), 
+	            background-color var(--transition-base), 
+	            border-color var(--transition-base), 
+	            transform var(--transition-base), 
+	            box-shadow var(--transition-base);
+	will-change: transform, box-shadow;
 }
 
+/* 3.2 Primary 变体 - 主要按钮 */
 .component-button-primary {
-  padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-md));
-  background: var(--component-button-primary-bg, var(--gradient-brand));
-  color: var(--component-button-primary-color, var(--text-inverse));
-  border: 1px solid var(--component-button-primary-border, transparent);
-  border-radius: var(--component-button-primary-radius, var(--radius-md));
-  box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
-  transform: var(--component-button-primary-transform, translateZ(0));
-  transition: var(--component-button-primary-transition, all var(--transition-base));
+	padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-md));
+	background: var(--component-button-primary-bg, var(--gradient-brand));
+	color: var(--component-button-primary-color, var(--text-inverse));
+	border: 1px solid var(--component-button-primary-border, transparent);
+	border-radius: var(--component-button-primary-radius, var(--radius-md));
+	box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
+	transform: var(--component-button-primary-transform, translateZ(0));
+	transition: var(--component-button-primary-transition, all var(--transition-base));
 }
 
 .component-button-primary:hover {
-  background: var(--component-button-primary-bg-hover, var(--gradient-brand));
-  color: var(--component-button-primary-color-hover, var(--text-inverse));
-  box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-sm));
-  transform: var(--component-button-primary-transform-hover, translateY(-1px) translateZ(0));
+	background: var(--component-button-primary-bg-hover, var(--gradient-brand));
+	color: var(--component-button-primary-color-hover, var(--text-inverse));
+	box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-sm));
+	transform: var(--component-button-primary-transform-hover, translateY(-1px) translateZ(0));
 }
 
 .component-button-primary:active {
-  transform: var(--component-button-primary-transform-active, translateY(0));
-  box-shadow: var(--component-button-primary-shadow-active, var(--component-button-primary-shadow));
+	transform: var(--component-button-primary-transform-active, translateY(0));
+	box-shadow: var(--component-button-primary-shadow-active, var(--component-button-primary-shadow));
 }
 
 .component-button-primary:focus-visible {
-  outline: 2px solid var(--component-button-primary-border, var(--primary-color));
-  outline-offset: 3px;
+	outline: 2px solid var(--component-button-primary-border, var(--primary-color));
+	outline-offset: 3px;
 }
 
+/* 3.3 Secondary 变体 - 次要按钮 */
 .component-button-secondary {
-  padding: var(--component-button-secondary-padding, var(--spacing-sm) var(--spacing-md));
-  background: var(--component-button-secondary-bg, var(--bg-tertiary));
-  color: var(--component-button-secondary-color, var(--text-secondary));
-  border: 1px solid var(--component-button-secondary-border, var(--border-light));
-  border-radius: var(--component-button-secondary-radius, var(--radius-md));
-  box-shadow: var(--component-button-secondary-shadow, none);
-  transform: var(--component-button-secondary-transform, translateZ(0));
-  transition: var(--component-button-secondary-transition, all var(--transition-base));
+	padding: var(--component-button-secondary-padding, var(--spacing-sm) var(--spacing-md));
+	background: var(--component-button-secondary-bg, var(--bg-tertiary));
+	color: var(--component-button-secondary-color, var(--text-secondary));
+	border: 1px solid var(--component-button-secondary-border, var(--border-light));
+	border-radius: var(--component-button-secondary-radius, var(--radius-md));
+	box-shadow: var(--component-button-secondary-shadow, none);
+	transform: var(--component-button-secondary-transform, translateZ(0));
+	transition: var(--component-button-secondary-transition, all var(--transition-base));
 }
 
 .component-button-secondary:hover {
-  border-color: var(--component-button-secondary-border-hover, var(--border-accent));
-  color: var(--component-button-secondary-color-hover, var(--primary-color));
-  background: var(--component-button-secondary-bg-hover, var(--primary-light));
-  box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-  transform: var(--component-button-secondary-transform-hover, translateY(-1px));
+	border-color: var(--component-button-secondary-border-hover, var(--border-accent));
+	color: var(--component-button-secondary-color-hover, var(--primary-color));
+	background: var(--component-button-secondary-bg-hover, var(--primary-light));
+	box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
+	transform: var(--component-button-secondary-transform-hover, translateY(-1px));
 }
 
 .component-button-secondary:active {
-  transform: var(--component-button-secondary-transform-active, translateY(0));
-  box-shadow: var(--component-button-secondary-shadow-active, var(--component-button-secondary-shadow));
+	transform: var(--component-button-secondary-transform-active, translateY(0));
+	box-shadow: var(--component-button-secondary-shadow-active, var(--component-button-secondary-shadow));
 }
 
 .component-button-secondary:focus-visible {
-  outline: 2px solid var(--component-button-secondary-border-hover, var(--border-accent));
-  outline-offset: 3px;
+	outline: 2px solid var(--component-button-secondary-border-hover, var(--border-accent));
+	outline-offset: 3px;
 }
 
+/* 3.4 Outline 变体 - 轮廓按钮 */
 .component-button-outline {
-  padding: var(--component-button-outline-padding, var(--spacing-sm) var(--spacing-md));
-  background: var(--component-button-outline-bg, transparent);
-  color: var(--component-button-outline-color, var(--primary-color));
-  border: 1px solid var(--component-button-outline-border, var(--primary-color));
-  border-radius: var(--component-button-outline-radius, var(--radius-md));
-  box-shadow: var(--component-button-outline-shadow, none);
-  transform: var(--component-button-outline-transform, translateZ(0));
-  transition: var(--component-button-outline-transition, all var(--transition-base));
+	padding: var(--component-button-outline-padding, var(--spacing-sm) var(--spacing-md));
+	background: var(--component-button-outline-bg, transparent);
+	color: var(--component-button-outline-color, var(--primary-color));
+	border: 1px solid var(--component-button-outline-border, var(--primary-color));
+	border-radius: var(--component-button-outline-radius, var(--radius-md));
+	box-shadow: var(--component-button-outline-shadow, none);
+	transform: var(--component-button-outline-transform, translateZ(0));
+	transition: var(--component-button-outline-transition, all var(--transition-base));
 }
 
 .component-button-outline:hover {
-  background: var(--component-button-outline-bg-hover, var(--primary-lighter));
-  box-shadow: var(--component-button-outline-shadow-hover, var(--shadow-xs));
-  transform: var(--component-button-outline-transform-hover, translateY(-1px));
+	background: var(--component-button-outline-bg-hover, var(--primary-lighter));
+	box-shadow: var(--component-button-outline-shadow-hover, var(--shadow-xs));
+	transform: var(--component-button-outline-transform-hover, translateY(-1px));
 }
 
 .component-button-outline:active {
-  transform: var(--component-button-outline-transform-active, translateY(0));
-  box-shadow: var(--component-button-outline-shadow-active, var(--component-button-outline-shadow));
+	transform: var(--component-button-outline-transform-active, translateY(0));
+	box-shadow: var(--component-button-outline-shadow-active, var(--component-button-outline-shadow));
 }
 
 .component-button-outline:focus-visible {
-  outline: 2px solid var(--component-button-outline-border, var(--primary-color));
-  outline-offset: 3px;
+	outline: 2px solid var(--component-button-outline-border, var(--primary-color));
+	outline-offset: 3px;
 }
 
+/* 3.5 Ghost 变体 - 幽灵按钮 */
 .component-button-ghost {
-  padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
-  background: var(--component-button-ghost-bg, transparent);
-  color: var(--component-button-ghost-color, var(--text-secondary));
-  border: 1px solid var(--component-button-ghost-border, transparent);
-  border-radius: var(--component-button-ghost-radius, var(--radius-md));
-  box-shadow: var(--component-button-ghost-shadow, none);
-  transform: var(--component-button-ghost-transform, translateZ(0));
-  transition: var(--component-button-ghost-transition, all var(--transition-fast));
+	padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
+	background: var(--component-button-ghost-bg, transparent);
+	color: var(--component-button-ghost-color, var(--text-secondary));
+	border: 1px solid var(--component-button-ghost-border, transparent);
+	border-radius: var(--component-button-ghost-radius, var(--radius-md));
+	box-shadow: var(--component-button-ghost-shadow, none);
+	transform: var(--component-button-ghost-transform, translateZ(0));
+	transition: var(--component-button-ghost-transition, all var(--transition-fast));
 }
 
 .component-button-ghost:hover {
-  color: var(--component-button-ghost-color-hover, var(--primary-color));
-  background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-  border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-  box-shadow: var(--component-button-ghost-shadow-hover, var(--shadow-xs));
-  transform: var(--component-button-ghost-transform-hover, translateY(-1px));
+	color: var(--component-button-ghost-color-hover, var(--primary-color));
+	background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
+	border-color: var(--component-button-ghost-border-hover, var(--border-accent));
+	box-shadow: var(--component-button-ghost-shadow-hover, var(--shadow-xs));
+	transform: var(--component-button-ghost-transform-hover, translateY(-1px));
 }
 
 .component-button-ghost:active {
-  transform: var(--component-button-ghost-transform-active, scale(0.98));
+	transform: var(--component-button-ghost-transform-active, scale(0.98));
 }
 
 .component-button-ghost:focus-visible {
-  outline: 2px solid var(--component-button-ghost-border-hover, var(--border-accent));
-  outline-offset: 3px;
+	outline: 2px solid var(--component-button-ghost-border-hover, var(--border-accent));
+	outline-offset: 3px;
 }
 
+/* 3.6 按钮禁用状态 */
 .component-button-primary[disabled],
 .component-button-primary.is-disabled,
 .component-button-secondary[disabled],
@@ -280,464 +309,316 @@
 .component-button-outline.is-disabled,
 .component-button-ghost[disabled],
 .component-button-ghost.is-disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  pointer-events: none;
-  box-shadow: none !important;
-  transform: none !important;
+	opacity: 0.6;
+	cursor: not-allowed;
+	pointer-events: none;
+	box-shadow: none !important;
+	transform: none !important;
 }
 
-/* ================================
-   通用标签样式
-   ================================ */
+/* ============================================
+ * 4. Tag 组件样式
+ * ============================================
+ * 提供两种变体：default、primary
+ * ============================================ */
+
+/* 4.1 Tag 基础样式 */
 .component-tag-default,
 .component-tag-primary {
-  padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-  border-radius: var(--component-tag-default-radius, var(--radius-full));
-  font-size: 0.8125rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: var(--component-tag-default-transition, all var(--transition-fast));
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  box-shadow: var(--component-tag-default-shadow, none);
-  transform: var(--component-tag-default-transform, translateZ(0));
+	padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+	border-radius: var(--component-tag-default-radius, var(--radius-full));
+	font-size: 0.8125rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: var(--component-tag-default-transition, all var(--transition-fast));
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-xs);
+	box-shadow: var(--component-tag-default-shadow, none);
+	transform: var(--component-tag-default-transform, translateZ(0));
 }
 
+/* 4.2 Default 变体 */
 .component-tag-default {
-  background: var(--component-tag-default-bg, var(--bg-tertiary));
-  color: var(--component-tag-default-color, var(--text-secondary));
-  border: 1px solid var(--component-tag-default-border, var(--border-light));
+	background: var(--component-tag-default-bg, var(--bg-tertiary));
+	color: var(--component-tag-default-color, var(--text-secondary));
+	border: 1px solid var(--component-tag-default-border, var(--border-light));
 }
 
 .component-tag-default:hover {
-  border-color: var(--component-tag-default-border-hover, var(--border-accent));
-  color: var(--component-tag-default-color-hover, var(--primary-color));
-  background: var(--component-tag-default-bg-hover, var(--primary-lighter));
-  transform: var(--component-tag-default-transform-hover, translateY(-1px));
-  box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
+	border-color: var(--component-tag-default-border-hover, var(--border-accent));
+	color: var(--component-tag-default-color-hover, var(--primary-color));
+	background: var(--component-tag-default-bg-hover, var(--primary-lighter));
+	transform: var(--component-tag-default-transform-hover, translateY(-1px));
+	box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
 }
 
 .component-tag-default:active {
-  transform: var(--component-tag-default-transform-active, translateY(0));
+	transform: var(--component-tag-default-transform-active, translateY(0));
 }
 
+/* 4.3 Primary 变体 */
 .component-tag-primary {
-  background: var(--component-tag-primary-bg, var(--gradient-brand));
-  color: var(--component-tag-primary-color, var(--text-inverse));
-  border: 1px solid var(--component-tag-primary-border, transparent);
-  box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
-  font-weight: 600;
-  transform: var(--component-tag-primary-transform, translateZ(0));
+	background: var(--component-tag-primary-bg, var(--gradient-brand));
+	color: var(--component-tag-primary-color, var(--text-inverse));
+	border: 1px solid var(--component-tag-primary-border, transparent);
+	box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
+	font-weight: 600;
+	transform: var(--component-tag-primary-transform, translateZ(0));
 }
 
 .component-tag-primary:hover {
-  background: var(--component-tag-primary-bg-hover, var(--primary-color));
-  color: var(--component-tag-primary-color-hover, var(--text-inverse));
-  box-shadow: var(--component-tag-primary-shadow-hover, var(--shadow-sm));
-  transform: var(--component-tag-primary-transform-hover, translateY(-1px));
+	background: var(--component-tag-primary-bg-hover, var(--primary-color));
+	color: var(--component-tag-primary-color-hover, var(--text-inverse));
+	box-shadow: var(--component-tag-primary-shadow-hover, var(--shadow-sm));
+	transform: var(--component-tag-primary-transform-hover, translateY(-1px));
 }
 
-/* ================================
-   通用徽章样式
-   ================================ */
+/* ============================================
+ * 5. Badge 组件样式
+ * ============================================
+ * 提供多种变体：default、primary、success、warning、error
+ * ============================================ */
+
+/* 5.1 Default 变体 */
 .component-badge-default {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5rem;
-  padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
-  border-radius: var(--component-badge-default-radius, var(--radius-full));
-  background: var(--component-badge-default-bg, var(--primary-lighter));
-  color: var(--component-badge-default-color, var(--primary-color));
-  border: 1px solid var(--component-badge-default-border, var(--border-accent));
-  font-size: 0.7rem;
-  font-weight: 500;
-  transition: var(--component-badge-default-transition, all var(--transition-fast));
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.5rem;
+	padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
+	border-radius: var(--component-badge-default-radius, var(--radius-full));
+	background: var(--component-badge-default-bg, var(--primary-lighter));
+	color: var(--component-badge-default-color, var(--primary-color));
+	border: 1px solid var(--component-badge-default-border, var(--border-accent));
+	font-size: 0.7rem;
+	font-weight: 500;
+	transition: var(--component-badge-default-transition, all var(--transition-fast));
 }
 
+/* 5.2 Primary 变体 */
 .component-badge-primary {
-  background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
-  border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
-  color: var(--component-badge-primary-color, var(--text-inverse));
+	background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
+	border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
+	color: var(--component-badge-primary-color, var(--text-inverse));
 }
 
-/* ================================
-   通用输入框样式
-   ================================ */
+/* ============================================
+ * 6. Input 组件样式
+ * ============================================
+ * 提供 default 变体
+ * ============================================ */
+
 .component-input-default {
-  padding: var(--component-input-default-padding, calc(var(--spacing-md) * 0.875) var(--spacing-lg));
-  background: var(--component-input-default-bg, var(--input-bg));
-  color: var(--component-input-default-color, var(--text-primary));
-  border: 1px solid var(--component-input-default-border, var(--border-light));
-  border-radius: var(--component-input-default-radius, var(--radius-xl));
-  font-size: 0.9375rem;
-  transition: var(
-    --component-input-default-transition,
-    border-color var(--transition-fast),
-    background-color var(--transition-fast),
-    box-shadow var(--transition-fast)
-  );
-  box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
-  -webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-  backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-  width: 100%;
+	padding: var(--component-input-default-padding, calc(var(--spacing-md) * 0.875) var(--spacing-lg));
+	background: var(--component-input-default-bg, var(--input-bg));
+	color: var(--component-input-default-color, var(--text-primary));
+	border: 1px solid var(--component-input-default-border, var(--border-light));
+	border-radius: var(--component-input-default-radius, var(--radius-xl));
+	font-size: 0.9375rem;
+	transition: var(
+		--component-input-default-transition,
+		border-color var(--transition-fast),
+		background-color var(--transition-fast),
+		box-shadow var(--transition-fast)
+	);
+	box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
+	-webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
+	backdrop-filter: var(--component-input-default-backdrop, blur(12px));
+	width: 100%;
 }
 
 .component-input-default::placeholder {
-  color: var(--text-tertiary);
+	color: var(--text-tertiary);
 }
 
 .component-input-default:focus {
-  outline: none;
-  border-color: var(--component-input-default-border-focus, var(--primary-color));
-  box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px var(--primary-lighter);
-  background: var(--component-input-default-bg-focus, var(--card-bg));
-  transform: var(--component-input-default-transform-focus, scale(1.01));
+	outline: none;
+	border-color: var(--component-input-default-border-focus, var(--primary-color));
+	box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px var(--primary-lighter);
+	background: var(--component-input-default-bg-focus, var(--card-bg));
+	transform: var(--component-input-default-transform-focus, scale(1.01));
 }
 
 .component-input-default:hover:not(:focus) {
-  border-color: var(--component-input-default-border-hover, var(--border-color));
+	border-color: var(--component-input-default-border-hover, var(--border-color));
 }
 
 .component-input-default:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
+	opacity: 0.5;
+	cursor: not-allowed;
+	box-shadow: none;
 }
 
-/* ================================
-   通用链接样式
-   ================================ */
+/* ============================================
+ * 7. Link 组件样式
+ * ============================================
+ * 提供两种变体：default、secondary
+ * ============================================ */
+
+/* 7.1 Link 基础样式 */
 .component-link-default,
 .component-link-secondary {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-2xs);
-  text-decoration: none;
-  cursor: pointer;
-  line-height: 1.2;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-2xs);
+	text-decoration: none;
+	cursor: pointer;
+	line-height: 1.2;
 }
 
+/* 7.2 Default 变体 */
 .component-link-default {
-  color: var(--component-link-default-color, var(--primary-color));
-  text-decoration: var(--component-link-default-text-decoration, underline);
-  text-decoration-thickness: var(--component-link-default-text-decoration-thickness, 2px);
-  text-underline-offset: var(--component-link-default-text-underline-offset, 4px);
-  background-image: var(--component-link-default-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor));
-  background-size: var(--component-link-default-underline-size, 0% 2px, 100% 2px);
-  background-repeat: no-repeat;
-  background-position: 0 100%, 0 100%;
-  transition: var(
-    --component-link-default-transition,
-    color var(--transition-base),
-    transform var(--transition-base),
-    background-size var(--transition-slow),
-    text-shadow var(--transition-base)
-  );
+	color: var(--component-link-default-color, var(--primary-color));
+	text-decoration: var(--component-link-default-text-decoration, underline);
+	text-decoration-thickness: var(--component-link-default-text-decoration-thickness, 2px);
+	text-underline-offset: var(--component-link-default-text-underline-offset, 4px);
+	background-image: var(--component-link-default-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor));
+	background-size: var(--component-link-default-underline-size, 0% 2px, 100% 2px);
+	background-repeat: no-repeat;
+	background-position: 0 100%, 0 100%;
+	transition: var(
+		--component-link-default-transition,
+		color var(--transition-base),
+		transform var(--transition-base),
+		background-size var(--transition-slow),
+		text-shadow var(--transition-base)
+	);
 }
 
 .component-link-default:hover {
-  color: var(--component-link-default-color-hover, var(--primary-color-strong));
-  background-image: var(--component-link-default-underline-hover, var(--component-link-default-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor)));
-  background-size: var(--component-link-default-underline-size-hover, 100% 2px, 100% 2px);
-  transform: var(--component-link-default-transform-hover, translateY(-2px));
-  text-shadow: var(--component-link-default-text-shadow-hover, none);
+	color: var(--component-link-default-color-hover, var(--primary-color-strong));
+	background-image: var(--component-link-default-underline-hover, var(--component-link-default-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor)));
+	background-size: var(--component-link-default-underline-size-hover, 100% 2px, 100% 2px);
+	transform: var(--component-link-default-transform-hover, translateY(-2px));
+	text-shadow: var(--component-link-default-text-shadow-hover, none);
 }
 
 .component-link-default:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
+	outline: 2px solid currentColor;
+	outline-offset: 3px;
 }
 
+/* 7.3 Secondary 变体 */
 .component-link-secondary {
-  color: var(--component-link-secondary-color, var(--text-primary));
-  background: var(--component-link-secondary-bg, transparent);
-  border: var(--component-link-secondary-border, 1px solid transparent);
-  border-radius: var(--component-link-secondary-radius, var(--radius-md));
-  box-shadow: var(--component-link-secondary-shadow, none);
-  -webkit-backdrop-filter: var(--component-link-secondary-backdrop, none);
-  backdrop-filter: var(--component-link-secondary-backdrop, none);
-  padding: var(--component-link-secondary-padding, var(--spacing-2xs) var(--spacing-sm));
-  text-decoration: var(--component-link-secondary-text-decoration, underline);
-  text-decoration-thickness: var(--component-link-secondary-text-decoration-thickness, 1px);
-  text-underline-offset: var(--component-link-secondary-text-underline-offset, 2px);
-  background-image: var(--component-link-secondary-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor));
-  background-size: var(--component-link-secondary-underline-size, 0% 1px, 100% 1px);
-  background-repeat: no-repeat;
-  background-position: 0 100%, 0 100%;
-  transition: var(
-    --component-link-secondary-transition,
-    color var(--transition-base),
-    transform var(--transition-base),
-    background-color var(--transition-base),
-    border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    background-size var(--transition-base)
-  );
+	color: var(--component-link-secondary-color, var(--text-primary));
+	background: var(--component-link-secondary-bg, transparent);
+	border: var(--component-link-secondary-border, 1px solid transparent);
+	border-radius: var(--component-link-secondary-radius, var(--radius-md));
+	box-shadow: var(--component-link-secondary-shadow, none);
+	-webkit-backdrop-filter: var(--component-link-secondary-backdrop, none);
+	backdrop-filter: var(--component-link-secondary-backdrop, none);
+	padding: var(--component-link-secondary-padding, var(--spacing-2xs) var(--spacing-sm));
+	text-decoration: var(--component-link-secondary-text-decoration, underline);
+	text-decoration-thickness: var(--component-link-secondary-text-decoration-thickness, 1px);
+	text-underline-offset: var(--component-link-secondary-text-underline-offset, 2px);
+	background-image: var(--component-link-secondary-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor));
+	background-size: var(--component-link-secondary-underline-size, 0% 1px, 100% 1px);
+	background-repeat: no-repeat;
+	background-position: 0 100%, 0 100%;
+	transition: var(
+		--component-link-secondary-transition,
+		color var(--transition-base),
+		transform var(--transition-base),
+		background-color var(--transition-base),
+		border-color var(--transition-base),
+		box-shadow var(--transition-base),
+		background-size var(--transition-base)
+	);
 }
 
 .component-link-secondary:hover {
-  color: var(--component-link-secondary-color-hover, var(--primary-color));
-  background: var(--component-link-secondary-bg-hover, var(--component-link-secondary-bg, transparent));
-  border: var(--component-link-secondary-border-hover, var(--component-link-secondary-border, 1px solid transparent));
-  box-shadow: var(--component-link-secondary-shadow-hover, var(--component-link-secondary-shadow, none));
-  -webkit-backdrop-filter: var(--component-link-secondary-backdrop-hover, var(--component-link-secondary-backdrop, none));
-  backdrop-filter: var(--component-link-secondary-backdrop-hover, var(--component-link-secondary-backdrop, none));
-  transform: var(--component-link-secondary-transform-hover, translateX(2px));
-  background-image: var(--component-link-secondary-underline-hover, var(--component-link-secondary-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor)));
-  background-size: var(--component-link-secondary-underline-size-hover, 100% 1px, 100% 1px);
+	color: var(--component-link-secondary-color-hover, var(--primary-color));
+	background: var(--component-link-secondary-bg-hover, var(--component-link-secondary-bg, transparent));
+	border: var(--component-link-secondary-border-hover, var(--component-link-secondary-border, 1px solid transparent));
+	box-shadow: var(--component-link-secondary-shadow-hover, var(--component-link-secondary-shadow, none));
+	-webkit-backdrop-filter: var(--component-link-secondary-backdrop-hover, var(--component-link-secondary-backdrop, none));
+	backdrop-filter: var(--component-link-secondary-backdrop-hover, var(--component-link-secondary-backdrop, none));
+	transform: var(--component-link-secondary-transform-hover, translateX(2px));
+	background-image: var(--component-link-secondary-underline-hover, var(--component-link-secondary-underline, linear-gradient(transparent, transparent), linear-gradient(currentColor, currentColor)));
+	background-size: var(--component-link-secondary-underline-size-hover, 100% 1px, 100% 1px);
 }
 
 .component-link-secondary:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
+	outline: 2px solid currentColor;
+	outline-offset: 3px;
 }
 
-/* ================================
-   通用动画和过渡
-   ================================ */
+/* ============================================
+ * 8. 动画和过渡效果
+ * ============================================ */
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.05);
-  }
+	0%, 100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.7;
+		transform: scale(1.05);
+	}
 }
 
 .animation-fade-in {
-  animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
+	animation: fadeIn var(--motion-duration-medium) var(--motion-easing-standard);
 }
 
 .animation-slide-in {
-  animation: slideIn var(--motion-duration-medium) var(--motion-easing-standard);
+	animation: slideIn var(--motion-duration-medium) var(--motion-easing-standard);
 }
 
 .animation-pulse {
-  animation: pulse 2s ease-in-out infinite;
+	animation: pulse 2s ease-in-out infinite;
 }
 
-/* ================================
-   通用布局工具类
-   ================================ */
+/* ============================================
+ * 9. 布局工具类
+ * ============================================ */
+
+/* 9.1 Flex 布局 */
 .layout-flex {
-  display: flex;
+	display: flex;
 }
 
 .layout-flex-col {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .layout-grid {
-  display: grid;
+	display: grid;
 }
 
-.component-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.component-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
-}
-
-.component-panel-title {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.component-panel-caption {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-}
-
-.component-panel-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-}
-
-.component-meta-summary {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.component-meta-chip {
-  padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.5) var(--spacing-sm));
-  border-radius: var(--component-badge-default-radius, var(--radius-full));
-  font-size: 0.75rem;
-  background: var(--component-badge-default-bg, var(--primary-lighter));
-  color: var(--component-badge-default-color, var(--text-secondary));
-  border: 1px solid var(--component-badge-default-border, var(--border-light));
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  transition: var(--component-badge-default-transition, all var(--transition-fast));
-}
-
-.component-meta-chip.muted {
-  background: transparent;
-  color: var(--text-tertiary);
-  border-color: var(--border-light);
-}
-
-.component-meta-chip.selected {
-  background: var(--component-badge-primary-bg, var(--primary-light));
-  color: var(--component-badge-primary-color, var(--primary-color));
-  border-color: var(--component-badge-primary-border, var(--border-accent));
-  font-weight: 500;
-}
-
-.component-secondary-action {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-}
-
-.component-chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-}
-
-.component-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--spacing-xs);
-}
-
-.component-chip-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.5rem;
-  padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
-  border-radius: var(--component-badge-default-radius, var(--radius-full));
-}
-
-.component-chip-active,
-.component-chip.active {
-  background: var(--component-tag-primary-bg, var(--gradient-brand));
-  color: var(--component-tag-primary-color, var(--text-inverse));
-  border-color: var(--component-tag-primary-border, transparent);
-  box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
-}
-
-.component-chip-active .component-chip-badge,
-.component-chip.active .component-chip-badge {
-  background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
-  border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
-  color: var(--component-badge-primary-color, var(--text-inverse));
-}
-
-.component-toggle {
-  display: inline-flex;
-  gap: var(--spacing-2xs);
-  padding: 0.25rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--component-card-default-border, var(--border-light));
-  background: var(--component-card-default-bg, var(--bg-secondary));
-}
-
-.component-toggle-btn {
-  border: none;
-  background: transparent;
-  color: var(--component-button-ghost-color, var(--text-tertiary));
-  font-size: 0.8125rem;
-  padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-  border-radius: var(--component-button-ghost-radius, var(--radius-full));
-  cursor: pointer;
-  transition: var(
-    --component-button-ghost-transition,
-    color var(--transition-fast),
-    background-color var(--transition-fast)
-  );
-  font-weight: 500;
-}
-
-.component-toggle-btn:hover {
-  color: var(--component-button-ghost-color-hover, var(--primary-color));
-  background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-}
-
-.component-toggle-btn.active {
-  background: var(--component-button-secondary-bg, var(--primary-light));
-  color: var(--component-button-secondary-color-hover, var(--primary-color));
-  box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-  font-weight: 600;
-}
-
-.component-empty-state {
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-xl);
-  background: var(--component-card-default-bg, var(--layer-1, var(--bg-tertiary)));
-  color: var(--text-tertiary);
-  text-align: center;
-  font-size: 0.875rem;
-  border: 1px dashed var(--component-card-default-border, var(--border-light));
-  box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-  -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-  backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-  transition: var(
-    --component-card-default-transition,
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    background-color var(--transition-fast)
-  );
-}
-
-.component-empty-state:hover {
-  border-color: var(--component-card-default-border-hover, var(--border-accent));
-  box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
-  background: var(--component-card-default-bg-hover, var(--surface-glass));
-}
-
-/* 布局工具类 - 统一使用 flex 布局 */
+/* 9.2 对齐工具类 */
 .layout-center,
 .layout-between,
 .layout-start,
 .layout-end {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .layout-center { justify-content: center; }
@@ -745,9 +626,7 @@
 .layout-start { justify-content: flex-start; }
 .layout-end { justify-content: flex-end; }
 
-/* ================================
-   通用间距工具类
-   ================================ */
+/* 9.3 间距工具类 */
 .gap-xs { gap: var(--spacing-xs); }
 .gap-sm { gap: var(--spacing-sm); }
 .gap-md { gap: var(--spacing-md); }
@@ -755,9 +634,190 @@
 .gap-xl { gap: var(--spacing-xl); }
 .gap-2xl { gap: var(--spacing-2xl); }
 
-/* ================================
-   通用文本工具类
-   ================================ */
+/* ============================================
+ * 10. 复合组件样式
+ * ============================================ */
+
+/* 10.1 Panel 面板组件 */
+.component-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-md);
+}
+
+.component-panel-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-sm);
+}
+
+.component-panel-title {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.component-panel-caption {
+	font-size: 0.75rem;
+	color: var(--text-tertiary);
+}
+
+.component-panel-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: var(--spacing-xs);
+}
+
+/* 10.2 Meta 元数据组件 */
+.component-meta-summary {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.component-meta-chip {
+	padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.5) var(--spacing-sm));
+	border-radius: var(--component-badge-default-radius, var(--radius-full));
+	font-size: 0.75rem;
+	background: var(--component-badge-default-bg, var(--primary-lighter));
+	color: var(--component-badge-default-color, var(--text-secondary));
+	border: 1px solid var(--component-badge-default-border, var(--border-light));
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	transition: var(--component-badge-default-transition, all var(--transition-fast));
+}
+
+.component-meta-chip.muted {
+	background: transparent;
+	color: var(--text-tertiary);
+	border-color: var(--border-light);
+}
+
+.component-meta-chip.selected {
+	background: var(--component-badge-primary-bg, var(--primary-light));
+	color: var(--component-badge-primary-color, var(--primary-color));
+	border-color: var(--component-badge-primary-border, var(--border-accent));
+	font-weight: 500;
+}
+
+.component-secondary-action {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+}
+
+/* 10.3 Chip 芯片组件 */
+.component-chip-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-sm);
+}
+
+.component-chip {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: var(--spacing-xs);
+}
+
+.component-chip-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.5rem;
+	padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
+	border-radius: var(--component-badge-default-radius, var(--radius-full));
+}
+
+.component-chip-active,
+.component-chip.active {
+	background: var(--component-tag-primary-bg, var(--gradient-brand));
+	color: var(--component-tag-primary-color, var(--text-inverse));
+	border-color: var(--component-tag-primary-border, transparent);
+	box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
+}
+
+.component-chip-active .component-chip-badge,
+.component-chip.active .component-chip-badge {
+	background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
+	border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
+	color: var(--component-badge-primary-color, var(--text-inverse));
+}
+
+/* 10.4 Toggle 切换组件 */
+.component-toggle {
+	display: inline-flex;
+	gap: var(--spacing-2xs);
+	padding: 0.25rem;
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--component-card-default-border, var(--border-light));
+	background: var(--component-card-default-bg, var(--bg-secondary));
+}
+
+.component-toggle-btn {
+	border: none;
+	background: transparent;
+	color: var(--component-button-ghost-color, var(--text-tertiary));
+	font-size: 0.8125rem;
+	padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
+	border-radius: var(--component-button-ghost-radius, var(--radius-full));
+	cursor: pointer;
+	transition: var(
+		--component-button-ghost-transition,
+		color var(--transition-fast),
+		background-color var(--transition-fast)
+	);
+	font-weight: 500;
+}
+
+.component-toggle-btn:hover {
+	color: var(--component-button-ghost-color-hover, var(--primary-color));
+	background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
+}
+
+.component-toggle-btn.active {
+	background: var(--component-button-secondary-bg, var(--primary-light));
+	color: var(--component-button-secondary-color-hover, var(--primary-color));
+	box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
+	font-weight: 600;
+}
+
+/* 10.5 Empty State 空状态组件 */
+.component-empty-state {
+	padding: var(--spacing-lg);
+	border-radius: var(--radius-xl);
+	background: var(--component-card-default-bg, var(--layer-1, var(--bg-tertiary)));
+	color: var(--text-tertiary);
+	text-align: center;
+	font-size: 0.875rem;
+	border: 1px dashed var(--component-card-default-border, var(--border-light));
+	box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
+	-webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
+	backdrop-filter: var(--component-card-default-backdrop, blur(8px));
+	transition: var(
+		--component-card-default-transition,
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast),
+		background-color var(--transition-fast)
+	);
+}
+
+.component-empty-state:hover {
+	border-color: var(--component-card-default-border-hover, var(--border-accent));
+	box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
+	background: var(--component-card-default-bg-hover, var(--surface-glass));
+}
+
+/* ============================================
+ * 11. 文本工具类
+ * ============================================ */
+
 .text-xs { font-size: 0.75rem; }
 .text-sm { font-size: 0.875rem; }
 .text-base { font-size: 1rem; }
@@ -775,9 +835,10 @@
 .text-tertiary { color: var(--text-tertiary); }
 .text-inverse { color: var(--text-inverse); }
 
-/* ================================
-   通用边框和阴影工具类
-   ================================ */
+/* ============================================
+ * 12. 边框和阴影工具类
+ * ============================================ */
+
 .border-light { border-color: var(--border-light); }
 .border-color { border-color: var(--border-color); }
 .border-accent { border-color: var(--border-accent); }
@@ -787,67 +848,76 @@
 .shadow-md { box-shadow: var(--shadow-md); }
 .shadow-lg { box-shadow: var(--shadow-lg); }
 
-/* ================================
-   响应式工具类
-   ================================ */
+/* ============================================
+ * 13. 响应式工具类
+ * ============================================ */
+
 @media (max-width: 768px) {
-  .mobile\:hidden { display: none; }
-  .mobile\:block { display: block; }
-  .mobile\:flex { display: flex; }
-  .mobile\:flex-col { display: flex; flex-direction: column; }
-  .mobile\:text-center { text-align: center; }
+	.mobile\:hidden { display: none; }
+	.mobile\:block { display: block; }
+	.mobile\:flex { display: flex; }
+	.mobile\:flex-col { display: flex; flex-direction: column; }
+	.mobile\:text-center { text-align: center; }
 }
 
 @media (min-width: 769px) {
-  .desktop\:hidden { display: none; }
-  .desktop\:block { display: block; }
-  .desktop\:flex { display: flex; }
+	.desktop\:hidden { display: none; }
+	.desktop\:block { display: block; }
+	.desktop\:flex { display: flex; }
 }
 
-/* ================================
-   无障碍和交互工具类
-   ================================ */
+/* ============================================
+ * 14. 无障碍和交互工具类
+ * ============================================ */
+
+/* 屏幕阅读器专用 */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
+/* 焦点可见样式 */
 .focus-visible:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
 }
+
+/* ============================================
+ * 15. 减少动画偏好支持
+ * ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .animation-fade-in,
-  .animation-slide-in,
-  .animation-pulse {
-    animation: none;
-  }
-  
-  /* 禁用所有组件的过渡动画 */
-  .component-card-default,
-  .component-card-glass,
-  .component-card-elevated,
-  .component-button-primary,
-  .component-button-secondary,
-  .component-button-outline,
-  .component-button-ghost,
-  .component-tag-default,
-  .component-tag-primary,
-  .component-badge-default,
-  .component-input-default,
-  .component-link-default,
-  .component-link-secondary,
-  .component-meta-chip,
-  .component-toggle-btn,
-  .component-empty-state {
-    transition: none;
-  }
+	/* 禁用动画类 */
+	.animation-fade-in,
+	.animation-slide-in,
+	.animation-pulse {
+		animation: none;
+	}
+	
+	/* 禁用所有组件的过渡动画 */
+	.component-card-default,
+	.component-card-glass,
+	.component-card-elevated,
+	.component-button-primary,
+	.component-button-secondary,
+	.component-button-outline,
+	.component-button-ghost,
+	.component-tag-default,
+	.component-tag-primary,
+	.component-badge-default,
+	.component-input-default,
+	.component-link-default,
+	.component-link-secondary,
+	.component-meta-chip,
+	.component-toggle-btn,
+	.component-empty-state {
+		transition: none;
+	}
 }
