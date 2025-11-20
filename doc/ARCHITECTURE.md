@@ -30,7 +30,8 @@ cyue-website-hub/
 ├── scripts/               # 工具脚本
 │   └── import-csv.js      # CSV 批量导入脚本
 ├── src/                   # 源代码目录
-│   ├── app.css            # 全局样式文件
+│   ├── app.css            # 全局样式文件（部分基础变量，可在主题中覆盖）
+│   ├── components.css     # 组件类样式定义
 │   ├── app.d.ts           # TypeScript 类型声明
 │   ├── app.html           # HTML 模板
 │   ├── data/              # 数据目录
@@ -170,11 +171,16 @@ ContentArea (结果展示)
 - 提供数据缓存机制，供 SSR/SSG 阶段复用
 
 **关键特性**：
-- 使用 Vite 的 `import.meta.glob` 实现动态导入
+- 使用文件系统 API（Node.js `fs` 模块）在服务器端读取文件
+- 支持 Markdown frontmatter 格式（使用 `gray-matter` 解析）
+- 支持三种数据格式：
+  - 单个 JSON 对象（`[id].json`）
+  - JSON 数组（`sites.json`）
+  - Markdown frontmatter（`[id].md`，推荐方式）
 - 内存缓存机制，避免重复加载
-- 支持两种数据格式：单个 JSON 对象和 JSON 数组
 - 自动解析并构建分组树，支持任意层级的子分组
-- 避免在浏览器环境执行 Node.js 依赖（如 `gray-matter`），所有解析逻辑在服务器端完成
+- 避免在浏览器环境执行 Node.js 依赖（如 `gray-matter`、`fs`），所有解析逻辑在服务器端完成
+- 支持相关网站推荐功能，基于标签相似度计算
 
 **主要函数**：
 - `loadAllNavItems()` - 加载所有导航项
@@ -182,6 +188,7 @@ ContentArea (结果展示)
 - `loadMarkdownContent()` - 加载 Markdown 内容
 - `loadGroupMetadata()` - 加载分组元数据
 - `getAllTags()` - 获取所有标签
+- `getTagSummaries()` - 获取标签摘要（包含标签使用统计）
 - `findGroupById()` - 在分组树中查找指定分组
 
 **分组解析流程概述**：
@@ -239,23 +246,32 @@ ContentArea (结果展示)
 
 **功能组件**：
 - `SearchBar.svelte` - 搜索输入框
-- `TagList.svelte` - 标签筛选列表
+- `TagFilterPanel.svelte` - 标签筛选面板，提供标签筛选功能
+- `GroupFilterPanel.svelte` - 分组筛选面板，提供分组筛选功能
 - `NavGroup.svelte` - 顶层分组容器，协调分组与子分组展示
 - `NavGroupSection.svelte` - 单个分组段的递归渲染
 - `NavGroupChildren.svelte` - 子分组集合包装
 - `SidebarGroupTree.svelte` - 树形分组导航入口
 - `SidebarGroupTreeList.svelte` / `SidebarGroupTreeItem.svelte` - 树形分组列表与节点
 - `NavItem.svelte` - 单个导航项
+- `SiteIcon.svelte` - 网站图标组件，支持自动获取 favicon 和占位符
 - `FavoriteManager.svelte` - 通过派生 store（`derived`）组合导航数据和收藏 ID，避免循环依赖
+- `RelatedRecommendations.svelte` - 相关网站推荐组件，基于标签相似度推荐相关网站
 - `MarkdownRenderer.svelte` - Markdown 渲染
 - `ThemeToggle.svelte` - 主题切换按钮
+- `ContentArea.svelte` - 内容展示区域，统一管理内容区域的展示逻辑
 
 #### 3.5 工具函数 (`utils/`)
 
-`group.ts` 提供树形分组相关的纯函数：
+**group.ts** 提供树形分组相关的纯函数：
 - `countGroupItems()` - 统计分组及其子分组包含的网站数量
 - `flattenGroupTree()` - 将树形结构拍平成数组，便于快速检索
 - `findGroupInTree()` - 根据谓词在树中定位分组
+
+**icon.ts** 提供图标处理相关的工具函数：
+- 图标 URL 处理
+- Favicon 自动获取逻辑
+- 图标占位符生成
 
 ### 4. 路由设计
 
@@ -277,12 +293,15 @@ ContentArea (结果展示)
 
 - `src/routes/+layout.server.ts`
   - 构建阶段（SSG）预加载所有分组、标签和导航项，作为 `navigation` 上下文注入客户端
+  - 仅在首页和收藏页加载导航数据，其他页面按需加载，优化性能
+  - 加载网站配置（`config.json`）和构建时间信息
   - 客户端水合时复用该数据，不再额外请求或解析 Markdown
 - `src/routes/group/[group]/+page.server.ts`
   - 按分组 ID 预渲染分组页面
   - 仅在服务器端调用 `loadGroups()`
 - `src/routes/item/[id]/+page.server.ts`
   - 加载单个导航项及其 Markdown 描述
+  - 生成相关网站推荐（基于标签相似度算法）
   - 避免浏览器执行 `gray-matter`
 
 > 说明：所有 `+page.server.ts` 都导出 `entries()`，确保在静态导出时预生成所有详情页。
@@ -297,9 +316,44 @@ interface NavItem {
   url: string;         // 网站 URL
   icon?: string;       // 图标路径（可选）
   info?: string;       // 简要信息（可选）
-  desc_md?: string;    // Markdown 文件名（可选）
-  group: string;       // 所属分组
+  desc_md?: string;    // Markdown 文件名（可选，仅用于 JSON 格式）
+  group: string;       // 所属分组（自动推断，数据文件中可忽略）
   tags: string[];      // 标签数组
+}
+```
+
+#### WebsiteConfig（网站配置）
+```typescript
+interface WebsiteConfig {
+  domain: string;       // 网站域名
+  name: string;         // 网站名称
+  description?: string; // 网站描述
+  icon?: string;        // 网站图标
+  image?: string;       // 网站预览图
+  keywords?: string;    // SEO 关键词
+  locale?: string;      // 语言区域
+  author?: string;      // 作者
+  contactEmail?: string; // 联系邮箱
+  version?: string;     // 版本号
+}
+```
+
+#### TagSummary（标签摘要）
+```typescript
+interface TagSummary {
+  name: string;         // 标签名称
+  count: number;        // 使用该标签的导航项数量
+  groupIds: string[];   // 包含该标签的分组 ID 列表
+  groupCount: number;   // 包含该标签的分组数量
+}
+```
+
+#### ItemRecommendation（推荐项）
+```typescript
+interface ItemRecommendation {
+  item: NavItem;        // 推荐的导航项
+  commonTags: string[]; // 共同标签列表
+  isSameGroup: boolean; // 是否属于同一分组
 }
 ```
 
@@ -426,6 +480,7 @@ groups/
 **vite.config.ts**:
 - 使用 SvelteKit 插件
 - 支持热模块替换（HMR）
+- 注入构建时间常量 `__BUILD_TIME__`，用于版本追踪
 
 #### 构建流程
 
@@ -481,8 +536,20 @@ SvelteKit 编译
 - 减少运行时计算
 
 ### 4. 资源优化
-- 图标自动获取和缓存
+- 图标自动获取和缓存（使用 Google favicon 服务）
 - CSS 变量实现主题切换，无需重新加载样式
+- 按需加载导航数据，减少不必要的内存占用
+
+### 5. 推荐算法
+- 基于标签相似度的相关网站推荐（在 `item/[id]/+page.server.ts` 中实现）
+- 使用多因素评分算法：
+  - 稀有标签权重（使用频率越低的标签权重越高）
+  - 共同标签数量
+  - 标签重叠覆盖率
+  - 同分组加分
+  - 多样性惩罚（避免推荐过于相似的网站）
+- 支持同分组优先推荐
+- 可配置推荐数量（默认 6 个）
 
 ## 扩展性
 

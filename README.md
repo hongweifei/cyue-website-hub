@@ -7,7 +7,8 @@
 - ✅ 按分组展示网站导航项
 - ✅ 支持子分组与树形导航结构
 - ✅ 支持按名称、标签、分组、介绍内容模糊搜索
-- ✅ 标签筛选和分组筛选
+- ✅ 标签筛选和分组筛选（支持面板式筛选）
+- ✅ 相关网站推荐（基于标签相似度）
 - ✅ 用户收藏功能（localStorage）
 - ✅ 响应式设计（手机、平板、PC）
 - ✅ Markdown 富文本介绍
@@ -215,7 +216,32 @@ tags:
 npm run import:csv data.csv
 ```
 
-CSV 格式请参考 `scripts/import-csv.js` 文件中的注释。
+**CSV 格式说明**：
+
+CSV 文件应包含以下列（标题行必需）：
+- `id` (必需) - 唯一标识符，将作为文件名
+- `name` (必需) - 网站名称
+- `url` (必需) - 网站地址
+- `icon` (可选) - 图标路径，如 `/assets/icons/baidu.ico`
+- `info` (可选) - 简要信息
+- `group` (必需) - 分组路径，支持子分组（如 `search` 或 `AI/工具`）
+  - 子分组使用斜杠分隔，如 `AI/工具` 表示 AI 分组下的工具子分组
+  - 分组基于文件路径自动推断，此字段仅用于确定文件存放位置
+- `tags` (可选) - 标签，多个标签用逗号分隔，如 `"搜索,工具"`
+- `description` (可选) - Markdown 格式的详细描述内容
+
+**CSV 示例**：
+
+```csv
+id,name,url,icon,info,group,tags,description
+baidu,百度,https://www.baidu.com,/assets/icons/baidu.ico,中国最大的搜索引擎,search,"搜索,工具","百度一下，你就知道。"
+chatgpt,ChatGPT,https://chat.openai.com,,AI对话工具,AI/工具,"AI,对话","OpenAI 开发的 AI 对话工具"
+```
+
+**注意**：
+- 导入的文件将使用 Markdown frontmatter 格式，不再创建单独的 JSON 文件
+- 如果分组目录不存在，脚本会自动创建
+- 详细格式说明请参考 `scripts/import-csv.js` 文件中的注释
 
 ## 项目结构
 
@@ -228,21 +254,36 @@ src/
 │   └── group/[group]/   # 分组页
 ├── lib/
 │   ├── components/      # 组件
-│   │   ├── NavGroup.svelte
-│   │   ├── NavGroupSection.svelte
-│   │   ├── NavGroupChildren.svelte
-│   │   ├── SidebarGroupTree.svelte
-│   │   ├── SidebarGroupTreeList.svelte
-│   │   ├── SidebarGroupTreeItem.svelte
-│   │   ├── NavItem.svelte
-│   │   ├── SearchBar.svelte
-│   │   ├── TagList.svelte
-│   │   ├── FavoriteManager.svelte
-│   │   └── MarkdownRenderer.svelte
+│   │   ├── ContentArea.svelte          # 内容展示区域
+│   │   ├── FavoriteManager.svelte      # 收藏管理器
+│   │   ├── GroupFilterPanel.svelte     # 分组筛选面板
+│   │   ├── LayoutToggle.svelte         # 布局切换器
+│   │   ├── MarkdownRenderer.svelte     # Markdown 渲染器
+│   │   ├── NavGroup.svelte             # 导航分组组件
+│   │   ├── NavGroupSection.svelte      # 分组段组件
+│   │   ├── NavGroupChildren.svelte     # 子分组集合组件
+│   │   ├── NavItem.svelte              # 导航项组件
+│   │   ├── RelatedRecommendations.svelte # 相关推荐组件
+│   │   ├── SearchBar.svelte            # 搜索栏组件
+│   │   ├── Sidebar.svelte              # 侧边栏组件
+│   │   ├── SidebarGroupTree.svelte     # 侧边栏分组树
+│   │   ├── SidebarGroupTreeList.svelte # 分组树列表
+│   │   ├── SidebarGroupTreeItem.svelte # 分组树节点
+│   │   ├── SiteIcon.svelte             # 网站图标组件
+│   │   ├── TagFilterPanel.svelte       # 标签筛选面板
+│   │   └── ThemeToggle.svelte          # 主题切换器
 │   ├── stores/          # 状态管理
-│   │   └── favorites.ts
+│   │   ├── favorites.ts # 收藏状态
+│   │   ├── layout.ts    # 布局状态
+│   │   └── theme.ts     # 主题状态
+│   ├── hooks/           # 自定义 Hooks
+│   │   ├── useLayout.ts      # 布局管理 Hook
+│   │   └── useNavigation.ts  # 导航数据管理 Hook
+│   ├── services/        # 业务服务层
+│   │   └── searchService.ts  # 搜索服务
 │   ├── utils/           # 工具函数
-│   │   └── group.ts
+│   │   ├── group.ts     # 分组工具函数
+│   │   └── icon.ts      # 图标处理工具
 │   ├── dataLoader.ts    # 数据加载
 │   └── types.ts         # 类型定义
 └── data/
@@ -302,14 +343,33 @@ src/
 
 ## 自定义
 
-### 主题系统速览
+### 主题系统
 
+主题系统提供了完全动态化、零配置的主题管理方案。系统支持自动扫描和加载主题文件，无需修改任何代码即可添加新主题。
+
+**核心特性**：
+- 零配置添加主题：只需创建 CSS 和 JSON 文件，系统自动识别
+- 双轨配置：支持 CSS 变量和 JSON 配置文件，灵活组合
+- 动态加载：按需加载主题 CSS，不阻塞页面初始化
+- 布局驱动：主题可以控制页面布局结构，无需修改组件代码
+- 组件样式系统：统一的组件样式管理，支持多变体
+- 自适应模式：支持跟随系统光暗自动切换
+
+**快速了解**：
 - 主题由 `src/lib/theme/styles/*.css` 与可选的 `src/lib/theme/configs/*.json` 组成，系统会自动扫描并注册，无需改动业务代码。
 - CSS 中可使用 `--theme-*` 变量声明主题元数据与样式，JSON 可补充更复杂的配置；两者自动合并，JSON 优先。
-- 组件样式通过命名规范化的 CSS 变量驱动，解耦视觉与逻辑，详见 `src/lib/theme/COMPONENT_STYLES.md`。
-- 布局联动：主题可设置 `layout.tokens`（或 `--theme-layout-*` 变量），运行时会为 `<html>` 写入 `data-layout-*`，从而让 `src/routes/+layout.svelte` 等顶层结构在切换主题时同步调整。
-- 页级扩展：新增 `pageHome` / `pageFavorites` / `pageGroup` / `pageItem` 等 tokens，可在各页面文件内基于 `data-layout-page-*` 选择器定制不同主题下的排布。
-- 更多细节、示例与最佳实践请参阅 `src/lib/theme/README.md`。
+- 组件样式通过命名规范化的 CSS 变量驱动，解耦视觉与逻辑。
+- 布局联动：主题可设置 `layout.tokens`（或 `--theme-layout-*` 变量），运行时会为 `<html>` 写入 `data-layout-*`，从而让顶层结构在切换主题时同步调整。
+
+**详细文档**：
+- 📖 [主题系统完整文档](./doc/THEME_SYSTEM.md) - 系统概述、架构设计、使用指南
+- 📖 [CSS 变量参考文档](./doc/CSS_VARIABLES.md) - 所有 CSS 变量完整列表和说明
+- 📖 [组件样式系统使用指南](./doc/COMPONENT_STYLES.md) - 组件样式系统完整文档
+
+**重要提示**：
+- `harmony.css` 是默认主题，包含所有基础样式变量的完整定义，是创建新主题的最佳参考
+- `app.css` 中的基础变量（如 spacing、radius、motion 等）可以在主题中覆盖定制
+- 基础样式变量分为两类：`app.css` 中的部分变量（可覆盖）和 `harmony.css` 中的完整变量定义（参考标准）
 
 ### 修改主题颜色
 
@@ -328,7 +388,9 @@ src/
 - 组件位于 `src/lib/components/`
 - 数据加载逻辑在 `src/lib/dataLoader.ts`
 - 状态管理在 `src/lib/stores/`
+- 业务逻辑在 `src/lib/services/`
+- 自定义 Hooks 在 `src/lib/hooks/`
 
 ## 许可证
 
-MIT
+本项目采用Apache License 2.0开源许可证。

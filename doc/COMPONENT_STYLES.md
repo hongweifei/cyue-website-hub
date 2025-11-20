@@ -110,10 +110,15 @@
 
 ### 2. 在主题 CSS 中定义组件样式
 
-在主题 CSS 文件中定义组件样式变量：
+在主题 CSS 文件中定义组件样式变量。**建议参考 `harmony.css` 了解所有可用的组件样式变量**：
 
 ```css
 :root[data-theme="my-theme"] {
+  /* 基础样式变量（可选，可以参考 harmony.css） */
+  --primary-color: #007DFF;
+  --spacing-sm: 12px;
+  --radius-lg: 20px;
+  
   /* Button 组件 - Primary 变体 */
   --component-button-primary-bg: linear-gradient(135deg, #007DFF, #00D9FF);
   --component-button-primary-color: #FFFFFF;
@@ -121,8 +126,8 @@
   --component-button-primary-shadow: 0 4px 12px rgba(0, 125, 255, 0.3);
   --component-button-primary-bg-hover: linear-gradient(135deg, #1890FF, #00B8D9);
   --component-button-primary-shadow-hover: 0 6px 20px rgba(0, 125, 255, 0.4);
-  --component-button-primary-radius: 16px;
-  --component-button-primary-padding: 12px 24px;
+  --component-button-primary-radius: var(--radius-lg);  /* 引用基础变量 */
+  --component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);  /* 引用基础变量 */
   --component-button-primary-transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
 
   /* Button 组件 - Secondary 变体 */
@@ -132,6 +137,11 @@
   /* ... 更多属性 */
 }
 ```
+
+**提示**：
+- 组件样式变量可以引用主题基础变量（如 `var(--radius-lg)`）
+- 基础变量可以在主题中覆盖 `app.css` 中的默认值
+- 参考 `harmony.css` 查看完整的组件样式变量定义
 
 ### 3. 支持多个变体
 
@@ -336,9 +346,12 @@ const bgVar = componentStyles.button.var("primary", "bg"); // ✅
 
 查看以下文件了解完整示例：
 
-- `src/lib/theme/styles/harmony.css` - 浅色主题组件样式定义
+- `src/lib/theme/styles/harmony.css` - **默认主题**，包含完整的组件样式定义和基础样式变量（主要参考）
 - `src/lib/theme/styles/harmony-dark.css` - 深色主题组件样式定义
+- `src/components.css` - 组件类样式实现
 - `src/lib/theme/components.ts` - 组件样式工具函数
+
+**提示**：`harmony.css` 是默认主题，不仅包含组件样式变量，还包含所有基础样式变量的完整定义，是创建新主题的最佳参考。
 
 ## 常见问题
 
