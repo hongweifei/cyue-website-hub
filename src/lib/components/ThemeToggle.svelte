@@ -684,14 +684,17 @@
         .theme-panel {
             position: fixed;
             top: calc(var(--header-height, 64px) + var(--spacing-md));
-            left: 50%;
-            transform: translateX(-50%);
-            right: auto;
-            width: min(360px, calc(100vw - var(--spacing-lg)));
+            left: var(--spacing-lg);
+            right: var(--spacing-lg);
+            width: auto;
+            max-width: 360px;
             max-height: calc(100vh - var(--spacing-xl));
+            margin-left: auto;
+            margin-right: auto;
             overflow-y: auto;
             padding: var(--spacing-sm) var(--spacing-md);
             border-radius: var(--radius-2xl);
+            transform: none;
         }
 
 		.theme-option {
