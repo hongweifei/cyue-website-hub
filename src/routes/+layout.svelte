@@ -700,8 +700,6 @@
 
   :global(:root[data-layout-shell="edge-to-edge"]) .container {
     max-width: 100%;
-    padding-left: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
-    padding-right: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
   }
 
   :global(:root[data-layout-density="cozy"]) {
