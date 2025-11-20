@@ -360,6 +360,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   .tag-filter-panel:not(.stacked) .tag-grid {
     flex: 0 1 auto;
     max-height: clamp(180px, 32vh, 320px);
+    overflow-x: hidden;
     overflow-y: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
