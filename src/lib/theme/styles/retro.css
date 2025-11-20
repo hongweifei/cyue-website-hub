@@ -495,6 +495,60 @@
 	box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
+/* ============================================
+ * Hover 状态文字可读性优化
+ * ============================================ */
+
+/* Retro 主题 - 确保 hover 状态文字清晰 */
+:root[data-theme="retro"] .component-button-secondary:hover {
+	color: var(--text-primary) !important;
+	font-weight: 600;
+}
+
+:root[data-theme="retro"] .component-card-default:hover,
+:root[data-theme="retro"] .component-card-glass:hover {
+	color: var(--text-primary) !important;
+}
+
+:root[data-theme="retro"] .component-card-default:hover h1,
+:root[data-theme="retro"] .component-card-default:hover h2,
+:root[data-theme="retro"] .component-card-default:hover h3,
+:root[data-theme="retro"] .component-card-default:hover h4,
+:root[data-theme="retro"] .component-card-default:hover p,
+:root[data-theme="retro"] .component-card-default:hover span,
+:root[data-theme="retro"] .component-card-glass:hover h1,
+:root[data-theme="retro"] .component-card-glass:hover h2,
+:root[data-theme="retro"] .component-card-glass:hover h3,
+:root[data-theme="retro"] .component-card-glass:hover h4,
+:root[data-theme="retro"] .component-card-glass:hover p,
+:root[data-theme="retro"] .component-card-glass:hover span {
+	color: inherit;
+}
+
+:root[data-theme="retro"] .component-tag-default:hover {
+	color: var(--text-primary) !important;
+	font-weight: 600;
+}
+
+/* Retro 主题 - 确保 link hover 时文字清晰可见 */
+:root[data-theme="retro"] .nav-link:hover {
+	color: #0000ff !important;
+	font-weight: 700;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="retro"] .component-link-default:hover {
+	color: #ff00ff !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="retro"] .component-link-secondary:hover {
+	color: #0000ff !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
 	:root[data-theme="retro"] .header-shell {

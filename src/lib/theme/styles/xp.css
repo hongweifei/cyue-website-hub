@@ -527,6 +527,60 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* ============================================
+ * Hover 状态文字可读性优化
+ * ============================================ */
+
+/* XP 主题 - 确保 hover 状态文字清晰 */
+:root[data-theme="xp"] .component-button-secondary:hover {
+	color: var(--text-primary) !important;
+	font-weight: 500;
+}
+
+:root[data-theme="xp"] .component-card-default:hover,
+:root[data-theme="xp"] .component-card-glass:hover {
+	color: var(--text-primary) !important;
+}
+
+:root[data-theme="xp"] .component-card-default:hover h1,
+:root[data-theme="xp"] .component-card-default:hover h2,
+:root[data-theme="xp"] .component-card-default:hover h3,
+:root[data-theme="xp"] .component-card-default:hover h4,
+:root[data-theme="xp"] .component-card-default:hover p,
+:root[data-theme="xp"] .component-card-default:hover span,
+:root[data-theme="xp"] .component-card-glass:hover h1,
+:root[data-theme="xp"] .component-card-glass:hover h2,
+:root[data-theme="xp"] .component-card-glass:hover h3,
+:root[data-theme="xp"] .component-card-glass:hover h4,
+:root[data-theme="xp"] .component-card-glass:hover p,
+:root[data-theme="xp"] .component-card-glass:hover span {
+	color: inherit;
+}
+
+:root[data-theme="xp"] .component-tag-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+}
+
+/* XP 主题 - 确保 link hover 时文字清晰可见 */
+:root[data-theme="xp"] .nav-link:hover {
+	color: #0078d7 !important;
+	font-weight: 700;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="xp"] .component-link-default:hover {
+	color: #005a9e !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="xp"] .component-link-secondary:hover {
+	color: #0078d7 !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
 	:root[data-theme="xp"] .footer-shell {

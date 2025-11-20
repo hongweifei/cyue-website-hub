@@ -561,6 +561,65 @@
 	animation: pulse 2s ease-in-out infinite;
 }
 
+/* ============================================
+ * Hover 状态文字可读性优化
+ * ============================================ */
+
+/* Noir 主题 - 确保 hover 状态文字清晰 */
+:root[data-theme="noir"] .component-button-secondary:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+}
+
+:root[data-theme="noir"] .component-card-default:hover,
+:root[data-theme="noir"] .component-card-glass:hover {
+	color: var(--text-primary) !important;
+}
+
+:root[data-theme="noir"] .component-card-default:hover h1,
+:root[data-theme="noir"] .component-card-default:hover h2,
+:root[data-theme="noir"] .component-card-default:hover h3,
+:root[data-theme="noir"] .component-card-default:hover h4,
+:root[data-theme="noir"] .component-card-default:hover p,
+:root[data-theme="noir"] .component-card-default:hover span,
+:root[data-theme="noir"] .component-card-glass:hover h1,
+:root[data-theme="noir"] .component-card-glass:hover h2,
+:root[data-theme="noir"] .component-card-glass:hover h3,
+:root[data-theme="noir"] .component-card-glass:hover h4,
+:root[data-theme="noir"] .component-card-glass:hover p,
+:root[data-theme="noir"] .component-card-glass:hover span {
+	color: inherit;
+}
+
+:root[data-theme="noir"] .component-tag-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: 0 0 6px rgba(249, 115, 22, 0.4);
+}
+
+/* Noir 主题 - 简化 link hover 样式，确保文字清晰可见 */
+:root[data-theme="noir"] .nav-link:hover {
+	color: var(--primary-color) !important;
+	font-weight: 600;
+	text-shadow: none; /* 移除文字阴影，避免模糊 */
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="noir"] .component-link-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: none; /* 移除文字阴影，避免模糊 */
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="noir"] .component-link-secondary:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+	text-shadow: none; /* 移除文字阴影，避免模糊 */
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
 	:root[data-theme="noir"] .header-shell::before {

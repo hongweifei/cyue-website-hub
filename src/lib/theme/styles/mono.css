@@ -465,6 +465,60 @@
 	box-shadow: none;
 }
 
+/* ============================================
+ * Hover 状态文字可读性优化
+ * ============================================ */
+
+/* Mono 主题 - 确保 hover 状态文字清晰 */
+:root[data-theme="mono"] .component-button-secondary:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+}
+
+:root[data-theme="mono"] .component-card-default:hover,
+:root[data-theme="mono"] .component-card-glass:hover {
+	color: var(--text-primary) !important;
+}
+
+:root[data-theme="mono"] .component-card-default:hover h1,
+:root[data-theme="mono"] .component-card-default:hover h2,
+:root[data-theme="mono"] .component-card-default:hover h3,
+:root[data-theme="mono"] .component-card-default:hover h4,
+:root[data-theme="mono"] .component-card-default:hover p,
+:root[data-theme="mono"] .component-card-default:hover span,
+:root[data-theme="mono"] .component-card-glass:hover h1,
+:root[data-theme="mono"] .component-card-glass:hover h2,
+:root[data-theme="mono"] .component-card-glass:hover h3,
+:root[data-theme="mono"] .component-card-glass:hover h4,
+:root[data-theme="mono"] .component-card-glass:hover p,
+:root[data-theme="mono"] .component-card-glass:hover span {
+	color: inherit;
+}
+
+:root[data-theme="mono"] .component-tag-default:hover {
+	color: var(--primary-color) !important;
+	font-weight: 500;
+}
+
+/* Mono 主题 - 确保 link hover 时文字清晰可见 */
+:root[data-theme="mono"] .nav-link:hover {
+	color: #5c4033 !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="mono"] .component-link-default:hover {
+	color: #5c4033 !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
+:root[data-theme="mono"] .component-link-secondary:hover {
+	color: #5c4033 !important;
+	font-weight: 600;
+	background: transparent !important; /* 移除背景，避免盖住文字 */
+}
+
 /* 移动端适配 */
 @media (max-width: 768px) {
 	:root[data-theme="mono"] .footer-shell {
