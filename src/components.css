@@ -4,7 +4,7 @@
  */
 
 /* ================================
-   通用卡片样式
+   基础重置和通用样式
    ================================ */
 .component-card-default,
 .component-card-glass,
@@ -20,8 +20,12 @@
 .component-input-default,
 .component-link-default,
 .component-link-secondary {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
+
+/* ================================
+   通用卡片样式
+   ================================ */
 
 .component-card-default {
   position: relative;
@@ -136,7 +140,10 @@
 /* ================================
    通用按钮样式
    ================================ */
-:is(.component-button-primary, .component-button-secondary, .component-button-outline, .component-button-ghost) {
+.component-button-primary,
+.component-button-secondary,
+.component-button-outline,
+.component-button-ghost {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -265,8 +272,14 @@
   outline-offset: 3px;
 }
 
-:is(.component-button-primary, .component-button-secondary, .component-button-outline, .component-button-ghost)[disabled],
-:is(.component-button-primary, .component-button-secondary, .component-button-outline, .component-button-ghost).is-disabled {
+.component-button-primary[disabled],
+.component-button-primary.is-disabled,
+.component-button-secondary[disabled],
+.component-button-secondary.is-disabled,
+.component-button-outline[disabled],
+.component-button-outline.is-disabled,
+.component-button-ghost[disabled],
+.component-button-ghost.is-disabled {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
@@ -277,11 +290,9 @@
 /* ================================
    通用标签样式
    ================================ */
-.component-tag-default {
+.component-tag-default,
+.component-tag-primary {
   padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-  background: var(--component-tag-default-bg, var(--bg-tertiary));
-  color: var(--component-tag-default-color, var(--text-secondary));
-  border: 1px solid var(--component-tag-default-border, var(--border-light));
   border-radius: var(--component-tag-default-radius, var(--radius-full));
   font-size: 0.8125rem;
   font-weight: 500;
@@ -292,6 +303,12 @@
   gap: var(--spacing-xs);
   box-shadow: var(--component-tag-default-shadow, none);
   transform: var(--component-tag-default-transform, translateZ(0));
+}
+
+.component-tag-default {
+  background: var(--component-tag-default-bg, var(--bg-tertiary));
+  color: var(--component-tag-default-color, var(--text-secondary));
+  border: 1px solid var(--component-tag-default-border, var(--border-light));
 }
 
 .component-tag-default:hover {
@@ -376,7 +393,7 @@
   outline: none;
   border-color: var(--component-input-default-border-focus, var(--primary-color));
   box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px var(--primary-lighter);
-  background: var(--component-card-default-bg, var(--card-bg));
+  background: var(--component-input-default-bg-focus, var(--card-bg));
   transform: var(--component-input-default-transform-focus, scale(1.01));
 }
 
@@ -439,11 +456,11 @@
   color: var(--component-link-secondary-color, var(--text-primary));
   background: var(--component-link-secondary-bg, transparent);
   border: var(--component-link-secondary-border, 1px solid transparent);
-  border-radius: var(--component-button-ghost-radius, var(--radius-md));
+  border-radius: var(--component-link-secondary-radius, var(--radius-md));
   box-shadow: var(--component-link-secondary-shadow, none);
   -webkit-backdrop-filter: var(--component-link-secondary-backdrop, none);
   backdrop-filter: var(--component-link-secondary-backdrop, none);
-  padding: var(--component-button-ghost-padding, var(--spacing-2xs) var(--spacing-sm));
+  padding: var(--component-link-secondary-padding, var(--spacing-2xs) var(--spacing-sm));
   text-decoration: var(--component-link-secondary-text-decoration, underline);
   text-decoration-thickness: var(--component-link-secondary-text-decoration-thickness, 1px);
   text-underline-offset: var(--component-link-secondary-text-underline-offset, 2px);
@@ -714,29 +731,19 @@
   background: var(--component-card-default-bg-hover, var(--surface-glass));
 }
 
-.layout-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.layout-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.layout-start {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
+/* 布局工具类 - 统一使用 flex 布局 */
+.layout-center,
+.layout-between,
+.layout-start,
 .layout-end {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
 }
+
+.layout-center { justify-content: center; }
+.layout-between { justify-content: space-between; }
+.layout-start { justify-content: flex-start; }
+.layout-end { justify-content: flex-end; }
 
 /* ================================
    通用间距工具类
@@ -787,7 +794,7 @@
   .mobile\:hidden { display: none; }
   .mobile\:block { display: block; }
   .mobile\:flex { display: flex; }
-  .mobile\:flex-col { flex-direction: column; }
+  .mobile\:flex-col { display: flex; flex-direction: column; }
   .mobile\:text-center { text-align: center; }
 }
 
@@ -824,6 +831,7 @@
     animation: none;
   }
   
+  /* 禁用所有组件的过渡动画 */
   .component-card-default,
   .component-card-glass,
   .component-card-elevated,
@@ -832,9 +840,14 @@
   .component-button-outline,
   .component-button-ghost,
   .component-tag-default,
+  .component-tag-primary,
+  .component-badge-default,
   .component-input-default,
   .component-link-default,
-  .component-link-secondary {
+  .component-link-secondary,
+  .component-meta-chip,
+  .component-toggle-btn,
+  .component-empty-state {
     transition: none;
   }
 }

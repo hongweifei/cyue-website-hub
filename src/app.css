@@ -70,6 +70,7 @@ html {
 body {
 	background: var(--app-background);
 	background-attachment: fixed;
+	background-size: 100% 100%;
 	color: var(--text-primary);
 	line-height: 1.6;
 	font-size: 16px;
@@ -77,11 +78,15 @@ body {
 	/* 只过渡颜色相关属性，避免重排 */
 	transition:
 		background-color var(--transition-slow),
+		background-image var(--transition-slow),
 		color var(--transition-slow);
 	/* 优化渲染性能 */
 	contain: layout style paint;
 	/* 优化滚动性能 */
 	overscroll-behavior: contain;
+	/* 增强背景渲染质量 */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 @supports (scrollbar-width: thin) {
@@ -104,10 +109,15 @@ body::-webkit-scrollbar-thumb {
 	border-radius: var(--radius-md);
 	border: 2px solid transparent;
 	background-clip: padding-box;
+	transition: background var(--transition-base);
 }
 
 body:hover::-webkit-scrollbar-thumb {
 	background: var(--border-color);
+}
+
+body::-webkit-scrollbar-thumb:hover {
+	background: var(--border-accent);
 }
 
 @media (max-width: 768px) {
@@ -153,6 +163,13 @@ a, button {
 	touch-action: manipulation;
 	/* 优化交互性能 */
 	will-change: transform;
+	/* 平滑的交互反馈 */
+	-webkit-tap-highlight-color: transparent;
+}
+
+a:active, button:active {
+	transform: scale(0.98);
+	transition: transform var(--transition-fast);
 }
 
 /* 性能优化：减少重排的通用类 */
