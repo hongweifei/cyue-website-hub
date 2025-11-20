@@ -213,7 +213,7 @@
     align-self: flex-start;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .group-filter-panel {
       padding: var(--spacing-sm);
       gap: var(--spacing-xs);
