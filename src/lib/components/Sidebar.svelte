@@ -184,12 +184,7 @@
 
 	@media (max-width: 1024px) {
 		.sidebar {
-			position: static;
-			top: auto;
-			max-height: none;
-			overflow: visible;
-			padding: var(--spacing-lg);
-			gap: var(--spacing-lg);
+			display: none;
 		}
 	}
 
