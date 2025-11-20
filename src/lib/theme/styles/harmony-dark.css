@@ -69,16 +69,20 @@
 	--code-bg: rgba(17, 20, 30, 0.9);
 	--header-bg: rgba(29, 33, 41, 0.9);
 	--footer-bg: rgba(22, 24, 35, 0.9);
-	--app-background: radial-gradient(circle at 12% 18%, rgba(64, 169, 255, 0.15), transparent 50%), radial-gradient(circle at 86% 12%, rgba(54, 207, 201, 0.12), transparent 50%), linear-gradient(160deg, #1D2129 0%, #161823 40%, #11141E 100%);
+	--app-background: 
+		radial-gradient(circle at 12% 18%, rgba(64, 169, 255, 0.18), transparent 55%),
+		radial-gradient(circle at 86% 12%, rgba(54, 207, 201, 0.15), transparent 55%),
+		radial-gradient(circle at 50% 85%, rgba(99, 102, 241, 0.1), transparent 50%),
+		linear-gradient(160deg, #1D2129 0%, #161823 35%, #11141E 70%, #0F1117 100%);
 
-	/* 鸿蒙设计规范暗色主题阴影 */
-	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.3);
-	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
-	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.7);
-	--shadow-soft: 0 6px 20px rgba(64, 169, 255, 0.15);
-	--shadow-glow: 0 8px 32px rgba(64, 169, 255, 0.25);
+	/* 鸿蒙设计规范暗色主题阴影 - 增强霓虹光效 */
+	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4);
+	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.5);
+	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7), 0 6px 12px rgba(0, 0, 0, 0.6);
+	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.7);
+	--shadow-soft: 0 6px 20px rgba(64, 169, 255, 0.2), 0 0 12px rgba(64, 169, 255, 0.1);
+	--shadow-glow: 0 8px 32px rgba(64, 169, 255, 0.35), 0 0 24px rgba(54, 207, 201, 0.2);
 
 	/* 鸿蒙设计规范暗色主题层级颜色 */
 	--layer-primary-soft: rgba(64, 169, 255, 0.18);
@@ -108,9 +112,9 @@
 	--component-button-primary-border: transparent;
 	--component-button-primary-shadow: var(--shadow-soft);
 	--component-button-primary-bg-hover: linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%);
-	--component-button-primary-shadow-hover: var(--shadow-glow);
-	--component-button-primary-transform-hover: translateY(-2px) scale(1.02);
-	--component-button-primary-transform-active: translateY(0) scale(0.98);
+	--component-button-primary-shadow-hover: var(--shadow-glow), 0 0 24px rgba(64, 169, 255, 0.4);
+	--component-button-primary-transform-hover: translateY(-3px) scale(1.03);
+	--component-button-primary-transform-active: translateY(-1px) scale(0.98);
 	--component-button-primary-radius: var(--radius-md);
 	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-primary-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -157,34 +161,37 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 20px rgba(64, 169, 255, 0.1);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 24px rgba(64, 169, 255, 0.15), 0 0 0 1px rgba(64, 169, 255, 0.2);
 	--component-card-default-border-hover: var(--border-accent);
-	--component-card-default-transform-hover: translateY(-3px);
+	--component-card-default-bg-hover: rgba(29, 33, 41, 0.98);
+	--component-card-default-transform-hover: translateY(-4px) scale(1.01);
 	--component-card-default-radius: var(--radius-xl);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(10px);
+	--component-card-default-backdrop: blur(16px) saturate(180%);
 	--component-card-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	--component-card-elevated-bg: var(--card-bg);
 	--component-card-elevated-border: var(--border-light);
 	--component-card-elevated-shadow: var(--shadow-md);
-	--component-card-elevated-shadow-hover: var(--shadow-lg), 0 0 30px rgba(64, 169, 255, 0.15);
+	--component-card-elevated-shadow-hover: var(--shadow-lg), 0 0 36px rgba(64, 169, 255, 0.2), 0 0 0 1px rgba(64, 169, 255, 0.25);
 	--component-card-elevated-border-hover: var(--border-accent);
-	--component-card-elevated-transform-hover: translateY(-5px);
+	--component-card-elevated-bg-hover: rgba(29, 33, 41, 0.98);
+	--component-card-elevated-transform-hover: translateY(-6px) scale(1.02);
 	--component-card-elevated-radius: var(--radius-xl);
 	--component-card-elevated-padding: var(--spacing-lg);
-	--component-card-elevated-backdrop: blur(14px);
+	--component-card-elevated-backdrop: blur(20px) saturate(180%);
 	--component-card-elevated-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	--component-card-glass-bg: var(--surface-glass);
 	--component-card-glass-border: var(--border-soft);
 	--component-card-glass-shadow: var(--shadow-xs);
-	--component-card-glass-shadow-hover: var(--shadow-sm), 0 0 24px rgba(54, 207, 201, 0.12);
+	--component-card-glass-shadow-hover: var(--shadow-sm), 0 0 28px rgba(54, 207, 201, 0.18), 0 0 0 1px rgba(54, 207, 201, 0.2);
 	--component-card-glass-border-hover: var(--border-accent);
-	--component-card-glass-transform-hover: translateY(-3px);
+	--component-card-glass-bg-hover: rgba(29, 33, 41, 0.9);
+	--component-card-glass-transform-hover: translateY(-4px) scale(1.01);
 	--component-card-glass-radius: var(--radius-xl);
 	--component-card-glass-padding: var(--spacing-lg);
-	--component-card-glass-backdrop: blur(18px);
+	--component-card-glass-backdrop: blur(24px) saturate(200%);
 	--component-card-glass-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	/* Input 组件样式 - 蓝色光晕效果 */
@@ -194,11 +201,12 @@
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: var(--border-color);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter), 0 0 12px rgba(64, 169, 255, 0.25);
-	--component-input-default-transform-focus: scale(1.005);
+	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 16px rgba(64, 169, 255, 0.3);
+	--component-input-default-bg-focus: rgba(22, 24, 35, 0.98);
+	--component-input-default-transform-focus: scale(1.008);
 	--component-input-default-radius: var(--radius-2xl);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(14px);
+	--component-input-default-backdrop: blur(20px) saturate(180%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	/* Tag 组件样式 - 蓝色光效 */
@@ -209,8 +217,8 @@
 	--component-tag-default-bg-hover: var(--primary-light);
 	--component-tag-default-color-hover: var(--primary-color);
 	--component-tag-default-border-hover: var(--primary-color);
-	--component-tag-default-shadow-hover: 0 0 8px rgba(64, 169, 255, 0.2);
-	--component-tag-default-transform-hover: translateY(-1px) scale(1.02);
+	--component-tag-default-shadow-hover: 0 0 12px rgba(64, 169, 255, 0.25), 0 0 0 1px rgba(64, 169, 255, 0.2);
+	--component-tag-default-transform-hover: translateY(-2px) scale(1.03);
 	--component-tag-default-radius: var(--radius-full);
 	--component-tag-default-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -221,8 +229,8 @@
 	--component-tag-primary-shadow: none;
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: 0 0 12px rgba(64, 169, 255, 0.3);
-	--component-tag-primary-transform-hover: translateY(-1px) scale(1.03);
+	--component-tag-primary-shadow-hover: 0 0 16px rgba(64, 169, 255, 0.4), 0 0 0 1px rgba(64, 169, 255, 0.3);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.04);
 	--component-tag-primary-radius: var(--radius-full);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -232,12 +240,12 @@
 	--component-link-default-color-hover: var(--primary-hover);
 	--component-link-default-underline: linear-gradient(transparent, transparent), linear-gradient(var(--primary-color), var(--primary-color));
 	--component-link-default-underline-hover: linear-gradient(transparent, transparent), linear-gradient(var(--primary-hover), var(--primary-hover));
-	--component-link-default-transform-hover: translateY(-1px);
+	--component-link-default-transform-hover: translateY(-2px);
 	--component-link-default-transition: color var(--transition-base), transform var(--transition-base), background-size var(--transition-base), text-shadow var(--transition-base);
 	--component-link-default-text-decoration: underline;
 	--component-link-default-text-decoration-thickness: 1.5px;
 	--component-link-default-text-underline-offset: 3px;
-	--component-link-default-text-shadow-hover: 0 0 8px rgba(64, 169, 255, 0.4);
+	--component-link-default-text-shadow-hover: 0 0 12px rgba(64, 169, 255, 0.5);
 
 	--component-link-secondary-color: var(--text-secondary);
 	--component-link-secondary-color-hover: var(--text-primary);
@@ -342,6 +350,198 @@
 	
 	:root[data-theme="harmony-dark"] h2 {
 		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Harmony Dark 主题 - 夜空霓虹，蓝色光效 */
+:root[data-theme="harmony-dark"] .component-card-default {
+	/* 增强暗色玻璃质感 */
+	background: linear-gradient(140deg, rgba(29, 33, 41, 0.95) 0%, rgba(22, 24, 35, 0.95) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony-dark"] .component-card-default::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(64, 169, 255, 0.2), rgba(54, 207, 201, 0.2));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="harmony-dark"] .component-card-default:hover::after {
+	opacity: 1;
+}
+
+:root[data-theme="harmony-dark"] .component-button-primary {
+	/* 增强霓虹发光效果 */
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(64, 169, 255, 0.3), var(--shadow-soft);
+}
+
+:root[data-theme="harmony-dark"] .component-button-primary::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(64, 169, 255, 0.4), transparent);
+	transform: translate(-50%, -50%);
+	transition: width 0.6s, height 0.6s;
+}
+
+:root[data-theme="harmony-dark"] .component-button-primary:hover::before {
+	width: 300px;
+	height: 300px;
+}
+
+:root[data-theme="harmony-dark"] .component-tag-primary {
+	/* 增强标签的霓虹光效 */
+	box-shadow: 0 0 10px rgba(64, 169, 255, 0.3), inset 0 0 10px rgba(64, 169, 255, 0.1);
+}
+
+:root[data-theme="harmony-dark"] .component-link-default {
+	/* 增强链接的霓虹下划线 */
+	position: relative;
+}
+
+:root[data-theme="harmony-dark"] .component-link-default::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+	transition: width var(--transition-base);
+	box-shadow: 0 0 8px var(--primary-color);
+}
+
+:root[data-theme="harmony-dark"] .component-link-default:hover::after {
+	width: 100%;
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Harmony Dark 主题 - Header 定制 */
+:root[data-theme="harmony-dark"] .header-shell {
+	/* 增强暗色玻璃质感 */
+	background: linear-gradient(140deg, rgba(29, 33, 41, 0.95) 0%, rgba(22, 24, 35, 0.95) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony-dark"] .header-shell::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(64, 169, 255, 0.2), rgba(54, 207, 201, 0.2));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.6;
+	pointer-events: none;
+	box-shadow: 0 0 20px rgba(64, 169, 255, 0.2), 0 0 30px rgba(54, 207, 201, 0.15);
+}
+
+:root[data-theme="harmony-dark"] .logo a {
+	/* 增强 logo 霓虹效果 */
+	text-shadow: 0 0 20px rgba(64, 169, 255, 0.5), 0 0 30px rgba(54, 207, 201, 0.3);
+	filter: drop-shadow(0 0 8px rgba(64, 169, 255, 0.4));
+}
+
+:root[data-theme="harmony-dark"] .nav-link::after {
+	/* 增强导航链接霓虹下划线 */
+	background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+	box-shadow: 0 0 10px var(--primary-color), 0 0 15px rgba(54, 207, 201, 0.5);
+}
+
+/* Harmony Dark 主题 - Footer 定制 */
+:root[data-theme="harmony-dark"] .footer-shell {
+	/* 增强暗色玻璃质感 */
+	background: linear-gradient(140deg, rgba(29, 33, 41, 0.92) 0%, rgba(22, 24, 35, 0.92) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony-dark"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(64, 169, 255, 0.15), rgba(54, 207, 201, 0.15));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.5;
+	pointer-events: none;
+	box-shadow: 0 0 20px rgba(64, 169, 255, 0.15), 0 0 30px rgba(54, 207, 201, 0.1);
+}
+
+:root[data-theme="harmony-dark"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的霓虹效果 */
+	box-shadow: 0 4px 15px rgba(64, 169, 255, 0.4), 0 0 25px rgba(54, 207, 201, 0.3), inset 0 0 15px rgba(64, 169, 255, 0.1);
+}
+
+:root[data-theme="harmony-dark"] .footer-theme-hint::before {
+	/* 增强主题提示点的霓虹光效 */
+	box-shadow: 0 0 10px rgba(54, 207, 201, 0.6), 0 0 15px rgba(64, 169, 255, 0.4);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="harmony-dark"] .header-shell::after {
+		display: none;
+	}
+	
+	:root[data-theme="harmony-dark"] .logo a {
+		text-shadow: 0 0 8px rgba(64, 169, 255, 0.3);
+		filter: none;
+	}
+	
+	:root[data-theme="harmony-dark"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="harmony-dark"] .footer-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="harmony-dark"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="harmony-dark"] .footer-theme-hint::before {
+		animation: none;
+		box-shadow: 0 0 6px rgba(54, 207, 201, 0.4);
 	}
 }
 

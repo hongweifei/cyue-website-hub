@@ -67,15 +67,20 @@
 	--code-bg: rgba(15, 23, 42, 0.08);
 	--header-bg: rgba(247, 250, 255, 0.9);
 	--footer-bg: rgba(224, 231, 255, 0.85);
-	--app-background: radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.18), transparent 45%), radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.2), transparent 40%), linear-gradient(135deg, #ecfeff 0%, #ede9fe 45%, #e0f2fe 100%);
+	--app-background: 
+		radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.22), transparent 50%),
+		radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.24), transparent 50%),
+		radial-gradient(circle at 50% 80%, rgba(244, 114, 182, 0.15), transparent 45%),
+		linear-gradient(135deg, #ecfeff 0%, #ede9fe 35%, #e0f2fe 70%, #f0e6ff 100%);
 
-	--shadow-xs: 0 5px 18px rgba(79, 70, 229, 0.12);
-	--shadow-sm: 0 10px 28px rgba(79, 70, 229, 0.18);
-	--shadow-md: 0 16px 36px rgba(14, 165, 233, 0.16);
-	--shadow-lg: 0 24px 48px rgba(14, 165, 233, 0.2);
-	--shadow-xl: 0 32px 60px rgba(79, 70, 229, 0.25);
-	--shadow-soft: 0 8px 32px rgba(124, 58, 237, 0.18);
-	--shadow-glow: 0 0 40px rgba(34, 211, 238, 0.35);
+	/* 高饱和玻璃霓虹阴影 - 增强光效 */
+	--shadow-xs: 0 4px 16px rgba(79, 70, 229, 0.15), 0 2px 8px rgba(244, 114, 182, 0.1);
+	--shadow-sm: 0 8px 24px rgba(79, 70, 229, 0.2), 0 4px 12px rgba(34, 211, 238, 0.15);
+	--shadow-md: 0 12px 32px rgba(14, 165, 233, 0.22), 0 6px 16px rgba(244, 114, 182, 0.18);
+	--shadow-lg: 0 18px 48px rgba(14, 165, 233, 0.25), 0 8px 24px rgba(34, 211, 238, 0.2);
+	--shadow-xl: 0 24px 64px rgba(79, 70, 229, 0.3), 0 12px 32px rgba(244, 114, 182, 0.25);
+	--shadow-soft: 0 8px 32px rgba(124, 58, 237, 0.22), 0 0 24px rgba(34, 211, 238, 0.2);
+	--shadow-glow: 0 0 48px rgba(34, 211, 238, 0.4), 0 0 32px rgba(244, 114, 182, 0.3);
 
 	--layer-primary-soft: rgba(124, 58, 237, 0.12);
 	--layer-primary-strong: rgba(124, 58, 237, 0.2);
@@ -104,9 +109,9 @@
 	--component-button-primary-border: transparent;
 	--component-button-primary-shadow: var(--shadow-soft);
 	--component-button-primary-bg-hover: linear-gradient(135deg, #f472b6 0%, #60a5fa 100%);
-	--component-button-primary-shadow-hover: var(--shadow-glow);
-	--component-button-primary-transform-hover: translateY(-3px) scale(1.01);
-	--component-button-primary-transform-active: translateY(0) scale(0.99);
+	--component-button-primary-shadow-hover: var(--shadow-glow), 0 0 32px rgba(244, 114, 182, 0.4), 0 0 48px rgba(96, 165, 250, 0.3);
+	--component-button-primary-transform-hover: translateY(-4px) scale(1.03);
+	--component-button-primary-transform-active: translateY(-1px) scale(0.98);
 	--component-button-primary-radius: var(--radius-lg);
 	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-primary-transition: all var(--transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -153,12 +158,13 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 32px rgba(124, 58, 237, 0.15), 0 0 48px rgba(34, 211, 238, 0.1);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 40px rgba(124, 58, 237, 0.2), 0 0 56px rgba(34, 211, 238, 0.15), 0 0 0 1px rgba(124, 58, 237, 0.2);
 	--component-card-default-border-hover: var(--border-accent);
-	--component-card-default-transform-hover: translateY(-4px);
+	--component-card-default-bg-hover: rgba(248, 248, 255, 0.95);
+	--component-card-default-transform-hover: translateY(-5px) scale(1.01);
 	--component-card-default-radius: var(--radius-2xl);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(20px);
+	--component-card-default-backdrop: blur(28px) saturate(200%);
 	--component-card-default-transition: all var(--transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1);
 
 	--component-card-elevated-bg: var(--card-bg);
@@ -175,12 +181,13 @@
 	--component-card-glass-bg: var(--surface-glass);
 	--component-card-glass-border: var(--border-soft);
 	--component-card-glass-shadow: var(--shadow-xs);
-	--component-card-glass-shadow-hover: var(--shadow-sm), 0 0 40px rgba(244, 114, 182, 0.2), 0 0 56px rgba(96, 165, 250, 0.15);
+	--component-card-glass-shadow-hover: var(--shadow-sm), 0 0 48px rgba(244, 114, 182, 0.25), 0 0 64px rgba(96, 165, 250, 0.2), 0 0 0 1px rgba(244, 114, 182, 0.25);
 	--component-card-glass-border-hover: var(--border-accent);
-	--component-card-glass-transform-hover: translateY(-4px);
+	--component-card-glass-bg-hover: rgba(252, 252, 255, 0.7);
+	--component-card-glass-transform-hover: translateY(-5px) scale(1.01);
 	--component-card-glass-radius: var(--radius-2xl);
 	--component-card-glass-padding: var(--spacing-lg);
-	--component-card-glass-backdrop: blur(28px);
+	--component-card-glass-backdrop: blur(32px) saturate(220%);
 	--component-card-glass-transition: all var(--transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1);
 
 	/* Input 组件样式 - 高饱和玻璃，霓虹光效 */
@@ -190,11 +197,12 @@
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: var(--border-color);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 3px var(--primary-lighter), 0 0 24px rgba(124, 58, 237, 0.25), 0 0 36px rgba(34, 211, 238, 0.2);
+	--component-input-default-shadow-focus: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 32px rgba(124, 58, 237, 0.3), 0 0 48px rgba(34, 211, 238, 0.25);
+	--component-input-default-bg-focus: rgba(255, 255, 255, 1);
 	--component-input-default-transform-focus: scale(1.01);
 	--component-input-default-radius: var(--radius-2xl);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(20px);
+	--component-input-default-backdrop: blur(24px) saturate(200%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.34, 1.56, 0.64, 1);
 
 	/* Tag 组件样式 - 高饱和渐变光效 */
@@ -217,8 +225,8 @@
 	--component-tag-primary-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: 0 0 20px rgba(124, 58, 237, 0.3), 0 0 32px rgba(34, 211, 238, 0.25);
-	--component-tag-primary-transform-hover: translateY(-2px) scale(1.06);
+	--component-tag-primary-shadow-hover: 0 0 24px rgba(124, 58, 237, 0.4), 0 0 40px rgba(34, 211, 238, 0.3), 0 0 0 1px rgba(124, 58, 237, 0.3);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.08);
 	--component-tag-primary-radius: var(--radius-full);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -233,7 +241,8 @@
 	--component-link-default-text-decoration: underline;
 	--component-link-default-text-decoration-thickness: 2px;
 	--component-link-default-text-underline-offset: 4px;
-	--component-link-default-text-shadow-hover: 0 0 16px rgba(124, 58, 237, 0.4), 0 0 24px rgba(34, 211, 238, 0.3);
+	--component-link-default-text-shadow-hover: 0 0 20px rgba(124, 58, 237, 0.5), 0 0 32px rgba(34, 211, 238, 0.4);
+	--component-link-default-transform-hover: translateY(-2px);
 
 	--component-link-secondary-color: var(--text-secondary);
 	--component-link-secondary-color-hover: var(--text-primary);
@@ -340,6 +349,223 @@
 	
 	:root[data-theme="aqua"] h2 {
 		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Aqua 主题 - 高饱和玻璃，渐变浮动 */
+:root[data-theme="aqua"] .component-card-default,
+:root[data-theme="aqua"] .component-card-glass {
+	/* 增强高饱和玻璃质感 */
+	overflow: hidden;
+}
+
+:root[data-theme="aqua"] .component-card-default::before,
+:root[data-theme="aqua"] .component-card-glass::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: conic-gradient(from 0deg, transparent, rgba(124, 58, 237, 0.1), transparent 30%);
+	animation: rotate 8s linear infinite;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="aqua"] .component-card-default:hover::before,
+:root[data-theme="aqua"] .component-card-glass:hover::before {
+	opacity: 1;
+}
+
+@keyframes rotate {
+	to { transform: rotate(360deg); }
+}
+
+:root[data-theme="aqua"] .component-button-primary {
+	/* 增强渐变按钮的霓虹效果 */
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 0 30px rgba(244, 114, 182, 0.4), 0 0 50px rgba(96, 165, 250, 0.3), var(--shadow-soft);
+}
+
+:root[data-theme="aqua"] .component-button-primary::after {
+	content: '';
+	position: absolute;
+	inset: -2px;
+	border-radius: inherit;
+	padding: 2px;
+	background: linear-gradient(135deg, #f472b6, #60a5fa, #22d3ee);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.6;
+	animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+	0%, 100% { opacity: 0.4; }
+	50% { opacity: 0.8; }
+}
+
+:root[data-theme="aqua"] .component-tag-primary {
+	/* 增强标签的渐变光效 */
+	background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(34, 211, 238, 0.2) 100%);
+	box-shadow: 0 0 15px rgba(124, 58, 237, 0.3), 0 0 25px rgba(34, 211, 238, 0.2);
+}
+
+:root[data-theme="aqua"] .component-input-default:focus {
+	/* 增强输入框的霓虹聚焦效果 */
+	box-shadow: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 30px rgba(124, 58, 237, 0.4), 0 0 50px rgba(34, 211, 238, 0.3), var(--shadow-soft);
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Aqua 主题 - Header 定制 */
+:root[data-theme="aqua"] .header-shell {
+	/* 增强高饱和玻璃质感 */
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 114, 182, 0.1) 50%, rgba(34, 211, 238, 0.1) 100%);
+	position: relative;
+}
+
+:root[data-theme="aqua"] .header-shell::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: conic-gradient(from 0deg, transparent, rgba(124, 58, 237, 0.15), transparent 30%);
+	animation: rotate 10s linear infinite;
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+:root[data-theme="aqua"] .logo a {
+	/* 增强 logo 渐变霓虹效果 */
+	background: linear-gradient(135deg, #7c3aed 0%, #f472b6 50%, #22d3ee 100%);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: logoGradient 4s ease-in-out infinite;
+	filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4));
+}
+
+@keyframes logoGradient {
+	0%, 100% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+}
+
+:root[data-theme="aqua"] .nav-link::after {
+	/* 增强导航链接渐变下划线 */
+	background: linear-gradient(90deg, #7c3aed, #f472b6, #22d3ee);
+	background-size: 200% 100%;
+	box-shadow: 0 0 12px rgba(124, 58, 237, 0.5), 0 0 20px rgba(34, 211, 238, 0.4);
+	animation: underlineGlow 3s linear infinite;
+}
+
+@keyframes underlineGlow {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+/* Aqua 主题 - Footer 定制 */
+:root[data-theme="aqua"] .footer-shell {
+	/* 增强高饱和玻璃质感 */
+	background: linear-gradient(140deg, rgba(255, 255, 255, 0.88) 0%, rgba(244, 114, 182, 0.08) 50%, rgba(34, 211, 238, 0.08) 100%);
+	position: relative;
+	overflow: hidden;
+}
+
+:root[data-theme="aqua"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: conic-gradient(from 180deg, transparent, rgba(34, 211, 238, 0.12), transparent 30%);
+	animation: rotate 12s linear infinite;
+	opacity: 0.25;
+	pointer-events: none;
+}
+
+:root[data-theme="aqua"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的渐变霓虹效果 */
+	box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4), 0 0 30px rgba(34, 211, 238, 0.3), 0 0 40px rgba(244, 114, 182, 0.2);
+	animation: logoMarkGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoMarkGlow {
+	0%, 100% { 
+		box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4), 0 0 30px rgba(34, 211, 238, 0.3), 0 0 40px rgba(244, 114, 182, 0.2);
+	}
+	50% { 
+		box-shadow: 0 4px 25px rgba(124, 58, 237, 0.6), 0 0 40px rgba(34, 211, 238, 0.5), 0 0 50px rgba(244, 114, 182, 0.4);
+	}
+}
+
+:root[data-theme="aqua"] .footer-theme-hint::before {
+	/* 增强主题提示点的渐变光效 */
+	background: radial-gradient(circle, #f472b6 0%, #22d3ee 50%, transparent 70%);
+	box-shadow: 0 0 12px rgba(244, 114, 182, 0.6), 0 0 18px rgba(34, 211, 238, 0.4);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="aqua"] .header-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="aqua"] .logo a {
+		animation: none;
+		filter: none;
+	}
+	
+	:root[data-theme="aqua"] .nav-link::after {
+		animation: none;
+	}
+	
+	:root[data-theme="aqua"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="aqua"] .footer-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="aqua"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="aqua"] .footer-logo .logo-mark {
+		animation: none;
+		box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3), 0 0 12px rgba(34, 211, 238, 0.2);
+	}
+	
+	:root[data-theme="aqua"] .footer-theme-hint::before {
+		animation: none;
+		box-shadow: 0 0 6px rgba(244, 114, 182, 0.4);
 	}
 }
 

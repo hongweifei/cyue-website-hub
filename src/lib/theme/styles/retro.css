@@ -348,3 +348,192 @@
 	}
 }
 
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Retro 主题 - 90年代3D浮雕风格 */
+:root[data-theme="retro"] .component-card-default {
+	/* 增强3D浮雕效果 */
+	background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+	border: 3px outset #cccccc;
+	box-shadow: 
+		4px 4px 0px #000000,
+		inset 2px 2px 0px rgba(255, 255, 255, 0.6),
+		inset -2px -2px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="retro"] .component-card-default:hover {
+	border: 3px outset var(--primary-color);
+	box-shadow: 
+		5px 5px 0px #000000,
+		inset 2px 2px 0px rgba(255, 255, 255, 0.7),
+		inset -2px -2px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="retro"] .component-button-primary {
+	/* 增强3D按钮的浮雕效果 */
+	border: 2px outset var(--primary-color);
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+	box-shadow: 
+		3px 3px 0px #000000,
+		inset 1px 1px 0px rgba(255, 255, 255, 0.4),
+		inset -1px -1px 0px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="retro"] .component-button-primary:active {
+	border: 2px inset var(--primary-color);
+	box-shadow: 
+		1px 1px 0px #000000,
+		inset 2px 2px 0px rgba(0, 0, 0, 0.3),
+		inset -1px -1px 0px rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="retro"] .component-input-default {
+	/* 增强输入框的凹陷效果 */
+	border: 2px inset #cccccc;
+	background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 100%);
+	box-shadow: 
+		inset 3px 3px 5px rgba(0, 0, 0, 0.3),
+		inset -2px -2px 3px rgba(255, 255, 255, 0.5),
+		1px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
+:root[data-theme="retro"] .component-tag-default {
+	/* 增强标签的3D效果 */
+	border: 1px outset #999999;
+	box-shadow: 
+		2px 2px 0px #000000,
+		inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+	background: linear-gradient(180deg, #ffffff 0%, #e6e6e6 100%);
+}
+
+:root[data-theme="retro"] .component-tag-default:hover {
+	border: 1px outset var(--primary-color);
+	box-shadow: 
+		3px 3px 0px #000000,
+		inset 1px 1px 0px rgba(255, 255, 255, 0.6);
+}
+
+:root[data-theme="retro"] .component-link-default {
+	/* 90年代经典链接样式 */
+	color: #0000ff;
+	text-decoration: underline;
+}
+
+:root[data-theme="retro"] .component-link-default:visited {
+	color: #800080;
+}
+
+:root[data-theme="retro"] .component-link-default:hover {
+	color: #ff00ff;
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Retro 主题 - Header 定制 */
+:root[data-theme="retro"] .header-shell {
+	/* 增强 90 年代 3D 浮雕效果 */
+	background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+	border: 3px outset #cccccc;
+	box-shadow: 
+		4px 4px 0px #000000,
+		inset 2px 2px 0px rgba(255, 255, 255, 0.6),
+		inset -2px -2px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="retro"] .header-shell:hover {
+	border: 3px outset var(--primary-color);
+	box-shadow: 
+		5px 5px 0px #000000,
+		inset 2px 2px 0px rgba(255, 255, 255, 0.7),
+		inset -2px -2px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="retro"] .logo a {
+	/* 增强 logo 90 年代风格 */
+	color: #0000ff !important;
+	-webkit-text-fill-color: #0000ff !important;
+	background: none !important;
+	-webkit-background-clip: unset !important;
+	background-clip: unset !important;
+	text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+	font-weight: 900;
+}
+
+:root[data-theme="retro"] .nav-link::after {
+	/* 90 年代经典下划线 */
+	background: #0000ff;
+	box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+	height: 2px;
+}
+
+/* Retro 主题 - Footer 定制 */
+:root[data-theme="retro"] .footer-shell {
+	/* 增强 90 年代 3D 浮雕效果 */
+	background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+	border: 3px outset #cccccc;
+	box-shadow: 
+		4px 4px 0px #000000,
+		inset 2px 2px 0px rgba(255, 255, 255, 0.6),
+		inset -2px -2px 0px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="retro"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的 3D 效果 */
+	border: 2px outset var(--primary-color);
+	box-shadow: 
+		3px 3px 0px #000000,
+		inset 1px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+:root[data-theme="retro"] .footer-theme-hint::before {
+	/* 90 年代风格主题提示点 */
+	background: radial-gradient(circle, #0000ff 0%, transparent 70%);
+	box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="retro"] .header-shell {
+		border: 1px solid #cccccc;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+	
+	:root[data-theme="retro"] .header-shell:hover {
+		border: 1px solid var(--primary-color);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+	}
+	
+	:root[data-theme="retro"] .logo a {
+		text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+	}
+	
+	:root[data-theme="retro"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="retro"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="retro"] .footer-logo .logo-mark {
+		border: 1px solid var(--primary-color);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	
+	:root[data-theme="retro"] .footer-theme-hint::before {
+		box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+	}
+}
+

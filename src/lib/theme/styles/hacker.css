@@ -73,9 +73,11 @@
 	--code-bg: rgba(5, 5, 5, 0.98);
 	--header-bg: rgba(0, 0, 0, 0.95);
 	--footer-bg: rgba(0, 0, 0, 0.9);
-	--app-background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%), 
-	                  radial-gradient(circle at 20% 30%, rgba(0, 255, 0, 0.05), transparent 60%), 
-	                  radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.08), transparent 50%);
+	--app-background: 
+		linear-gradient(135deg, #000000 0%, #0a0a0a 35%, #000000 70%, #050505 100%),
+		radial-gradient(circle at 20% 30%, rgba(0, 255, 0, 0.08), transparent 60%),
+		radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.1), transparent 55%),
+		radial-gradient(circle at 50% 80%, rgba(0, 255, 255, 0.05), transparent 50%);
 
 	/* 黑客风格阴影 - 绿色霓虹光效 */
 	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0, 255, 0, 0.2);
@@ -163,12 +165,13 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: 1px solid var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 16px rgba(0, 255, 0, 0.15);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 20px rgba(0, 255, 0, 0.2), 0 0 0 1px rgba(0, 255, 0, 0.3);
 	--component-card-default-border-hover: 1px solid var(--border-accent);
-	--component-card-default-transform-hover: translateY(-2px);
+	--component-card-default-bg-hover: rgba(0, 0, 0, 0.95);
+	--component-card-default-transform-hover: translateY(-3px);
 	--component-card-default-radius: var(--radius-sm);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(2px);
+	--component-card-default-backdrop: blur(4px);
 	--component-card-default-transition: all var(--transition-fast) cubic-bezier(0.25, 0, 0.5, 1);
 
 	--component-card-elevated-bg: var(--card-bg);
@@ -200,11 +203,12 @@
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: 1px solid var(--border-color);
 	--component-input-default-border-focus: 1px solid var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 1px var(--primary-lighter), 0 0 12px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.2);
-	--component-input-default-transform-focus: scale(1.005);
+	--component-input-default-shadow-focus: 0 0 0 1px var(--primary-lighter), 0 0 16px rgba(0, 255, 0, 0.5), 0 0 28px rgba(0, 255, 0, 0.3);
+	--component-input-default-bg-focus: rgba(0, 0, 0, 0.98);
+	--component-input-default-transform-focus: scale(1.008);
 	--component-input-default-radius: var(--radius-sm);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(2px);
+	--component-input-default-backdrop: blur(4px);
 	--component-input-default-transition: all var(--transition-fast) cubic-bezier(0.25, 0, 0.5, 1);
 
 	/* Tag 组件样式 - 绿色霓虹光效 */
@@ -227,8 +231,8 @@
 	--component-tag-primary-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: 0 0 16px rgba(0, 255, 0, 0.5);
-	--component-tag-primary-transform-hover: translateY(-1px);
+	--component-tag-primary-shadow-hover: 0 0 20px rgba(0, 255, 0, 0.6), 0 0 0 1px rgba(0, 255, 0, 0.4);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.02);
 	--component-tag-primary-radius: var(--radius-xs);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-fast) cubic-bezier(0.25, 0, 0.5, 1);
@@ -243,7 +247,8 @@
 	--component-link-default-text-decoration: underline;
 	--component-link-default-text-decoration-thickness: 1.5px;
 	--component-link-default-text-underline-offset: 3px;
-	--component-link-default-text-shadow-hover: 0 0 12px rgba(0, 255, 0, 0.6);
+	--component-link-default-text-shadow-hover: 0 0 16px rgba(0, 255, 0, 0.7), 0 0 24px rgba(57, 255, 20, 0.4);
+	--component-link-default-transform-hover: translateY(-2px);
 
 	--component-link-secondary-color: var(--text-secondary);
 	--component-link-secondary-color-hover: var(--text-primary);
@@ -351,6 +356,203 @@
 	
 	:root[data-theme="hacker"] h2 {
 		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Hacker 主题 - 终端绿色矩阵风格 */
+:root[data-theme="hacker"] .component-card-default {
+	/* 增强终端风格的边框光效 */
+	border: 1px solid var(--border-light);
+	position: relative;
+}
+
+:root[data-theme="hacker"] .component-card-default::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px solid var(--primary-color);
+	opacity: 0;
+	transition: opacity var(--transition-fast);
+	pointer-events: none;
+	box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.1);
+}
+
+:root[data-theme="hacker"] .component-card-default:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="hacker"] .component-button-primary {
+	/* 增强终端按钮的绿色发光 */
+	text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+	box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), inset 0 0 20px rgba(0, 255, 0, 0.1), var(--shadow-soft);
+	position: relative;
+}
+
+:root[data-theme="hacker"] .component-button-primary::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border: 1px solid var(--primary-color);
+	opacity: 0.5;
+	animation: pulseBorder 2s ease-in-out infinite;
+}
+
+@keyframes pulseBorder {
+	0%, 100% { opacity: 0.3; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); }
+	50% { opacity: 0.8; box-shadow: 0 0 15px rgba(0, 255, 0, 0.6); }
+}
+
+:root[data-theme="hacker"] .component-input-default {
+	/* 增强输入框的终端风格 */
+	font-family: var(--font-sans-primary);
+	letter-spacing: 0.05em;
+}
+
+:root[data-theme="hacker"] .component-input-default:focus {
+	/* 增强聚焦时的绿色光效 */
+	box-shadow: 0 0 0 1px var(--primary-lighter), 0 0 20px rgba(0, 255, 0, 0.6), 0 0 35px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1);
+	text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+:root[data-theme="hacker"] .component-tag-primary {
+	/* 增强标签的绿色霓虹效果 */
+	text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+	box-shadow: 0 0 15px rgba(0, 255, 0, 0.4), inset 0 0 10px rgba(0, 255, 0, 0.1);
+}
+
+:root[data-theme="hacker"] .component-link-default {
+	/* 增强链接的绿色发光下划线 */
+	text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+}
+
+:root[data-theme="hacker"] .component-link-default:hover {
+	text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(57, 255, 20, 0.4);
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Hacker 主题 - Header 定制 */
+:root[data-theme="hacker"] .header-shell {
+	/* 增强终端风格 */
+	background: linear-gradient(180deg, rgba(0, 20, 0, 0.95) 0%, rgba(0, 15, 0, 0.98) 100%);
+	border: 1px solid rgba(0, 255, 0, 0.2);
+	position: relative;
+}
+
+:root[data-theme="hacker"] .header-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border: 1px solid rgba(0, 255, 0, 0.3);
+	border-radius: inherit;
+	opacity: 0;
+	transition: opacity var(--transition-fast);
+	pointer-events: none;
+	box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), inset 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+:root[data-theme="hacker"] .header-shell:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="hacker"] .logo a {
+	/* 增强 logo 绿色发光效果 */
+	color: #00ff00 !important;
+	-webkit-text-fill-color: #00ff00 !important;
+	text-shadow: 0 0 15px rgba(0, 255, 0, 0.8), 0 0 25px rgba(0, 255, 0, 0.5);
+	filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.6));
+	background: none !important;
+	-webkit-background-clip: unset !important;
+	background-clip: unset !important;
+}
+
+:root[data-theme="hacker"] .nav-link {
+	/* 增强导航链接终端风格 */
+	font-family: var(--font-sans-primary);
+	letter-spacing: 0.05em;
+}
+
+:root[data-theme="hacker"] .nav-link::after {
+	/* 增强导航链接绿色下划线 */
+	background: #00ff00;
+	box-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+/* Hacker 主题 - Footer 定制 */
+:root[data-theme="hacker"] .footer-shell {
+	/* 增强终端风格 */
+	background: linear-gradient(180deg, rgba(0, 20, 0, 0.92) 0%, rgba(0, 15, 0, 0.95) 100%);
+	border: 1px solid rgba(0, 255, 0, 0.15);
+	position: relative;
+}
+
+:root[data-theme="hacker"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border: 1px solid rgba(0, 255, 0, 0.2);
+	border-radius: inherit;
+	opacity: 0.5;
+	pointer-events: none;
+	box-shadow: 0 0 10px rgba(0, 255, 0, 0.15), inset 0 0 10px rgba(0, 255, 0, 0.08);
+}
+
+:root[data-theme="hacker"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的绿色发光 */
+	background: linear-gradient(135deg, #00ff00 0%, #39ff14 100%);
+	box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5), 0 0 25px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.2);
+}
+
+:root[data-theme="hacker"] .footer-theme-hint::before {
+	/* 增强主题提示点的绿色光效 */
+	background: radial-gradient(circle, #00ff00 0%, transparent 70%);
+	box-shadow: 0 0 12px rgba(0, 255, 0, 0.8), 0 0 18px rgba(0, 255, 0, 0.5);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="hacker"] .header-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="hacker"] .logo a {
+		text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+		filter: none;
+	}
+	
+	:root[data-theme="hacker"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="hacker"] .footer-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="hacker"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="hacker"] .footer-theme-hint::before {
+		animation: none;
+		box-shadow: 0 0 6px rgba(0, 255, 0, 0.5);
 	}
 }
 

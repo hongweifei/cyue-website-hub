@@ -68,16 +68,20 @@
 	--code-bg: rgba(0, 0, 0, 0.04);
 	--header-bg: rgba(255, 255, 255, 0.85);
 	--footer-bg: rgba(247, 248, 250, 0.9);
-	--app-background: radial-gradient(circle at 20% 20%, rgba(0, 125, 255, 0.08), transparent 50%), radial-gradient(circle at 80% 10%, rgba(0, 217, 255, 0.1), transparent 50%), linear-gradient(135deg, #F7F8FA 0%, #FFFFFF 40%, #F0F2F5 100%);
+	--app-background: 
+		radial-gradient(circle at 20% 20%, rgba(0, 125, 255, 0.1), transparent 55%),
+		radial-gradient(circle at 80% 10%, rgba(0, 217, 255, 0.12), transparent 55%),
+		radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.06), transparent 50%),
+		linear-gradient(135deg, #F7F8FA 0%, #FFFFFF 35%, #F0F2F5 70%, #FAFBFC 100%);
 
-	/* 鸿蒙设计规范阴影 - 更柔和的阴影效果 */
-	--shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.04);
-	--shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
-	--shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-	--shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1);
-	--shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
-	--shadow-soft: 0 6px 20px rgba(0, 125, 255, 0.08);
-	--shadow-glow: 0 8px 32px rgba(0, 125, 255, 0.15);
+	/* 鸿蒙设计规范阴影 - 增强层次感和深度 */
+	--shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+	--shadow-sm: 0 3px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+	--shadow-md: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
+	--shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08);
+	--shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.1);
+	--shadow-soft: 0 4px 14px rgba(0, 125, 255, 0.12), 0 2px 6px rgba(0, 125, 255, 0.08);
+	--shadow-glow: 0 8px 32px rgba(0, 125, 255, 0.2), 0 4px 16px rgba(0, 217, 255, 0.15);
 
 	/* 鸿蒙设计规范层级颜色 */
 	--layer-primary-soft: rgba(0, 125, 255, 0.1);
@@ -107,9 +111,9 @@
 	--component-button-primary-border: transparent;
 	--component-button-primary-shadow: var(--shadow-soft);
 	--component-button-primary-bg-hover: linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%);
-	--component-button-primary-shadow-hover: var(--shadow-glow);
-	--component-button-primary-transform-hover: translateY(-2px) scale(1.01);
-	--component-button-primary-transform-active: translateY(0) scale(0.99);
+	--component-button-primary-shadow-hover: var(--shadow-glow), 0 0 20px rgba(0, 125, 255, 0.3);
+	--component-button-primary-transform-hover: translateY(-3px) scale(1.02);
+	--component-button-primary-transform-active: translateY(-1px) scale(0.98);
 	--component-button-primary-radius: var(--radius-lg);
 	--component-button-primary-padding: var(--spacing-sm) var(--spacing-lg);
 	--component-button-primary-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -156,34 +160,37 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-soft);
+	--component-card-default-shadow-hover: var(--shadow-soft), 0 0 0 1px rgba(0, 125, 255, 0.1);
 	--component-card-default-border-hover: var(--border-accent);
-	--component-card-default-transform-hover: translateY(-3px);
+	--component-card-default-bg-hover: rgba(255, 255, 255, 0.98);
+	--component-card-default-transform-hover: translateY(-4px) scale(1.01);
 	--component-card-default-radius: var(--radius-xl);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(12px);
+	--component-card-default-backdrop: blur(16px) saturate(180%);
 	--component-card-default-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	--component-card-elevated-bg: var(--card-bg);
 	--component-card-elevated-border: var(--border-light);
 	--component-card-elevated-shadow: var(--shadow-md);
-	--component-card-elevated-shadow-hover: var(--shadow-glow);
+	--component-card-elevated-shadow-hover: var(--shadow-glow), 0 0 0 1px rgba(0, 125, 255, 0.15);
 	--component-card-elevated-border-hover: var(--border-accent);
-	--component-card-elevated-transform-hover: translateY(-5px);
+	--component-card-elevated-bg-hover: rgba(255, 255, 255, 0.98);
+	--component-card-elevated-transform-hover: translateY(-6px) scale(1.02);
 	--component-card-elevated-radius: var(--radius-xl);
 	--component-card-elevated-padding: var(--spacing-lg);
-	--component-card-elevated-backdrop: blur(16px);
+	--component-card-elevated-backdrop: blur(20px) saturate(180%);
 	--component-card-elevated-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	--component-card-glass-bg: var(--surface-glass);
 	--component-card-glass-border: var(--border-soft);
 	--component-card-glass-shadow: var(--shadow-xs);
-	--component-card-glass-shadow-hover: var(--shadow-soft);
+	--component-card-glass-shadow-hover: var(--shadow-soft), 0 0 0 1px rgba(0, 125, 255, 0.12);
 	--component-card-glass-border-hover: var(--border-accent);
-	--component-card-glass-transform-hover: translateY(-3px);
+	--component-card-glass-bg-hover: rgba(255, 255, 255, 0.85);
+	--component-card-glass-transform-hover: translateY(-4px) scale(1.01);
 	--component-card-glass-radius: var(--radius-xl);
 	--component-card-glass-padding: var(--spacing-lg);
-	--component-card-glass-backdrop: blur(20px);
+	--component-card-glass-backdrop: blur(24px) saturate(200%);
 	--component-card-glass-transition: all var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	/* Input 组件样式 - 柔和玻璃质感 */
@@ -193,11 +200,12 @@
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: var(--border-color);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 3px var(--primary-lighter), var(--shadow-soft);
-	--component-input-default-transform-focus: scale(1.005);
+	--component-input-default-shadow-focus: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), var(--shadow-soft);
+	--component-input-default-bg-focus: rgba(255, 255, 255, 1);
+	--component-input-default-transform-focus: scale(1.008);
 	--component-input-default-radius: var(--radius-2xl);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(16px);
+	--component-input-default-backdrop: blur(20px) saturate(180%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 	/* Tag 组件样式 - 优雅圆润 */
@@ -208,8 +216,8 @@
 	--component-tag-default-bg-hover: var(--primary-light);
 	--component-tag-default-color-hover: var(--primary-color);
 	--component-tag-default-border-hover: var(--primary-color);
-	--component-tag-default-shadow-hover: var(--shadow-xs);
-	--component-tag-default-transform-hover: translateY(-1px) scale(1.02);
+	--component-tag-default-shadow-hover: var(--shadow-xs), 0 0 0 1px rgba(0, 125, 255, 0.1);
+	--component-tag-default-transform-hover: translateY(-2px) scale(1.03);
 	--component-tag-default-radius: var(--radius-full);
 	--component-tag-default-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-default-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -220,8 +228,8 @@
 	--component-tag-primary-shadow: none;
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: var(--shadow-soft);
-	--component-tag-primary-transform-hover: translateY(-1px) scale(1.03);
+	--component-tag-primary-shadow-hover: var(--shadow-soft), 0 0 0 1px rgba(0, 125, 255, 0.2);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.04);
 	--component-tag-primary-radius: var(--radius-full);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -231,7 +239,7 @@
 	--component-link-default-color-hover: var(--primary-hover);
 	--component-link-default-underline: linear-gradient(transparent, transparent), linear-gradient(var(--primary-color), var(--primary-color));
 	--component-link-default-underline-hover: linear-gradient(transparent, transparent), linear-gradient(var(--primary-hover), var(--primary-hover));
-	--component-link-default-transform-hover: translateY(-1px);
+	--component-link-default-transform-hover: translateY(-2px);
 	--component-link-default-transition: color var(--transition-base), transform var(--transition-base), background-size var(--transition-slow);
 	--component-link-default-text-decoration: underline;
 	--component-link-default-text-decoration-thickness: 2px;
@@ -371,6 +379,189 @@
 	
 	:root[data-theme="harmony"] h3 {
 		font-size: var(--mobile-font-size-base) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Harmony 主题 - 优雅玻璃质感，柔和流畅 */
+:root[data-theme="harmony"] .component-card-default {
+	/* 增强玻璃质感 */
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
+}
+
+:root[data-theme="harmony"] .component-card-default::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .component-card-default:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="harmony"] .component-button-primary {
+	/* 增强渐变按钮的质感 */
+	position: relative;
+	overflow: hidden;
+}
+
+:root[data-theme="harmony"] .component-button-primary::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+	transition: left var(--transition-slow);
+}
+
+:root[data-theme="harmony"] .component-button-primary:hover::before {
+	left: 100%;
+}
+
+:root[data-theme="harmony"] .component-tag-primary {
+	/* 增强标签的渐变效果 */
+	background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 217, 255, 0.15) 100%);
+}
+
+:root[data-theme="harmony"] .component-input-default:focus {
+	/* 增强输入框的聚焦光效 */
+	box-shadow: 0 0 0 3px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 20px rgba(0, 125, 255, 0.2), var(--shadow-soft);
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Harmony 主题 - Header 定制 */
+:root[data-theme="harmony"] .header-shell {
+	/* 增强玻璃质感 */
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 250, 255, 0.95) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony"] .header-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.08), rgba(0, 217, 255, 0.08));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .header-shell:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="harmony"] .logo a {
+	/* 增强 logo 渐变效果 */
+	background: linear-gradient(135deg, #007DFF 0%, #00D9FF 50%, #007DFF 100%);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: logoGradient 3s ease-in-out infinite;
+}
+
+@keyframes logoGradient {
+	0%, 100% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+}
+
+:root[data-theme="harmony"] .nav-link::after {
+	/* 增强导航链接下划线 */
+	background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+	box-shadow: 0 0 8px rgba(0, 125, 255, 0.3);
+}
+
+/* Harmony 主题 - Footer 定制 */
+:root[data-theme="harmony"] .footer-shell {
+	/* 增强玻璃质感 */
+	background: linear-gradient(140deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 250, 255, 0.92) 100%);
+	position: relative;
+}
+
+:root[data-theme="harmony"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(0, 125, 255, 0.1), rgba(0, 217, 255, 0.1));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+:root[data-theme="harmony"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的渐变效果 */
+	box-shadow: 0 4px 12px rgba(0, 125, 255, 0.25), 0 0 20px rgba(0, 217, 255, 0.15);
+}
+
+:root[data-theme="harmony"] .footer-theme-hint::before {
+	/* 增强主题提示点的光效 */
+	box-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="harmony"] .header-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="harmony"] .logo a {
+		animation: none;
+	}
+	
+	:root[data-theme="harmony"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="harmony"] .footer-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="harmony"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="harmony"] .footer-theme-hint::before {
+		animation: none;
+		box-shadow: 0 0 4px rgba(0, 217, 255, 0.3);
 	}
 }
 

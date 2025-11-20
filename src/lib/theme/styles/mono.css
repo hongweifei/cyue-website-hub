@@ -67,7 +67,10 @@
 	--code-bg: rgba(60, 47, 37, 0.08);
 	--header-bg: rgba(255, 249, 239, 0.9);
 	--footer-bg: rgba(247, 233, 214, 0.92);
-	--app-background: linear-gradient(135deg, #fdf4e3 0%, #f5ebe0 40%, #fef9f3 100%), radial-gradient(circle at 20% 20%, rgba(180, 83, 9, 0.12), transparent 45%);
+	--app-background: 
+		linear-gradient(135deg, #fdf4e3 0%, #f5ebe0 35%, #fef9f3 70%, #faf5ed 100%),
+		radial-gradient(circle at 20% 20%, rgba(180, 83, 9, 0.1), transparent 50%),
+		radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06), transparent 45%);
 
 	--shadow-xs: 0 6px 18px rgba(60, 47, 37, 0.08);
 	--shadow-sm: 0 10px 28px rgba(60, 47, 37, 0.12);
@@ -153,12 +156,13 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 0 1px rgba(180, 83, 9, 0.1);
 	--component-card-default-border-hover: var(--border-accent);
-	--component-card-default-transform-hover: translateY(-1px);
+	--component-card-default-bg-hover: rgba(255, 249, 239, 0.98);
+	--component-card-default-transform-hover: translateY(-2px);
 	--component-card-default-radius: var(--radius-md);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(4px);
+	--component-card-default-backdrop: blur(6px) saturate(120%);
 	--component-card-default-transition: all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1);
 
 	--component-card-elevated-bg: var(--card-bg);
@@ -190,11 +194,12 @@
 	--component-input-default-shadow: inset 0 1px 2px rgba(92, 64, 51, 0.08);
 	--component-input-default-border-hover: var(--border-color);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: inset 0 1px 2px rgba(92, 64, 51, 0.08), 0 0 0 2px var(--primary-lighter);
-	--component-input-default-transform-focus: scale(1);
+	--component-input-default-shadow-focus: inset 0 1px 2px rgba(92, 64, 51, 0.08), 0 0 0 2px var(--primary-lighter), 0 0 0 1px var(--primary-color);
+	--component-input-default-bg-focus: rgba(255, 252, 245, 1);
+	--component-input-default-transform-focus: scale(1.005);
 	--component-input-default-radius: var(--radius-sm);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(2px);
+	--component-input-default-backdrop: blur(4px) saturate(120%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1);
 
 	/* Tag 组件样式 - 扁平柔和 */
@@ -339,6 +344,143 @@
 	
 	:root[data-theme="mono"] h2 {
 		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Mono 主题 - 极简纸感，扁平柔和 */
+:root[data-theme="mono"] .component-card-default {
+	/* 增强纸张质感 */
+	background: linear-gradient(140deg, rgba(255, 250, 245, 0.96) 0%, rgba(247, 231, 214, 0.96) 100%);
+	box-shadow: 
+		0 1px 3px rgba(92, 64, 51, 0.08),
+		0 1px 2px rgba(92, 64, 51, 0.06),
+		inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+:root[data-theme="mono"] .component-card-default:hover {
+	/* 纸张悬浮效果 */
+	box-shadow: 
+		0 4px 12px rgba(92, 64, 51, 0.12),
+		0 2px 4px rgba(92, 64, 51, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+:root[data-theme="mono"] .component-button-primary {
+	/* 增强按钮的纸张质感 */
+	box-shadow: 
+		0 2px 4px rgba(92, 64, 51, 0.1),
+		inset 0 1px 0 rgba(255, 255, 255, 0.3),
+		inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="mono"] .component-button-primary:hover {
+	box-shadow: 
+		0 3px 6px rgba(92, 64, 51, 0.15),
+		inset 0 1px 0 rgba(255, 255, 255, 0.4),
+		inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="mono"] .component-input-default {
+	/* 增强输入框的纸张凹陷效果 */
+	box-shadow: 
+		inset 2px 2px 4px rgba(92, 64, 51, 0.1),
+		inset -1px -1px 2px rgba(255, 255, 255, 0.5),
+		0 1px 0 rgba(255, 255, 255, 0.5);
+	background: linear-gradient(180deg, rgba(255, 252, 245, 0.98) 0%, rgba(255, 250, 245, 0.95) 100%);
+}
+
+:root[data-theme="mono"] .component-tag-default {
+	/* 增强标签的纸张质感 */
+	box-shadow: 
+		inset 0 1px 2px rgba(92, 64, 51, 0.08),
+		0 1px 1px rgba(92, 64, 51, 0.05);
+	background: linear-gradient(180deg, rgba(250, 241, 229, 0.95) 0%, rgba(244, 232, 216, 0.9) 100%);
+}
+
+:root[data-theme="mono"] .component-link-default {
+	/* 极简下划线，无动画 */
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Mono 主题 - Header 定制 */
+:root[data-theme="mono"] .header-shell {
+	/* 增强纸张质感 */
+	background: linear-gradient(140deg, rgba(255, 250, 245, 0.98) 0%, rgba(247, 231, 214, 0.98) 100%);
+	box-shadow: 
+		0 2px 6px rgba(92, 64, 51, 0.1),
+		0 1px 3px rgba(92, 64, 51, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	border: 1px solid rgba(92, 64, 51, 0.15);
+}
+
+:root[data-theme="mono"] .logo a {
+	/* 增强 logo 纸张质感 */
+	color: #5c4033 !important;
+	-webkit-text-fill-color: #5c4033 !important;
+	background: none !important;
+	-webkit-background-clip: unset !important;
+	background-clip: unset !important;
+	text-shadow: 0 1px 2px rgba(92, 64, 51, 0.1);
+}
+
+:root[data-theme="mono"] .nav-link::after {
+	/* 极简下划线 */
+	background: #5c4033;
+	box-shadow: none;
+	height: 1px;
+}
+
+/* Mono 主题 - Footer 定制 */
+:root[data-theme="mono"] .footer-shell {
+	/* 增强纸张质感 */
+	background: linear-gradient(140deg, rgba(255, 250, 245, 0.95) 0%, rgba(247, 231, 214, 0.95) 100%);
+	box-shadow: 
+		0 2px 8px rgba(92, 64, 51, 0.12),
+		0 1px 4px rgba(92, 64, 51, 0.1),
+		inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	border: 1px solid rgba(92, 64, 51, 0.12);
+}
+
+:root[data-theme="mono"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的纸张质感 */
+	box-shadow: 
+		0 2px 6px rgba(92, 64, 51, 0.15),
+		inset 0 1px 2px rgba(255, 255, 255, 0.6),
+		inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="mono"] .footer-theme-hint::before {
+	/* 极简主题提示点 */
+	background: radial-gradient(circle, #5c4033 0%, transparent 70%);
+	box-shadow: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="mono"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="mono"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
 	}
 }
 

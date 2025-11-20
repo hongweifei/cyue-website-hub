@@ -67,7 +67,11 @@
 	--code-bg: rgba(3, 6, 32, 0.95);
 	--header-bg: rgba(5, 8, 22, 0.9);
 	--footer-bg: rgba(5, 8, 22, 0.88);
-	--app-background: linear-gradient(125deg, #030712 0%, #050816 45%, #0f172a 100%), radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.16), transparent 55%), radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.18), transparent 50%);
+	--app-background: 
+		linear-gradient(125deg, #030712 0%, #050816 35%, #0f172a 70%, #020617 100%),
+		radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.2), transparent 60%),
+		radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.22), transparent 55%),
+		radial-gradient(circle at 50% 85%, rgba(99, 102, 241, 0.12), transparent 50%);
 
 	--shadow-xs: 0 10px 20px rgba(2, 6, 23, 0.8);
 	--shadow-sm: 0 18px 32px rgba(2, 6, 23, 0.78);
@@ -153,12 +157,13 @@
 	--component-card-default-bg: var(--card-bg);
 	--component-card-default-border: var(--border-light);
 	--component-card-default-shadow: var(--shadow-xs);
-	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 24px rgba(249, 115, 22, 0.15), 0 0 32px rgba(34, 211, 238, 0.1);
+	--component-card-default-shadow-hover: var(--shadow-sm), 0 0 32px rgba(249, 115, 22, 0.2), 0 0 48px rgba(34, 211, 238, 0.15), 0 0 0 1px rgba(249, 115, 22, 0.25);
 	--component-card-default-border-hover: var(--border-accent);
-	--component-card-default-transform-hover: translateY(-4px);
+	--component-card-default-bg-hover: rgba(6, 9, 22, 0.96);
+	--component-card-default-transform-hover: translateY(-5px) scale(1.01);
 	--component-card-default-radius: var(--radius-xl);
 	--component-card-default-padding: var(--spacing-lg);
-	--component-card-default-backdrop: blur(8px);
+	--component-card-default-backdrop: blur(12px) saturate(180%);
 	--component-card-default-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	--component-card-elevated-bg: var(--card-bg);
@@ -190,11 +195,12 @@
 	--component-input-default-shadow: var(--shadow-xs);
 	--component-input-default-border-hover: var(--border-accent);
 	--component-input-default-border-focus: var(--primary-color);
-	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter), 0 0 20px rgba(249, 115, 22, 0.3), 0 0 30px rgba(34, 211, 238, 0.2);
-	--component-input-default-transform-focus: scale(1.02);
+	--component-input-default-shadow-focus: 0 0 0 2px var(--primary-lighter), 0 0 0 1px var(--primary-color), 0 0 28px rgba(249, 115, 22, 0.4), 0 0 40px rgba(34, 211, 238, 0.3);
+	--component-input-default-bg-focus: rgba(4, 6, 20, 0.95);
+	--component-input-default-transform-focus: scale(1.01);
 	--component-input-default-radius: var(--radius-2xl);
 	--component-input-default-padding: calc(var(--spacing-md) * 0.875) var(--spacing-lg);
-	--component-input-default-backdrop: blur(12px);
+	--component-input-default-backdrop: blur(16px) saturate(180%);
 	--component-input-default-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 	/* Tag 组件样式 - 霓虹光效 */
@@ -217,8 +223,8 @@
 	--component-tag-primary-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
 	--component-tag-primary-bg-hover: var(--primary-color);
 	--component-tag-primary-color-hover: var(--text-inverse);
-	--component-tag-primary-shadow-hover: 0 0 16px rgba(249, 115, 22, 0.4), 0 0 24px rgba(34, 211, 238, 0.3);
-	--component-tag-primary-transform-hover: translateY(-2px) scale(1.08);
+	--component-tag-primary-shadow-hover: 0 0 20px rgba(249, 115, 22, 0.5), 0 0 32px rgba(34, 211, 238, 0.4), 0 0 0 1px rgba(249, 115, 22, 0.4);
+	--component-tag-primary-transform-hover: translateY(-2px) scale(1.1);
 	--component-tag-primary-radius: var(--radius-full);
 	--component-tag-primary-padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
 	--component-tag-primary-transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -341,6 +347,268 @@
 	
 	:root[data-theme="noir"] h2 {
 		font-size: var(--mobile-font-size-lg) !important;
+	}
+}
+
+/* ============================================
+ * 主题特色组件样式覆盖
+ * ============================================ */
+
+/* Noir 主题 - 赛博朋克霓虹效果 */
+:root[data-theme="noir"] .component-card-default {
+	/* 增强赛博朋克霓虹描边 */
+	position: relative;
+	overflow: hidden;
+}
+
+:root[data-theme="noir"] .component-card-default::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(34, 211, 238, 0.4));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+	pointer-events: none;
+	box-shadow: 0 0 20px rgba(249, 115, 22, 0.3), 0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+:root[data-theme="noir"] .component-card-default:hover::before {
+	opacity: 1;
+}
+
+:root[data-theme="noir"] .component-button-primary {
+	/* 增强赛博朋克按钮的霓虹效果 */
+	position: relative;
+	overflow: hidden;
+	text-shadow: 0 0 10px rgba(249, 115, 22, 0.8), 0 0 20px rgba(34, 211, 238, 0.6);
+}
+
+:root[data-theme="noir"] .component-button-primary::after {
+	content: '';
+	position: absolute;
+	inset: -3px;
+	border-radius: inherit;
+	padding: 3px;
+	background: linear-gradient(135deg, #f97316, #22d3ee, #f97316);
+	background-size: 200% 200%;
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.7;
+	animation: neonBorder 3s linear infinite;
+}
+
+@keyframes neonBorder {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+:root[data-theme="noir"] .component-tag-primary {
+	/* 增强标签的双色霓虹效果 */
+	box-shadow: 
+		0 0 15px rgba(249, 115, 22, 0.4),
+		0 0 25px rgba(34, 211, 238, 0.3),
+		inset 0 0 10px rgba(249, 115, 22, 0.1);
+	text-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
+}
+
+:root[data-theme="noir"] .component-input-default:focus {
+	/* 增强输入框的双色霓虹聚焦 */
+	box-shadow: 
+		0 0 0 2px var(--primary-lighter),
+		0 0 0 1px var(--primary-color),
+		0 0 25px rgba(249, 115, 22, 0.5),
+		0 0 40px rgba(34, 211, 238, 0.4),
+		var(--shadow-soft);
+}
+
+:root[data-theme="noir"] .component-link-default {
+	/* 增强链接的双色霓虹下划线 */
+	position: relative;
+}
+
+:root[data-theme="noir"] .component-link-default::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--primary-color));
+	background-size: 200% 100%;
+	transition: width var(--transition-base);
+	box-shadow: 0 0 10px var(--primary-color), 0 0 15px var(--accent-color);
+	animation: neonUnderline 3s linear infinite;
+}
+
+:root[data-theme="noir"] .component-link-default:hover::after {
+	width: 100%;
+}
+
+@keyframes neonUnderline {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+ * Header & Footer 定制
+ * ============================================ */
+
+/* Noir 主题 - Header 定制 */
+:root[data-theme="noir"] .header-shell {
+	/* 增强赛博朋克霓虹效果 */
+	background: linear-gradient(140deg, rgba(15, 15, 20, 0.98) 0%, rgba(10, 10, 15, 0.98) 100%);
+	position: relative;
+}
+
+:root[data-theme="noir"] .header-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(34, 211, 238, 0.3));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.7;
+	pointer-events: none;
+	box-shadow: 0 0 25px rgba(249, 115, 22, 0.3), 0 0 35px rgba(34, 211, 238, 0.2);
+}
+
+:root[data-theme="noir"] .logo a {
+	/* 增强 logo 双色霓虹效果 */
+	background: linear-gradient(135deg, #f97316 0%, #22d3ee 50%, #f97316 100%);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: logoGradient 3s linear infinite;
+	text-shadow: 0 0 15px rgba(249, 115, 22, 0.6), 0 0 25px rgba(34, 211, 238, 0.4);
+	filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.5));
+}
+
+@keyframes logoGradient {
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+:root[data-theme="noir"] .nav-link::after {
+	/* 增强导航链接双色霓虹下划线 */
+	background: linear-gradient(90deg, #f97316, #22d3ee, #f97316);
+	background-size: 200% 100%;
+	box-shadow: 0 0 12px rgba(249, 115, 22, 0.6), 0 0 18px rgba(34, 211, 238, 0.5);
+	animation: neonUnderline 3s linear infinite;
+}
+
+/* Noir 主题 - Footer 定制 */
+:root[data-theme="noir"] .footer-shell {
+	/* 增强赛博朋克霓虹效果 */
+	background: linear-gradient(140deg, rgba(15, 15, 20, 0.95) 0%, rgba(10, 10, 15, 0.95) 100%);
+	position: relative;
+}
+
+:root[data-theme="noir"] .footer-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	padding: 1px;
+	background: linear-gradient(135deg, rgba(249, 115, 22, 0.25), rgba(34, 211, 238, 0.25));
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0.6;
+	pointer-events: none;
+	box-shadow: 0 0 20px rgba(249, 115, 22, 0.25), 0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+:root[data-theme="noir"] .footer-logo .logo-mark {
+	/* 增强 footer logo 标记的双色霓虹效果 */
+	box-shadow: 
+		0 4px 20px rgba(249, 115, 22, 0.5),
+		0 0 30px rgba(34, 211, 238, 0.4),
+		inset 0 0 15px rgba(249, 115, 22, 0.2);
+	animation: logoMarkGlow 3s ease-in-out infinite;
+}
+
+@keyframes logoMarkGlow {
+	0%, 100% { 
+		box-shadow: 0 4px 20px rgba(249, 115, 22, 0.5), 0 0 30px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(249, 115, 22, 0.2);
+	}
+	50% { 
+		box-shadow: 0 4px 25px rgba(249, 115, 22, 0.7), 0 0 40px rgba(34, 211, 238, 0.6), inset 0 0 20px rgba(249, 115, 22, 0.3);
+	}
+}
+
+:root[data-theme="noir"] .footer-theme-hint::before {
+	/* 增强主题提示点的双色霓虹光效 */
+	background: radial-gradient(circle, #f97316 0%, #22d3ee 50%, transparent 70%);
+	box-shadow: 0 0 12px rgba(249, 115, 22, 0.7), 0 0 18px rgba(34, 211, 238, 0.5);
+	animation: pulse 2s ease-in-out infinite;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+	:root[data-theme="noir"] .header-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="noir"] .logo a {
+		animation: none;
+		text-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+		filter: none;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		color: transparent;
+	}
+	
+	:root[data-theme="noir"] .nav-link::after {
+		animation: none;
+	}
+	
+	:root[data-theme="noir"] .footer-shell {
+		background: none !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		-webkit-backdrop-filter: none !important;
+		backdrop-filter: none !important;
+		transform: none !important;
+	}
+	
+	:root[data-theme="noir"] .footer-shell::before {
+		display: none;
+	}
+	
+	:root[data-theme="noir"] .footer-shell:hover {
+		transform: none !important;
+		box-shadow: none !important;
+		border-color: transparent !important;
+	}
+	
+	:root[data-theme="noir"] .footer-logo .logo-mark {
+		animation: none;
+		box-shadow: 0 2px 10px rgba(249, 115, 22, 0.3), 0 0 15px rgba(34, 211, 238, 0.2);
+	}
+	
+	:root[data-theme="noir"] .footer-theme-hint::before {
+		animation: none;
+		box-shadow: 0 0 6px rgba(249, 115, 22, 0.5);
 	}
 }
 
