@@ -22,7 +22,7 @@
   }
 </script>
 
-<article class="nav-item">
+<article class="nav-item component-card-default component-card-elevated">
   <div class="nav-item-header">
     <SiteIcon
       item={item}
@@ -31,7 +31,7 @@
     />
     <div class="nav-item-info">
       <h3 class="nav-item-name">
-        <a href="/item/{item.id}" class="item-link">
+        <a href="/item/{item.id}" class="item-link component-link-secondary">
           {item.name}
         </a>
       </h3>
@@ -40,7 +40,7 @@
       {/if}
     </div>
     <button
-      class="favorite-btn"
+      class="favorite-btn component-button-ghost"
       class:favorited={isFavorite}
       onclick={toggleFavorite}
       aria-label={isFavorite ? "取消收藏" : "收藏"}
@@ -65,18 +65,20 @@
   {#if item.tags.length > 0}
     <div class="nav-item-tags">
       {#each item.tags as tag}
-        <span class="tag">{tag}</span>
+        <span class="tag component-tag-default">{tag}</span>
       {/each}
     </div>
   {/if}
 
   <div class="nav-item-footer">
-    <a href="/item/{item.id}" class="detail-link">查看详情</a>
+    <a href="/item/{item.id}" class="detail-link component-button-outline">
+      查看详情
+    </a>
     <a
       href="{item.url}?utm_source={resolvedSiteDomain}&utm_medium=navigation"
       target="_blank"
       rel="noopener noreferrer"
-      class="external-link"
+      class="external-link component-button-primary"
     >
       访问网站 →
     </a>
@@ -85,39 +87,9 @@
 
 <style>
   .nav-item {
-    background: var(--component-card-default-bg, var(--card-bg));
-    border: 1px solid var(--component-card-default-border, var(--border-light));
-    border-radius: var(--component-card-default-radius, var(--radius-xl));
-    padding: var(--component-card-default-padding, var(--spacing-lg));
-    /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
-    transition: var(
-      --component-card-default-transition,
-      transform var(--transition-base),
-      border-color var(--transition-base),
-      box-shadow var(--transition-base),
-      background-color var(--transition-base)
-    );
     position: relative;
-    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-    backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-    /* GPU 加速 */
-    transform: translateZ(0);
     will-change: transform, box-shadow;
-    /* 限制重排范围，但不限制阴影 */
     contain: layout style;
-  }
-
-  .nav-item:hover {
-    /* 保留所有视觉效果 */
-    transform: translateY(-2px) translateZ(0);
-    border-color: var(--border-accent);
-    box-shadow: var(--component-card-default-shadow-hover, var(--shadow-md));
-    background: var(--component-card-default-bg-hover, var(--surface-glass));
-  }
-
-  .nav-item:active {
-    transform: translateY(0);
   }
 
   .nav-item-header {
@@ -140,21 +112,12 @@
   }
 
   .nav-item-name a.item-link {
-    color: var(--component-link-secondary-color, var(--text-primary));
-    text-decoration: none;
-    /* 只过渡颜色和 transform */
-    transition: var(
-      --component-link-secondary-transition,
-      color var(--transition-base)
-    ),
-      transform var(--transition-base);
     display: inline-block;
     /* 优化渲染 */
     contain: layout style;
   }
 
   .nav-item-name a.item-link:hover {
-    color: var(--component-link-secondary-color-hover, var(--primary-color));
     transform: translateX(2px);
   }
 
@@ -172,39 +135,14 @@
 
   .favorite-btn {
     flex-shrink: 0;
-    background: var(--component-button-ghost-bg, var(--bg-tertiary));
-    border: 1px solid var(--component-button-ghost-border, var(--border-light));
-    cursor: pointer;
-    padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
-    color: var(--component-button-ghost-color, var(--text-tertiary));
-    /* 只过渡颜色、背景、边框和 transform */
-    transition: var(
-      --component-button-ghost-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast),
-      border-color var(--transition-fast),
-      transform var(--transition-fast)
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--component-button-ghost-radius, var(--radius-md));
     width: 44px;
     height: 44px;
-    /* 优化渲染 */
     contain: layout style paint;
   }
 
   .favorite-btn svg {
     width: 22px;
     height: 22px;
-  }
-
-  .favorite-btn:hover {
-    color: var(--component-button-ghost-color-hover, var(--primary-color));
-    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-    transform: scale(1.05);
   }
 
   .favorite-btn.favorited {
@@ -226,30 +164,8 @@
 
   .tag {
     font-size: 0.75rem;
-    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    background: var(--component-tag-default-bg, var(--tag-bg));
-    color: var(--component-tag-default-color, var(--text-secondary));
-    border-radius: var(--component-tag-default-radius, var(--radius-full));
     font-weight: 500;
-    border: 1px solid var(--component-tag-default-border, var(--border-light));
-    /* 只过渡颜色、背景、边框和 transform */
-    transition: var(
-      --component-tag-default-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast),
-      border-color var(--transition-fast),
-      transform var(--transition-fast)
-    );
-    /* 优化渲染 */
     contain: layout style;
-  }
-
-  .tag:hover {
-    background: var(--component-tag-default-bg-hover, var(--primary-light));
-    color: var(--component-tag-default-color-hover, var(--primary-color));
-    border-color: var(--component-tag-default-border-hover, var(--primary-color));
-    transform: translateY(-1px) translateZ(0);
-    box-shadow: var(--shadow-xs);
   }
 
   .nav-item-footer {
@@ -264,61 +180,12 @@
   .external-link {
     flex: 1;
     text-align: center;
-    padding: var(--component-button-secondary-padding, var(--spacing-sm) var(--spacing-md));
-    font-size: 0.875rem;
-    border-radius: var(--component-button-secondary-radius, var(--radius-md));
-    text-decoration: none;
-    /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
-    transition: var(
-      --component-button-secondary-transition,
-      color var(--transition-base),
-      background-color var(--transition-base),
-      border-color var(--transition-base),
-      transform var(--transition-base),
-      opacity var(--transition-base),
-      box-shadow var(--transition-base)
-    );
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    /* GPU 加速 */
     transform: translateZ(0);
     contain: layout style;
-  }
-
-  .detail-link {
-    background: var(--component-button-secondary-bg, var(--bg-tertiary));
-    color: var(--component-button-secondary-color, var(--text-secondary));
-    border: 1px solid var(--component-button-secondary-border, var(--border-light));
-    box-shadow: var(--component-button-secondary-shadow, none);
-  }
-
-  .detail-link:hover {
-    background: var(--component-button-secondary-bg-hover, var(--primary-light));
-    color: var(--component-button-secondary-color-hover, var(--primary-color));
-    border-color: var(--component-button-secondary-border-hover, var(--primary-color));
-    transform: translateY(-1px) translateZ(0);
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-  }
-
-  .external-link {
-    background: var(--component-button-primary-bg, var(--gradient-brand));
-    color: var(--component-button-primary-color, var(--text-inverse));
-    border: 1px solid var(--component-button-primary-border, transparent);
-    box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
-  }
-
-  .external-link:hover {
-    transform: translateY(-1px) translateZ(0);
-    opacity: 0.95;
-    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-sm));
-  }
-
-  .external-link:active,
-  .detail-link:active {
-    transform: translateY(0);
   }
 
   @media (max-width: 768px) {

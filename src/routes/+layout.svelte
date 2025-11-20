@@ -140,13 +140,13 @@
           <div class="nav-links">
             <a
               href="/"
-              class="nav-link"
+              class="nav-link component-link-secondary"
               data-sveltekit-preload-data="hover"
               onclick={(e) => handleNavClick(e, "/")}>首页</a
             >
             <a
               href="/favorites"
-              class="nav-link"
+              class="nav-link component-link-secondary"
               data-sveltekit-preload-data="hover"
               onclick={(e) => handleNavClick(e, "/favorites")}>收藏</a
             >
@@ -266,6 +266,8 @@
     --layout-main-border: var(--component-card-default-border, 1px solid var(--border-light));
     --layout-main-shadow: var(--component-card-default-shadow, var(--shadow-sm));
     --layout-main-background: var(--component-card-default-bg, var(--card-bg));
+    --layout-logo-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%);
+    --layout-logo-filter: none;
     --layout-footer-padding: var(--component-card-glass-padding, clamp(var(--spacing-xl), 5vw, var(--spacing-2xl)));
     --layout-nav-gap: var(--spacing-lg);
     --layout-nav-justify: flex-start;
@@ -339,11 +341,15 @@
     align-items: center;
     gap: var(--spacing-sm);
     /* 将渐变背景应用到链接上，确保文字可见 */
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%);
+    background: var(
+      --layout-logo-gradient,
+      linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 65%, var(--primary-color-strong) 100%)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent; /* 后备方案，确保文字透明以显示渐变 */
+    filter: var(--layout-logo-filter, none);
     /* 优化渐变文字渲染性能 */
     transform: translateZ(0);
     will-change: background;

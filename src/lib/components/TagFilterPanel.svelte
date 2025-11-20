@@ -152,11 +152,11 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 </script>
 
-<div class="tag-filter-panel" class:stacked={isStackLayout}>
-  <div class="panel-header">
+<div class="tag-filter-panel component-card-default component-panel" class:stacked={isStackLayout}>
+  <div class="panel-header component-panel-header">
     <div class="header-title">
-      <h3>标签筛选</h3>
-      <span class="tag-count">
+      <h3 class="component-panel-title">标签筛选</h3>
+      <span class="tag-count component-panel-caption">
         {#if filteredCount === totalTagCount}
           共 {totalTagCount} 个标签
         {:else}
@@ -165,35 +165,40 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
       </span>
     </div>
     {#if selectedTags.length > 0}
-      <button class="clear-btn" onclick={handleClear}>清除选中</button>
+      <button class="clear-btn component-link-default" onclick={handleClear}>
+        清除选中
+      </button>
     {/if}
   </div>
 
-  <div class="panel-meta" aria-live="polite">
-    <div class="meta-summary">
+  <div class="panel-meta component-panel-meta" aria-live="polite">
+    <div class="meta-summary component-meta-summary">
       {#if selectedCount > 0}
-        <span class="meta-chip selected-chip">{selectedCount} 个已选</span>
+        <span class="meta-chip component-meta-chip selected">{selectedCount} 个已选</span>
       {/if}
       {#if hasGroupContext}
-        <span class="meta-chip">当前分组包含 {groupTagCount} 个标签</span>
+        <span class="meta-chip component-meta-chip">当前分组包含 {groupTagCount} 个标签</span>
       {/if}
-      <span class="meta-chip muted">
+      <span class="meta-chip component-meta-chip muted">
         {remainingCount > 0 && !showAll
           ? `已显示 ${visibleTags.length} 个`
           : `共 ${orderedTags.length} 个可选`}
       </span>
     </div>
     {#if remainingCount > 0 || showAll}
-      <button class="secondary-action" onclick={handleShowAllToggle}>
+      <button
+        class="secondary-action component-button-ghost component-secondary-action"
+        onclick={handleShowAllToggle}
+      >
         {showAll ? "收起全部标签" : "展开全部标签"}
       </button>
     {/if}
   </div>
 
   {#if hasGroupContext}
-    <div class="group-toggle" role="radiogroup">
+    <div class="group-toggle component-toggle" role="radiogroup">
       <button
-        class="group-toggle-btn"
+        class="group-toggle-btn component-toggle-btn"
         class:active={!showGroupOnly}
         onclick={() => handleSetGroupMode(false)}
         aria-pressed={!showGroupOnly}
@@ -201,7 +206,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
         全部标签
       </button>
       <button
-        class="group-toggle-btn"
+        class="group-toggle-btn component-toggle-btn"
         class:active={showGroupOnly}
         onclick={() => handleSetGroupMode(true)}
         aria-pressed={showGroupOnly}
@@ -213,7 +218,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   <div class="search-wrapper">
     <input
-      class="search-input"
+      class="search-input component-input-default"
       type="search"
       placeholder="搜索标签或关键字…"
       bind:value={searchQuery}
@@ -226,7 +231,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
       <div class="quick-tags-list">
         {#each quickTags as tag (tag.name)}
           <button
-            class="quick-tag"
+            class="quick-tag component-tag-default"
             class:selected={selectedSet.has(tag.name)}
             onclick={() => onToggle(tag.name)}
             title={`共有 ${tag.count} 个网站使用“${tag.name}”`}
@@ -240,11 +245,11 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   <div class="tag-grid" class:stacked={isStackLayout}>
     {#if visibleTags.length === 0}
-      <div class="empty-state">没有匹配的标签</div>
+      <div class="empty-state component-empty-state">没有匹配的标签</div>
     {:else}
       {#each visibleTags as tag (tag.name)}
         <button
-          class="tag-pill"
+          class="tag-pill component-chip component-tag-default"
           class:selected={selectedSet.has(tag.name)}
           class:ingroup={!selectedSet.has(tag.name) && groupTagSet.has(tag.name)}
           onclick={() => onToggle(tag.name)}
@@ -252,7 +257,9 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
         >
           <span class="tag-name">{tag.name}</span>
           <span class="tag-meta">
-            <span class="tag-count-badge">{tag.count}</span>
+            <span class="tag-count-badge component-chip-badge component-badge-default">
+              {tag.count}
+            </span>
             <!-- {#if showGroupCount}
               <span class="tag-group-count">{tag.groupCount}</span>
             {/if} -->
@@ -263,7 +270,10 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   </div>
 
   {#if remainingCount > 0}
-    <button class="toggle-btn" onclick={handleShowAllToggle}>
+    <button
+      class="toggle-btn component-button-secondary component-secondary-action"
+      onclick={handleShowAllToggle}
+    >
       {showAll ? "收起标签" : `展开更多标签（+${remainingCount}）`}
     </button>
   {/if}
@@ -271,97 +281,13 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
 <style>
   .tag-filter-panel {
-    display: flex;
-    flex-direction: column;
     gap: var(--spacing-md);
-  }
-
-  .panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-sm);
-  }
-
-  .panel-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs);
-  }
-
-  .meta-summary {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    align-items: center;
-  }
-
-  .meta-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: var(--component-badge-default-padding, calc(var(--spacing-xs) * 0.5) var(--spacing-sm));
-    border-radius: var(--component-badge-default-radius, var(--radius-full));
-    font-size: 0.75rem;
-    background: var(--component-badge-default-bg, var(--primary-lighter));
-    color: var(--component-badge-default-color, var(--text-secondary));
-    border: 1px solid var(--component-badge-default-border, var(--border-light));
-    transition: var(--component-badge-default-transition, all var(--transition-fast));
-  }
-
-  .meta-chip.selected-chip {
-    background: var(--component-badge-primary-bg, var(--primary-light));
-    color: var(--component-badge-primary-color, var(--primary-color));
-    border-color: var(--component-badge-primary-border, var(--border-accent));
-    font-weight: 500;
-  }
-
-  .meta-chip.muted {
-    background: transparent;
-    color: var(--text-tertiary);
-    border-color: var(--border-light);
-  }
-
-  .secondary-action {
-    border: 1px solid var(--component-button-ghost-border, var(--border-light));
-    background: var(--component-button-ghost-bg, var(--bg-tertiary));
-    color: var(--component-button-ghost-color, var(--text-secondary));
-    font-size: 0.75rem;
-    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    border-radius: var(--component-button-ghost-radius, var(--radius-full));
-    cursor: pointer;
-    transition: var(
-      --component-button-ghost-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast),
-      border-color var(--transition-fast)
-    );
-  }
-
-  .secondary-action:hover {
-    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-    color: var(--component-button-ghost-color-hover, var(--primary-color));
-    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
   }
 
   .header-title {
     display: flex;
     align-items: baseline;
     gap: var(--spacing-sm);
-  }
-
-  .header-title h3 {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .tag-count {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
   }
 
   .clear-btn {
@@ -384,41 +310,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .group-toggle {
-    display: inline-flex;
-    gap: 0.25rem;
-    padding: 0.25rem;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--component-card-default-border, var(--border-light));
-    background: var(--component-card-default-bg, var(--bg-secondary));
     width: max-content;
-  }
-
-  .group-toggle-btn {
-    border: none;
-    background: transparent;
-    color: var(--component-button-ghost-color, var(--text-tertiary));
-    font-size: 0.8125rem;
-    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    border-radius: var(--component-button-ghost-radius, var(--radius-full));
-    cursor: pointer;
-    transition: var(
-      --component-button-ghost-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast)
-    );
-    font-weight: 500;
-  }
-
-  .group-toggle-btn:hover {
-    color: var(--component-button-ghost-color-hover, var(--primary-color));
-    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-  }
-
-  .group-toggle-btn.active {
-    background: var(--component-button-secondary-bg, var(--primary-light));
-    color: var(--component-button-secondary-color-hover, var(--primary-color));
-    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-    font-weight: 600;
   }
 
   .search-wrapper {
@@ -427,30 +319,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
 
   .search-input {
     width: 100%;
-    padding: var(--component-input-default-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-md));
-    border-radius: var(--component-input-default-radius, var(--radius-xl));
-    border: 1px solid var(--component-input-default-border, var(--border-light));
-    background: var(--component-input-default-bg, var(--input-bg));
-    box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
     font-size: 0.875rem;
-    transition: var(--component-input-default-transition, all var(--transition-fast));
-    backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-    -webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-  }
-
-  .search-input::placeholder {
-    color: var(--text-tertiary);
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--component-input-default-border-focus, var(--primary-color));
-    box-shadow: var(--component-input-default-shadow-focus, var(--shadow-xs));
-    background: var(--component-card-default-bg, var(--card-bg));
-  }
-
-  .search-input:hover:not(:focus) {
-    border-color: var(--component-input-default-border-hover, var(--border-color));
   }
 
   .quick-tags {
@@ -473,31 +342,11 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .quick-tag {
-    border: 1px solid var(--component-tag-default-border, var(--border-light));
-    background: var(--component-tag-default-bg, var(--bg-tertiary));
-    color: var(--component-tag-default-color, var(--text-secondary));
-    border-radius: var(--component-tag-default-radius, var(--radius-full));
-    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
     font-size: 0.75rem;
-    cursor: pointer;
-    transition: var(--component-tag-default-transition, all var(--transition-fast));
     font-weight: 500;
-    box-shadow: var(--component-tag-default-shadow, none);
-  }
-
-  .quick-tag:hover {
-    border-color: var(--component-tag-default-border-hover, var(--border-accent));
-    color: var(--component-tag-default-color-hover, var(--primary-color));
-    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
-    transform: translateY(-1px);
-    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
   }
 
   .quick-tag.selected {
-    background: var(--component-tag-primary-bg, var(--gradient-brand));
-    color: var(--component-tag-primary-color, var(--text-inverse));
-    border-color: var(--component-tag-primary-border, transparent);
-    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
     font-weight: 600;
   }
 
@@ -506,12 +355,6 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     flex-wrap: wrap;
     column-gap: var(--spacing-xs);
     row-gap: var(--spacing-sm);
-  }
-
-  /* 垂直布局下，展开后高度不变，保持固定高度 */
-  .tag-filter-panel:not(.stacked) {
-    display: flex;
-    flex-direction: column;
   }
 
   .tag-filter-panel:not(.stacked) .tag-grid {
@@ -549,22 +392,11 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .tag-pill {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--spacing-xs);
-    padding: var(--component-tag-default-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-md));
-    border-radius: var(--component-tag-default-radius, var(--radius-xl));
-    border: 1px solid var(--component-tag-default-border, var(--border-light));
-    background: var(--component-tag-default-bg, var(--bg-tertiary));
-    color: var(--component-tag-default-color, var(--text-secondary));
-    cursor: pointer;
-    transition: var(--component-tag-default-transition, all var(--transition-fast));
-    font-size: 0.8125rem;
+    width: 100%;
     text-align: left;
     flex: 0 1 auto;
-    max-width: 100%;
     flex-wrap: wrap;
+    font-size: 0.8125rem;
     font-weight: 500;
     row-gap: 0.3rem;
   }
@@ -577,23 +409,7 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
     row-gap: 0.4rem;
   }
 
-  .tag-pill:hover {
-    border-color: var(--component-tag-default-border-hover, var(--border-accent));
-    color: var(--component-tag-default-color-hover, var(--primary-color));
-    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
-    transform: translateY(-1px);
-    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
-  }
-
-  .tag-pill.selected {
-    background: var(--component-tag-primary-bg, var(--gradient-brand));
-    color: var(--component-tag-primary-color, var(--text-inverse));
-    border-color: var(--component-tag-primary-border, transparent);
-    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
-    font-weight: 600;
-  }
-
-  .tag-pill.ingroup {
+  .tag-pill.ingroup:not(.selected) {
     border-color: var(--border-accent);
     background: var(--primary-lighter);
     color: var(--primary-color);
@@ -626,61 +442,23 @@ const showGroupCount = $derived(enableGroupCount && !isStackLayout);
   }
 
   .tag-count-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     min-width: 1.75rem;
-    padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
-    border-radius: var(--component-badge-default-radius, var(--radius-full));
-    background: var(--component-badge-default-bg, var(--primary-lighter));
-    color: var(--component-badge-default-color, var(--primary-color));
-    border: 1px solid var(--component-badge-default-border, var(--border-accent));
     font-weight: 500;
-  }
-
-  .tag-pill.selected .tag-count-badge {
-    background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.25));
-    border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.4));
-    color: var(--component-badge-primary-color, var(--text-inverse));
   }
 
   .toggle-btn {
     align-self: flex-start;
-    border: none;
-    background: none;
-    color: var(--component-link-default-color, var(--primary-color));
-    font-size: 0.8125rem;
-    cursor: pointer;
-    padding: var(--spacing-xs) 0;
-    transition: var(
-      --component-link-default-transition,
-      color var(--transition-base)
-    );
-  }
-
-  .toggle-btn:hover {
-    color: var(--component-link-default-color-hover, var(--primary-hover));
-    text-decoration: underline;
-  }
-
-  .empty-state {
-    grid-column: 1 / -1;
-    padding: var(--spacing-lg);
-    text-align: center;
-    color: var(--text-tertiary);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-lg);
-    border: 1px dashed var(--border-light);
+    margin-top: var(--spacing-sm);
   }
 
   @media (max-width: 768px) {
-    .panel-meta {
+    .component-panel-meta {
       flex-direction: column;
       align-items: stretch;
       gap: var(--spacing-xs);
     }
 
-    .secondary-action {
+    .component-secondary-action {
       width: 100%;
       text-align: center;
     }

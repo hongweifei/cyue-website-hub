@@ -36,7 +36,7 @@
 				搜索结果 ({filteredItems.length})
 			</h2>
 			{#if filteredItems.length === 0}
-				<div class="no-results">
+				<div class="no-results component-empty-state component-card-elevated">
 					<p>没有找到匹配的网站</p>
 				</div>
 			{:else}
@@ -112,30 +112,6 @@
 		height: 1.5rem;
 		background: var(--gradient-brand);
 		border-radius: var(--radius-full);
-	}
-
-	.no-results {
-		text-align: center;
-		padding: var(--component-card-default-padding, var(--spacing-2xl) var(--spacing-md));
-		color: var(--text-secondary);
-		background: var(--component-card-default-bg, var(--bg-secondary));
-		border-radius: var(--component-card-default-radius, var(--radius-2xl));
-		border: 1px dashed var(--component-card-default-border, var(--border-light));
-		box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-		backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-		-webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-		transition: var(
-			--component-card-default-transition,
-			border-color var(--transition-fast),
-			box-shadow var(--transition-fast),
-			background-color var(--transition-fast)
-		);
-	}
-
-	.no-results:hover {
-		border-color: var(--border-accent);
-		box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
-		background: var(--component-card-default-bg-hover, var(--surface-glass));
 	}
 
 	.no-results p {

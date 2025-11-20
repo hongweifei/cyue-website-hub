@@ -23,13 +23,13 @@
 	</svg>
 	<input
 		type="text"
-		class="search-input"
+		class="search-input component-input-default"
 		placeholder="搜索网站名称、标签、分组..."
 		value={value}
 		oninput={(e) => onInput(e.currentTarget.value)}
 	/>
 	{#if value}
-		<button class="clear-btn" onclick={() => onInput('')} aria-label="清除搜索">
+		<button class="clear-btn component-button-ghost" onclick={() => onInput('')} aria-label="清除搜索">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="20"
@@ -67,48 +67,11 @@
 
 	.search-input {
 		width: 100%;
-		padding: var(
-			--component-input-default-padding,
-			calc(var(--spacing-md) * 0.875) var(--spacing-lg)
-		);
 		padding-left: 3.5rem;
 		font-size: 0.9375rem;
-		border: 1px solid var(--component-input-default-border, var(--border-light));
-		border-radius: var(--component-input-default-radius, var(--radius-2xl));
-		background: var(--component-input-default-bg, var(--input-bg));
-		color: var(--component-input-default-color, var(--text-primary));
-		/* 优化 transition - 只过渡会变化的属性 */
-		transition: var(
-			--component-input-default-transition,
-			border-color var(--transition-fast),
-			background-color var(--transition-fast),
-			box-shadow var(--transition-fast)
-		);
-		box-shadow: var(--component-input-default-shadow, var(--shadow-xs));
-		backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-		-webkit-backdrop-filter: var(--component-input-default-backdrop, blur(12px));
-		/* GPU 加速 */
 		transform: translateZ(0);
 		will-change: box-shadow;
-		/* 优化渲染 */
 		contain: layout style;
-	}
-
-	.search-input::placeholder {
-		color: var(--text-tertiary);
-	}
-
-	.search-input:focus {
-		outline: none;
-		border-color: var(--component-input-default-border-focus, var(--primary-color));
-		box-shadow: var(--component-input-default-shadow-focus, var(--shadow-sm)), 0 0 0 2px
-				var(--primary-lighter);
-		background: var(--component-card-default-bg, var(--card-bg));
-	}
-
-	.search-input:hover:not(:focus) {
-		border-color: var(--component-input-default-border-hover, var(--border-color));
-		/* 保持 box-shadow 不变，减少重绘 */
 	}
 
 	.search-bar:has(.search-input:focus) .search-icon {
@@ -118,39 +81,11 @@
 	.clear-btn {
 		position: absolute;
 		right: var(--spacing-md);
-		background: var(--component-button-ghost-bg, transparent);
-		border: 1px solid var(--component-button-ghost-border, transparent);
-		cursor: pointer;
-		padding: var(--spacing-xs);
-		color: var(--component-button-ghost-color, var(--text-tertiary));
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		/* 只过渡颜色、背景和 transform */
-		transition: var(
-			--component-button-ghost-transition,
-			color var(--transition-fast),
-			background-color var(--transition-fast),
-			transform var(--transition-fast)
-		);
-		border-radius: var(--component-button-ghost-radius, var(--radius-full));
 		width: 28px;
 		height: 28px;
 		z-index: 1;
-		/* 优化渲染 */
 		will-change: transform;
 		contain: layout style paint;
-	}
-
-	.clear-btn:hover {
-		color: var(--component-button-ghost-color-hover, var(--text-primary));
-		background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-		transform: scale(1.05);
-	}
-
-	.clear-btn:active {
-		transform: scale(0.98);
-		background: var(--component-button-secondary-bg, var(--primary-light));
 	}
 
 	@media (max-width: 768px) {
@@ -159,10 +94,6 @@
 		}
 
 		.search-input {
-			padding: var(
-				--component-input-default-padding,
-				calc(var(--spacing-sm) * 0.875) var(--spacing-md)
-			);
 			padding-left: 3rem;
 			font-size: 0.9375rem;
 			border-radius: var(--component-input-default-radius, var(--radius-xl));

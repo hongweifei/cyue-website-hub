@@ -34,7 +34,7 @@
 	const totalGroups = $derived(groups.length);
 </script>
 
-<aside class="sidebar">
+<aside class="sidebar component-card-glass">
 	<div class="sidebar-header">
 		<h2 class="sidebar-title">分组</h2>
 	</div>
@@ -54,18 +54,29 @@
 	</div>
 	<nav class="sidebar-nav">
 		<button
-			class="sidebar-group-btn root"
-			class:active={selectedGroupId === null}
+			class="sidebar-group-btn root component-button-secondary"
+			class:component-button-primary={selectedGroupId === null}
 			onclick={() => onGroupSelect(null)}
 			aria-pressed={selectedGroupId === null}
 			type="button"
 		>
-			<span class="sidebar-group-icon root-icon" aria-hidden="true">📚</span>
+			<span
+				class="sidebar-group-icon root-icon component-tag-default"
+				class:component-tag-primary={selectedGroupId === null}
+				aria-hidden="true"
+			>
+				📚
+			</span>
 			<div class="sidebar-group-content">
 				<span class="sidebar-group-name">全部</span>
 				<span class="sidebar-group-meta">{totalGroups} 个分组 · {totalItems} 个网站</span>
 			</div>
-			<span class="sidebar-group-count">{totalItems}</span>
+			<span
+				class="sidebar-group-count component-badge-default"
+				class:component-badge-primary={selectedGroupId === null}
+			>
+				{totalItems}
+			</span>
 		</button>
 		<SidebarGroupTree
 			{groups}
@@ -77,39 +88,24 @@
 
 <style>
 	.sidebar {
-		position: sticky;
-		top: calc(var(--spacing-xl) + 64px);
-		max-height: calc(100vh - 96px);
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-lg);
-		padding: var(--component-card-glass-padding, var(--spacing-lg));
-		background: var(--component-card-glass-bg, var(--card-bg));
-		border: 1px solid var(--component-card-glass-border, var(--border-light));
-		border-radius: var(--component-card-glass-radius, var(--radius-2xl));
-		box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
-		backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-		-webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-		overflow-x: hidden;
-		overflow-y: auto;
-		/* 优化 transition - 只过渡会变化的属性 */
-		transition: var(
-			--component-card-glass-transition,
-			border-color var(--transition-base),
-			box-shadow var(--transition-base)
-		);
-		/* GPU 加速 */
+		overflow: visible;
 		transform: translateZ(0);
-		/* 限制重排范围 */
 		contain: layout style paint;
-		/* 优化滚动 */
-		-webkit-overflow-scrolling: touch;
-		scroll-behavior: smooth;
 	}
 
-	.sidebar:hover {
-		border-color: var(--border-accent);
-		box-shadow: var(--component-card-glass-shadow-hover, var(--shadow-sm));
+	@media (min-width: 1025px) {
+		.sidebar {
+			position: sticky;
+			top: calc(var(--spacing-xl) + 64px);
+			max-height: calc(100vh - 96px);
+			overflow-x: hidden;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			scroll-behavior: smooth;
+		}
 	}
 
 	.sidebar-header {
@@ -188,17 +184,18 @@
 
 	@media (max-width: 1024px) {
 		.sidebar {
+			position: static;
+			top: auto;
+			max-height: none;
+			overflow: visible;
 			padding: var(--spacing-lg);
+			gap: var(--spacing-lg);
 		}
 	}
 
 	@media (max-width: 768px) {
 		.sidebar {
-			position: static;
-			max-height: none;
-			top: auto;
-			padding: var(--spacing-md);
-			gap: var(--spacing-md);
+			display: none;
 		}
 	}
 
@@ -232,20 +229,20 @@
 		color: var(--component-badge-default-color, var(--primary-color));
 	}
 
-	.sidebar-group-btn.root.active {
+	.sidebar-group-btn.root.component-button-primary {
 		background: var(--component-button-primary-bg, var(--gradient-brand));
 		border-color: transparent;
 		color: var(--component-button-primary-color, var(--text-inverse));
 		box-shadow: var(--component-button-primary-shadow, var(--shadow-xs));
 	}
 
-	.sidebar-group-btn.root.active .sidebar-group-count {
+	.sidebar-group-btn.root.component-button-primary .sidebar-group-count {
 		background: rgba(255, 255, 255, 0.2);
 		border-color: rgba(255, 255, 255, 0.3);
 		color: var(--text-inverse);
 	}
 
-	.sidebar-group-btn.root.active .sidebar-group-meta {
+	.sidebar-group-btn.root.component-button-primary .sidebar-group-meta {
 		color: var(--text-inverse);
 	}
 </style>

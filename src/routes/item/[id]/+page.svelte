@@ -35,7 +35,7 @@
 
 <div class="item-detail-page">
   <div class="item-header">
-    <a href="/" class="back-link" data-sveltekit-preload-data="hover">
+    <a href="/" class="back-link component-button-secondary" data-sveltekit-preload-data="hover">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -53,7 +53,7 @@
     </a>
   </div>
 
-  <article class="item-detail">
+  <article class="item-detail component-card-elevated">
     <div class="item-detail-header">
       <div class="header-main">
         <div class="icon-wrapper">
@@ -69,7 +69,7 @@
             <h1 class="item-name">{data.item.name}</h1>
             <div class="item-actions">
               <button
-                class="favorite-btn"
+                class="favorite-btn component-button-ghost"
                 class:favorited={isFavorite}
                 onclick={toggleFavorite}
                 aria-label={isFavorite ? "取消收藏" : "收藏"}
@@ -95,7 +95,7 @@
             <p class="item-brief">{data.item.info}</p>
           {/if}
           <div class="item-meta">
-            <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="item-group">
+            <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="item-group component-tag-primary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -114,7 +114,7 @@
             {#if data.item.tags.length > 0}
               <div class="item-tags">
                 {#each data.item.tags as tag}
-                  <span class="tag">{tag}</span>
+                  <span class="tag component-tag-default">{tag}</span>
                 {/each}
               </div>
             {/if}
@@ -127,7 +127,7 @@
             ?.domain}&utm_medium=navigation"
           target="_blank"
           rel="noopener noreferrer"
-          class="visit-btn"
+          class="visit-btn component-button-primary"
         >
           <span>访问网站</span>
           <svg
@@ -155,7 +155,7 @@
     {/if}
 
     <div class="item-footer">
-      <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="group-link">
+      <a href="/group/{encodeGroupIdForUrl(data.item.group)}" class="group-link component-link-default">
         查看 {data.item.group} 分组下的所有网站 →
       </a>
     </div>
@@ -201,34 +201,12 @@
   }
 
   .back-link {
-    color: var(--component-button-secondary-color, var(--text-secondary));
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: var(--component-button-secondary-transition, all var(--transition-fast));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
-    border-radius: var(--component-button-secondary-radius, var(--radius-full));
+    font-size: 0.875rem;
+    text-decoration: none;
     font-weight: 500;
-    background: var(--component-button-secondary-bg, var(--bg-tertiary));
-    border: var(--component-button-secondary-border, 1px solid var(--border-light));
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-  }
-
-  .back-link:hover {
-    color: var(--component-button-secondary-color-hover, var(--primary-color));
-    background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
-    border-color: var(--component-button-secondary-border-hover, var(--border-accent));
-    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-  }
-
-  .back-link:active {
-    transform: var(--component-button-secondary-transform-active, translateY(0));
   }
 
   .back-link svg {
@@ -236,22 +214,8 @@
   }
 
   .item-detail {
-    /* 默认布局：合并为一个卡片 */
-    background: var(--component-card-default-bg, var(--card-bg));
-    border: var(--component-card-default-border, 1px solid var(--border-light));
-    border-radius: var(--component-card-default-radius, var(--radius-2xl));
-    /* 使用与 header/footer 一致的 padding，确保内容宽度对齐 */
     padding: var(--spacing-2xl) calc(var(--layout-header-padding-x, var(--spacing-lg)) * var(--layout-density-scale, 1));
-    box-shadow: var(--component-card-default-shadow, var(--shadow-sm));
-    backdrop-filter: var(--component-card-default-backdrop, blur(16px));
-    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px));
-    transition: var(--component-card-default-transition, all var(--transition-base));
     position: relative;
-  }
-
-  .item-detail:hover {
-    box-shadow: var(--component-card-default-shadow-hover, var(--shadow-md));
-    border-color: var(--component-card-default-border-hover, var(--border-accent));
   }
 
   /* 默认布局：移除相关推荐的卡片样式和内边距，合并到内容卡片中 */
@@ -535,26 +499,11 @@
 
   .item-group {
     font-size: 0.875rem;
-    color: var(--component-tag-default-color, var(--text-secondary));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    background: var(--component-tag-default-bg, var(--tag-bg));
-    border: var(--component-tag-default-border, var(--border-light));
-    border-radius: var(--component-tag-default-radius, var(--radius-full));
-    font-weight: 500;
     text-decoration: none;
-    transition: var(--component-tag-default-transition, all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1));
-    box-shadow: var(--component-tag-default-shadow, none);
-  }
-
-  .item-group:hover {
-    background: var(--component-tag-default-bg-hover, var(--primary-light));
-    border-color: var(--component-tag-default-border-hover, var(--primary-color));
-    color: var(--component-tag-default-color-hover, var(--primary-color));
-    transform: var(--component-tag-default-transform-hover, translateY(-1px) scale(1.03));
-    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
+    font-weight: 600;
   }
 
   .item-group svg {
@@ -570,21 +519,7 @@
 
   .tag {
     font-size: 0.875rem;
-    padding: var(--component-tag-primary-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    background: var(--component-tag-primary-bg, var(--primary-light));
-    color: var(--component-tag-primary-color, var(--primary-color));
-    border: var(--component-tag-primary-border, var(--primary-color));
-    border-radius: var(--component-tag-primary-radius, var(--radius-full));
     font-weight: 600;
-    box-shadow: var(--component-tag-primary-shadow, none);
-    transition: var(--component-tag-primary-transition, all var(--transition-fast));
-  }
-
-  .tag:hover {
-    transform: var(--component-tag-primary-transform-hover, translateY(-1px) scale(1.05));
-    box-shadow: var(--component-tag-primary-shadow-hover, var(--shadow-xs));
-    background: var(--component-tag-primary-bg-hover, var(--primary-color));
-    color: var(--component-tag-primary-color-hover, var(--text-inverse));
   }
 
   .item-actions {
@@ -603,30 +538,13 @@
   }
 
   .visit-btn {
-    padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-lg));
-    background: var(--component-button-primary-bg, var(--gradient-brand));
-    color: var(--component-button-primary-color, var(--text-inverse));
     text-decoration: none;
-    border-radius: var(--component-button-primary-radius, var(--radius-md));
-    border: var(--component-button-primary-border, transparent);
     font-weight: 600;
     font-size: 0.9375rem;
-    transition: var(--component-button-primary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     white-space: nowrap;
-    box-shadow: var(--component-button-primary-shadow, var(--shadow-soft));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-  }
-
-  .visit-btn:hover {
-    background: var(--component-button-primary-bg-hover, linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%));
-    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-glow));
-    transform: var(--component-button-primary-transform-hover, translateY(-1px) scale(1.02));
-  }
-
-  .visit-btn:active {
-    transform: var(--component-button-primary-transform-active, translateY(0) scale(0.98));
   }
 
   .visit-btn svg {
@@ -644,27 +562,12 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-md));
-    background: var(--component-button-ghost-bg, transparent);
-    border: var(--component-button-ghost-border, transparent);
-    border-radius: var(--component-button-ghost-radius, var(--radius-md));
-    cursor: pointer;
-    color: var(--component-button-ghost-color, var(--text-tertiary));
-    transition: var(--component-button-ghost-transition, all var(--transition-fast) cubic-bezier(0.4, 0, 0.2, 1));
     flex-shrink: 0;
-    box-shadow: var(--component-button-ghost-shadow, none);
   }
 
   .favorite-btn svg {
     width: 1.5rem;
     height: 1.5rem;
-  }
-
-  .favorite-btn:hover {
-    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-    color: var(--component-button-ghost-color-hover, var(--primary-color));
-    background: var(--component-button-ghost-bg-hover, var(--bg-tertiary));
-    transform: var(--component-button-ghost-transform-hover, scale(1.05));
   }
 
   .favorite-btn.favorited {
@@ -712,39 +615,11 @@
   }
 
   .group-link {
-    color: var(--component-button-secondary-color, var(--primary-color));
     text-decoration: none;
     font-weight: 500;
-    transition: var(--component-button-secondary-transition, all var(--transition-fast));
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
-    border-radius: var(--component-button-secondary-radius, var(--radius-full));
-    background: var(--component-button-secondary-bg, var(--primary-lighter));
-    border: var(--component-button-secondary-border, 1px solid var(--border-accent));
-    box-shadow: var(--component-button-secondary-shadow, none);
-  }
-
-  .group-link:hover {
-    color: var(--component-button-secondary-color-hover, var(--primary-hover));
-    background: var(--component-button-secondary-bg-hover, var(--primary-light));
-    border-color: var(--component-button-secondary-border-hover, var(--border-accent));
-    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .back-link:hover,
-    .back-link:active,
-    .tag:hover,
-    .visit-btn:hover,
-    .favorite-btn:hover,
-    .favorite-btn.favorited:hover,
-    .group-link:hover {
-      transform: none;
-      box-shadow: none;
-    }
   }
 
   @media (max-width: 768px) {
@@ -761,22 +636,14 @@
     }
 
     .back-link {
-      background: transparent;
-      border: none;
       padding: var(--spacing-sm) var(--spacing-xs);
       font-size: 0.875rem;
       min-height: 44px;
-      display: inline-flex;
-      align-items: center;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .back-link:hover,
     .back-link:active {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      transform: translateX(-2px);
+      transform: none;
     }
 
     .item-detail {

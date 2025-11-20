@@ -36,7 +36,7 @@
 <div class="favorite-manager">
 	<h2 class="favorite-title">我的收藏</h2>
 	{#if favoriteItems.length === 0}
-		<div class="empty-state">
+		<div class="empty-state component-empty-state component-card-elevated">
 			<p>还没有收藏任何网站</p>
 			<p class="empty-hint">点击导航项上的 ❤️ 图标即可收藏</p>
 		</div>
@@ -65,30 +65,6 @@
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 		line-height: 1.2;
-	}
-
-	.empty-state {
-		text-align: center;
-		padding: var(--spacing-3xl) var(--spacing-xl);
-		color: var(--text-secondary);
-		background: var(--component-card-default-bg, var(--bg-secondary));
-		border-radius: var(--component-card-default-radius, var(--radius-2xl));
-		border: 1px dashed var(--component-card-default-border, var(--border-light));
-		box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-		backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-		-webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-		transition: var(
-			--component-card-default-transition,
-			border-color var(--transition-fast),
-			box-shadow var(--transition-fast),
-			background-color var(--transition-fast)
-		);
-	}
-
-	.empty-state:hover {
-		border-color: var(--border-accent);
-		box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
-		background: var(--component-card-default-bg-hover, var(--surface-glass));
 	}
 
 	.empty-state p:first-child {

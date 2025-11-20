@@ -16,7 +16,7 @@
 
 <div class="group-page">
 	<div class="group-header">
-		<a href="/" class="back-link" data-sveltekit-preload-data="hover">
+		<a href="/" class="back-link component-button-secondary" data-sveltekit-preload-data="hover">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="20"
@@ -46,38 +46,14 @@
 	}
 
 	.back-link {
-		color: var(--component-button-secondary-color, var(--text-secondary));
-		text-decoration: none;
-		font-size: 0.875rem;
-		transition: var(--component-button-secondary-transition, all var(--transition-fast));
 		display: inline-flex;
 		align-items: center;
 		gap: var(--spacing-sm);
-		padding: var(--component-button-secondary-padding, calc(var(--spacing-sm) * 0.875) var(--spacing-lg));
-		border-radius: var(--component-button-secondary-radius, var(--radius-full));
-		font-weight: 500;
-		background: var(--component-button-secondary-bg, var(--bg-tertiary));
-		border: var(--component-button-secondary-border, 1px solid var(--border-light));
-		cursor: pointer;
-		user-select: none;
-		-webkit-tap-highlight-color: transparent;
-		box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-	}
-
-	.back-link:hover {
-		color: var(--component-button-secondary-color-hover, var(--primary-color));
-		background: var(--component-button-secondary-bg-hover, var(--primary-lighter));
-		border-color: var(--component-button-secondary-border-hover, var(--border-accent));
-		transform: var(--component-button-secondary-transform-hover, translateY(-1px));
-		box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-	}
-
-	.back-link:active {
-		transform: var(--component-button-secondary-transform-active, translateY(0));
+		text-decoration: none;
+		font-size: 0.875rem;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.back-link:hover,
 		.back-link:active {
 			transform: none;
 		}
@@ -103,7 +79,6 @@
 
 	:global(:root[data-layout-page-group="compact"]) .group-header .back-link {
 		font-size: 0.875rem;
-		padding: calc(var(--spacing-xs) * 1.25) var(--spacing-md);
 	}
 </style>
 

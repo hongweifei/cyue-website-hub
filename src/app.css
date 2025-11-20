@@ -1,3 +1,6 @@
+/** 导入通用组件样式 */
+@import "./components.css";
+
 :root {
 	color-scheme: light;
 	--grid-unit: 8px;
@@ -9,6 +12,7 @@
 	--spacing-lg: calc(var(--grid-unit) * 3);
 	--spacing-xl: calc(var(--grid-unit) * 4);
 	--spacing-2xl: calc(var(--grid-unit) * 5);
+	--mobile-touch-target: 44px;
 
 	/* 鸿蒙设计规范圆角系统 */
 	--radius-xs: 8px;
@@ -187,6 +191,13 @@ a, button {
 		-moz-osx-font-smoothing: grayscale;
 		/* 移动端禁用 contain，避免兼容性问题 */
 		contain: none;
+	}
+
+	button:not(.favorite-btn):not(.clear-btn),
+	.nav-link,
+	a[role="button"],
+	.component-input-default {
+		min-height: var(--mobile-touch-target);
 	}
 }
 

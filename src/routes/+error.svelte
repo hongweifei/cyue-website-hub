@@ -16,18 +16,18 @@
 
 <section class="error-page" role="alert">
   <div class="error-hero" aria-hidden="true"></div>
-  <div class="error-content">
+  <div class="error-content component-card-glass">
     <span class="error-code">{status}</span>
     <h1>抱歉，页面无法正常加载</h1>
     <p class="error-message">
       {error?.message ?? "我们正在努力修复，请稍后重试。"}
     </p>
     <div class="actions">
-      <button type="button" class="primary" onclick={() => goto("/")}>返回首页</button>
-      <button type="button" class="secondary" onclick={handleBack}>返回上一页</button>
+      <button type="button" class="primary component-button-primary" onclick={() => goto("/")}>返回首页</button>
+      <button type="button" class="secondary component-button-secondary" onclick={handleBack}>返回上一页</button>
     </div>
   </div>
-  <div class="error-links card">
+  <div class="error-links card component-card-glass">
     <h2>你可以：</h2>
     <ul>
       <li><a href="/">回到导航主页</a></li>
@@ -63,16 +63,6 @@
 
   .error-content,
   .card {
-    backdrop-filter: var(--component-card-glass-backdrop, blur(22px));
-    background: var(--component-card-glass-bg, linear-gradient(
-        140deg,
-        color-mix(in srgb, var(--surface-glass) 88%, transparent),
-        color-mix(in srgb, var(--card-bg) 90%, transparent)
-      ));
-    border: var(--component-card-glass-border, 1px solid color-mix(in srgb, var(--border-soft) 80%, transparent));
-    border-radius: var(--component-card-glass-radius, var(--radius-xl));
-    padding: var(--component-card-glass-padding, clamp(var(--spacing-lg), 5vw, var(--spacing-2xl)));
-    box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
@@ -111,61 +101,6 @@
 
   .actions button {
     font-weight: 600;
-    cursor: pointer;
-  }
-
-  .actions button.primary {
-    padding: var(--component-button-primary-padding, var(--spacing-sm) var(--spacing-lg));
-    border-radius: var(--component-button-primary-radius, var(--radius-md));
-    border: var(--component-button-primary-border, transparent);
-    background: var(--component-button-primary-bg, var(--gradient-brand));
-    color: var(--component-button-primary-color, var(--text-inverse));
-    box-shadow: var(--component-button-primary-shadow, var(--shadow-soft));
-    transition: var(--component-button-primary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
-  }
-
-  .actions button.primary:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
-  }
-
-  .actions button.primary:hover,
-  .actions button.primary:focus-visible {
-    background: var(--component-button-primary-bg-hover, linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%));
-    transform: var(--component-button-primary-transform-hover, translateY(-2px) scale(1.02));
-    box-shadow: var(--component-button-primary-shadow-hover, var(--shadow-glow));
-  }
-
-  .actions button.primary:active {
-    transform: var(--component-button-primary-transform-active, translateY(0) scale(0.98));
-  }
-
-  .actions button.secondary {
-    padding: var(--component-button-secondary-padding, var(--spacing-sm) var(--spacing-lg));
-    border-radius: var(--component-button-secondary-radius, var(--radius-md));
-    border: var(--component-button-secondary-border, 1px solid var(--border-light));
-    background: var(--component-button-secondary-bg, var(--bg-tertiary));
-    color: var(--component-button-secondary-color, var(--text-primary));
-    box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-    transition: var(--component-button-secondary-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
-  }
-
-  .actions button.secondary:hover,
-  .actions button.secondary:focus-visible {
-    background: var(--component-button-secondary-bg-hover, var(--primary-light));
-    border-color: var(--component-button-secondary-border-hover, var(--primary-color));
-    color: var(--component-button-secondary-color-hover, var(--primary-color));
-    transform: var(--component-button-secondary-transform-hover, translateY(-1px));
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
-  }
-
-  .actions button.secondary:active {
-    transform: var(--component-button-secondary-transform-active, translateY(0));
-  }
-
-  .actions button.secondary:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--primary-color) 35%, transparent);
-    outline-offset: 3px;
   }
 
   .error-links h2 {

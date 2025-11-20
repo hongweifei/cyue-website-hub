@@ -47,7 +47,7 @@
 		{/if}
 		<div class="group-info">
 			<h2 class="group-title">
-				<a href={`/group/${encodeGroupIdForUrl(group.id)}`} class="group-link">{group.name}</a>
+				<a href={`/group/${encodeGroupIdForUrl(group.id)}`} class="group-link component-link-default">{group.name}</a>
 			</h2>
 			<div class="group-meta">
 				{#if group.description}
@@ -231,18 +231,10 @@
 	}
 
 	.group-link {
-		color: var(--component-link-default-color, var(--text-primary));
-		text-decoration: none;
-		transition: var(
-			--component-link-default-transition,
-			color var(--transition-base),
-			transform var(--transition-base)
-		);
 		display: inline-block;
 	}
 
 	.group-link:hover {
-		color: var(--component-link-default-color-hover, var(--primary-color));
 		transform: translateX(4px);
 	}
 

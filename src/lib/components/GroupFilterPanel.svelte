@@ -102,24 +102,27 @@
 </script>
 
 <section
-  class="group-filter-panel"
+  class="group-filter-panel component-card-default component-panel gap-sm"
   class:vertical={isVertical}
   class:collapsed={isVertical && shouldShowToggle && !expandAll}
   aria-labelledby="group-filter-heading"
 >
-  <div class="filter-bar">
-    <h3 id="group-filter-heading">{label}</h3>
+  <div class="filter-bar component-panel-header">
+    <h3 id="group-filter-heading" class="component-panel-title">{label}</h3>
     {#if selectedGroupId !== null}
-      <button class="filter-clear" onclick={() => handleSelect(null)}>
+      <button
+        class="filter-clear component-button-ghost component-secondary-action"
+        onclick={() => handleSelect(null)}
+      >
         清除分组
       </button>
     {/if}
   </div>
 
-  <div class="group-chip-list">
+  <div class="group-chip-list component-chip-list">
     {#if showAllOption}
       <button
-        class="group-chip"
+        class="group-chip component-chip component-tag-default"
         class:active={selectedGroupId === null}
         onclick={() => handleSelect(null)}
       >
@@ -128,19 +131,21 @@
     {/if}
     {#each visibleGroups as group (group.id)}
       <button
-        class="group-chip"
+        class="group-chip component-chip component-tag-default"
         class:active={selectedGroupId === group.id}
         onclick={() => handleSelect(group.id)}
         title={`该分组包含 ${group.count} 个网站`}
       >
         <span class="group-chip-name">{group.label}</span>
-        <span class="group-chip-count">{group.count}</span>
+        <span class="group-chip-count component-chip-badge component-badge-default">
+          {group.count}
+        </span>
       </button>
     {/each}
   </div>
   {#if shouldShowToggle}
     <button
-      class="group-toggle"
+      class="group-toggle component-button-ghost component-secondary-action"
       type="button"
       onclick={() => (expandAll = !expandAll)}
       aria-expanded={expandAll}
@@ -153,129 +158,13 @@
 </section>
 
 <style>
-  .group-filter-panel {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: var(--component-card-default-padding, var(--spacing-md));
-    background: var(--component-card-default-bg, var(--bg-secondary));
-    border-radius: var(--component-card-default-radius, var(--radius-xl));
-    border: 1px solid var(--component-card-default-border, var(--border-light));
-    transition: var(
-      --component-card-default-transition,
-      border-color var(--transition-fast),
-      background-color var(--transition-fast),
-      box-shadow var(--transition-fast)
-    );
-    box-shadow: var(--component-card-default-shadow, var(--shadow-xs));
-    backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(8px));
-  }
-
-  .group-filter-panel:hover {
-    border-color: var(--border-accent);
-    background: var(--component-card-default-bg-hover, var(--surface-glass));
-    box-shadow: var(--component-card-default-shadow-hover, var(--shadow-sm));
-  }
-
-  .filter-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-sm);
-  }
-
-  .filter-bar h3 {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .filter-clear {
-    border: 1px solid var(--component-button-ghost-border, var(--border-light));
-    background: var(--component-button-ghost-bg, var(--bg-tertiary));
-    color: var(--component-button-ghost-color, var(--primary-color));
-    font-size: 0.8125rem;
-    cursor: pointer;
-    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    border-radius: var(--component-button-ghost-radius, var(--radius-full));
-    transition: var(
-      --component-button-ghost-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast),
-      border-color var(--transition-fast),
-      transform var(--transition-fast),
-      box-shadow var(--transition-fast)
-    );
-    font-weight: 500;
-  }
-
-  .filter-clear:hover {
-    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-    color: var(--component-button-ghost-color-hover, var(--primary-color));
-    transform: translateY(-1px);
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
-  }
-
   .group-chip-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
     flex: 1;
   }
 
   .group-chip {
-    border: 1px solid var(--component-tag-default-border, var(--border-light));
-    background: var(--component-tag-default-bg, var(--bg-tertiary));
-    color: var(--component-tag-default-color, var(--text-secondary));
-    border-radius: var(--component-tag-default-radius, var(--radius-full));
-    padding: var(--component-tag-default-padding, calc(var(--spacing-xs) * 0.875) var(--spacing-md));
     font-size: 0.8125rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    transition: var(--component-tag-default-transition, all var(--transition-fast));
     font-weight: 500;
-    box-shadow: var(--component-tag-default-shadow, none);
-  }
-
-  .group-chip:hover {
-    border-color: var(--component-tag-default-border-hover, var(--border-accent));
-    color: var(--component-tag-default-color-hover, var(--primary-color));
-    background: var(--component-tag-default-bg-hover, var(--primary-lighter));
-    transform: translateY(-1px);
-    box-shadow: var(--component-tag-default-shadow-hover, var(--shadow-xs));
-  }
-
-  .group-chip.active {
-    background: var(--component-tag-primary-bg, var(--gradient-brand));
-    color: var(--component-tag-primary-color, var(--text-inverse));
-    border-color: var(--component-tag-primary-border, transparent);
-    box-shadow: var(--component-tag-primary-shadow, var(--shadow-xs));
-    font-weight: 600;
-  }
-
-  .group-chip-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.5rem;
-    padding: var(--component-badge-default-padding, calc(var(--spacing-2xs) * 0.5) calc(var(--spacing-xs) * 0.75));
-    border-radius: var(--component-badge-default-radius, var(--radius-full));
-    background: var(--component-badge-default-bg, var(--primary-lighter));
-    border: 1px solid var(--component-badge-default-border, var(--border-accent));
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--component-badge-default-color, var(--primary-color));
-  }
-
-  .group-chip.active .group-chip-count {
-    background: var(--component-badge-primary-bg, rgba(255, 255, 255, 0.2));
-    border-color: var(--component-badge-primary-border, rgba(255, 255, 255, 0.3));
-    color: var(--component-badge-primary-color, var(--text-inverse));
   }
 
   .group-chip-name {
@@ -322,35 +211,11 @@
   .group-toggle {
     margin-top: var(--spacing-sm);
     align-self: flex-start;
-    border: 1px solid var(--component-button-ghost-border, var(--border-light));
-    background: var(--component-button-ghost-bg, var(--bg-tertiary));
-    color: var(--component-link-default-color, var(--primary-color));
-    font-size: 0.8125rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: var(--component-button-ghost-padding, calc(var(--spacing-xs) * 0.75) var(--spacing-sm));
-    border-radius: var(--component-button-ghost-radius, var(--radius-full));
-    transition: var(
-      --component-button-ghost-transition,
-      color var(--transition-fast),
-      background-color var(--transition-fast),
-      border-color var(--transition-fast),
-      transform var(--transition-fast),
-      box-shadow var(--transition-fast)
-    );
-  }
-
-  .group-toggle:hover {
-    color: var(--component-link-default-color-hover, var(--primary-color));
-    background: var(--component-button-ghost-bg-hover, var(--primary-lighter));
-    border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-    transform: translateY(-1px);
-    box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-xs));
   }
 
   @media (max-width: 768px) {
     .group-filter-panel {
-      padding: var(--component-card-default-padding, var(--spacing-sm));
+      padding: var(--spacing-sm);
       gap: var(--spacing-xs);
     }
 

@@ -107,7 +107,7 @@
 <div class="theme-toggle-wrapper" data-open={isOpen}>
     <button
         type="button"
-        class="theme-toggle-btn"
+        class="theme-toggle-btn component-button-secondary"
         data-mode={currentOption.mode}
         onclick={handleToggle}
         aria-haspopup="true"
@@ -159,7 +159,7 @@
 
     {#if isOpen}
         <div
-            class="theme-panel"
+            class="theme-panel component-card-glass component-panel"
             role="menu"
             aria-label="主题选择"
             bind:this={panelRef}
@@ -167,7 +167,7 @@
             {#each THEME_OPTIONS as option}
                 <button
                     type="button"
-                    class="theme-option"
+                    class="theme-option component-card-default"
                     onclick={() => handleSelect(option.id)}
                     data-selected={option.id === currentTheme}
                     role="menuitemradio"
@@ -237,31 +237,20 @@
         display: inline-flex;
         align-items: center;
         gap: var(--spacing-xs);
-        padding: var(--component-button-secondary-padding, 0 var(--spacing-md));
         height: 38px;
-        background: var(--component-button-secondary-bg, var(--bg-tertiary));
-        border: 1px solid var(--component-button-secondary-border, var(--border-light));
-        border-radius: var(--component-button-secondary-radius, var(--radius-full));
-        color: var(--component-button-secondary-color, var(--text-primary));
-        cursor: pointer;
-        transition: var(
-            --component-button-secondary-transition,
-            all var(--transition-fast)
-        );
-        box-shadow: var(--component-button-secondary-shadow, var(--shadow-xs));
-        backdrop-filter: var(--component-button-secondary-backdrop, blur(12px));
-        -webkit-backdrop-filter: var(--component-button-secondary-backdrop, blur(12px));
         min-width: auto;
+        --component-button-secondary-padding: 0 var(--spacing-md);
+        --component-button-secondary-backdrop: blur(12px);
     }
 
     .theme-toggle-btn[data-mode="dark"] {
-        background: color-mix(
+        --component-button-secondary-bg: color-mix(
             in srgb,
             var(--bg-tertiary) 80%,
             rgba(56, 56, 78, 0.65)
         );
-        color: var(--text-secondary);
-        border-color: color-mix(
+        --component-button-secondary-color: var(--text-secondary);
+        --component-button-secondary-border: color-mix(
             in srgb,
             var(--border-light) 75%,
             rgba(255, 255, 255, 0.18)
@@ -269,20 +258,7 @@
     }
 
     .theme-toggle-btn[data-mode="adaptive"] {
-        border-color: var(--border-accent);
-    }
-
-    .theme-toggle-btn:hover {
-        border-color: var(--component-button-secondary-border-hover, var(--border-accent));
-        background: var(--component-button-secondary-bg-hover, var(--bg-secondary));
-        color: var(--component-button-secondary-color-hover, var(--primary-color));
-        transform: translateY(-1px);
-        box-shadow: var(--component-button-secondary-shadow-hover, var(--shadow-sm));
-    }
-
-    .theme-toggle-btn:active {
-        transform: translateY(0);
-        box-shadow: var(--shadow-xs);
+        --component-button-secondary-border: var(--border-accent);
     }
 
     .icon-wrapper {
@@ -415,12 +391,6 @@
         max-width: 420px;
         max-height: calc(100vh - 120px);
         padding: var(--component-card-glass-padding, var(--spacing-md));
-        background: var(--component-card-glass-bg, var(--bg-elevated, var(--bg-primary)));
-        border: 1px solid var(--component-card-glass-border, var(--border-light));
-        border-radius: var(--component-card-glass-radius, var(--radius-3xl, 28px));
-        box-shadow: var(--component-card-glass-shadow, var(--shadow-lg, 0 35px 65px rgba(15, 23, 42, 0.25)));
-        backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
-        -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(20px));
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
@@ -459,31 +429,21 @@
     }
 
     .theme-option {
+        appearance: none;
         display: grid;
         grid-template-columns: auto 1fr auto;
         gap: var(--spacing-md);
         align-items: center;
         width: 100%;
-        padding: var(--component-button-ghost-padding, var(--spacing-sm) var(--spacing-sm));
-        border-radius: var(--component-button-ghost-radius, var(--radius-2xl));
-        border: 1px solid var(--component-button-ghost-border, transparent);
-        background: var(--component-button-ghost-bg, rgba(255, 255, 255, 0.01));
         cursor: pointer;
-        color: var(--component-button-ghost-color, var(--text-secondary));
-        transition: var(
-            --component-button-ghost-transition,
-            border var(--transition-fast),
-            background var(--transition-fast),
-            color var(--transition-fast),
-            transform var(--transition-fast)
-        );
-    }
-
-    .theme-option:hover {
-        border-color: var(--component-button-ghost-border-hover, var(--border-accent));
-        background: var(--component-button-ghost-bg-hover, var(--bg-secondary));
-        color: var(--component-button-ghost-color-hover, var(--text-primary));
-        transform: translateY(-1px);
+        text-align: left;
+        color: var(--text-secondary);
+        --component-card-default-padding: var(--spacing-sm) var(--spacing-sm);
+        --component-card-default-radius: var(--radius-2xl);
+        --component-card-default-transform: translateZ(0);
+        --component-card-default-transform-hover: translateY(-1px);
+        --component-card-default-border-hover: var(--component-button-ghost-border-hover, var(--border-accent));
+        --component-card-default-bg-hover: var(--component-button-ghost-bg-hover, var(--bg-secondary));
     }
 
     .theme-option:hover .preview {
@@ -500,10 +460,10 @@
     }
 
     .theme-option[data-selected="true"] {
-        border-color: var(--component-button-secondary-border, var(--border-accent));
-        background: var(--component-button-secondary-bg, color-mix(in srgb, var(--primary-lighter) 60%, transparent));
-        color: var(--component-button-secondary-color, var(--text-primary));
-        box-shadow: var(--component-button-secondary-shadow, inset 0 0 0 1px rgba(255, 255, 255, 0.35));
+        --component-card-default-border: var(--component-button-secondary-border, var(--border-accent));
+        --component-card-default-bg: color-mix(in srgb, var(--primary-lighter) 60%, transparent);
+        --component-card-default-shadow: var(--component-button-secondary-shadow, inset 0 0 0 1px rgba(255, 255, 255, 0.35));
+        color: var(--text-primary);
     }
 
     .theme-option[data-selected="true"] .preview {
@@ -737,8 +697,8 @@
 		.theme-option {
 			grid-template-columns: auto 1fr;
 			gap: var(--spacing-xs);
-			padding: var(--spacing-xs) var(--spacing-sm);
 			align-items: center;
+			--component-card-default-padding: var(--spacing-xs) var(--spacing-sm);
 		}
 
 		/* 移动端简化预览 - 移除边框层 */
