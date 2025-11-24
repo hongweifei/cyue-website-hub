@@ -24,10 +24,7 @@
     // 当 navigation 数据从 null 变为有值时，更新 store
     $effect(() => {
       if (data.navigation) {
-        navigation.groups.set(data.navigation.groups);
-        navigation.allTags.set(data.navigation.tags);
-        navigation.tagSummaries.set(data.navigation.tagSummaries);
-        navigation.navItems.set(data.navigation.navItems);
+        navigation.updateData(data.navigation);
       }
     });
 
