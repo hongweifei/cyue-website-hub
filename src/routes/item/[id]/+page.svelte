@@ -214,6 +214,7 @@
   }
 
   .item-detail {
+    transform: none !important;
     padding: var(--spacing-2xl) calc(var(--layout-header-padding-x, var(--spacing-lg)) * var(--layout-density-scale, 1));
     position: relative;
   }
