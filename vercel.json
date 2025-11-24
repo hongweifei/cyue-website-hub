@@ -2,10 +2,48 @@
   "buildCommand": "vite build",
   "devCommand": "vite dev",
   "outputDirectory": "build",
+  "redirects": [
+    {
+      "source": "/group/:group/",
+      "destination": "/group/:group",
+      "permanent": true
+    },
+    {
+      "source": "/group/:group.html",
+      "destination": "/group/:group",
+      "permanent": true
+    },
+    {
+      "source": "/item/:id/",
+      "destination": "/item/:id",
+      "permanent": true
+    },
+    {
+      "source": "/item/:id.html",
+      "destination": "/item/:id",
+      "permanent": true
+    },
+    {
+      "source": "/favorites/",
+      "destination": "/favorites",
+      "permanent": true
+    },
+    {
+      "source": "/favorites.html",
+      "destination": "/favorites",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "source": "/group/:group",
+      "destination": "/group/:group.html"
+    },
+    {
+      "source": "/item/:id",
+      "destination": "/item/:id.html"
     }
-  ]
+  ],
+  "trailingSlash": false,
+  "cleanUrls": true
 }
