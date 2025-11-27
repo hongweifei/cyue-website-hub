@@ -308,8 +308,8 @@
     border-radius: var(--component-card-glass-radius, var(--radius-2xl));
     border: var(--layout-header-border);
     box-shadow: var(--layout-header-shadow);
-    backdrop-filter: var(--layout-header-backdrop);
-    -webkit-backdrop-filter: var(--layout-header-backdrop);
+    /* backdrop-filter: var(--layout-header-backdrop); */
+    /* -webkit-backdrop-filter: var(--layout-header-backdrop); */
     /* 优化 transition - 只过渡会变化的属性，保留视觉效果 */
     transition: var(--component-card-glass-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     /* GPU 加速 backdrop-filter */
@@ -439,8 +439,8 @@
       calc(var(--layout-main-padding-x) * var(--layout-density-scale));
     border: var(--layout-main-border);
     box-shadow: var(--layout-main-shadow);
-    backdrop-filter: var(--component-card-default-backdrop, blur(16px));
-    -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px));
+    /* backdrop-filter: var(--component-card-default-backdrop, blur(16px)); */
+    /* -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px)); */
     /* 优化 transition - 使用组件样式变量 */
     transition: var(--component-card-default-transition, all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1));
     /* GPU 加速 backdrop-filter */
@@ -490,8 +490,8 @@
       ));
     border: var(--component-card-glass-border, 1px solid var(--border-light));
     box-shadow: var(--component-card-glass-shadow, var(--shadow-sm));
-    backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
-    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
+    /* backdrop-filter: var(--component-card-glass-backdrop, blur(24px)); */
+    /* -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px)); */
     color: var(--text-secondary);
     /* GPU 加速 backdrop-filter */
     transform: translateZ(0);
@@ -563,7 +563,7 @@
     color: var(--component-badge-default-color, var(--text-secondary));
     border: var(--component-badge-default-border, var(--border-light));
     box-shadow: var(--component-badge-default-shadow, inset 0 1px 2px rgba(0, 0, 0, 0.05));
-    backdrop-filter: blur(8px);
+    /* backdrop-filter: blur(8px); */
     font-weight: 500;
   }
 
@@ -832,8 +832,8 @@
   }
 
   :global(:root[data-layout-cards="floating"]) .main .container {
-    backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
-    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px));
+    /* backdrop-filter: var(--component-card-glass-backdrop, blur(24px)); */
+    /* -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(24px)); */
   }
 
   :global(:root[data-layout-cards="flat"]) {

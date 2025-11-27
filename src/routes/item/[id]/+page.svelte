@@ -900,8 +900,8 @@
   border-radius: var(--component-card-default-radius, var(--radius-2xl));
   padding: var(--component-card-default-padding, var(--spacing-2xl));
   box-shadow: var(--component-card-default-shadow, var(--shadow-sm));
-  backdrop-filter: var(--component-card-default-backdrop, blur(16px));
-  -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px));
+  /* backdrop-filter: var(--component-card-default-backdrop, blur(16px)); */
+  /* -webkit-backdrop-filter: var(--component-card-default-backdrop, blur(16px)); */
 }
 
 :global(:root[data-layout-page-item="split"]) .item-detail-page :global(.recommendations) {

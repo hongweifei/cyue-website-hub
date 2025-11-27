@@ -49,8 +49,6 @@
   let hasError = $state(false);
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
   let imgElement = $state<HTMLImageElement | null>(null);
-  let hostElement = $state<HTMLDivElement | null>(null);
-  let isVisible = $state(!browser);
 
   const placeholderContent = $derived(
     (fallbackText ?? item.name?.[0] ?? "?").toUpperCase(),
@@ -83,7 +81,7 @@
   function setupIconTimeout() {
     clearTimeoutIfNeeded();
 
-    if (!isVisible || cachedIconUrl || !activeIconUrl || hasError) {
+    if (cachedIconUrl || !activeIconUrl || hasError) {
       return;
     }
 
@@ -113,34 +111,6 @@
   });
 
   $effect(() => {
-    if (!browser) {
-      return;
-    }
-
-    if (!hostElement || isVisible) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
-          isVisible = true;
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "150px" },
-    );
-
-    observer.observe(hostElement);
-    return () => observer.disconnect();
-  });
-
-  $effect(() => {
-    if (!isVisible) {
-      clearTimeoutIfNeeded();
-      return;
-    }
-
     if (activeIconUrl && !hasError) {
       setupIconTimeout();
     }
@@ -179,12 +149,11 @@
 </script>
 
 <div
-  bind:this={hostElement}
   class={combinedClass}
   style={dimensionStyle}
   aria-hidden="true"
 >
-  {#if hasError || !isVisible || !activeIconUrl}
+  {#if hasError || !activeIconUrl}
     <div class={`site-icon-placeholder ${placeholderClass}`.trim()}>
       {placeholderContent}
     </div>
@@ -212,7 +181,6 @@
     />
   {/if}
 </div>
-
 <style>
   .site-icon {
     display: flex;
@@ -226,12 +194,11 @@
     border: 1px solid var(--component-card-glass-border, var(--border-accent));
     box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
     color: var(--primary-color);
-    backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-    -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-    transition: var(
-      --component-card-glass-transition,
-      all var(--transition-fast)
-    );
+    /* 性能优化：移除默认状态下的 backdrop-filter，因为它在大量元素时会导致严重卡顿 */
+    /* backdrop-filter: var(--component-card-glass-backdrop, blur(12px)); */
+    /* -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px)); */
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+    will-change: transform; /* 仅在需要动画的属性上使用 */
   }
 
   .site-icon--muted {

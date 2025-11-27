@@ -2,7 +2,6 @@
 	import type { NavGroup as NavGroupType } from '../types';
 	import NavItem from './NavItem.svelte';
 	import NavGroupChildren from './NavGroupChildren.svelte';
-	import LazyLoad from './LazyLoad.svelte';
 	import { countGroupItems } from '../utils/group';
 	import { encodeGroupIdForUrl } from '../dataLoader';
 
@@ -64,19 +63,14 @@
 	{#if group.items.length > 0}
 		<div class="nav-items-grid">
 			{#each group.items as item (item.id)}
-				<LazyLoad threshold={0.05} rootMargin="50px">
-					<NavItem {item} {favoriteIds} />
-				</LazyLoad>
+				<NavItem {item} {favoriteIds} />
 			{/each}
 		</div>
 	{/if}
 	{#if hasChildren}
-		<LazyLoad threshold={0.1} rootMargin="100px">
-			<NavGroupChildren groups={childGroups} level={level + 1} {favoriteIds} />
-		</LazyLoad>
+		<NavGroupChildren groups={childGroups} level={level + 1} {favoriteIds} />
 	{/if}
 </section>
-
 <style>
 	.nav-group {
 		position: relative;
@@ -179,8 +173,8 @@
 		justify-content: center;
 		box-shadow: var(--component-card-glass-shadow, var(--shadow-xs));
 		border: 1px solid var(--component-card-glass-border, var(--border-light));
-		backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
-		-webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px));
+		/* backdrop-filter: var(--component-card-glass-backdrop, blur(12px)); */
+		/* -webkit-backdrop-filter: var(--component-card-glass-backdrop, blur(12px)); */
 		/* 优化 transition - 只过渡会变化的属性 */
 		transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 		/* GPU 加速 */

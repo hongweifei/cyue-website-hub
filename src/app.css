@@ -198,7 +198,8 @@ img {
 a, button {
 	-webkit-tap-highlight-color: transparent;  /* 移除默认触摸高亮 */
 	touch-action: manipulation;                 /* 优化触摸响应 */
-	will-change: transform;                     /* 优化交互性能 */
+	/* 移除全局 will-change，避免创建过多图层导致内存占用过高 */
+	/* will-change: transform; */
 }
 
 /* 激活状态反馈 */
