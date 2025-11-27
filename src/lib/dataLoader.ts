@@ -143,6 +143,9 @@ function loadMarkdownFiles(): Map<string, string> {
   return files;
 }
 
+// 缓存机制：在 SSG 项目中，数据加载主要发生在构建时
+// 运行时的缓存机制可以简化，因为内容已经是静态的
+
 // 延迟加载文件数据（只在需要时读取）
 let cachedJsonFiles: Map<string, NavItem | NavItem[]> | null = null;
 let cachedGroupMetadataFiles: Map<string, GroupMetadata> | null = null;

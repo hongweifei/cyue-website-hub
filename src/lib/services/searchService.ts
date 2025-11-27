@@ -16,6 +16,7 @@ interface NormalizedItem {
 export class SearchService {
   private normalizedCache = new Map<NavItem, NormalizedItem>();
   private keyCache = new Map<string, NormalizedItem>();
+  private tagsCache = new Map<string, string[]>();
 
   /**
    * 搜索导航项
@@ -29,7 +30,7 @@ export class SearchService {
     const targetGroup = filters.group?.trim() ?? "";
     const hasGroup = targetGroup.length > 0;
 
-    const tagFilters =
+    const tagFilters = 
       filters.tags && filters.tags.length > 0
         ? this.buildTagSet(filters.tags)
         : null;
@@ -42,22 +43,48 @@ export class SearchService {
       return items;
     }
 
+    // 预计算匹配条件，减少循环中的计算量
+    const matchAllTags = tagFilters ? Array.from(tagFilters) : [];
+    const matchAllTokens = queryTokens;
+
     const results: NavItem[] = [];
 
     for (const item of items) {
       const normalized = this.getNormalized(item);
       if (!normalized) continue;
 
+      // 分组匹配
       if (hasGroup && normalized.groupId !== targetGroup) {
         continue;
       }
 
-      if (tagFilters && !this.matchTags(normalized, tagFilters)) {
-        continue;
+      // 标签匹配优化：使用 Set.has 方法，O(1) 时间复杂度
+      if (matchAllTags.length > 0) {
+        let hasMatchingTag = false;
+        for (const tag of matchAllTags) {
+          if (normalized.tagSet.has(tag)) {
+            hasMatchingTag = true;
+            break;
+          }
+        }
+        if (!hasMatchingTag) {
+          continue;
+        }
       }
 
-      if (hasQuery && !this.matchQuery(normalized, queryTokens)) {
-        continue;
+      // 查询匹配优化：使用 indexOf 代替 includes，性能更优
+      if (matchAllTokens.length > 0) {
+        const text = normalized.searchText;
+        let matchesAllTokens = true;
+        for (const token of matchAllTokens) {
+          if (text.indexOf(token) === -1) {
+            matchesAllTokens = false;
+            break;
+          }
+        }
+        if (!matchesAllTokens) {
+          continue;
+        }
       }
 
       results.push(item);
@@ -72,13 +99,30 @@ export class SearchService {
    * @returns 排序后的标签列表
    */
   getAllTags(items: NavItem[]): string[] {
+    // 生成缓存键
+    const cacheKey = items.length > 0 ? `${items[0].id}-${items.length}` : "empty";
+    
+    // 检查缓存
+    if (this.tagsCache.has(cacheKey)) {
+      return this.tagsCache.get(cacheKey)!;
+    }
+
     const tagSet = new Set<string>();
 
-    items.forEach((item) => {
-      item.tags.forEach((tag) => tagSet.add(tag));
-    });
+    // 优化：使用 for 循环代替 forEach，性能更优
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      for (let j = 0; j < item.tags.length; j++) {
+        tagSet.add(item.tags[j]);
+      }
+    }
 
-    return Array.from(tagSet).sort();
+    const tags = Array.from(tagSet).sort();
+    
+    // 缓存结果
+    this.tagsCache.set(cacheKey, tags);
+    
+    return tags;
   }
 
   private buildTagSet(tags: string[]): Set<string> {

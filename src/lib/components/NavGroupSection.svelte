@@ -2,6 +2,7 @@
 	import type { NavGroup as NavGroupType } from '../types';
 	import NavItem from './NavItem.svelte';
 	import NavGroupChildren from './NavGroupChildren.svelte';
+	import LazyLoad from './LazyLoad.svelte';
 	import { countGroupItems } from '../utils/group';
 	import { encodeGroupIdForUrl } from '../dataLoader';
 
@@ -63,12 +64,16 @@
 	{#if group.items.length > 0}
 		<div class="nav-items-grid">
 			{#each group.items as item (item.id)}
-				<NavItem {item} {favoriteIds} />
+				<LazyLoad threshold={0.05} rootMargin="50px">
+					<NavItem {item} {favoriteIds} />
+				</LazyLoad>
 			{/each}
 		</div>
 	{/if}
 	{#if hasChildren}
-		<NavGroupChildren groups={childGroups} level={level + 1} {favoriteIds} />
+		<LazyLoad threshold={0.1} rootMargin="100px">
+			<NavGroupChildren groups={childGroups} level={level + 1} {favoriteIds} />
+		</LazyLoad>
 	{/if}
 </section>
 

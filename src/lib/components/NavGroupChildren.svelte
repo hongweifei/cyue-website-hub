@@ -14,11 +14,9 @@
 
 {#if groups.length > 0}
 	<div class="subgroups">
-		<div class="subgroups-list">
-		{#each groups as child (child.id)}
-			<NavGroupSection group={child} level={level} {favoriteIds} />
-		{/each}
-		</div>
+	{#each groups as child (child.id)}
+		<NavGroupSection group={child} level={level} {favoriteIds} />
+	{/each}
 	</div>
 {/if}
 
@@ -26,16 +24,13 @@
 	.subgroups {
 		margin-top: var(--spacing-2xl);
 		border-left: 1px solid var(--component-card-default-border, transparent);
-	}
-
-	.subgroups-list {
 		display: flex;
 		flex-direction: column;
 		gap: var(--spacing-2xl);
 		position: relative;
 	}
 
-	.subgroups-list::before {
+	.subgroups::before {
 		content: '';
 		position: absolute;
 		left: 0;
@@ -50,7 +45,7 @@
 			margin-top: var(--spacing-xl);
 			padding-left: var(--spacing-md);
 			border-left: 2px solid var(--component-card-default-border, var(--border-light));
-			position: relative;
+			gap: var(--spacing-xl);
 		}
 
 		.subgroups::before {
@@ -63,14 +58,6 @@
 			background: var(--component-card-default-border-hover, var(--gradient-brand));
 			opacity: 0.6;
 		}
-
-		.subgroups-list {
-			gap: var(--spacing-xl);
-		}
-
-		.subgroups-list::before {
-			display: none;
-		}
 	}
 
 	@media (max-width: 480px) {
@@ -78,6 +65,7 @@
 			margin-top: var(--spacing-lg);
 			padding-left: var(--spacing-sm);
 			border-left-width: 1.5px;
+			gap: var(--spacing-lg);
 		}
 
 		.subgroups::before {
@@ -85,10 +73,6 @@
 			width: 1.5px;
 			top: calc(-1 * var(--spacing-sm));
 			height: var(--spacing-sm);
-		}
-
-		.subgroups-list {
-			gap: var(--spacing-lg);
 		}
 	}
 </style>
